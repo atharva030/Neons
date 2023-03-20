@@ -21,11 +21,12 @@ container_PRIMARY:{
     backgroundColor:"#3B71F3",
 },
 container_TERTIARY:{
-    backgroundColor:"#f9f9f9",
+    backgroundColor:"#f9f9f",
 },
 text:{
     fontWeight:'bold',
-    color:'white'
+    color:'white',
+    fontFamily:"Poppins-Black"
 },
 text_TERTIARY:{
     fontWeight:'bold',
