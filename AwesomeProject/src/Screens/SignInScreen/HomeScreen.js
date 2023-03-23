@@ -1,23 +1,22 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import avatar from '../../../assets/Image/profile.jpg';
 import styles from '../../Styles/Home';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
 import TaskItem from '../../Components/TaskItem';
 
+
 const HomeScreen = () => {
-  let datesWhitelist = [{
-    start: moment(),
-    end: moment().add(3, 'days')  // total 1 days enabled
-  }];
+  let datesWhitelist = [
+    {
+      start: moment(),
+      end: moment().add(3, 'days'), // total 1 days enabled
+    },
+  ];
   // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
   return (
+    <ScrollView>
     <View style={styles.fullscreen}>
       <View style={styles.outer}>
         <View style={styles.titleContainer}>
@@ -33,41 +32,36 @@ const HomeScreen = () => {
             <Text style={styles.addText}>+ Add Task</Text>
           </TouchableOpacity>
         </View>
-            <CalendarStrip
-                    calendarAnimation={{type: 'sequence', duration: 30}}
-                    daySelectionAnimation={{type: 'border', duration: 200, borderWidth: 1, borderHighlightColor: 'black'}}
-                    style={styles.calenderStyle}
-                    calendarHeaderStyle={{color: 'black'}}
-                    // calendarColor={'#7743CE'}
-                    dateNumberStyle={{color: 'black'}}
-                    dateNameStyle={{color: 'grey'}}
-                    highlightDateNumberStyle={{color: 'yellow'}}
-                    highlightDateNameStyle={{color: 'yellow'}}
-                    disabledDateNameStyle={{color: 'black'}}
-                    disabledDateNumberStyle={{color: 'black'}}
-                    datesWhitelist={datesWhitelist}
-                    // datesBlacklist={datesBlacklist}
-                    // iconLeft={require('./img/left-arrow.png')}
-                    // iconRight={require('./img/right-arrow.png')}
-                    iconContainer={{flex: 0.1}}
-                />
-    <View style={styles.taskFlex}>
-      <Text style={styles.firstflex}>URGENT</Text>
-      {/* <hr></hr> */}
-      <View style={styles.hairline} />
-      <View style={styles.secondflex}>
-        <View style={styles.secondSubFlex}>
-          <Text style={styles.taskText}>New Web UI Design Project</Text>
-          <Text style={styles.taskText}>ICON</Text>
-        </View>
-        <Text style={styles.taskText}>Website UI Design</Text>
+        <CalendarStrip
+          calendarAnimation={{type: 'sequence', duration: 30}}
+          daySelectionAnimation={{
+            type: 'border',
+            duration: 200,
+            borderWidth: 1,
+            borderHighlightColor: 'black',
+          }}
+          style={styles.calenderStyle}
+          calendarHeaderStyle={{color: 'black'}}
+          // calendarColor={'#7743CE'}
+          dateNumberStyle={{color: 'black'}}
+          dateNameStyle={{color: '#8d98b0'}}
+          highlightDateNumberStyle={{color: 'yellow'}}
+          highlightDateNameStyle={{color: 'yellow'}}
+          disabledDateNameStyle={{color: 'black'}}
+          disabledDateNumberStyle={{color: 'black'}}
+          datesWhitelist={datesWhitelist}
+          // datesBlacklist={datesBlacklist}
+          // iconLeft={require('./img/left-arrow.png')}
+          // iconRight={require('./img/right-arrow.png')}
+          iconContainer={{flex: 0.1}}
+        />
+       <TaskItem type="URGENT" color="red" desc="Website UI Design for $500" persons='3' title="New Web UI Design Project" time="10-11 AM"/>
+       <TaskItem type="RUNNING" color="#55d9a8" desc="Website UI Design for $500" persons='5' title="New Web UI Design Project" time="9-11 AM"/>
+       <TaskItem type="ONGOING" color="#ff0096" desc="Website UI Design for $500" persons='5' title="New Web UI Design Project" time="9-11 AM"/>
+       <TaskItem type="STOPPED" color="#0067fb" desc="Website UI Design for $500" persons='5' title="New Web UI Design Project" time="9-11 AM"/>
       </View>
     </View>
-
-      </View>
-  
-    </View>
-    
+    </ScrollView>
   );
 };
 
