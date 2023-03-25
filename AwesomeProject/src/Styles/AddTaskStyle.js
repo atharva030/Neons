@@ -1,25 +1,18 @@
 module.exports = {
   Addfullscreen: {
-    width: '100%',
-    height: '100%',
+    flex: 1,
     backgroundColor: '#5a55ca',
-    flexDirection: 'column',
   },
   flexBox: {
-    // margin: 15,
     flexDirection: 'columns',
   },
   Addsubscreen: {
-    marginTop: 20,
-    height: '17%',
-    flexDirection: 'row',
-    width: 110,
-    // justifyContent: 'space-between',
+    flex: 1,
+    marginBottom: 70,
   },
 
   addSecondScreen: {
-    height: '85%',
-    width: '100%',
+    flex: 2,
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -28,7 +21,6 @@ module.exports = {
     flexDirection: 'column',
   },
   AddtitleText: {
-    // width: '40%',
     height: 50,
     maxWidth: 300,
     fontSize: 22,
@@ -37,18 +29,14 @@ module.exports = {
     color: 'white',
   },
   dateInput: {
-    // margin: 12,
     borderColor: '#8d98b0',
-    // boxSizing: "borderBox",
     width: '96%',
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
   },
   input: {
-    // margin: 12,
     borderColor: '#8d98b0',
-    // boxSizing: "borderBox",
 
     borderBottomWidth: 1,
     color: 'black',
@@ -56,9 +44,7 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   Emailinput: {
-    // margin: 12,
     borderColor: '#8d98b0',
-    // boxSizing: "borderBox",
     width: '94%',
     marginBottom: 10,
     borderBottomWidth: 1,
@@ -67,10 +53,7 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   passwordinput: {
-    // margin: 12,
     borderColor: '#8d98b0',
-    // boxSizing: "borderBox",
-    // border: 'none',
     width: '94%',
     borderBottomWidth: 1,
     color: 'black',
@@ -96,9 +79,7 @@ module.exports = {
     marginLeft: 43,
   },
   timeInput: {
-    // margin: 12,
     borderColor: '#8d98b0',
-    // boxSizing: "borderBox",
     borderBottomWidth: 1,
     color: 'black',
     width: '100%',
@@ -110,9 +91,8 @@ module.exports = {
   },
 
   Loginsubscreen: {
-    flexDirection: 'row',
-    width: 110,
-    height: '19%',
+    flex: 1,
+    marginBottom: 70,
   },
   loginSecondScreen: {
     height: '90%',
@@ -124,7 +104,7 @@ module.exports = {
     paddingTop: 67,
     flexDirection: 'column',
   },
- registerSecondScreen: {
+  registerSecondScreen: {
     height: '90%',
     width: '100%',
     backgroundColor: 'white',

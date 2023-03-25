@@ -4,6 +4,12 @@ import styles from '../Styles/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const TaskItem = props => {
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {backgroundColor: 'white', padding: 20};
+
   return (
     <View style={styles.taskFlex}>
       <Text style={{color: props.color, padding: 10}}>{props.type}</Text>

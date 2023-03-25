@@ -4,6 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
@@ -15,6 +16,7 @@ const LoginScreen = () => {
   const [hidePassword, sethidePassword] = useState(true);
   const [password, setPassword] = useState('');
   return (
+    <ScrollView>
     <View style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
         <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
@@ -141,6 +143,7 @@ const LoginScreen = () => {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
