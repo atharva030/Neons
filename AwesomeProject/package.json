@@ -18,7 +18,6 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "moment": "^2.29.4",
     "react": "18.2.0",
-    "react-date-picker": "^9.2.0",
     "react-datepicker": "^4.10.0",
     "react-icons": "^4.8.0",
     "react-native": "^0.71.4",

@@ -47,7 +47,7 @@ module.exports = {
   },
   dateText: {
     fontFamily: 'Poppins-Medium',
-    color:'#8d98b0'
+    color: '#8d98b0',
   },
   container: {
     flex: 1,
@@ -88,14 +88,12 @@ module.exports = {
     width: 300,
     height: 170,
     flexDirection: 'column',
-    border: 20,
-
     borderColor: 'black',
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
     marginLeft: 10,
-    marginBottom:10
+    marginBottom: 10,
   },
   hairline: {
     backgroundColor: '#A2A2A2',
@@ -118,34 +116,34 @@ module.exports = {
   secondSubFlex: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems:"center",
+    alignItems: 'center',
   },
-  mainSecondFlex:{
-    flexDirection:"column",
+  mainSecondFlex: {
+    flexDirection: 'column',
     padding: 10,
-    justifyContent:'center',
-    paddingBottom:0
+    justifyContent: 'center',
+    paddingBottom: 0,
   },
-  timeSlot:{
-    color:"black"
+  timeSlot: {
+    color: 'black',
   },
-  secondflex:{
-    flexDirection:"column"
+  secondflex: {
+    flexDirection: 'column',
   },
   // flexIcon:{
   //   flexDirection:"row",
   //   justifyContent:"space-between",
   //   marginTop:"10"
   // }
-  flexIcon:{
-    marginTop:25,
-    flexDirection:"row",
-    justifyContent:"space-between"
+  flexIcon: {
+    marginTop: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  iconStyle:{
-    flexDirection:"row",
-    justifyContent:'space-evenly',
-    alignItems:'center',
-    width:80
-  }
+  iconStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    width: 80,
+  },
 };

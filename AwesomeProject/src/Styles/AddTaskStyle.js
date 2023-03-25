@@ -1,9 +1,9 @@
 module.exports = {
   Addfullscreen: {
-    height: '100%',
     width: '100%',
+    height: '100%',
     backgroundColor: '#5a55ca',
-    flexDirection:'column'
+    flexDirection: 'column',
   },
   flexBox: {
     // margin: 15,
@@ -13,17 +13,18 @@ module.exports = {
     marginTop: 20,
     height: '17%',
     flexDirection: 'row',
-    width:110
+    width: 110,
     // justifyContent: 'space-between',
   },
+
   addSecondScreen: {
-    height: '81%',
+    height: '85%',
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
-    paddingTop:17,
+    paddingTop: 17,
     flexDirection: 'column',
   },
   AddtitleText: {
@@ -39,8 +40,7 @@ module.exports = {
     // margin: 12,
     borderColor: '#8d98b0',
     // boxSizing: "borderBox",
-    width:'96%',
-    border: 'none',
+    width: '96%',
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
@@ -49,22 +49,45 @@ module.exports = {
     // margin: 12,
     borderColor: '#8d98b0',
     // boxSizing: "borderBox",
-    border: 'none',
+
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
+    fontFamily: 'Poppins-Regular',
+  },
+  Emailinput: {
+    // margin: 12,
+    borderColor: '#8d98b0',
+    // boxSizing: "borderBox",
+    width: '94%',
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    color: 'black',
+    paddingVertical: 0,
+    fontFamily: 'Poppins-Regular',
+  },
+  passwordinput: {
+    // margin: 12,
+    borderColor: '#8d98b0',
+    // boxSizing: "borderBox",
+    // border: 'none',
+    width: '94%',
+    borderBottomWidth: 1,
+    color: 'black',
+    paddingVertical: 0,
+    fontFamily: 'Poppins-Regular',
   },
   labelStyle: {
     color: 'black',
     marginLeft: 4,
     color: '#8d98b0',
-    fontFamily:'Poppins-Medium'
+    fontFamily: 'Poppins-Medium',
   },
+
   commonPadding: {},
   avatarText: {
     color: '#c2c9d7',
-    fontFamily:'Poppins-Regular'
-
+    fontFamily: 'Poppins-Regular',
   },
   timeContainer: {
     width: '100%',
@@ -76,14 +99,44 @@ module.exports = {
     // margin: 12,
     borderColor: '#8d98b0',
     // boxSizing: "borderBox",
-    border: 'none',
     borderBottomWidth: 1,
     color: 'black',
-    width:'100%',
+    width: '100%',
     paddingVertical: 0,
   },
-  submitBtn:{
-    width:"100%",
-    marginTop:20
-  }
+  submitBtn: {
+    width: '100%',
+    marginTop: 20,
+  },
+
+  Loginsubscreen: {
+    flexDirection: 'row',
+    width: 110,
+    height: '19%',
+  },
+  loginSecondScreen: {
+    height: '90%',
+    width: '100%',
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    padding: 30,
+    paddingTop: 67,
+    flexDirection: 'column',
+  },
+ registerSecondScreen: {
+    height: '90%',
+    width: '100%',
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    padding: 30,
+    flexDirection: 'column',
+  },
+  emaillabelStyle: {
+    color: 'black',
+    marginLeft: 4,
+    color: '#8d98b0',
+    fontFamily: 'Poppins-Medium',
+  },
 };

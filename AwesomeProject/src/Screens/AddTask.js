@@ -1,10 +1,17 @@
-import {View, Text, TextInput, TouchableOpacity, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AvatarImage from './Avatar/Avatar';
-import Calender from './Calender/Calender';
-import Time from './Time/Time';
+import AvatarImage from '../Components/Avatar/Avatar';
+import Calender from '../Components/Calender/Calender';
+import Time from '../Components/Time/Time';
 import {RadioButton} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';

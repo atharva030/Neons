@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
-import avatar from '../../../assets/Image/profile.jpg';
-import styles from '../../Styles/Home';
+import avatar from '../../assets/Image/profile.jpg';
+import styles from '../Styles/Home';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
-import TaskItem from '../../Components/TaskItem';
+import TaskItem from './TaskItem';
 
 
 const HomeScreen = () => {
