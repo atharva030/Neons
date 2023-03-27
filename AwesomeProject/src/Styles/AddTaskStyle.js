@@ -119,4 +119,26 @@ module.exports = {
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
   },
+
+  containerStyle:{
+   
+    backgroundColor: 'white',
+    padding: 20, 
+    height: '45%', 
+    width: '80%',
+    borderRadius: 20,
+    justifyContent: 'center', 
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  modalTital:{
+    fontFamily: 'Poppins-SemiBold',
+    color: 'black',
+    fontSize: 20,
+  },
+  modalSubtital:{
+    paddingTop: 20,
+    fontFamily: 'Poppins-Light',
+    textAlign: 'center',
+  }
 };

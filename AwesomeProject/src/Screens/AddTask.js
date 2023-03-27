@@ -17,13 +17,32 @@ import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
 import { useState } from 'react';
 
+
+import { Modal, Portal, Provider } from 'react-native-paper';
+
 const AddTask = () => {
   const [checked, setChecked] = useState('first');
+
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {backgroundColor: 'white', padding: 20, height: 100, width: 100};
 
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>
-      
+      <Provider>
+      <Portal>
+
+      <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
+          <Icon name="checkmark-circle-outline" size={90} color="#008000" />
+          <Text style={styles.modalTital}>Congrats !</Text>
+          <Text style={styles.modalSubtital} >You successfully created a task in your account.</Text>
+      </Modal>
+
+      </Portal>
+
         <View style={styles.Addsubscreen}>
           <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
             <Icon name="chevron-back" size={30} color="white" />
@@ -157,11 +176,12 @@ const AddTask = () => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={() => console.log('Pressed')}>
+              onPress={showModal}>
               Done
             </Button>
           </View>
         </View>
+        </Provider>
       </View>
     </ScrollView>
   );
