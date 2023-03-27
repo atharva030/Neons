@@ -5,17 +5,10 @@ import Spacing from '../../constant/Spacing';
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
-    // height: '100%',
   },
   container: {
-    // backgroundColor: Colors.primary,
     width: '100%',
-    flexDirection:'row'
-    // height: 50,
-  },
-  topIcon: {
-    // marginLeft: 14,
-    // marginTop: 25,
+    flexDirection: 'row',
   },
   bottomView: {
     padding: Spacing * 1,

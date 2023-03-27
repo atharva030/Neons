@@ -1,4 +1,11 @@
-import {View, Text, TextInput, TouchableOpacity, Pressable, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Pressable,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,7 +43,7 @@ const RegisterScreen = () => {
             //   underlineColorAndroid="transparent"
           />
         </View>
-        <View >
+        <View>
           <Text style={styles.emaillabelStyle}>Phone</Text>
           <TextInput
             style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
@@ -46,7 +53,7 @@ const RegisterScreen = () => {
             //   underlineColorAndroid="transparent"
           />
         </View>
-        <View >
+        <View>
           <Text style={styles.emaillabelStyle}>Email</Text>
           <TextInput
             style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
@@ -56,7 +63,7 @@ const RegisterScreen = () => {
             //   underlineColorAndroid="transparent"
           />
         </View>
-         
+
         <Text style={styles.labelStyle}>Password</Text>
         <View style={{flexDirection: 'row'}}>
           <TextInput

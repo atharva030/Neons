@@ -3,7 +3,7 @@ import React from 'react';
 
 const Landing = () => {
   return (
-    <ScrollView style={{flex:1,backgroundColor:'#f0f4fd'}}>
+    <ScrollView style={{flex: 1, backgroundColor: '#f0f4fd'}}>
       <View style={{flex: 1, marginTop: 170, alignItems: 'center'}}>
         <Text
           style={{

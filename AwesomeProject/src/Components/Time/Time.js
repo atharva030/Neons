@@ -62,7 +62,7 @@ const Time = () => {
               //   underlineColorAndroid="transparent"
             />
           </Pressable>
-          <Button icon="calendar" onPress={showStPicker}></Button>
+          <Button icon="clock-time-three" onPress={showStPicker}></Button>
           <DateTimePickerModal
             isVisible={isStTimePickerVisible}
             mode="time"
@@ -86,7 +86,7 @@ const Time = () => {
               //   underlineColorAndroid="transparent"
             />
           </Pressable>
-          <Button icon="calendar" onPress={showEndPicker}></Button>
+          <Button icon="clock-time-three" onPress={showEndPicker}></Button>
           <DateTimePickerModal
             isVisible={isEndTimePickerVisible}
             mode="time"

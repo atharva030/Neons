@@ -5,17 +5,21 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import {Image} from 'react-native-elements/dist/image/Image';
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
   return (
     <View style={styles.fullscreen}>
       <View style={[styles.titleView]}>
         <Text style={[styles.title1]}>TaskStack</Text>
         <Text style={[styles.title2]}>Manage{'\n'} your tasks easily</Text>
-        <Text style={[styles.title3]}>Effortlessly manage your tasks with TaskStack.</Text>
+        <Text style={[styles.title3]}>
+          Effortlessly manage your tasks with TaskStack.
+        </Text>
       </View>
 
       <View style={[styles.mainContainer, {flexDirection: 'column'}]}>
-        <TouchableOpacity style={styles.container} onPress={()=>console.warn('Sign IN with Google')}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => console.warn('Sign IN with Google')}>
           <View style={styles.card}>
             <Text style={styles.headingText}>Sign in with Google </Text>
             <IonIcon
@@ -33,7 +37,9 @@ const Welcome = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.container} onPress={()=>console.warn('Sign IN with facebook')}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => console.warn('Sign IN with facebook')}>
           <View style={styles.card}>
             <Text style={styles.headingText}>Sign in with facebook </Text>
             <IonIcon
@@ -52,7 +58,9 @@ const Welcome = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.container} onPress={()=>console.warn('Sign IN with email')}>
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => navigation.navigate('Login')}>
           <View style={styles.card}>
             <Text style={styles.headingText}>Sign in with Email</Text>
             <IonIcon

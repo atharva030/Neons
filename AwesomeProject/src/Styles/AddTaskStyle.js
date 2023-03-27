@@ -95,7 +95,7 @@ module.exports = {
     marginBottom: 70,
   },
   loginSecondScreen: {
-    height: '90%',
+    height: '100%',
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
