@@ -8,7 +8,7 @@ module.exports = {
   },
   Addsubscreen: {
     flex: 1,
-    marginBottom: 70,
+    marginBottom: 30,
   },
 
   addSecondScreen: {
@@ -17,7 +17,7 @@ module.exports = {
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
-    paddingTop: 17,
+    // paddingTop: 7,
     flexDirection: 'column',
   },
   AddtitleText: {
@@ -90,6 +90,10 @@ module.exports = {
     marginTop: 20,
   },
 
+  AddTeamsubscreen: {
+    flex: 1,
+    marginBottom: 2,
+  },
   Loginsubscreen: {
     flex: 1,
     marginBottom: 70,
@@ -108,6 +112,15 @@ module.exports = {
     height: '90%',
     width: '100%',
     backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    padding: 30,
+    flexDirection: 'column',
+  },
+  AddTeamSecondScreen: {
+    height: '90%',
+    width: '100%',
+    backgroundColor: '#f0f4fd',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,

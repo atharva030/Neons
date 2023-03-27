@@ -9,25 +9,26 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RegisterScreen from './Register';
 // import Welcome from './src/Screens/Welcome';
 // import Landing from './src/Screens/Landing';
-import MemberSelect from './MemberSelect';
- 
+import MemberSelect from './AddTeamMember';
+import AddTeamMember from './AddTeamMember';
+
 const Navigation = () => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     // {key: 'LoginScreen', title: 'Login'},
-    // {key: 'MemberSelect', title: 'Member'},
     {key: 'HomeScreen', title: 'Home'},
     {key: 'AddTask', title: 'Add Task'},
+    {key: 'AddTeamMember', title: 'Add Team'},
   ]);
 
   const renderIcon = ({route, color, focused}) => {
     let iconName;
 
     switch (route.key) {
-      case 'LoginScreen':
+      case 'AddTeamMember':
         iconName = focused ? 'account' : 'account-outline';
         break;
-      case 'RegisterScreen':
+      case 'LoginScreen':
         iconName = focused ? 'account-edit' : 'account-edit-outline';
         break;
       case 'AddTask':
@@ -45,7 +46,7 @@ const Navigation = () => {
 
   const renderScene = BottomNavigation.SceneMap({
     AddTask: AddTask,
-    // LoginScreen: LoginScreen,
+    AddTeamMember: AddTeamMember,
     RegisterScreen: RegisterScreen,
     HomeScreen: HomeScreen,
     // MemberSelect: MemberSelect,
@@ -70,8 +71,6 @@ const styles = StyleSheet.create({
   barStyle: {
     backgroundColor: '#8d98b0',
     height: 70,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
   },
   iconStyle: {
     marginBottom: -5, // adjust this value to align the icon with the text label

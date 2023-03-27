@@ -7,8 +7,8 @@ import {
   ScrollView,
 } from 'react-native';
 import React from 'react';
-import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
+import styles from '../Styles/AddTaskStyle';
 import AvatarImage from '../Components/Avatar/Avatar';
 import Calender from '../Components/Calender/Calender';
 import Time from '../Components/Time/Time';
@@ -17,36 +17,16 @@ import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
 import {useState} from 'react';
 
-
-import { Modal, Portal, Provider } from 'react-native-paper';
-
-const AddTask = () => {
+const EditTask = () => {
   const [checked, setChecked] = useState('first');
-
-  const [visible, setVisible] = React.useState(false);
-
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-  const containerStyle = {backgroundColor: 'white', padding: 20, height: 100, width: 100};
 
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>
-      <Provider>
-      <Portal>
-
-      <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
-          <Icon name="checkmark-circle-outline" size={90} color="#008000" />
-          <Text style={styles.modalTital}>Congrats !</Text>
-          <Text style={styles.modalSubtital} >You successfully created a task in your account.</Text>
-      </Modal>
-
-      </Portal>
-
         <View style={styles.Addsubscreen}>
           <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
             <Icon name="chevron-back" size={30} color="white" />
-            <Text style={styles.AddtitleText}>Add Task</Text>
+            <Text style={styles.AddtitleText}>Edit Task</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.addSecondScreen}>
@@ -68,19 +48,19 @@ const AddTask = () => {
             <AvatarImage text="John" />
             <AvatarImage text="Atharva" />
             <AvatarImage text="Hindavi" />
-            <Avatar.Text
-              style={{
-                marginTop: 10,
-                backgroundColor: '#8d98b0',
-                color: 'black',
-              }}
-              size={55}
-              label="+"
-            />
+            <TouchableOpacity onPress={()=>console.warn('Pressed')}>
+              <Avatar.Text
+                style={{
+                  marginTop: 10,
+                  backgroundColor: '#8d98b0',
+                  color: 'black',
+                }}
+                size={55}
+                label="+"
+              />
+            </TouchableOpacity>
           </View>
           <View style={{marginTop: 10}}>
-            <Calender />
-            <Time />
             <View style={{marginTop: 10}}>
               <Text style={styles.labelStyle}>DESCRIPTION</Text>
               <TextInput
@@ -176,15 +156,14 @@ const AddTask = () => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={showModal}>
+              onPress={() => console.log('Pressed')}>
               Done
             </Button>
           </View>
         </View>
-        </Provider>
       </View>
     </ScrollView>
   );
 };
 
-export default AddTask;
+export default EditTask;

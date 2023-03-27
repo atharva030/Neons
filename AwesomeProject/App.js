@@ -6,6 +6,8 @@ import Welcome from './src/Screens/Welcome';
 import NavigationScreen from './src/Screens/NavigationScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AddTeamMember from './src/Screens/AddTeamMember';
+import EditTask from './src/Screens/EditTask';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +40,8 @@ const App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    // <AddTeamMember/>
+    // <EditTask/>
   );
 };
 
