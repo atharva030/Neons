@@ -7,8 +7,8 @@ import {
   ScrollView,
 } from 'react-native';
 import React from 'react';
-import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
+import styles from '../Styles/AddTaskStyle';
 import AvatarImage from '../Components/Avatar/Avatar';
 import Calender from '../Components/Calender/Calender';
 import Time from '../Components/Time/Time';
@@ -17,7 +17,7 @@ import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
 import {useState} from 'react';
 
-const AddTask = () => {
+const EditTask = () => {
   const [checked, setChecked] = useState('first');
 
   return (
@@ -26,7 +26,7 @@ const AddTask = () => {
         <View style={styles.Addsubscreen}>
           <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
             <Icon name="chevron-back" size={30} color="white" />
-            <Text style={styles.AddtitleText}>Add Task</Text>
+            <Text style={styles.AddtitleText}>Edit Task</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.addSecondScreen}>
@@ -48,19 +48,19 @@ const AddTask = () => {
             <AvatarImage text="John" />
             <AvatarImage text="Atharva" />
             <AvatarImage text="Hindavi" />
-            <Avatar.Text
-              style={{
-                marginTop: 10,
-                backgroundColor: '#8d98b0',
-                color: 'black',
-              }}
-              size={55}
-              label="+"
-            />
+            <TouchableOpacity onPress={()=>console.warn('Pressed')}>
+              <Avatar.Text
+                style={{
+                  marginTop: 10,
+                  backgroundColor: '#8d98b0',
+                  color: 'black',
+                }}
+                size={55}
+                label="+"
+              />
+            </TouchableOpacity>
           </View>
           <View style={{marginTop: 10}}>
-            <Calender />
-            <Time />
             <View style={{marginTop: 10}}>
               <Text style={styles.labelStyle}>DESCRIPTION</Text>
               <TextInput
@@ -166,4 +166,4 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default EditTask;

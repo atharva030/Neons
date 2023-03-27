@@ -5,8 +5,14 @@ import styles from '../Styles/Home';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
 import TaskItem from './TaskItem';
+import {Modal, Portal, Button, Provider} from 'react-native-paper';
 
 const HomeScreen = () => {
+  const [visible, setVisible] = React.useState(false);
+
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const containerStyle = {backgroundColor: 'white', padding: 20};
   let datesWhitelist = [
     {
       start: moment(),
@@ -17,6 +23,14 @@ const HomeScreen = () => {
   return (
     <ScrollView>
       <View style={styles.fullscreen}>
+        <Modal
+          onDismiss={hideModal}
+          visible={visible}
+          contentContainerStyle={containerStyle}
+          style={{color: 'black'}}>
+          <Text>Example Modal. Click outside this area to dismiss.</Text>
+        </Modal>
+
         <View style={styles.outer}>
           <View style={styles.titleContainer}>
             <Text style={[styles.titleText]}>Task</Text>
@@ -61,6 +75,7 @@ const HomeScreen = () => {
             persons="3"
             title="New Web UI Design Project"
             time="10-11 AM"
+            showModal={showModal}
           />
           <TaskItem
             type="RUNNING"

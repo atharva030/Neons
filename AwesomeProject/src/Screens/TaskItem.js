@@ -6,9 +6,7 @@ import {Modal, Portal, Button, Provider} from 'react-native-paper';
 const TaskItem = props => {
   const [visible, setVisible] = React.useState(false);
 
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-  const containerStyle = {backgroundColor: 'blue', padding: 20};
+
 
   return (
     <Provider>
@@ -22,19 +20,13 @@ const TaskItem = props => {
               <Text style={styles.taskBigText}>{props.title}</Text>
               {/* <Text style={styles.taskText}>O</Text> */}
               <TouchableOpacity>
-                <Icon name="md-ellipsis-vertical" size={15} color="grey" />
+                <Icon name="md-ellipsis-vertical" size={15} color="grey" onPress={props.showModal}/>
               </TouchableOpacity>
             </View>
             <Text style={styles.taskText}>{props.desc}</Text>
             <Portal>
-              <Modal
-                visible={visible}
-                contentContainerStyle={containerStyle}
-                style={{color: 'black'}}>
-                <Text>Example Modal. Click outside this area to dismiss.</Text>
-              </Modal>
-
-              <Button style={{marginTop: 30}} >
+             
+              <Button style={{marginTop: 30}} onPress={props.showModal}>
                 Show
               </Button>
             </Portal>
