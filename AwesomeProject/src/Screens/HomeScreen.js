@@ -7,7 +7,9 @@ import CalendarStrip from 'react-native-calendar-strip';
 import TaskItem from './TaskItem';
 import {Modal, Portal, Button, Provider} from 'react-native-paper';
 
-const HomeScreen = () => {
+import AddTask from './AddTask';
+
+const HomeScreen = ({navigation}) => {
   const [visible, setVisible] = React.useState(false);
 
   const showModal = () => setVisible(true);
@@ -20,6 +22,8 @@ const HomeScreen = () => {
     },
   ];
   // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
+
+
   return (
     <ScrollView>
       <View style={styles.fullscreen}>
@@ -34,14 +38,16 @@ const HomeScreen = () => {
         <View style={styles.outer}>
           <View style={styles.titleContainer}>
             <Text style={[styles.titleText]}>Task</Text>
-            <Image source={avatar} style={styles.logo} />
+            <TouchableOpacity>
+              <Image source={avatar} style={styles.logo} />
+            </TouchableOpacity>
           </View>
           <View style={styles.dayContainer}>
             <View style={styles.innerdayContainer}>
               <Text style={[styles.dateText]}>May 01, 2023</Text>
               <Text style={[styles.titleText]}>Today</Text>
             </View>
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddTask')}>
               <Text style={styles.addText}>+ Add Task</Text>
             </TouchableOpacity>
           </View>

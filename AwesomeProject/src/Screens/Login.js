@@ -20,7 +20,8 @@ const LoginScreen = ({navigation}) => {
     <ScrollView>
       <View style={styles.Addfullscreen}>
         <View style={styles.Loginsubscreen}>
-          <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
+          <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}} 
+          onPress={() => navigation.goBack()}>
             <Icon name="chevron-back" size={30} color="white" />
             <Text style={styles.AddtitleText}>Login</Text>
           </TouchableOpacity>
@@ -101,7 +102,7 @@ const LoginScreen = ({navigation}) => {
               }}>
               Don't have an Account?
             </Text>
-            <TouchableOpacity onPress={() => console.warn('Register Page')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
               <Text
                 style={{
                   color: '#5a55ca',

@@ -16,16 +16,21 @@ import {RadioButton} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
 import {useState} from 'react';
+import HomeScreen from './HomeScreen';
 
 
 import { Modal, Portal, Provider } from 'react-native-paper';
 
-const AddTask = () => {
+const AddTask = ({navigation}) => {
   const [checked, setChecked] = useState('first');
 
   const [visible, setVisible] = React.useState(false);
-
-  const showModal = () => setVisible(true);
+  const showModal = () => {
+    setVisible(true);
+    setTimeout(() => {
+      setVisible(false);
+    }, 5000); 
+  };
   const hideModal = () => setVisible(false);
   const containerStyle = {backgroundColor: 'white', padding: 20, height: 100, width: 100};
 
@@ -35,16 +40,18 @@ const AddTask = () => {
       <Provider>
       <Portal>
 
-      <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle}>
+      <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.containerStyle} >
           <Icon name="checkmark-circle-outline" size={90} color="#008000" />
           <Text style={styles.modalTital}>Congrats !</Text>
           <Text style={styles.modalSubtital} >You successfully created a task in your account.</Text>
+          
       </Modal>
 
       </Portal>
 
         <View style={styles.Addsubscreen}>
-          <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
+          <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}
+            onPress={() => navigation.goBack()}>
             <Icon name="chevron-back" size={30} color="white" />
             <Text style={styles.AddtitleText}>Add Task</Text>
           </TouchableOpacity>
