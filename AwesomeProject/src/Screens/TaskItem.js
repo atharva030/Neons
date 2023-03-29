@@ -4,7 +4,6 @@ import styles from '../Styles/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Modal, Portal, Button, Provider} from 'react-native-paper';
 const TaskItem = props => {
-  const [visible, setVisible] = React.useState(false);
 
   return (
     <Provider>
@@ -22,7 +21,6 @@ const TaskItem = props => {
                   name="md-ellipsis-vertical"
                   size={15}
                   color="grey"
-                  onPress={props.showModal}
                 />
               </TouchableOpacity>
             </View>

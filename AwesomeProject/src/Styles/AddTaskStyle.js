@@ -1,11 +1,11 @@
-const { Dimensions } = require("react-native");
+const {Dimensions} = require('react-native');
 
-const deviceHeight=Dimensions.get('window').height;
-const deviceWidth=Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 module.exports = {
   Addfullscreen: {
-    height:deviceHeight,
-    widht:deviceWidth,
+    height: deviceHeight,
+    widht: deviceWidth,
     flex: 1,
     backgroundColor: '#5a55ca',
   },
@@ -14,17 +14,18 @@ module.exports = {
   },
   Addsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 9,
     marginBottom: 20,
   },
 
   addSecondScreen: {
-    flex: 2,
+    // flex: 2,
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
     // paddingTop: 7,
+    height: deviceHeight / 1.16,
     flexDirection: 'column',
   },
   AddtitleText: {
@@ -107,11 +108,12 @@ module.exports = {
 
   AddTeamsubscreen: {
     flex: 1,
+    height: deviceHeight / 9,
     marginBottom: 20,
   },
   Loginsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 8,
     marginBottom: 20,
   },
   loginSecondScreen: {
@@ -126,8 +128,8 @@ module.exports = {
     flexDirection: 'column',
   },
   registerSecondScreen: {
-    flex:1,
-    height: deviceHeight/1.15,
+    flex: 1,
+    height: deviceHeight / 1.17,
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
@@ -137,9 +139,8 @@ module.exports = {
     flexDirection: 'column',
   },
   AddTeamSecondScreen: {
-    // height: '90%',
-    flex: 2,
-    // width: '100%',
+    // flex: 2,
+    height: deviceHeight / 0.9,
     backgroundColor: '#f0f4fd',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,

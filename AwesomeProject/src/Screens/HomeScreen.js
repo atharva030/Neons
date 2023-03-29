@@ -10,31 +10,19 @@ import {Modal, Portal, Button, Provider} from 'react-native-paper';
 import AddTask from './AddTask';
 
 const HomeScreen = ({navigation}) => {
-  const [visible, setVisible] = React.useState(false);
 
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-  const containerStyle = {backgroundColor: 'white', padding: 20};
+ 
   let datesWhitelist = [
     {
       start: moment(),
       end: moment().add(3, 'days'), // total 1 days enabled
     },
   ];
-  // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
 
 
   return (
     <ScrollView>
       <View style={styles.fullscreen}>
-        <Modal
-          onDismiss={hideModal}
-          visible={visible}
-          contentContainerStyle={containerStyle}
-          style={{color: 'black'}}>
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
-        </Modal>
-
         <View style={styles.outer}>
           <View style={styles.titleContainer}>
             <Text style={[styles.titleText]}>Task</Text>
@@ -61,7 +49,6 @@ const HomeScreen = ({navigation}) => {
             }}
             style={styles.calenderStyle}
             calendarHeaderStyle={{color: 'black'}}
-            // calendarColor={'#7743CE'}
             dateNumberStyle={{color: 'black'}}
             dateNameStyle={{color: '#8d98b0'}}
             highlightDateNumberStyle={{color: '#5a55ca'}}
@@ -69,9 +56,6 @@ const HomeScreen = ({navigation}) => {
             disabledDateNameStyle={{color: 'black'}}
             disabledDateNumberStyle={{color: 'black'}}
             datesWhitelist={datesWhitelist}
-            // datesBlacklist={datesBlacklist}
-            // iconLeft={require('./img/left-arrow.png')}
-            // iconRight={require('./img/right-arrow.png')}
             iconContainer={{flex: 0.1}}
           />
           <TaskItem
@@ -81,7 +65,6 @@ const HomeScreen = ({navigation}) => {
             persons="3"
             title="New Web UI Design Project"
             time="10-11 AM"
-            showModal={showModal}
           />
           <TaskItem
             type="RUNNING"
