@@ -1,5 +1,11 @@
+const { Dimensions } = require("react-native");
+
+const deviceHeight=Dimensions.get('window').height;
+const deviceWidth=Dimensions.get('window').width;
 module.exports = {
   Addfullscreen: {
+    height:deviceHeight,
+    widht:deviceWidth,
     flex: 1,
     backgroundColor: '#5a55ca',
   },
@@ -7,8 +13,9 @@ module.exports = {
     flexDirection: 'columns',
   },
   Addsubscreen: {
-    flex: 1,
-    marginBottom: 30,
+    // flex: 1,
+    height:deviceHeight/8,
+    marginBottom: 20,
   },
 
   addSecondScreen: {
@@ -37,7 +44,6 @@ module.exports = {
   },
   input: {
     borderColor: '#8d98b0',
-
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
@@ -88,18 +94,29 @@ module.exports = {
   submitBtn: {
     width: '100%',
     marginTop: 20,
+    backgroundColor: '#5a55ca',
+    color: 'white',
+  },
+  sendOtp: {
+    width: '100%',
+    marginTop: 20,
+    backgroundColor: '#5a55ca',
+    color: 'white',
+    marginBottom: 315,
   },
 
   AddTeamsubscreen: {
     flex: 1,
-    marginBottom: 2,
+    marginBottom: 20,
   },
   Loginsubscreen: {
-    flex: 1,
-    marginBottom: 70,
+    // flex: 1,
+    height:deviceHeight/8,
+    marginBottom: 20,
   },
   loginSecondScreen: {
-    height: '100%',
+    // height: '100%',
+    flex: 1,
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
@@ -109,17 +126,20 @@ module.exports = {
     flexDirection: 'column',
   },
   registerSecondScreen: {
-    height: '90%',
+    flex:1,
+    height: deviceHeight/1.15,
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
+    // marginTop:10,
     flexDirection: 'column',
   },
   AddTeamSecondScreen: {
-    height: '90%',
-    width: '100%',
+    // height: '90%',
+    flex: 2,
+    // width: '100%',
     backgroundColor: '#f0f4fd',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -133,25 +153,25 @@ module.exports = {
     fontFamily: 'Poppins-Medium',
   },
 
-  containerStyle:{
-   
+  containerStyle: {
     backgroundColor: 'white',
-    padding: 20, 
-    height: '45%', 
+    padding: 20,
+    height: '45%',
     width: '80%',
     borderRadius: 20,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignSelf: 'center',
     alignItems: 'center',
   },
-  modalTital:{
+  modalTital: {
     fontFamily: 'Poppins-SemiBold',
     color: 'black',
     fontSize: 20,
   },
-  modalSubtital:{
+  modalSubtital: {
     paddingTop: 20,
     fontFamily: 'Poppins-Light',
     textAlign: 'center',
-  }
+    color: 'grey',
+  },
 };

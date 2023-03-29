@@ -1,9 +1,7 @@
 import {Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import styles from '../Styles/Welcome';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import {Image} from 'react-native-elements/dist/image/Image';
 
 const Welcome = ({navigation}) => {
   return (

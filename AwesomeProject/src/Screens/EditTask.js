@@ -10,8 +10,6 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../Styles/AddTaskStyle';
 import AvatarImage from '../Components/Avatar/Avatar';
-import Calender from '../Components/Calender/Calender';
-import Time from '../Components/Time/Time';
 import {RadioButton} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
