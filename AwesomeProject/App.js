@@ -1,13 +1,16 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from './src/Screens/Login';
 import RegisterScreen from './src/Screens/Register';
 import Welcome from './src/Screens/Welcome';
 import NavigationScreen from './src/Screens/NavigationScreen';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import AddTeamMember from './src/Screens/AddTeamMember';
 import EditTask from './src/Screens/EditTask';
+import EmailValid from './src/Components/ForgotPassword/EmailValid';
+import OtpValid from './src/Components/ForgotPassword/OtpValid';
+import Newpassword from './src/Components/ForgotPassword/Newpassword';
 
 const Stack = createNativeStackNavigator();
 
@@ -38,10 +41,31 @@ const App = () => {
           component={NavigationScreen}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name="EmailValid"
+          component={EmailValid}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="OtpValid"
+          component={OtpValid}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Newpassword"
+          component={Newpassword}
+          options={{headerShown: false}}
+        />
+        
       </Stack.Navigator>
-    </NavigationContainer>
+   </NavigationContainer>
     // <AddTeamMember/>
     // <EditTask/>
+    // <>
+    // {/* <EmailValid/> */}
+    // {/* <OtpValid/> */}
+    // {/* <Newpassword/> */}
+    // </>
   );
 };
 
