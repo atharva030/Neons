@@ -18,7 +18,6 @@ import AddTask from './src/Screens/AddTask';
 import HomeScreen from './src/Screens/HomeScreen';
 import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 
-
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -63,39 +62,8 @@ const App = () => {
           component={Newpassword}
           options={{headerShown: false}}
         />
-        
-      </Stack.Navigator>
-   </NavigationContainer>
-    // <AddTeamMember/>
-    // <EditTask/>
-    // <>
-    // {/* <EmailValid/> */}
-    // {/* <OtpValid/> */}
-    // {/* <Newpassword/> */}
-    // </>
-
-{/* 
-        <Stack.Screen
-          name="NavigationScreen"
-          component={NavigationScreen}
-          options={{headerShown: false}} /> */}
-
-        {/*         
-
-        <Stack.Screen
-          name="AddTask"
-          component={AddTask}
-          options={{headerShown: false}} />
-
-        <Stack.Screen
-          name="AddTeamMember"
-          component={AddTeamMember}
-          options={{headerShown: false}} /> */}
       </Stack.Navigator>
     </NavigationContainer>
-
-    
-
   );
 };
 

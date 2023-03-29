@@ -10,11 +10,7 @@ import {Modal, Portal, Button, Provider} from 'react-native-paper';
 import AddTask from './AddTask';
 
 const HomeScreen = ({navigation}) => {
-  const [visible, setVisible] = React.useState(false);
 
-  const showModal = () => setVisible(true);
-  const hideModal = () => setVisible(false);
-  const containerStyle = {backgroundColor: 'white', padding: 20};
   let datesWhitelist = [
     {
       start: moment(),
@@ -27,13 +23,7 @@ const HomeScreen = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.fullscreen}>
-        <Modal
-          onDismiss={hideModal}
-          visible={visible}
-          contentContainerStyle={containerStyle}
-          style={{color: 'black'}}>
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
-        </Modal>
+      
 
         <View style={styles.outer}>
           <View style={styles.titleContainer}>
@@ -81,7 +71,7 @@ const HomeScreen = ({navigation}) => {
             persons="3"
             title="New Web UI Design Project"
             time="10-11 AM"
-            showModal={showModal}
+            
           />
           <TaskItem
             type="RUNNING"

@@ -2,12 +2,9 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import styles from '../Styles/Home';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Modal, Portal, Button, Provider} from 'react-native-paper';
 const TaskItem = props => {
-  const [visible, setVisible] = React.useState(false);
 
   return (
-    <Provider>
       <View style={styles.taskFlex}>
         <Text style={{color: props.color, padding: 10}}>{props.type}</Text>
         {/* <hr></hr> */}
@@ -22,16 +19,11 @@ const TaskItem = props => {
                   name="md-ellipsis-vertical"
                   size={15}
                   color="grey"
-                  onPress={props.showModal}
                 />
               </TouchableOpacity>
             </View>
             <Text style={styles.taskText}>{props.desc}</Text>
-            <Portal>
-              <Button style={{marginTop: 30}} onPress={props.showModal}>
-                Show
-              </Button>
-            </Portal>
+            
           </View>
           <View style={styles.flexIcon}>
             <View style={styles.iconStyle}>
@@ -49,7 +41,6 @@ const TaskItem = props => {
           </View>
         </View>
       </View>
-    </Provider>
   );
 };
 

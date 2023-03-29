@@ -11,7 +11,12 @@ import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import TeamItems from '../Components/TeamItems/TeamItems';
-
+import { TouchableWithoutFeedback } from 'react-native';
+const HideKeyboard = ({children}) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
 const AddTeamMember = ({navigation}) => {
 
   return (

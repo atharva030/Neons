@@ -15,7 +15,6 @@ import {IconButton} from 'react-native-paper';
 
 import LoginScreen from './Login';
 
-
 const RegisterScreen = ({navigation}) => {
   const [hidePassword, sethidePassword] = useState(true);
   const [hidecnfPassword, sethidecnfPassword] = useState(true);
@@ -23,8 +22,9 @@ const RegisterScreen = ({navigation}) => {
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
-        <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}
-        onPress={() => navigation.navigate('Welcome')}>
+        <TouchableOpacity
+          style={{flexDirection: 'row', marginTop: 20}}
+          onPress={() => navigation.navigate('Welcome')}>
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Register</Text>
         </TouchableOpacity>
@@ -118,12 +118,7 @@ const RegisterScreen = ({navigation}) => {
         <Button
           onPress={() => navigation.navigate('Login')}
           style={styles.submitBtn}
-
           mode="contained">
-
-          mode="contained"
-          onPress={() => navigation.navigate('Login')}>
-
           Register
         </Button>
         <View

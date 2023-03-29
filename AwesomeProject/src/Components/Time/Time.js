@@ -23,7 +23,10 @@ const Time = () => {
   const handleStartTime = StTime => {
     const dt = new Date(StTime);
     dt.toLocaleString();
-    console.warn('A Start has been picked: ', dt.toLocaleString().split(',')[1]);
+    console.warn(
+      'A Start has been picked: ',
+      dt.toLocaleString().split(',')[1],
+    );
     setsettleStartTime(dt.toLocaleString().split(',')[1]);
     console.log(settleStartTime);
     hidestTimePicker();
@@ -48,9 +51,9 @@ const Time = () => {
   return (
     <View style={styles.timeContainer}>
       <View style={{marginTop: 10}}>
-        <Text style={styles.labelStyle}>START TIME</Text>
+        <Text style={styles.labelStyle}>END TIME</Text>
         <View style={{flexDirection: 'row'}}>
-          <Pressable onPress={showStPicker} style={{width: '50%'}}>
+          <Pressable onPress={showEndPicker} style={{width: '50%'}}>
             <TextInput
               style={styles.timeInput}
               value={settleStartTime}
@@ -60,7 +63,9 @@ const Time = () => {
               placeholderTextColor="#8d98b0"
             />
           </Pressable>
-          <Button icon="clock-time-three" 
+          <Button icon="clock-time-three" onPress={showStPicker}></Button>
+          <DateTimePickerModal
+            icon="clock-time-three"
             isVisible={isStTimePickerVisible}
             mode="time"
             onConfirm={handleStartTime}
