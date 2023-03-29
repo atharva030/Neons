@@ -11,8 +11,11 @@ import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import TeamItems from '../Components/TeamItems/TeamItems';
+
 const AddTeamMember = ({navigation}) => {
+
   return (
+    <HideKeyboard>
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.AddTeamsubscreen}>
         <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}
@@ -81,6 +84,7 @@ const AddTeamMember = ({navigation}) => {
         </Button>
       </View>
     </ScrollView>
+    </HideKeyboard>
   );
 };
 

@@ -57,13 +57,10 @@ const Time = () => {
               onPress={handleStartTime}
               editable={false} // Adding hint in TextInput using Placeholder option.
               placeholder=""
-              // Making the Under line Transparent.
               placeholderTextColor="#8d98b0"
-              //   underlineColorAndroid="transparent"
             />
           </Pressable>
-          <Button icon="clock-time-three" onPress={showStPicker}></Button>
-          <DateTimePickerModal
+          <Button icon="clock-time-three" 
             isVisible={isStTimePickerVisible}
             mode="time"
             onConfirm={handleStartTime}

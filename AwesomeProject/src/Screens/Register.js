@@ -12,8 +12,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import {useState} from 'react';
 import {IconButton} from 'react-native-paper';
+
+import LoginScreen from './Login';
+
+
 const RegisterScreen = ({navigation}) => {
   const [hidePassword, sethidePassword] = useState(true);
+  const [hidecnfPassword, sethidecnfPassword] = useState(true);
   const [password, setPassword] = useState('');
   return (
     <ScrollView style={styles.Addfullscreen}>
@@ -31,6 +36,8 @@ const RegisterScreen = ({navigation}) => {
             textAlign: 'center',
             fontFamily: 'Poppins-Medium',
             fontSize: 25,
+            marginTop: 10,
+            marginBottom: 15,
           }}>
           Create a new Account
         </Text>
@@ -64,7 +71,6 @@ const RegisterScreen = ({navigation}) => {
             //   underlineColorAndroid="transparent"
           />
         </View>
-
         <Text style={styles.labelStyle}>Password</Text>
         <View style={{flexDirection: 'row'}}>
           <TextInput
@@ -87,32 +93,37 @@ const RegisterScreen = ({navigation}) => {
             }}
           />
         </View>
-        <Text style={styles.labelStyle}>Confirm Password</Text>
-        <View style={{flexDirection: 'row'}}>
-          <TextInput
-            value={password}
-            onChangeText={setPassword}
-            style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
-            placeholder=""
-            // Making the Under line Transparent.
-            placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
-            secureTextEntry={hidePassword}
-          />
-          <IconButton
-            icon={hidePassword ? 'eye-off' : 'eye'}
-            iconColor="black"
-            size={20}
-            color="black"
-            onPress={() => {
-              sethidePassword(!hidePassword);
-            }}
-          />
+        <View style={{marginTop: 10}}>
+          <Text style={styles.labelStyle}>Confirm Password</Text>
+          <View style={{flexDirection: 'row'}}>
+            <TextInput
+              style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
+              placeholder=""
+              // Making the Under line Transparent.
+              placeholderTextColor="#8d98b0"
+              //   underlineColorAndroid="transparent"
+              secureTextEntry={hidecnfPassword}
+            />
+            <IconButton
+              icon={hidecnfPassword ? 'eye-off' : 'eye'}
+              iconColor="black"
+              size={20}
+              color="black"
+              onPress={() => {
+                sethidecnfPassword(!hidecnfPassword);
+              }}
+            />
+          </View>
         </View>
         <Button
+          onPress={() => navigation.navigate('Login')}
           style={styles.submitBtn}
+
+          mode="contained">
+
           mode="contained"
           onPress={() => navigation.navigate('Login')}>
+
           Register
         </Button>
         <View
