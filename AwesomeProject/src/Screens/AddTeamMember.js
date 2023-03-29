@@ -16,7 +16,7 @@ const AddTeamMember = ({navigation}) => {
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.AddTeamsubscreen}>
         <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}
-          onPress={() => navigation.navigate('NavigationScreen')}
+          onPress={() => navigation.goBack()}
         >
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Add Team Member</Text>

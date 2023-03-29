@@ -42,13 +42,13 @@ const App = () => {
           component={BottomTabNavigator}
           options={{headerShown: false}}
         />
-{/* 
+        {/* 
         <Stack.Screen
           name="NavigationScreen"
           component={NavigationScreen}
           options={{headerShown: false}} /> */}
 
-{/*         
+        {/*         
 
         <Stack.Screen
           name="AddTask"
@@ -59,12 +59,8 @@ const App = () => {
           name="AddTeamMember"
           component={AddTeamMember}
           options={{headerShown: false}} /> */}
-
-        
       </Stack.Navigator>
     </NavigationContainer>
-
-    
   );
 };
 
