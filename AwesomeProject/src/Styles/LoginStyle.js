@@ -5,6 +5,7 @@ import Spacing from '../../constant/Spacing';
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
+    height: '100%',
   },
   container: {
     width: '100%',

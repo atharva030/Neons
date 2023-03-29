@@ -1,6 +1,8 @@
 import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {Avatar} from 'react-native-paper';
+
+import { Avatar } from "react-native-paper";
+
 const TeamItems = (props) => {
   return (
     <TouchableOpacity 

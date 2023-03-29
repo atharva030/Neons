@@ -11,20 +11,16 @@ import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import TeamItems from '../Components/TeamItems/TeamItems';
-import { Keyboard,  TouchableWithoutFeedback } from 'react-native';
- 
-const HideKeyboard = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-);
- 
-const AddTeamMember = () => {
+
+const AddTeamMember = ({navigation}) => {
+
   return (
     <HideKeyboard>
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.AddTeamsubscreen}>
-        <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
+        <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}
+          onPress={() => navigation.navigate('NavigationScreen')}
+        >
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Add Team Member</Text>
         </TouchableOpacity>

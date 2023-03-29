@@ -1,16 +1,18 @@
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import HomeScreen from './HomeScreen';
 import AddTask from './AddTask';
-// import LoginScreen from './Login';
 import {BottomNavigation, Text} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+
+
+import HomeScreen from './HomeScreen';
 import RegisterScreen from './Register';
 // import Welcome from './src/Screens/Welcome';
 // import Landing from './src/Screens/Landing';
 import MemberSelect from './AddTeamMember';
 import AddTeamMember from './AddTeamMember';
+import ProfileScreen from './ProfileScreen';
 
 const Navigation = () => {
   const [index, setIndex] = React.useState(0);
@@ -19,6 +21,7 @@ const Navigation = () => {
     {key: 'HomeScreen', title: 'Home'},
     {key: 'AddTask', title: 'Add Task'},
     {key: 'AddTeamMember', title: 'Add Team'},
+    {key: 'ProfileScreen', title: 'Profile'}
   ]);
 
   const renderIcon = ({route, color, focused}) => {
@@ -37,6 +40,7 @@ const Navigation = () => {
       case 'HomeScreen':
         iconName = focused ? 'home' : 'home-outline';
         break;
+      
     }
 
     return (
@@ -49,6 +53,7 @@ const Navigation = () => {
     AddTeamMember: AddTeamMember,
     RegisterScreen: RegisterScreen,
     HomeScreen: HomeScreen,
+    ProfileScreen: ProfileScreen,
     // MemberSelect: MemberSelect,
   });
 
@@ -61,8 +66,6 @@ const Navigation = () => {
         renderIcon={renderIcon}
         renderScene={renderScene}
       />
-      {/* <Welcome/> */}
-      {/* <Landing/> */}
     </SafeAreaProvider>
   );
 };
