@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
-  Alert,
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
@@ -19,17 +18,26 @@ import RegisterScreen from './Register';
 import { useValidation } from 'react-native-form-validator';
 
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import fetch from 'cross-fetch';
-
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
 );
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [hidePassword, sethidePassword] = useState(true);
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const { validate, isFieldInError, getErrorsInField, getErrorMessages } =
+    useValidation({
+      state: { email, password },
+    });
+  const Validate1 = () => {
+    validate({
+      email: { Email: true },
+      Password: { Password: true },
+    });
+  };
+  // const [Password, setPassword] = useState('');
   return (
     <HideKeyboard>
       <ScrollView>
@@ -57,10 +65,12 @@ const LoginScreen = ({navigation}) => {
               <Text style={styles.emaillabelStyle}>Email</Text>
               <TextInput
                 style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
-                placeholder=""
+                placeholder="google@gmail.com"
                 // Making the Under line Transparent.
                 placeholderTextColor="#8d98b0"
                 //   underlineColorAndroid="transparent"
+                value={email}
+                onChangeText={setEmail}
               />
               {isFieldInError('date') && getErrorsInField('date').map(errorMessage => (
                 <Text>{errorMessage}</Text>
@@ -72,10 +82,12 @@ const LoginScreen = ({navigation}) => {
                 value={password}
                 onChangeText={setPassword}
                 style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
-                placeholder=""
+                placeholder="your sec password"
                 // Making the Under line Transparent.
                 placeholderTextColor="#8d98b0"
+                //   underlineColorAndroid="transparent"
                 secureTextEntry={hidePassword}
+
               />
               <IconButton
                 icon={hidePassword ? 'eye-off' : 'eye'}
@@ -102,7 +114,7 @@ const LoginScreen = ({navigation}) => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={() => navigation.navigate('NavigationScreen')}>
+              onPress={() => Validate1()}>
               Log In
             </Button>
             
