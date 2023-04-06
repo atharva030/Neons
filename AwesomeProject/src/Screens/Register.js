@@ -9,16 +9,49 @@ import {
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button} from 'react-native-paper';
+import {Button, IconButton} from 'react-native-paper';
 import {useState} from 'react';
-import {IconButton} from 'react-native-paper';
-
 import LoginScreen from './Login';
 
 const RegisterScreen = ({navigation}) => {
   const [hidePassword, sethidePassword] = useState(true);
   const [hidecnfPassword, sethidecnfPassword] = useState(true);
+
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [role, setRole] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
+
+  const handleSubmitRegister = () => {
+    console.log(name);
+    fetch('http://10.70.2.180:5000/apiauth/createuser', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        phone: phone,
+        role: role,
+        email: email,
+        password: password,
+      }),
+    })
+      .then(response => response.json())
+      .then(responseData => {
+        console.log(JSON.stringify(responseData));
+        if (responseData.success) {
+          navigation.navigate('Login');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
@@ -46,20 +79,39 @@ const RegisterScreen = ({navigation}) => {
           <TextInput
             style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
+            value={name}
+            onChangeText={text => setName(text)}
           />
         </View>
-        <View>
-          <Text style={styles.emaillabelStyle}>Phone</Text>
-          <TextInput
-            style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
-            placeholder=""
-            // Making the Under line Transparent.
-            placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
-          />
+        <View
+          style={{
+            width: 280,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}>
+          <View style={{width: 138}}>
+            <Text style={styles.emaillabelStyle}>Phone</Text>
+            <TextInput
+              style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+              placeholder=""
+              placeholderTextColor="#8d98b0"
+              value={phone}
+              onChangeText={text => setPhone(text)}
+            />
+          </View>
+          <View style={{width: 138}}>
+            <Text style={styles.emaillabelStyle}>Choose your Role</Text>
+            <TextInput
+              style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+              placeholder=""
+              // Making the Under line Transparent.
+              placeholderTextColor="#8d98b0"
+              //   underlineColorAndroid="transparent"
+              value={role}
+              onChangeText={text => setRole(text)}
+            />
+          </View>
         </View>
         <View>
           <Text style={styles.emaillabelStyle}>Email</Text>
@@ -69,6 +121,8 @@ const RegisterScreen = ({navigation}) => {
             // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
             //   underlineColorAndroid="transparent"
+            value={email}
+            onChangeText={text => setEmail(text)}
           />
         </View>
         <Text style={styles.labelStyle}>Password</Text>
@@ -78,9 +132,7 @@ const RegisterScreen = ({navigation}) => {
             onChangeText={setPassword}
             style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
             secureTextEntry={hidePassword}
           />
           <IconButton
@@ -116,7 +168,7 @@ const RegisterScreen = ({navigation}) => {
           </View>
         </View>
         <Button
-          onPress={() => navigation.navigate('Login')}
+          // onPress={handleSubmitRegister}
           style={styles.submitBtn}
           mode="contained">
           Register
