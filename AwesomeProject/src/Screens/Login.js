@@ -10,69 +10,33 @@ import {
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button} from 'react-native-paper';
-import {useState} from 'react';
-import {Keyboard, TouchableWithoutFeedback} from 'react-native';
-import {IconButton} from 'react-native-paper';
+import { Button } from 'react-native-paper';
+import { useState } from 'react';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import Navigation from './NavigationScreen';
 import RegisterScreen from './Register';
+import { useValidation } from 'react-native-form-validator';
+
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import fetch from 'cross-fetch';
 
-const HideKeyboard = ({children}) => (
+const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
 );
-
 const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [hidePassword, sethidePassword] = useState(true);
-
-  handleToken = async () => {
-    var token = await AsyncStorage.getItem('auth');
-  };
-  
-  const handleSubmit = async () => {
-    console.log(email, password);
-    fetch('http://10.70.2.180:5000/apiauth/login', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then(response => response.json())
-      .then(async responseData => {
-        console.log(JSON.stringify(responseData));
-        if (responseData.success) {
-          //save auth-token and redirect
-          AsyncStorage.setItem('auth', JSON.stringify(responseData.authToken));
-          var token = await handleToken();
-          navigation.navigate('NavigationScreen');
-        } else {
-          Alert.alert(
-            'Unauthorised',
-            'Please Login with a correct Credentials',
-          );
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
+  const [password, setPassword] = useState('');
   return (
     <HideKeyboard>
       <ScrollView>
         <View style={styles.Addfullscreen}>
           <View style={styles.Loginsubscreen}>
             <TouchableOpacity
-              style={{flexDirection: 'row', marginTop: 20}}
+              style={{ flexDirection: 'row', marginTop: 20 }}
               onPress={() => navigation.goBack()}>
               <Icon name="chevron-back" size={30} color="white" />
               <Text style={styles.AddtitleText}>Login</Text>
@@ -89,25 +53,29 @@ const LoginScreen = ({navigation}) => {
               }}>
               Login with Email
             </Text>
-            <View style={{marginTop: 10}}>
+            <View style={{ marginTop: 10 }}>
               <Text style={styles.emaillabelStyle}>Email</Text>
               <TextInput
-                style={styles.Emailinput}
-                value={email}
+                style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+                placeholder=""
+                // Making the Under line Transparent.
                 placeholderTextColor="#8d98b0"
-                type="email"
-                onChangeText={text => setEmail(text)}
+                //   underlineColorAndroid="transparent"
               />
+              {isFieldInError('date') && getErrorsInField('date').map(errorMessage => (
+                <Text>{errorMessage}</Text>
+              ))}
             </View>
-
             <Text style={styles.labelStyle}>Password</Text>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               <TextInput
-                style={styles.passwordinput}
+                value={password}
+                onChangeText={setPassword}
+                style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
+                placeholder=""
+                // Making the Under line Transparent.
                 placeholderTextColor="#8d98b0"
                 secureTextEntry={hidePassword}
-                value={password}
-                onChangeText={text => setPassword(text)}
               />
               <IconButton
                 icon={hidePassword ? 'eye-off' : 'eye'}
@@ -119,7 +87,6 @@ const LoginScreen = ({navigation}) => {
                 }}
               />
             </View>
-
             <Pressable onPress={() => navigation.navigate('EmailValid')}>
               <Text
                 style={{
@@ -135,9 +102,10 @@ const LoginScreen = ({navigation}) => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={handleSubmit}>
+              onPress={() => navigation.navigate('NavigationScreen')}>
               Log In
             </Button>
+            
             <View
               style={{
                 flexDirection: 'row',
@@ -189,7 +157,7 @@ const LoginScreen = ({navigation}) => {
                   name="ios-logo-google"
                   size={35}
                   color="#5a55ca"
-                  style={{marginRight: 10}}
+                  style={{ marginRight: 10 }}
                 />
               </TouchableOpacity>
               <TouchableOpacity
@@ -198,7 +166,13 @@ const LoginScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
           </View>
+          {isFieldInError('date') &&
+          getErrorsInField('date').map(errorMessage => (
+          <Text>{errorMessage}</Text>
+        ))}
+
         </View>
+        
       </ScrollView>
     </HideKeyboard>
   );
