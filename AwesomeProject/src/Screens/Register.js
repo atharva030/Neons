@@ -22,11 +22,12 @@ const RegisterScreen = ({navigation}) => {
   const [role, setRole] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [password, setPassword] = useState('');
+  const [cnfpassword, setCnfPassword] = useState('');
 
   const handleSubmitRegister = () => {
-    console.log(name);
-    fetch('http://10.70.2.180:5000/apiauth/createuser', {
+    console.log(name,email,password, phone,role)
+    if(password===cnfpassword){
+    fetch('http://192.168.0.155:5000/api/auth/createuser', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -34,9 +35,9 @@ const RegisterScreen = ({navigation}) => {
       },
       body: JSON.stringify({
         name: name,
-        phone: phone,
-        role: role,
         email: email,
+        phone: phone,
+        userRole: role,
         password: password,
       }),
     })
@@ -50,6 +51,10 @@ const RegisterScreen = ({navigation}) => {
       .catch(error => {
         console.error(error);
       });
+    }
+    else{
+      console.log("password Not Matched")
+    }
   };
 
   return (
@@ -150,10 +155,9 @@ const RegisterScreen = ({navigation}) => {
           <View style={{flexDirection: 'row'}}>
             <TextInput
               style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
-              placeholder=""
-              // Making the Under line Transparent.
+              value={cnfpassword}
+              onChangeText={text => setCnfPassword(text)}
               placeholderTextColor="#8d98b0"
-              //   underlineColorAndroid="transparent"
               secureTextEntry={hidecnfPassword}
             />
             <IconButton
@@ -168,7 +172,7 @@ const RegisterScreen = ({navigation}) => {
           </View>
         </View>
         <Button
-          // onPress={handleSubmitRegister}
+          onPress={handleSubmitRegister}
           style={styles.submitBtn}
           mode="contained">
           Register

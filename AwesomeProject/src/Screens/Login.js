@@ -37,6 +37,28 @@ const LoginScreen = ({ navigation }) => {
       Password: { Password: true },
     });
   };
+  const handleLogin=()=>{
+    console.log(email,password)
+    fetch('http://192.168.0.155:5000/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+    .then(response => {response.json()
+    console.log("Print")})
+    .then(response => {
+      navigation.navigate('NavigationScreen')
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+  
   // const [Password, setPassword] = useState('');
   return (
     <HideKeyboard>
@@ -114,7 +136,7 @@ const LoginScreen = ({ navigation }) => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={() => Validate1()}>
+              onPress={handleLogin}>
               Log In
             </Button>
             
