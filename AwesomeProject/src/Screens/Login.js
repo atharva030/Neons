@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  ToastAndroid
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
@@ -37,7 +38,12 @@ const LoginScreen = ({ navigation }) => {
       Password: { Password: true },
     });
   };
+  const showToast = () => {
+    ToastAndroid.show('Login Sucessfull', ToastAndroid.SHORT);
+    navigation.navigate('NavigationScreen')
+  }
   const handleLogin=()=>{
+    
     console.log(email,password)
     fetch('http://192.168.0.155:5000/api/auth/login', {
       method: 'POST',
@@ -57,6 +63,7 @@ const LoginScreen = ({ navigation }) => {
     .catch(err => {
       console.log(err);
     });
+  
   }
   
   // const [Password, setPassword] = useState('');
@@ -136,7 +143,7 @@ const LoginScreen = ({ navigation }) => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={handleLogin}>
+              onPress={showToast}>
               Log In
             </Button>
             

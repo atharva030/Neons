@@ -5,8 +5,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-// import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+
+
 import styles from '../Styles/Welcome'
+GoogleSignin.configure({
+  webClientId: '1089530587229-074k6lbhrt1u61qheldv280fclhruh3u.apps.googleusercontent.com',
+  offlineAccess: true,
+  hostedDomain: '',
+  forceCodeForRefreshToken: true,
+  accountName: '',
+  // iosClientId:''
+});
 const Welcome = ({ navigation }) => {
   const [user, setUser] = useState(null);
 
@@ -21,8 +31,11 @@ const Welcome = ({ navigation }) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
+      console.log(userInfo);
       setUser(userInfo);
+      console.log(userInfo.email)
     } catch (error) {
+      console.log(error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
@@ -34,7 +47,6 @@ const Welcome = ({ navigation }) => {
       }
     }
   }
-
   return (
     <View style={styles.fullscreen}>
       <View style={[styles.titleView]}>
@@ -48,20 +60,23 @@ const Welcome = ({ navigation }) => {
       <View style={[styles.mainContainer, { flexDirection: 'column' }]}>
         <TouchableOpacity
           style={styles.container}
-          >
+        >
           <View style={styles.card}>
             <Text style={styles.headingText}>Sign in with Google </Text>
             <IonIcon
               name="logo-google"
               size={25}
               color="#6b8cff"
+
               style={styles.google_logo}></IonIcon>
             <View style={styles.rightIcon}>
               <IonIcon
                 name="arrow-forward-outline"
                 size={25}
                 color="#6b8cff"
+                onPress={handleSignIn}
                 style={styles.arrow}></IonIcon>
+
             </View>
           </View>
         </TouchableOpacity>
@@ -110,6 +125,4 @@ const Welcome = ({ navigation }) => {
     </View>
   );
 };
-
-
 export default Welcome;
