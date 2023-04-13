@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  ToastAndroid
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
@@ -12,11 +13,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Button, IconButton} from 'react-native-paper';
 import {useState} from 'react';
 import LoginScreen from './Login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loader from './Loader';
 
 const RegisterScreen = ({navigation}) => {
   const [hidePassword, sethidePassword] = useState(true);
   const [hidecnfPassword, sethidecnfPassword] = useState(true);
-
+  const [spinner, setSpinner] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [role, setRole] = useState('');
@@ -27,10 +30,10 @@ const RegisterScreen = ({navigation}) => {
   const handleSubmitRegister = () => {
     console.log(name,email,password, phone,role)
     if(password===cnfpassword){
-    fetch('http://192.168.0.155:5000/api/auth/createuser', {
+      setSpinner(true);
+    fetch('http://192.168.0.103:5000/api/auth/createuser', {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -41,12 +44,15 @@ const RegisterScreen = ({navigation}) => {
         password: password,
       }),
     })
-      .then(response => response.json())
-      .then(responseData => {
-        console.log(JSON.stringify(responseData));
-        if (responseData.success) {
-          navigation.navigate('Login');
-        }
+      .then(async response => {
+        res = await response.json();
+        console.log(res);
+        await AsyncStorage.setItem('auth-token', res.authToken);
+        auth = await AsyncStorage.getItem('auth-token');
+        console.log(auth);
+        setSpinner(false);
+        ToastAndroid.show('Registered successfully!', ToastAndroid.SHORT);
+        navigation.navigate('Login');
       })
       .catch(error => {
         console.error(error);
@@ -58,7 +64,9 @@ const RegisterScreen = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.Addfullscreen}>
+    <>
+    {spinner ? (<Loader/>):(
+      <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
         <TouchableOpacity
           style={{flexDirection: 'row', marginTop: 20}}
@@ -123,9 +131,7 @@ const RegisterScreen = ({navigation}) => {
           <TextInput
             style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
             value={email}
             onChangeText={text => setEmail(text)}
           />
@@ -236,6 +242,9 @@ const RegisterScreen = ({navigation}) => {
         </View>
       </View>
     </ScrollView>
+    )}
+    </>
+    
   );
 };
 

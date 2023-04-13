@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  BackHandler
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,11 +14,20 @@ import AvatarImage from '../Components/Avatar/Avatar';
 import {RadioButton} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 
 const EditTask = () => {
   const [checked, setChecked] = useState('first');
-
+  useEffect(() => {
+    const handleBackPress = () => {
+      navigation.goBack();
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, [navigation]);
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>

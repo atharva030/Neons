@@ -1,15 +1,25 @@
-import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, BackHandler} from 'react-native';
 import React from 'react';
 import styles from '../Styles/ProfileStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { useEffect } from 'react';
 import {Avatar} from 'react-native-paper';
 
 import profileImage from '../../assets/Image/profile.jpg';
 import TeamMember from '../Components/Teams/TeamMember';
 import TeamNames from '../Components/Teams/TeamNames';
 
-const Profile = () => {
+const Profile = ({navigation}) => {
+  useEffect(() => {
+    const handleBackPress = () => {
+      navigation.goBack();
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, [navigation]);
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>

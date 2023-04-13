@@ -11,14 +11,24 @@ import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import TeamItems from '../Components/TeamItems/TeamItems';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback,BackHandler } from 'react-native';
+import { useEffect } from 'react';
 const HideKeyboard = ({children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
 );
 const AddTeamMember = ({navigation}) => {
-
+  useEffect(() => {
+    const handleBackPress = () => {
+      navigation.goBack();
+      return true;
+    };
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, [navigation]);
   return (
     <HideKeyboard>
     <ScrollView style={styles.Addfullscreen}>

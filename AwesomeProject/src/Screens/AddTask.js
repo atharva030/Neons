@@ -15,9 +15,9 @@ import Time from '../Components/Time/Time';
 import {RadioButton} from 'react-native-paper';
 import {Button, Avatar} from 'react-native-paper';
 import {useState} from 'react';
-import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {Keyboard, TouchableWithoutFeedback, BackHandler} from 'react-native';
 import {Modal, Portal, Provider} from 'react-native-paper';
-
+import {useEffect} from 'react';
 const HideKeyboard = ({children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -28,7 +28,17 @@ const AddTask = ({navigation}) => {
   const [checked, setChecked] = useState('first');
 
   const [visible, setVisible] = React.useState(false);
-
+  const handleBackPress = () => {
+    navigation.goBack();
+    return true;
+  };
+  useEffect(() => {
+   
+    BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
+    };
+  }, []);
   const showModal = () => {
     setVisible(true);
     setTimeout(() => {
@@ -99,7 +109,7 @@ const AddTask = ({navigation}) => {
                 </TouchableOpacity>
               </View>
               <View style={{marginTop: 10}}>
-                <Calender />
+                {/* <Calender /> */}
                 <Time />
                 <View style={{marginTop: 10}}>
                   <Text style={styles.labelStyle}>DESCRIPTION</Text>

@@ -1,10 +1,9 @@
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Alert} from 'react-native';
 import AddTask from './AddTask';
 import {BottomNavigation, Text} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-
 
 import HomeScreen from './HomeScreen';
 import RegisterScreen from './Register';
@@ -13,6 +12,7 @@ import RegisterScreen from './Register';
 import MemberSelect from './AddTeamMember';
 import AddTeamMember from './AddTeamMember';
 import ProfileScreen from './ProfileScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Navigation = () => {
   const [index, setIndex] = React.useState(0);
@@ -21,7 +21,7 @@ const Navigation = () => {
     {key: 'HomeScreen', title: 'Home'},
     {key: 'AddTask', title: 'Add Task'},
     {key: 'AddTeamMember', title: 'Add Team'},
-    {key: 'ProfileScreen', title: 'Profile'}
+    {key: 'ProfileScreen', title: 'Profile'},
   ]);
 
   const renderIcon = ({route, color, focused}) => {
@@ -40,13 +40,16 @@ const Navigation = () => {
       case 'HomeScreen':
         iconName = focused ? 'home' : 'home-outline';
         break;
-      
     }
 
     return (
       <Icon name={iconName} size={20} color={color} style={styles.iconStyle} />
     );
   };
+  useEffect(() => {
+    token = AsyncStorage.getItem('auth-token');
+    console.log(token);
+  }, []);
 
   const renderScene = BottomNavigation.SceneMap({
     AddTask: AddTask,
@@ -58,15 +61,21 @@ const Navigation = () => {
   });
 
   return (
-    <SafeAreaProvider>
-      <BottomNavigation
-        barStyle={styles.barStyle}
-        navigationState={{index, routes}}
-        onIndexChange={setIndex}
-        renderIcon={renderIcon}
-        renderScene={renderScene}
-      />
-    </SafeAreaProvider>
+    <>
+      {AsyncStorage.getItem('auth-token') ? (
+        <SafeAreaProvider>
+          <BottomNavigation
+            barStyle={styles.barStyle}
+            navigationState={{index, routes}}
+            onIndexChange={setIndex}
+            renderIcon={renderIcon}
+            renderScene={renderScene}
+          />
+        </SafeAreaProvider>
+      ) : (
+        Alert('Please Login First')
+      )}
+    </>
   );
 };
 

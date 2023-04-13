@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useDebugValue, useEffect } from 'react';
+import {View, Text, Image, TouchableOpacity, ScrollView,BackHandler,Alert, ToastAndroid} from 'react-native';
 import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Home';
 import moment from 'moment';
@@ -9,22 +9,51 @@ import {Modal, Portal, Button, Provider} from 'react-native-paper';
 
 import AddTask from './AddTask';
 
+
+const currentDate = moment().format('MMMM DD, YYYY');
 const HomeScreen = ({navigation}) => {
 
   let datesWhitelist = [
     {
       start: moment(),
-      end: moment().add(3, 'days'), // total 1 days enabled
+      end: moment().add(3, 'days'),
     },
   ];
-  // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
 
+  const handleBackPress = () => {
+    Alert.alert(
+      'Exit App',
+      'Exiting the Application?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            console.log('Cancel Pressed');
+          },
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => BackHandler.exitApp(),
+        },
+      ],
+      {
+        cancelable: false,
+      },
+    );
+    return true;
+  };
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+  
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <ScrollView>
-      <View style={styles.fullscreen}>
       
-
+      <View style={styles.fullscreen}>
         <View style={styles.outer}>
           <View style={styles.titleContainer}>
             <Text style={[styles.titleText]}>Task</Text>
@@ -34,7 +63,7 @@ const HomeScreen = ({navigation}) => {
           </View>
           <View style={styles.dayContainer}>
             <View style={styles.innerdayContainer}>
-              <Text style={[styles.dateText]}>May 01, 2023</Text>
+              <Text style={[styles.dateText]}>{currentDate}</Text>
               <Text style={[styles.titleText]}>Today</Text>
             </View>
             <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddTask')}>
@@ -51,7 +80,6 @@ const HomeScreen = ({navigation}) => {
             }}
             style={styles.calenderStyle}
             calendarHeaderStyle={{color: 'black'}}
-            // calendarColor={'#7743CE'}
             dateNumberStyle={{color: 'black'}}
             dateNameStyle={{color: '#8d98b0'}}
             highlightDateNumberStyle={{color: '#5a55ca'}}
@@ -59,9 +87,6 @@ const HomeScreen = ({navigation}) => {
             disabledDateNameStyle={{color: 'black'}}
             disabledDateNumberStyle={{color: 'black'}}
             datesWhitelist={datesWhitelist}
-            // datesBlacklist={datesBlacklist}
-            // iconLeft={require('./img/left-arrow.png')}
-            // iconRight={require('./img/right-arrow.png')}
             iconContainer={{flex: 0.1}}
           />
           <TaskItem

@@ -14,7 +14,6 @@ module.exports = {
   titleContainer: {
     height: 50,
     width: '100%',
-    // backgroundColor:"blue",
     marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -130,11 +129,6 @@ module.exports = {
   secondflex: {
     flexDirection: 'column',
   },
-  // flexIcon:{
-  //   flexDirection:"row",
-  //   justifyContent:"space-between",
-  //   marginTop:"10"
-  // }
   flexIcon: {
     marginTop: 25,
     flexDirection: 'row',
