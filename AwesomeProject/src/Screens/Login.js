@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
-  ToastAndroid,
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
@@ -42,11 +41,9 @@ const LoginScreen = ({navigation}) => {
       Password: {Password: true},
     });
   };
-
-  const handleLogin = async () => {
-    console.log(email, password);
-    setSpinner(true);
-    fetch('http://192.168.0.103:5000/api/auth/login', {
+  const handleLogin=()=>{
+    console.log(email,password)
+    fetch('http://192.168.0.155:5000/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,21 +53,16 @@ const LoginScreen = ({navigation}) => {
         password: password,
       }),
     })
-      .then(async response => {
-        res = await response.json();
-        console.log(res);
-        await AsyncStorage.setItem('auth-token', res.authToken);
-        auth = await AsyncStorage.getItem('auth-token');
-        console.log(auth);
-        setSpinner(false);
-        ToastAndroid.show('Logged in successfully!', ToastAndroid.SHORT);
-        navigation.navigate('NavigationScreen');
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
+    .then(response => {response.json()
+    console.log("Print")})
+    .then(response => {
+      navigation.navigate('NavigationScreen')
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+  
   // const [Password, setPassword] = useState('');
   return (
     <>
@@ -89,113 +81,112 @@ const LoginScreen = ({navigation}) => {
                 </TouchableOpacity>
               </View>
 
-              <View style={styles.loginSecondScreen}>
-                <Text
-                  style={{
-                    color: 'black',
-                    textAlign: 'center',
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 25,
-                  }}>
-                  Login with Email
-                </Text>
-                <View style={{marginTop: 10}}>
-                  <Text style={styles.emaillabelStyle}>Email</Text>
-                  <TextInput
-                    style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
-                    placeholder="google@gmail.com"
-                    // Making the Under line Transparent.
-                    placeholderTextColor="#8d98b0"
-                    //   underlineColorAndroid="transparent"
-                    value={email}
-                    onChangeText={setEmail}
-                  />
-                  {isFieldInError('date') &&
-                    getErrorsInField('date').map(errorMessage => (
-                      <Text>{errorMessage}</Text>
-                    ))}
-                </View>
-                <Text style={styles.labelStyle}>Password</Text>
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    value={password}
-                    onChangeText={setPassword}
-                    style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
-                    placeholder="your sec password"
-                    // Making the Under line Transparent.
-                    placeholderTextColor="#8d98b0"
-                    //   underlineColorAndroid="transparent"
-                    secureTextEntry={hidePassword}
-                  />
-                  <IconButton
-                    icon={hidePassword ? 'eye-off' : 'eye'}
-                    iconColor="black"
-                    size={20}
-                    color="black"
-                    onPress={() => {
-                      sethidePassword(!hidePassword);
-                    }}
-                  />
-                </View>
-                <Pressable onPress={() => navigation.navigate('EmailValid')}>
-                  <Text
-                    style={{
-                      color: 'red',
-                      textAlign: 'right',
-                      fontFamily: 'Poppins-Regular',
-                      fontSize: 13,
-                      marginTop: 10,
-                    }}>
-                    Forgot Password?
-                  </Text>
-                </Pressable>
-                <Button
-                  style={styles.submitBtn}
-                  mode="contained"
-                  onPress={handleLogin}>
-                  Log In
-                </Button>
+          <View style={styles.loginSecondScreen}>
+            <Text
+              style={{
+                color: 'black',
+                textAlign: 'center',
+                fontFamily: 'Poppins-Medium',
+                fontSize: 25,
+              }}>
+              Login with Email
+            </Text>
+            <View style={{ marginTop: 10 }}>
+              <Text style={styles.emaillabelStyle}>Email</Text>
+              <TextInput
+                style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+                placeholder="google@gmail.com"
+                // Making the Under line Transparent.
+                placeholderTextColor="#8d98b0"
+                //   underlineColorAndroid="transparent"
+                value={email}
+                onChangeText={setEmail}
+              />
+              {isFieldInError('date') && getErrorsInField('date').map(errorMessage => (
+                <Text>{errorMessage}</Text>
+              ))}
+            </View>
+            <Text style={styles.labelStyle}>Password</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <TextInput
+                value={password}
+                onChangeText={setPassword}
+                style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
+                placeholder="your sec password"
+                // Making the Under line Transparent.
+                placeholderTextColor="#8d98b0"
+                //   underlineColorAndroid="transparent"
+                secureTextEntry={hidePassword}
 
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      textAlign: 'center',
-                      fontFamily: 'Poppins-Regular',
-                      fontSize: 13,
-                      marginTop: 10,
-                    }}>
-                    Don't have an Account?
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Register')}>
-                    <Text
-                      style={{
-                        color: '#5a55ca',
-                        textDecorationLine: 'underline',
-                        marginTop: 10,
-                        fontFamily: 'Poppins-Medium',
-                        marginLeft: 5,
-                      }}>
-                      Create New
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+              />
+              <IconButton
+                icon={hidePassword ? 'eye-off' : 'eye'}
+                iconColor="black"
+                size={20}
+                color="black"
+                onPress={() => {
+                  sethidePassword(!hidePassword);
+                }}
+              />
+            </View>
+            <Pressable onPress={() => navigation.navigate('EmailValid')}>
+              <Text
+                style={{
+                  color: 'red',
+                  textAlign: 'right',
+                  fontFamily: 'Poppins-Regular',
+                  fontSize: 13,
+                  marginTop: 10,
+                }}>
+                Forgot Password?
+              </Text>
+            </Pressable>
+            <Button
+              style={styles.submitBtn}
+              mode="contained"
+              onPress={handleLogin}>
+              Log In
+            </Button>
+            
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text
+                style={{
+                  color: 'black',
+                  textAlign: 'center',
+                  fontFamily: 'Poppins-Regular',
+                  fontSize: 13,
+                  marginTop: 10,
+                }}>
+                Don't have an Account?
+              </Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
                 <Text
                   style={{
-                    color: 'black',
-                    textAlign: 'center',
-                    fontFamily: 'Poppins-Regular',
-                    fontSize: 13,
+                    color: '#5a55ca',
+                    textDecorationLine: 'underline',
                     marginTop: 10,
+                    fontFamily: 'Poppins-Medium',
+                    marginLeft: 5,
                   }}>
-                  Sign In/ Register with:
+                  Create New
                 </Text>
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                color: 'black',
+                textAlign: 'center',
+                fontFamily: 'Poppins-Regular',
+                fontSize: 13,
+                marginTop: 10,
+              }}>
+              Sign In/ Register with:
+            </Text>
 
                 <View
                   style={{
