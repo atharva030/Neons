@@ -10,6 +10,7 @@ import RegisterScreen from './Register';
 // import Welcome from './src/Screens/Welcome';
 // import Landing from './src/Screens/Landing';
 import MemberSelect from './AddTeamMember';
+import Team_scr1 from './Team_scr1';
 import AddTeamMember from './AddTeamMember';
 import ProfileScreen from './ProfileScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';

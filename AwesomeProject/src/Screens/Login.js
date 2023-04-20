@@ -144,7 +144,7 @@ const LoginScreen = ({navigation}) => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={handleLogin}>
+              onPress={navigation.navigate('NavigationScreen')}>
               Log In
             </Button>
             

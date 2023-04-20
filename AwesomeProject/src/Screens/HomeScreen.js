@@ -1,5 +1,5 @@
-import React, { useDebugValue, useEffect } from 'react';
-import {View, Text, Image, TouchableOpacity, ScrollView,BackHandler,Alert, ToastAndroid} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {View, Text, Image, TouchableOpacity, ScrollView} from 'react-native';
 import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Home';
 import moment from 'moment';
@@ -9,50 +9,35 @@ import {Modal, Portal, Button, Provider} from 'react-native-paper';
 
 import AddTask from './AddTask';
 
-
-const currentDate = moment().format('MMMM DD, YYYY');
 const HomeScreen = ({navigation}) => {
+
+  const [tasks, setTasks] = useState([])
+
+  const fetchData = () => {
+    fetch('https://raw.githubusercontent.com/hindavilande05/testAPI/master/tasks.json')
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        setTasks(data.tasks)
+      })
+  }
+console.log(tasks);
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   let datesWhitelist = [
     {
       start: moment(),
-      end: moment().add(3, 'days'),
+      end: moment().add(3, 'days'), // total 1 days enabled
     },
   ];
-
-  const handleBackPress = () => {
-    Alert.alert(
-      'Exit App',
-      'Exiting the Application?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => {
-            console.log('Cancel Pressed');
-          },
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-          onPress: () => BackHandler.exitApp(),
-        },
-      ],
-      {
-        cancelable: false,
-      },
-    );
-    return true;
-  };
-
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-  
-    return () => backHandler.remove();
-  }, []);
+  // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
 
   return (
     <ScrollView>
-      
       <View style={styles.fullscreen}>
         <View style={styles.outer}>
           <View style={styles.titleContainer}>
@@ -63,7 +48,7 @@ const HomeScreen = ({navigation}) => {
           </View>
           <View style={styles.dayContainer}>
             <View style={styles.innerdayContainer}>
-              <Text style={[styles.dateText]}>{currentDate}</Text>
+              <Text style={[styles.dateText]}>May 01, 2023</Text>
               <Text style={[styles.titleText]}>Today</Text>
             </View>
             <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('AddTask')}>
@@ -80,6 +65,7 @@ const HomeScreen = ({navigation}) => {
             }}
             style={styles.calenderStyle}
             calendarHeaderStyle={{color: 'black'}}
+            // calendarColor={'#7743CE'}
             dateNumberStyle={{color: 'black'}}
             dateNameStyle={{color: '#8d98b0'}}
             highlightDateNumberStyle={{color: '#5a55ca'}}
@@ -87,44 +73,27 @@ const HomeScreen = ({navigation}) => {
             disabledDateNameStyle={{color: 'black'}}
             disabledDateNumberStyle={{color: 'black'}}
             datesWhitelist={datesWhitelist}
+            // datesBlacklist={datesBlacklist}
+            // iconLeft={require('./img/left-arrow.png')}
+            // iconRight={require('./img/right-arrow.png')}
             iconContainer={{flex: 0.1}}
           />
-          <TaskItem
-            type="URGENT"
-            color="red"
-            desc="Website UI Design for $500"
-            persons="3"
-            title="New Web UI Design Project"
-            time="10-11 AM"
-            
-          />
-          <TaskItem
-            type="RUNNING"
-            color="#55d9a8"
-            desc="Website UI Design for $500"
-            persons="5"
-            title="New Web UI Design Project"
-            time="9-11 AM"
-          />
-          <TaskItem
-            type="ONGOING"
-            color="#ff0096"
-            desc="Website UI Design for $500"
-            persons="5"
-            title="New Web UI Design Project"
-            time="9-11 AM"
-          />
-          <TaskItem
-            type="STOPPED"
-            color="#0067fb"
-            desc="Website UI Design for $500"
-            persons="5"
-            title="New Web UI Design Project"
-            time="9-11 AM"
-          />
+    
+          {tasks.map((items)=>{
+            return(
+              <TaskItem
+                status={items.status}
+                desc={items.desc}
+                person={items.person}
+                title={items.title}
+                time={items.time}
+              />)
+            })}
+          
         </View>
       </View>
     </ScrollView>
+    
   );
 };
 
