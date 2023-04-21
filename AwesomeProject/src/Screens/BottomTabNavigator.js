@@ -1,14 +1,15 @@
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import Colors from '../../constant/Colors';
 import AddTask from './AddTask';
 import AddTeamMember from './AddTeamMember';
 import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
+import Teamlist from './Teamlist';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -16,11 +17,11 @@ const Stack = createNativeStackNavigator();
 function BottomTabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
+      screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: Colors.primary,
 
-        tabBarIcon: ({color, size, focused}) => {
+        tabBarIcon: ({ color, size, focused }) => {
           let iconName;
 
           if (route.name == 'Home') {
@@ -42,7 +43,7 @@ function BottomTabNavigator() {
           );
         },
       })}>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Teamlist" component={Teamlist} />
       <Tab.Screen name="AddTask" component={TaskStack} />
       <Tab.Screen name="Add TeamMember" component={AddTeamMember} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
@@ -56,12 +57,17 @@ function TaskStack() {
       <Stack.Screen
         name="AddTask"
         component={AddTask}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Teamlist"
+        component={Teamlist}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

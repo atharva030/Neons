@@ -1,16 +1,18 @@
+import { Dimensions } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
-    height: '100%',
+    height: windowHeight,
   },
   flexBox: {
     margin: 15,
     flexDirection: 'columns',
   },
   outer: {
-    margin: 25,
+    margin: 20
   },
-
   titleContainer: {
     height: 50,
     width: '100%',
@@ -24,7 +26,12 @@ module.exports = {
     width: 35,
     borderRadius: 1000,
   },
-
+  fabContainer: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  }
+  ,
   titleText: {
     width: '40%',
     height: 50,
@@ -38,10 +45,10 @@ module.exports = {
     width: '50%',
     height: 50,
     maxWidth: 300,
-    fontSize: 23,
+    fontSize: 27,
     borderRadius: 30,
-    fontFamily: 'Poppins-ExtraBold',
-    color: 'black',
+    fontFamily: 'Poppins-SemiBold',
+    color: '#5a55ca',
   },
   dayContainer: {
     height: 50,
@@ -100,7 +107,7 @@ module.exports = {
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
-    marginLeft: 10,
+    marginLeft: 30,
     marginBottom: 10,
   },
   taskFlex: {
@@ -127,10 +134,14 @@ module.exports = {
   taskText: {
     color: '#8d98b0',
   },
-  taskBigText: {
+  personText: {
+    color: '#8d98b0',
+    marginLeft: 10
+  },
+  teamBigText: {
     color: 'black',
-    fontSize: 16,
-    fontFamily: 'Poppins-ExtraBold',
+    fontSize: 20,
+    fontFamily: 'Poppins-Regular',
   },
   secondSubFlex: {
     flexDirection: 'row',
