@@ -49,8 +49,6 @@ const AddTask = ({navigation}) => {
 
   return (
     <HideKeyboard>
-      <ScrollView>
-        <View style={styles.Addfullscreen}>
           <Provider>
             <Portal>
               <Modal
@@ -69,15 +67,8 @@ const AddTask = ({navigation}) => {
               </Modal>
             </Portal>
 
-            <View style={styles.Addsubscreen}>
-              <TouchableOpacity
-                style={{flexDirection: 'row', marginTop: 20}}
-                onPress={() => navigation.goBack()}>
-                <Icon name="chevron-back" size={30} color="white" />
-                <Text style={styles.AddtitleText}>Add Task</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.addSecondScreen}>
+        
+            <View style={styles.modalSecondScreen}>
               <View style={{marginTop: 10}}>
                 <Text style={styles.labelStyle}>TASK NAME</Text>
                 <TextInput
@@ -203,17 +194,10 @@ const AddTask = ({navigation}) => {
                     </Pressable>
                   </View>
                 </View>
-                <Button
-                  style={styles.submitBtn}
-                  mode="contained"
-                  onPress={showModal}>
-                  Done
-                </Button>
+               
               </View>
             </View>
           </Provider>
-        </View>
-      </ScrollView>
     </HideKeyboard>
   );
 };

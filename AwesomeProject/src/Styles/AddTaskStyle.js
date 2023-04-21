@@ -18,8 +18,15 @@ module.exports = {
     marginBottom: 20,
   },
 
+ 
+  modalSecondScreen: {
+    backgroundColor: 'white',
+    // padding: 30,
+    marginLeft: 21,
+    marginRight: 21,
+    flexDirection: 'column',
+  },
   addSecondScreen: {
-    flex: 2,
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,

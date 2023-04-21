@@ -36,23 +36,7 @@ const Team_scr1 = ({navigation}) => {
           <Provider>
 
 
-          <Portal>
-              <Modal
-                visible={visible}
-                onDismiss={hideModal}
-                contentContainerStyle={styles.containerStyle}>
-                <Icon
-                  name="checkmark-circle-outline"
-                  size={90}
-                  color="#008000"
-                />
-                <Text style={styles.modalTital}>Congrats !</Text>
-                <Text style={styles.modalSubtital}>
-                  You successfully created a task in your account.
-                </Text>
-              </Modal>
-            </Portal>
-
+         
 
 
             <Portal>

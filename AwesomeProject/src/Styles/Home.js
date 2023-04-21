@@ -50,7 +50,7 @@ module.exports = {
   innerdayContainer: {
     height: 50,
     width: '65%',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   dateText: {
@@ -92,17 +92,6 @@ module.exports = {
   },
   //TaskItem Styling Starts
 
-  teamFlex: {
-    width: 300,
-    height: 130,
-    flexDirection: 'column',
-    borderColor: 'black',
-    backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 10,
-    marginLeft: 10,
-    marginBottom: 10,
-  },
   taskFlex: {
     width: 300,
     height: 170,
@@ -111,7 +100,7 @@ module.exports = {
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
-    marginLeft: 10,
+    marginLeft: 30,
     marginBottom: 10,
   },
   hairline: {

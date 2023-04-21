@@ -4,7 +4,7 @@ const windowHeight = Dimensions.get('window').height;
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
-    height: windowHeight,
+    height: '100%',
   },
   flexBox: {
     margin: 15,

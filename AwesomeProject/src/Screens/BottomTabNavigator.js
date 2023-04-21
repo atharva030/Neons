@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import { StyleSheet } from 'react-native';

@@ -4,12 +4,22 @@ import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
-import { FAB, Provider, DefaultTheme, Portal, Button } from 'react-native-paper';
+import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'react-native-paper';
+import styles1 from '../Styles/AddTaskStyle';
 const currentDate = moment().format('MMMM DD, YYYY');
 const Teamlist = ({ navigation }) => {
     const [tasks, setTasks] = useState([])
-    const [modalVisible, setModalVisible] = useState(false);
     const [open, setOpen] = useState(false);
+    const [visible, setVisible] = React.useState(false);
+
+    const showModal = () => setVisible(true);
+    const hideModal = () => setVisible(false);
+    const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
+
+    const handleSubmit = () => {
+        hideModal();
+    };
+
 
     const fetchData = () => {
         fetch('https://raw.githubusercontent.com/hindavilande05/testAPI/master/team.json')
@@ -19,8 +29,8 @@ const Teamlist = ({ navigation }) => {
             .then(data => {
                 setTasks(data.teams)
             })
+        console.log(tasks);
     }
-    console.log(tasks);
 
     useEffect(() => {
         fetchData()
@@ -31,6 +41,36 @@ const Teamlist = ({ navigation }) => {
     return (
         <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
             <ScrollView>
+                <Portal>
+                    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+                        <View style={{ marginTop: 10 }}>
+                            <Text style={styles1.emaillabelStyle}>Enter Team Name</Text>
+                            <TextInput
+                                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                                placeholder="Team Name"
+                                placeholderTextColor="#8d98b0"
+                            />
+                        </View>
+                        <View style={{ marginTop: 10 }}>
+                            <Text style={styles1.emaillabelStyle}>Enter Team Description</Text>
+                            <TextInput
+                                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                                placeholder="Team Description"
+                                placeholderTextColor="#8d98b0"
+                            />
+                        </View>
+                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
+                            <Button icon="close" mode="contained" onPress={hideModal}>
+                                Close
+                            </Button>
+                            <Button icon="check" mode="contained" onPress={handleSubmit} style={{ marginLeft: 5 }}>
+                                Create Team
+                            </Button>
+                        </View>
+                    </Modal>
+                </Portal>
+
+
                 <View style={styles.fullscreen}>
                     <View style={styles.outer}>
                         <View style={styles.titleContainer}>
@@ -76,14 +116,15 @@ const Teamlist = ({ navigation }) => {
                             {
                                 icon: 'account-plus',
                                 label: 'New Team',
-                                onPress: () => setModalVisible(true),
+                                onPress: () => showModal()
                             },
                         ]}
                         onStateChange={onStateChange}
                         onPress={() => {
-                            if (open) {
-                                // do something if the speed dial is open
-                            }
+
+                            // if (open) {
+                            //     // do something if the speed dial is open
+                            // }
                         }}
                         overlayColor='transparent'
                     />
