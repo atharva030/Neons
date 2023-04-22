@@ -3,6 +3,7 @@ module.exports = {
     backgroundColor: '#f0f4fd',
     height: '100%',
   },
+ 
   flexBox: {
     margin: 15,
     flexDirection: 'columns',

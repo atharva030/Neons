@@ -43,7 +43,7 @@ function BottomTabNavigator() {
           );
         },
       })}>
-      <Tab.Screen name="Teamlist" component={Teamlist} />
+      <Tab.Screen name="HomeScreen" component={HomeScreen} />
       <Tab.Screen name="AddTask" component={TaskStack} />
       <Tab.Screen name="Teams" component={Team_scr1} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
@@ -65,8 +65,8 @@ function TaskStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Teamlist"
-        component={Teamlist}
+        name="HomeScreen"
+        component={HomeScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

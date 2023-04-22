@@ -75,10 +75,9 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.innerdayContainer}>
                 <Text style={[styles.dateText]}>{currentDate}</Text>
               </View>
-                <TouchableOpacity style={styles.addButton} onPress={showModal}>
+              <TouchableOpacity style={styles.addButton} onPress={showModal}>
                 <Text style={styles.addText}>+ Add Task</Text>
               </TouchableOpacity>
-            
             </View>
             <CalendarStrip
               onDateSelected={(date) => console.log(date)}
@@ -131,6 +130,7 @@ const HomeScreen = ({ navigation }) => {
         <Portal>
           <FAB.Group
             open={open}
+            fabStyle={styles.fab}
             visible
             icon={open ? 'chevron-down' : 'plus'}
             actions={[
