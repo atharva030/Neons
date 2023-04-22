@@ -5,7 +5,7 @@ import AddTask from './AddTask';
 import {BottomNavigation, Text} from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-import HomeScreen from './HomeScreen';
+import HomeScreen from './TaskList';
 import RegisterScreen from './Register';
 // import Welcome from './src/Screens/Welcome';
 // import Landing from './src/Screens/Landing';

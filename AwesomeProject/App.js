@@ -13,7 +13,7 @@ import OtpValid from './src/Components/ForgotPassword/OtpValid';
 import Newpassword from './src/Components/ForgotPassword/Newpassword';
 import ProfileScreen from './src/Screens/ProfileScreen';
 import AddTask from './src/Screens/AddTask';
-import HomeScreen from './src/Screens/HomeScreen';
+import HomeScreen from './src/Screens/TaskList';
 import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import SplashScreen from 'react-native-splash-screen';
 

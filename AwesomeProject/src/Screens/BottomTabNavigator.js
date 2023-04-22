@@ -7,9 +7,9 @@ import Colors from '../../constant/Colors';
 import AddTask from './AddTask';
 import AddTeamMember from './AddTeamMember';
 import Team_scr1 from './Team_scr1';
-import HomeScreen from './HomeScreen';
+import HomeScreen from './TaskList';
 import ProfileScreen from './ProfileScreen';
-import Teamlist from './Teamlist';
+import Teamlist from './Homescreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,9 +43,9 @@ function BottomTabNavigator() {
           );
         },
       })}>
-      <Tab.Screen name="HomeScreen" component={HomeScreen} />
-      <Tab.Screen name="AddTask" component={TaskStack} />
-      <Tab.Screen name="Teams" component={Team_scr1} />
+      <Tab.Screen name="Home" component={Teamlist} />
+      <Tab.Screen name="AfterHome" component={HomeScreen} />
+      {/* <Tab.Screen name="Teams" component={Team_scr1} /> */}
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
@@ -60,13 +60,13 @@ function TaskStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Home"
+        name="HomeScreen"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
+        name="Teamlist"
+        component={Teamlist}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
