@@ -16,6 +16,7 @@ import AddTask from './src/Screens/AddTask';
 import HomeScreen from './src/Screens/TaskList';
 import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import SplashScreen from 'react-native-splash-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +26,7 @@ const App = () => {
       SplashScreen.hide();
     }, 100);
   }, []);
-  
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, RefreshControl, ScrollView } from 'react-native';
 import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Home';
 import styles1 from '../Styles/AddTaskStyle';
@@ -9,10 +9,16 @@ import TaskItem from '../Components/Items/TaskItem';
 import { Modal, Button } from 'react-native-paper';
 import { FAB, Provider, DefaultTheme, Portal, TextInput } from 'react-native-paper';
 import AddTask from './AddTask';
+import TeamMember from '../Components/Teams/TeamMember';
 const currentDate = moment().format('MMMM DD, YYYY');
+
 const HomeScreen = ({ navigation }) => {
 
-  const [visible, setVisible] = React.useState(false);
+  const [selectedIds, setSelectedIds] = useState([]);
+
+  const [memberTeam, setmemberTeam] = useState(false)
+  const [resultTeamMemberData, setresultTeamMemberData] = useState("")
+  const [visible, setVisible] = useState(false);
   const [tasks, setTasks] = useState([])
   const [state, setState] = useState({ open: false });
   const onStateChange = ({ open }) => setState({ open });
@@ -20,11 +26,39 @@ const HomeScreen = ({ navigation }) => {
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const containerStyle = { backgroundColor: 'white', paddingTop: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 500 };
+  const containerMemberStyle = { backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 10, borderRadius: 20, width: 330, marginLeft: 10, height: 600 };
+  const containerStyle = { backgroundColor: 'white', paddingTop: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 370 };
 
   const handleSubmit = () => {
     hideModal();
+    handleAddMember();
   };
+
+  const fetchMembers = async () => {
+    // console.log("Hey")
+    fetch('http://192.168.0.115:8888/api/members/getuser', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        setresultTeamMemberData(data)
+
+        console.log(resultTeamMemberData); // this will log the array of objects returned by the API
+        // you can perform any additional logic here based on the returned data
+        //   navigation.navigate('NavigationScreen');
+        // for (let i = 0; i < resultTeamData.length; i++) {
+        //     const membersSize = resultTeamData[i].members.length;
+        //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
+        // }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
 
   const fetchData = () => {
     fetch('https://raw.githubusercontent.com/hindavilande05/testAPI/master/tasks.json')
@@ -35,10 +69,41 @@ const HomeScreen = ({ navigation }) => {
         setTasks(data.tasks)
       })
   }
-  console.log(tasks);
+  // console.log("Final array",role)
+  //This is sending the Members ID to the Backend 
+  const handleAddMember = async() => {
+    fetch("http://192.168.0.115:8888/api/team/64443be2840258d5b70397b6", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4MjQyMjY1Mn0.HSdE9BWdLaBk5nydzXeGoEDRCznGqL3re_IxDctwGHE"
+      },
+      body: JSON.stringify({
+        selectedIds: selectedIds,
+      }),
+    })
+      .then((response) => {
+        console.log("Response status code:", response.status);
+        return response.text();
+      })
+      .then((text) => {
+        console.log("Response body text:", text);
+        try {
+          const data = JSON.parse(text);
+          console.log(data);
+        } catch (err) {
+          console.log("Error parsing JSON:", err.message);
+        }
+      })
+      .catch((err) => {
+        console.log("Error: " + err.message);
+      });
+  };
+
 
   useEffect(() => {
-    fetchData()
+    // fetchData()
+    fetchMembers()
   }, [])
 
   let datesWhitelist = [
@@ -53,8 +118,40 @@ const HomeScreen = ({ navigation }) => {
     <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
       <ScrollView>
         <Portal>
-          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
+          <Modal visible={memberTeam} onDismiss={() => setmemberTeam(false)} contentContainerStyle={containerMemberStyle} >
+            <ScrollView>
+              {resultTeamMemberData.length === 0 ? (
+                (
 
+                  <View style={{ width: 360, height: 500, display: 'flex', alignItems: 'center' }}>
+                    <Text style={{ color: 'grey', fontSize: 20, padding: 20, marginTop: 140, textAlign: 'center', letterSpacing: 1.5 }}>You don't have Teams to Display</Text>
+                  </View>
+                )
+              ) : (
+                resultTeamMemberData.map((items) => (
+                  <TeamMember
+                    name={items.name}
+                    designation={items.designation}
+                    id={items._id}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
+                  />
+                ))
+              )}
+
+            </ScrollView>
+            <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginTop: 15, marginBottom: 10 }}>
+              <Button icon="close" mode="contained" onPress={() => setmemberTeam(false)} style={{ marginLeft: 25 }}>
+                Close
+              </Button>
+              <Button icon="check" mode="contained" onPress={handleSubmit} style={{ marginLeft: 5 }}>
+                Add Member
+              </Button>
+            </View>
+          </Modal>
+        </Portal>
+        <Portal>
+          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
             <AddTask />
             <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginBottom: 15 }}>
               <Button icon="close" mode="contained" onPress={hideModal} style={{ marginLeft: 25 }}>
@@ -75,9 +172,9 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.innerdayContainer}>
                 <Text style={[styles.dateText]}>{currentDate}</Text>
               </View>
-              <TouchableOpacity style={styles.addButton} onPress={showModal}>
+              {/* <TouchableOpacity style={styles.addButton} onPress={showModal}>
                 <Text style={styles.addText}>+ Add Task</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <CalendarStrip
               onDateSelected={(date) => console.log(date)}
@@ -138,6 +235,11 @@ const HomeScreen = ({ navigation }) => {
                 icon: 'plus',
                 label: 'Add Task',
                 onPress: () => showModal(),
+              },
+              {
+                icon: 'plus',
+                label: 'Add Team Members',
+                onPress: () => setmemberTeam(true),
               },
             ]}
             onStateChange={onStateChange}

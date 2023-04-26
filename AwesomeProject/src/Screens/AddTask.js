@@ -79,10 +79,10 @@ const AddTask = ({navigation}) => {
                   //   underlineColorAndroid="transparent"
                 />
               </View>
-              <View style={{marginTop: 20}}>
+              {/* <View style={{marginTop: 20}}>
                 <Text style={styles.labelStyle}>TEAM MEMBER</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
+              </View> */}
+              {/* <View style={{flexDirection: 'row'}}>
                 <AvatarImage text="Hindavi" />
                 <AvatarImage text="John" />
                 <AvatarImage text="Atharva" />
@@ -98,7 +98,7 @@ const AddTask = ({navigation}) => {
                     label="+"
                   />
                 </TouchableOpacity>
-              </View>
+              </View> */}
               <View style={{marginTop: 10}}>
                 {/* <Calender /> */}
                 <Time />

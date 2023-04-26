@@ -1,38 +1,88 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
 import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'react-native-paper';
 import styles1 from '../Styles/AddTaskStyle';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const currentDate = moment().format('MMMM DD, YYYY');
 const Teamlist = ({ navigation }) => {
+    const [teamName, setteamName] = useState('');
+    const [teamDesc, setteamDesc] = useState('');
 
-    const [tasks, setTasks] = useState([])
+    const [refreshing, setRefreshing] = useState(false);
+    const [resultTeamData, setresultTeamData] = useState('')
     const [open, setOpen] = useState(false);
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = useState(false);
+
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
-    const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
 
-    const handleSubmit = () => {
-        hideModal();
+    const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
+    const onRefresh = () => {
+        setRefreshing(true);
+        fetchTeam()
+        setRefreshing(false);
     };
 
-    const fetchData = () => {
-        fetch('https://raw.githubusercontent.com/hindavilande05/testAPI/master/team.json')
-            .then(response => {
-                return response.json()
+    const addTeam = async () => {
+        fetch('http://192.168.0.115:8888/api/team/createteam', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4MjQyMjY1Mn0.HSdE9BWdLaBk5nydzXeGoEDRCznGqL3re_IxDctwGHE"
+                //    await AsyncStorage.getItem('auth-token'),
+            },
+            body: JSON.stringify({
+                teamName: teamName,
+                teamDesc: teamDesc,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                hideModal()
+                setteamName('')
+                setteamDesc('')
+                fetchTeam()
             })
+            .catch((err) => {
+                console.log(err);
+            });
+
+    }
+
+    const fetchTeam = async () => {
+        // console.log("Hey")
+        fetch('http://192.168.0.115:8888/api/team/fetchallteams', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4MjQyMjY1Mn0.HSdE9BWdLaBk5nydzXeGoEDRCznGqL3re_IxDctwGHE",
+            },
+        })
+            .then(response => response.json())
             .then(data => {
-                setTasks(data.teams)
+                setresultTeamData(data)
+
+                // console.log(resultTeamData); // this will log the array of objects returned by the API
+                // you can perform any additional logic here based on the returned data
+                //   navigation.navigate('NavigationScreen');
+                // for (let i = 0; i < resultTeamData.length; i++) {
+                //     const membersSize = resultTeamData[i].members.length;
+                //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
+                // }
             })
-        console.log(tasks);
+            .catch(err => {
+                console.log(err);
+            });
+
     }
 
     useEffect(() => {
-        fetchData()
+        fetchTeam()
     }, [])
 
     const onStateChange = ({ open }) => setOpen(open);
@@ -48,6 +98,8 @@ const Teamlist = ({ navigation }) => {
                                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
                                 placeholder="Team Name"
                                 placeholderTextColor="#8d98b0"
+                                value={teamName}
+                                onChangeText={setteamName}
                             />
                         </View>
                         <View style={{ marginTop: 10 }}>
@@ -56,13 +108,15 @@ const Teamlist = ({ navigation }) => {
                                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
                                 placeholder="Team Description"
                                 placeholderTextColor="#8d98b0"
+                                value={teamDesc}
+                                onChangeText={setteamDesc}
                             />
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
                             <Button icon="close" mode="contained" onPress={hideModal}>
                                 Close
                             </Button>
-                            <Button icon="check" mode="contained" onPress={handleSubmit} style={{ marginLeft: 5 }}>
+                            <Button icon="check" mode="contained" onPress={addTeam} style={{ marginLeft: 5 }}>
                                 Create Team
                             </Button>
                         </View>
@@ -85,7 +139,7 @@ const Teamlist = ({ navigation }) => {
                         </View>
                     </View>
 
-                    {tasks.length === 0 ? (
+                    {resultTeamData.length === 0 ? (
                         (
 
                             <View style={{ width: 360, height: 500, display: 'flex', alignItems: 'center' }}>
@@ -96,11 +150,14 @@ const Teamlist = ({ navigation }) => {
                             </View>
                         )
                     ) : (
-                        tasks.map((items) => (
+                        resultTeamData.map((items) => (
                             <TeamItem
-                                desc={items.desc}
-                                person={items.people}
-                                title={items.name}
+                                desc={items.teamDesc}
+                                person={items.members.length}
+                                title={items.teamName}
+                                refreshControl={
+                                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                                }
                             />
                         ))
                     )}

@@ -28,7 +28,7 @@ function BottomTabNavigator() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name == 'AddTask') {
             iconName = focused ? 'plus-circle' : 'plus-circle-outline';
-          } else if (route.name == 'Teams') {
+          } else if (route.name == 'About') {
             iconName = focused ? 'account-plus' : 'account-plus-outline';
           } else if (route.name == 'Profile') {
             iconName = focused ? 'account-circle' : 'account-circle-outline';
@@ -44,7 +44,7 @@ function BottomTabNavigator() {
         },
       })}>
       <Tab.Screen name="Home" component={Teamlist} />
-      <Tab.Screen name="AfterHome" component={HomeScreen} />
+      <Tab.Screen name="About" component={HomeScreen} />
       {/* <Tab.Screen name="Teams" component={Team_scr1} /> */}
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>

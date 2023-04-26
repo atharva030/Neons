@@ -3,7 +3,7 @@ module.exports = {
     backgroundColor: '#f0f4fd',
     height: '100%',
   },
- 
+
   flexBox: {
     margin: 15,
     flexDirection: 'columns',
@@ -45,12 +45,12 @@ module.exports = {
     color: 'black',
   },
   dayContainer: {
-    height: 50,
+    height: 20,
     flexDirection: 'row',
   },
   innerdayContainer: {
-    height: 50,
-    width: '65%',
+    height: 30,
+    width: '30%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

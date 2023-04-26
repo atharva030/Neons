@@ -34,6 +34,9 @@ module.exports = {
     // paddingTop: 7,
     flexDirection: 'column',
   },
+  error:{
+    color:"red"
+  },
   AddtitleText: {
     height: 50,
     maxWidth: 300,
