@@ -7,23 +7,23 @@ import {
 } from 'react-native';
 
 import React from 'react';
-import {useState} from 'react';
-import {FAB, Portal, Provider, TextInput} from 'react-native-paper';
+import { useState } from 'react';
+import { FAB, Portal, Provider, TextInput } from 'react-native-paper';
 import styles from '../Styles/Teams1';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import TeamNames from '../Components/Teams/TeamNames';
 
-const Team_scr1 = ({navigation}) => {
-  const [state, setState] = useState({open: false});
-  const onStateChange = ({open}) => setState({open});
-  const {open} = state;
+const Team_scr1 = ({ navigation }) => {
+  const [state, setState] = useState({ open: false });
+  const onStateChange = ({ open }) => setState({ open });
+  const { open } = state;
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>
         <View style={styles.Addsubscreen}>
           <TouchableOpacity
-            style={{flexDirection: 'row', marginTop: 20}}
+            style={{ flexDirection: 'row', marginTop: 20 }}
             onPress={() => navigation.goBack()}>
             <Icon name="chevron-back" size={30} color="white" />
             <Text style={styles.AddtitleText}>Teams</Text>
@@ -34,11 +34,6 @@ const Team_scr1 = ({navigation}) => {
           {/* Floting add icon   */}
 
           <Provider>
-
-
-         
-
-
             <Portal>
               <FAB.Group
                 open={open}

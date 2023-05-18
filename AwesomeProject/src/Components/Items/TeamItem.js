@@ -6,11 +6,14 @@ import { useState, useEffect } from 'react';
 import { Button } from 'react-native-paper';
 
 const TeamItem = props => {
-
-    const [statusColor, setStatusColor] = useState("");
+    const appFun = (id) => {
+        console.log(id)
+        props.setteamId(id)
+    }
+    // const [statusColor, setStatusColor] = useState("");
     status = props.status;
     return (
-        <TouchableOpacity style={styles.teamFlex}>
+        <TouchableOpacity style={styles.teamFlex} onPress={() => appFun(props.items._id)}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             </View>
             <View style={styles.mainSecondFlex}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, RefreshControl, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Home';
 import styles1 from '../Styles/AddTaskStyle';
@@ -18,13 +18,16 @@ const HomeScreen = ({ navigation }) => {
 
   const [memberTeam, setmemberTeam] = useState(false)
   const [resultTeamMemberData, setresultTeamMemberData] = useState("")
+  const [teamMembers, setteamMembers] = useState("")
   const [visible, setVisible] = useState(false);
   const [tasks, setTasks] = useState([])
   const [state, setState] = useState({ open: false });
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
 
-  const showModal = () => setVisible(true);
+  const showModal = () => {
+    setVisible(true)
+  };
   const hideModal = () => setVisible(false);
   const containerMemberStyle = { backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 10, borderRadius: 20, width: 330, marginLeft: 10, height: 600 };
   const containerStyle = { backgroundColor: 'white', paddingTop: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 370 };
@@ -36,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.0.115:8888/api/members/getuser', {
+    fetch('http://10.70.15.105:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -47,6 +50,33 @@ const HomeScreen = ({ navigation }) => {
         setresultTeamMemberData(data)
 
         console.log(resultTeamMemberData); // this will log the array of objects returned by the API
+        // you can perform any additional logic here based on the returned data
+        //   navigation.navigate('NavigationScreen');
+        // for (let i = 0; i < resultTeamData.length; i++) {
+        //     const membersSize = resultTeamData[i].members.length;
+        //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
+        // }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
+  const fetchTeamMembers = async () => {
+    // console.log("Hey")
+    fetch('http://10.70.15.105:8888/api/team/64443be2840258d5b70397b6/getmembers', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4MjQyMjY1Mn0.HSdE9BWdLaBk5nydzXeGoEDRCznGqL3re_IxDctwGHE"
+
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        setteamMembers(data)
+
+        console.log(teamMembers); // this will log the array of objects returned by the API
         // you can perform any additional logic here based on the returned data
         //   navigation.navigate('NavigationScreen');
         // for (let i = 0; i < resultTeamData.length; i++) {
@@ -71,8 +101,8 @@ const HomeScreen = ({ navigation }) => {
   }
   // console.log("Final array",role)
   //This is sending the Members ID to the Backend 
-  const handleAddMember = async() => {
-    fetch("http://192.168.0.115:8888/api/team/64443be2840258d5b70397b6", {
+  const handleAddMember = async () => {
+    fetch("http://10.70.15.105:8888/api/team/64443be2840258d5b70397b6", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -130,7 +160,6 @@ const HomeScreen = ({ navigation }) => {
               ) : (
                 resultTeamMemberData.map((items) => (
                   <TeamMember
-                    name={items.name}
                     designation={items.designation}
                     id={items._id}
                     selectedIds={selectedIds}
@@ -155,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
             <AddTask />
             <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginBottom: 15 }}>
               <Button icon="close" mode="contained" onPress={hideModal} style={{ marginLeft: 25 }}>
-                Close
+                Close 
               </Button>
               <Button icon="check" mode="contained" onPress={handleSubmit} style={{ marginLeft: 5 }}>
                 Create Task
@@ -172,9 +201,9 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.innerdayContainer}>
                 <Text style={[styles.dateText]}>{currentDate}</Text>
               </View>
-              {/* <TouchableOpacity style={styles.addButton} onPress={showModal}>
-                <Text style={styles.addText}>+ Add Task</Text>
-              </TouchableOpacity> */}
+              <TouchableOpacity style={styles.addButton} onPress={fetchTeamMembers}>
+                <Text style={styles.addText}>View Team</Text>
+              </TouchableOpacity>
             </View>
             <CalendarStrip
               onDateSelected={(date) => console.log(date)}

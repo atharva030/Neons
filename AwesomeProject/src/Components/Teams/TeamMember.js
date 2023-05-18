@@ -32,10 +32,10 @@ const TeamMember = (props) => {
             onPress={handlePress}
             style={[
                 styles.chip,
-                props.selectedIds.includes(props.id) && styles.chipPressed
+                // props.selectedIds.includes(props.id) && styles.chipPressed
             ]}
         >
-            <View style={{ display: 'flex', flexDirection: 'row', paddingTop: 20 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', paddingTop: 10 }}>
                 <Avatar.Image
                     size={40}
                     source={require('../../../assets/Image/profile1.png')}
@@ -51,8 +51,8 @@ const TeamMember = (props) => {
                     <Text style={{
                         fontFamily: "Poppins-Regular",
                         fontSize: 16,
-                        color: '#0b204c',
-                    }}>{props.name} </Text>
+                        color: 'black',
+                    }}>Atharva  </Text>
                     <Text style={{
                         fontFamily: "Poppins-ExtraLight",
                         fontSize: 12,

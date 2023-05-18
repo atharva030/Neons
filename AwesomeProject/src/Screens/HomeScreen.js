@@ -6,7 +6,7 @@ import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
 import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'react-native-paper';
 import styles1 from '../Styles/AddTaskStyle';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 const currentDate = moment().format('MMMM DD, YYYY');
 const Teamlist = ({ navigation }) => {
     const [teamName, setteamName] = useState('');
@@ -17,6 +17,7 @@ const Teamlist = ({ navigation }) => {
     const [open, setOpen] = useState(false);
     const [visible, setVisible] = useState(false);
 
+    const [teamId, setteamId] = useState("")
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
 
@@ -26,9 +27,8 @@ const Teamlist = ({ navigation }) => {
         fetchTeam()
         setRefreshing(false);
     };
-
     const addTeam = async () => {
-        fetch('http://192.168.0.115:8888/api/team/createteam', {
+        fetch('http://10.70.15.105:8888/api/team/createteam', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const Teamlist = ({ navigation }) => {
 
     const fetchTeam = async () => {
         // console.log("Hey")
-        fetch('http://192.168.0.115:8888/api/team/fetchallteams', {
+        fetch('http://10.70.15.105:8888/api/team/fetchallteams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -153,6 +153,9 @@ const Teamlist = ({ navigation }) => {
                         resultTeamData.map((items) => (
                             <TeamItem
                                 desc={items.teamDesc}
+                                setteamId={setteamId}
+                                teamId={teamId}
+                                items={items}
                                 person={items.members.length}
                                 title={items.teamName}
                                 refreshControl={

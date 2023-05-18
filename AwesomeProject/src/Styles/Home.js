@@ -45,12 +45,13 @@ module.exports = {
     color: 'black',
   },
   dayContainer: {
-    height: 20,
+    height: 50,
+    // justifyContent:'space-evenly',
     flexDirection: 'row',
   },
   innerdayContainer: {
-    height: 30,
-    width: '30%',
+    height: 50,
+    width: '65%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
