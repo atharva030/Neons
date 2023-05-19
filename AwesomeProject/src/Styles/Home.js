@@ -142,8 +142,10 @@ module.exports = {
   },
   flexIcon: {
     marginTop: 25,
+    display:"flex",
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'center',
+    alignItems:'center'
   },
   iconStyle: {
     flexDirection: 'row',

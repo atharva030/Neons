@@ -28,11 +28,11 @@ const Teamlist = ({ navigation }) => {
         setRefreshing(false);
     };
     const addTeam = async () => {
-        fetch('http://10.70.15.105:8888/api/team/createteam', {
+        fetch('http://192.168.0.133:8888/api/team/createteam', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4MjQyMjY1Mn0.HSdE9BWdLaBk5nydzXeGoEDRCznGqL3re_IxDctwGHE"
+                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og"
                 //    await AsyncStorage.getItem('auth-token'),
             },
             body: JSON.stringify({
@@ -56,11 +56,11 @@ const Teamlist = ({ navigation }) => {
 
     const fetchTeam = async () => {
         // console.log("Hey")
-        fetch('http://10.70.15.105:8888/api/team/fetchallteams', {
+        fetch('http://192.168.0.133:8888/api/team/fetchallteams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4MjQyMjY1Mn0.HSdE9BWdLaBk5nydzXeGoEDRCznGqL3re_IxDctwGHE",
+                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og",
             },
         })
             .then(response => response.json())

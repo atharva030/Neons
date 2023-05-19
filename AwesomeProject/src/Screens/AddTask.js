@@ -24,12 +24,15 @@ const HideKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 
-const AddTask = ({ navigation }) => {
+const AddTask = (props) => {
+  // onPress={hideAddModal()} 
+  const { navigation, hideAddModal } = props;
+  // navigation = props.navigation;
   const [visible, setVisible] = useState(false);
   const [checked, setChecked] = useState('');
   const [taskName, settaskName] = useState('');
-  const [stTime, setstTime] = useState('');
-  const [endTime, setendTime] = useState('');
+  const [stDate, setstDate] = useState('');
+  const [endDate, setendDate] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
   // name st time end time desc status
@@ -49,20 +52,61 @@ const AddTask = ({ navigation }) => {
     setChecked('third')
     setStatus("ONGOING")
   };
+  const submitForm = () => {
+    addTaskdb()
+    // Add any other values you want to log here
+    hideAddModal();
+    // Additional logic for submitting the form
+  };
+  const addTaskdb = () => {
+    // console.log(email, password)
+    // setSpinner(true)
+    fetch('http://192.168.0.133:8888/api/task/64443be2840258d5b70397b6/tasks', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tasks: [
+          {
+            taskName: taskName,
+            taskDesc: description,
+            status: status,
+            startDate: stDate,
+            endDate: endDate,
+          }
+        ]
+      }),
+    })
+    .then(response => response.text())
+    .then(text => console.log(text))
+    .catch(error => console.log(error));
+    // .then((response) => response.json())
+    // .then(async(data) => {
+    //     console.log(data.authToken);
+    //     await AsyncStorage.setItem('auth-token',data.authToken)
+    //     setSpinner(false)
+    //     console.log("Next") 
+    //     navigation.navigate('NavigationScreen')
+    // })
+    // .catch((err) => {
+    //     // setSpinner(false)
+    //     console.log(err);
+    // });
+  }
   useEffect(() => {
-
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
     return () => {
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     };
   }, []);
 
-  const showModal = () => {
-    setVisible(true);
-    setTimeout(() => {
-      setVisible(false);
-    }, 3000);
-  };
+  // const showModal = () => {
+  //   setVisible(true);
+  //   setTimeout(() => {
+  //     setVisible(false);
+  //   }, 3000);
+  // };
   const hideModal = () => setVisible(false);
 
   return (
@@ -84,8 +128,6 @@ const AddTask = ({ navigation }) => {
             </Text>
           </Modal>
         </Portal>
-
-
         <View style={styles.modalSecondScreen}>
           <View style={{ marginTop: 10 }}>
             <Text style={styles.labelStyle}>TASK NAME</Text>
@@ -99,29 +141,9 @@ const AddTask = ({ navigation }) => {
               onChangeText={settaskName}
             />
           </View>
-          {/* <View style={{marginTop: 20}}>
-                <Text style={styles.labelStyle}>TEAM MEMBER</Text>
-              </View> */}
-          {/* <View style={{flexDirection: 'row'}}>
-                <AvatarImage text="Hindavi" />
-                <AvatarImage text="John" />
-                <AvatarImage text="Atharva" />
-                <AvatarImage text="Hindavi" />
-                <TouchableOpacity>
-                  <Avatar.Text
-                    style={{
-                      marginTop: 10,
-                      backgroundColor: '#dadada',
-                      color: 'black',
-                    }}
-                    size={55}
-                    label="+"
-                  />
-                </TouchableOpacity>
-              </View> */}
           <View style={{ marginTop: 10 }}>
             {/* <Calender /> */}
-            <Time setstTime={setstTime} setendTime={setendTime} />
+            <Time setstDate={setstDate} setendDate={setendDate} />
             <View style={{ marginTop: 10 }}>
               <Text style={styles.labelStyle}>DESCRIPTION</Text>
               <TextInput
@@ -216,9 +238,18 @@ const AddTask = ({ navigation }) => {
                 </Pressable>
               </View>
             </View>
-
+          </View>
+          <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginBottom: 15 }}>
+            <Button icon="close" mode="contained" onPress={hideAddModal} style={{ marginLeft: 25 }}>
+              Close
+            </Button>
+            <Button icon="check" mode="contained" onPress={submitForm} style={{ marginLeft: 5 }}>
+              Create Task
+            </Button>
           </View>
         </View>
+        {/* onPress={props.hideModal()}  */}
+
       </Provider>
     </HideKeyboard>
   );

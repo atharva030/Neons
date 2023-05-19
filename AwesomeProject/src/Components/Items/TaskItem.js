@@ -69,18 +69,13 @@ const TaskItem = props => {
           <Text style={styles.taskText}>{props.desc}</Text>
         </View>
         <View style={styles.flexIcon}>
-          <View style={styles.iconStyle}>
+          {/* <View style={styles.iconStyle}> */}
+            <Text style={styles.taskText}>{props.time}</Text>
             <TouchableOpacity>
               <Icon name="md-time-outline" size={15} color="grey" />
             </TouchableOpacity>
-            <Text style={styles.taskText}>{props.time}</Text>
-          </View>
-          <View style={styles.iconStyle}>
-            <TouchableOpacity>
-              <Icon name="md-person" size={15} color="grey" />
-            </TouchableOpacity>
-            <Text style={styles.taskText}>{props.person} Persons</Text>
-          </View>
+          {/* </View> */}
+       
         </View>
       </View>
       <Portal>
