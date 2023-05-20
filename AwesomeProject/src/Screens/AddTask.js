@@ -2,15 +2,11 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
   Pressable,
-  ScrollView,
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import AvatarImage from '../Components/Avatar/Avatar';
-import Calender from '../Components/Calender/Calender';
 import Time from '../Components/Time/Time';
 import { RadioButton } from 'react-native-paper';
 import { Button, Avatar } from 'react-native-paper';
@@ -81,18 +77,6 @@ const AddTask = (props) => {
     .then(response => response.text())
     .then(text => console.log(text))
     .catch(error => console.log(error));
-    // .then((response) => response.json())
-    // .then(async(data) => {
-    //     console.log(data.authToken);
-    //     await AsyncStorage.setItem('auth-token',data.authToken)
-    //     setSpinner(false)
-    //     console.log("Next") 
-    //     navigation.navigate('NavigationScreen')
-    // })
-    // .catch((err) => {
-    //     // setSpinner(false)
-    //     console.log(err);
-    // });
   }
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
@@ -101,12 +85,6 @@ const AddTask = (props) => {
     };
   }, []);
 
-  // const showModal = () => {
-  //   setVisible(true);
-  //   setTimeout(() => {
-  //     setVisible(false);
-  //   }, 3000);
-  // };
   const hideModal = () => setVisible(false);
 
   return (
@@ -248,7 +226,6 @@ const AddTask = (props) => {
             </Button>
           </View>
         </View>
-        {/* onPress={props.hideModal()}  */}
 
       </Provider>
     </HideKeyboard>

@@ -6,13 +6,13 @@ import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
 import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'react-native-paper';
 import styles1 from '../Styles/AddTaskStyle';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
 const currentDate = moment().format('MMMM DD, YYYY');
-const Teamlist = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
     const [teamName, setteamName] = useState('');
     const [teamDesc, setteamDesc] = useState('');
 
     const [refreshing, setRefreshing] = useState(false);
+    const [spinner, setSpinner] = useState(false);
     const [resultTeamData, setresultTeamData] = useState('')
     const [open, setOpen] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -193,4 +193,4 @@ const Teamlist = ({ navigation }) => {
     );
 };
 
-export default Teamlist;
+export default HomeScreen;

@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Pressable,
   ScrollView,
   ToastAndroid
 } from 'react-native';
@@ -12,9 +11,7 @@ import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button, IconButton} from 'react-native-paper';
 import {useState} from 'react';
-import LoginScreen from './Login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loader from './Loader';
 
 const RegisterScreen = ({navigation}) => {
   const [hidePassword, sethidePassword] = useState(true);

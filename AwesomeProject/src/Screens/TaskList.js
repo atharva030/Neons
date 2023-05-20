@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
-import avatar from '../../assets/Image/profile.jpg';
+import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
 import styles from '../Styles/Home';
-import styles1 from '../Styles/AddTaskStyle';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
 import TaskItem from '../Components/Items/TaskItem';
 import { Modal, Button } from 'react-native-paper';
-import { FAB, Provider, DefaultTheme, Portal, TextInput } from 'react-native-paper';
+import { FAB, Provider, DefaultTheme, Portal } from 'react-native-paper';
 import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
 const currentDate = moment().format('MMMM DD, YYYY');
 
-const HomeScreen = ({ navigation }) => {
+const TaskList = ({ navigation }) => {
 
   const [selectedIds, setSelectedIds] = useState([]);
   const [memberTeam, setmemberTeam] = useState(false)
@@ -333,4 +331,4 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+export default TaskList;

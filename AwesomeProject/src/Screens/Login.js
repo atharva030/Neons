@@ -13,10 +13,7 @@ import { Button } from 'react-native-paper';
 import { useState } from 'react';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { IconButton } from 'react-native-paper';
-import Navigation from './NavigationScreen';
-import RegisterScreen from './Register';
 import { useValidation } from 'react-native-form-validator';
-import Loader from './Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

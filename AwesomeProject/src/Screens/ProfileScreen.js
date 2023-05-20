@@ -3,7 +3,6 @@ import React from 'react';
 import styles from '../Styles/ProfileStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-paper';
-import profileImage from '../../assets/Image/profile.jpg';
 import TeamMember from '../Components/Teams/TeamMember';
 import TeamNames from '../Components/Teams/TeamNames';
 

@@ -5,11 +5,10 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import Colors from '../../constant/Colors';
 import AddTask from './AddTask';
-import AddTeamMember from './AddTeamMember';
-import Team_scr1 from './Team_scr1';
 import HomeScreen from './TaskList';
 import ProfileScreen from './ProfileScreen';
 import Teamlist from './Homescreen';
+import TaskList from './TaskList';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,8 +42,8 @@ function BottomTabNavigator() {
           );
         },
       })}>
-      <Tab.Screen name="Home" component={Teamlist} />
-      <Tab.Screen name="About" component={HomeScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="About" component={TaskList} />
       {/* <Tab.Screen name="Teams" component={Team_scr1} /> */}
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
