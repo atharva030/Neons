@@ -42,14 +42,35 @@ function BottomTabNavigator() {
           );
         },
       })}>
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="About" component={TaskList} />
+      <Tab.Screen name="Home" component={HomeStack} />
+      {/* <Tab.Screen name="About" component={TaskList} /> */}
       {/* <Tab.Screen name="Teams" component={Team_scr1} /> */}
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
 
+function HomeStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="TaskList"
+        component={TaskList}
+        options={{ headerShown: false }}
+      />
+      {/* <Stack.Screen
+        name="Teamlist"
+        component={Teamlist}
+        options={{ headerShown: false }}
+      /> */}
+    </Stack.Navigator>
+  );
+}
 function TaskStack() {
   return (
     <Stack.Navigator>

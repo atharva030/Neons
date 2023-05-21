@@ -78,34 +78,7 @@ const TaskItem = props => {
        
         </View>
       </View>
-      <Portal>
-        <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
-          <View style={{ marginTop: 10 }}>
-            <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
-            <TextInput
-              style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
-              placeholder="Team Name"
-              placeholderTextColor="#8d98b0"
-            />
-          </View>
-          <View style={{ marginTop: 10 }}>
-            <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
-            <TextInput
-              style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
-              placeholder="Team Description"
-              placeholderTextColor="#8d98b0"
-            />
-          </View>
-          <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
-            <Button icon="close" mode="contained" onPress={handleModalClose}>
-              Close
-            </Button>
-            <Button icon="check" mode="contained" onPress={() => setIsModalVisible(false)} style={{ marginLeft: 5 }}>
-              Done
-            </Button>
-          </View>
-        </Modal>
-      </Portal>
+      
     </View>
   );
 };

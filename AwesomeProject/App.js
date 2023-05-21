@@ -17,6 +17,7 @@ import HomeScreen from './src/Screens/TaskList';
 import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import SplashScreen from 'react-native-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// import Test from './src/Screens/Test';
 
 const Stack = createNativeStackNavigator();
 
@@ -70,7 +71,8 @@ const App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+    // <RoundedProgressBar progress={progress} />
+    );
 };
 
 const styles = StyleSheet.create({

@@ -10,18 +10,20 @@ import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
 const currentDate = moment().format('MMMM DD, YYYY');
 
-const TaskList = ({ navigation }) => {
+const TaskList = ({ navigation,route }) => {
 
   const [selectedIds, setSelectedIds] = useState([]);
   const [memberTeam, setmemberTeam] = useState(false)
   const [resultTeamMemberData, setresultTeamMemberData] = useState("")
   const [fetchTask, setfetchTask] = useState([])
   const [teamMembers, setteamMembers] = useState("")
+  const [taskId, settaskId] = useState("")
   const [visible, setVisible] = useState(false);
   const [state, setState] = useState({ open: false });
   const [refreshing, setRefreshing] = useState(false);
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
+  const teamIdByItem=route.params.post //id by teamItem
 
   const showModal = () => {
     console.log("preesed")
@@ -39,7 +41,7 @@ const TaskList = ({ navigation }) => {
   const fetchTasks = async () => {
 
     try {
-      const response = await fetch('http://192.168.0.133:8888/api/task/64443be2840258d5b70397b6/fetchtasks', {
+      const response = await fetch(`http://192.168.0.124:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +61,7 @@ const TaskList = ({ navigation }) => {
   const refreshfetchTasks = async () => {
     setRefreshing(true)
     try {
-      const response = await fetch('http://192.168.0.133:8888/api/task/64443be2840258d5b70397b6/fetchtasks', {
+      const response = await fetch(`http://192.168.0.124:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +88,7 @@ const TaskList = ({ navigation }) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.0.133:8888/api/members/getuser', {
+    fetch('http://192.168.0.124:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -111,7 +113,7 @@ const TaskList = ({ navigation }) => {
   }
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.0.133:8888/api/team/64443be2840258d5b70397b6/getmembers', {
+    fetch(`http://192.168.0.124:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -137,11 +139,28 @@ const TaskList = ({ navigation }) => {
 
   }
 
+  const deleteTeam = async (teamId) => {
+    try {
+        const response = await fetch(`http://192.168.0.124:8888/api/team/deleteteam/${teamId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
+        if (response.ok) {
+            console.log(`Team with ID ${teamId} deleted successfully`);
+        } else {
+            console.log(`Error deleting team with ID ${teamId}`);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
   // console.log("Final array",role)
   //This is sending the Members ID to the Backend 
   const handleAddMember = async () => {
-    fetch("http://192.168.0.133:8888/api/team/64443be2840258d5b70397b6", {
+    fetch(`http://192.168.0.124:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -168,7 +187,7 @@ const TaskList = ({ navigation }) => {
         console.log("Error: " + err.message);
       });
   };
-
+// console.log(props.route)
   useEffect(() => {
     // fetchData()
     fetchMembers()
@@ -225,15 +244,7 @@ const TaskList = ({ navigation }) => {
         </Portal>
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
-            <AddTask hideAddModal={hideModal} />
-            {/* <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginBottom: 15 }}>
-              <Button icon="close" mode="contained" onPress={hideModal} style={{ marginLeft: 25 }}>
-                Close 
-              </Button>
-              <Button icon="check" mode="contained" onPress={handleSubmit} style={{ marginLeft: 5 }}>
-                Create Task
-              </Button>
-            </View> */}
+            <AddTask hideAddModal={hideModal} teamIdByItem={teamIdByItem}/>
           </Modal>
         </Portal>
         <ScrollView>
@@ -292,6 +303,8 @@ const TaskList = ({ navigation }) => {
                   status={items.status}
                   desc={items.taskDesc}
                   // person={items.person}
+                  settaskId={settaskId}
+                  id={items._id}
                   title={items.taskName}
                   time={items.endDate}
                 />)

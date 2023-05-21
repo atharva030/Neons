@@ -22,7 +22,7 @@ const HideKeyboard = ({ children }) => (
 
 const AddTask = (props) => {
   // onPress={hideAddModal()} 
-  const { navigation, hideAddModal } = props;
+  const { navigation, hideAddModal,teamIdByItem } = props;
   // navigation = props.navigation;
   const [visible, setVisible] = useState(false);
   const [checked, setChecked] = useState('');
@@ -57,7 +57,7 @@ const AddTask = (props) => {
   const addTaskdb = () => {
     // console.log(email, password)
     // setSpinner(true)
-    fetch('http://192.168.0.133:8888/api/task/64443be2840258d5b70397b6/tasks', {
+    fetch(`http://192.168.0.124:8888/api/task/${teamIdByItem}/tasks`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

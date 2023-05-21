@@ -18,7 +18,6 @@ module.exports = {
     marginBottom: 20,
   },
 
- 
   modalSecondScreen: {
     backgroundColor: 'white',
     // padding: 30,

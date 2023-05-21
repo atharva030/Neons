@@ -24,8 +24,6 @@ const Profile = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </View>
-        
-
         <View style={styles.addSecondScreen}>
           <View style={styles.profileImage}>
             <Avatar.Image

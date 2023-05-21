@@ -9,32 +9,57 @@ const TeamItem = props => {
     const appFun = (id) => {
         console.log(id)
         props.setteamId(id)
+        props.navigation.navigate("TaskList",{
+             post: id 
+          });
     }
+    const deleteId = (id) => {
+        console.log(id)
+        props.setteamId(id)
+       props.deleteTeam(id)
+    }
+    const handleModal=(title,desc,id)=>{
+        props.setteamId(id)
+        props.handleEditClick()
+        props.setFormData({ editTitle: title ,editDesc:desc});
+    }
+    // props.setFormData({ fieldName: "existingValue" });
     // const [statusColor, setStatusColor] = useState("");
     status = props.status;
     return (
-        <TouchableOpacity style={styles.teamFlex} onPress={() => appFun(props.items._id)}>
+        <View style={styles.teamFlex}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             </View>
             <View style={styles.mainSecondFlex}>
                 <View style={styles.secondflex}>
                     <View style={styles.secondSubFlex}>
                         <Text style={styles.teamBigText}>{props.title}</Text>
-                        <Icon name='md-arrow-forward-circle-sharp' size={30} color="black" />
+                        <TouchableOpacity>
+                            <Icon name='md-arrow-forward-circle-sharp' onPress={() => appFun(props.items._id)} size={30} color="black" />
+                        </TouchableOpacity>
                     </View>
                     <Text style={styles.taskText}>{props.desc}</Text>
                 </View>
                 <View style={styles.flexIcon}>
 
                     <View style={styles.iconStyle}>
+                        <View style={{flexDirection:"row"}}>
                         <TouchableOpacity>
                             <Icon name="people" size={18} color="black" />
                         </TouchableOpacity>
                         <Text style={styles.personText}>{props.person} Persons</Text>
+                        </View>
+                        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+
+                            <Button icon="pencil" onPress={()=>handleModal(props.title,props.desc,props.items._id)}>
+                            </Button>
+                            <Button icon="delete" onPress={() => deleteId(props.items._id)}>
+                            </Button>
+                        </View>
                     </View>
                 </View>
             </View>
-        </TouchableOpacity>
+        </View>
     );
 };
 

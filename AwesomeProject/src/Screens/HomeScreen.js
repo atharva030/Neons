@@ -10,13 +10,12 @@ const currentDate = moment().format('MMMM DD, YYYY');
 const HomeScreen = ({ navigation }) => {
     const [teamName, setteamName] = useState('');
     const [teamDesc, setteamDesc] = useState('');
-
     const [refreshing, setRefreshing] = useState(false);
+    const [resultTeamData, setresultTeamData] = useState("");
     const [spinner, setSpinner] = useState(false);
-    const [resultTeamData, setresultTeamData] = useState('')
     const [open, setOpen] = useState(false);
     const [visible, setVisible] = useState(false);
-
+    const [formData, setFormData] = useState({ editTitle: "", editDesc: "" });
     const [teamId, setteamId] = useState("")
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
@@ -28,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
         setRefreshing(false);
     };
     const addTeam = async () => {
-        fetch('http://192.168.0.133:8888/api/team/createteam', {
+        fetch('http://192.168.0.124:8888/api/team/createteam', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,9 +53,28 @@ const HomeScreen = ({ navigation }) => {
 
     }
 
+    // console.log("sadaddaddasdad",teamId)
+    const editTeam = async (teamId) => {
+        setIsModalVisible(false);
+        console.log(formData.editTitle);
+        console.log(teamId);
+        fetch(`http://192.168.0.124:8888/api/team/updateteam/${teamId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            teamName: formData.editTitle,
+            teamDesc: formData.editDesc,
+          }),
+        }).catch((err) => {
+          console.log(err);
+        });
+      };
+      
     const fetchTeam = async () => {
         // console.log("Hey")
-        fetch('http://192.168.0.133:8888/api/team/fetchallteams', {
+        fetch('http://192.168.0.124:8888/api/team/fetchallteams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -80,16 +98,67 @@ const HomeScreen = ({ navigation }) => {
             });
 
     }
+    const refreshFetchTeam = async () => {
+        // console.log("Hey")
+        setRefreshing(true)
+        fetch('http://192.168.0.124:8888/api/team/fetchallteams', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og",
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                setresultTeamData(data)
+                setTimeout(() => {
+                    setRefreshing(false)
+                    console.log("after", refreshing)
+                }, 2000);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }
+    const deleteTeam = async (teamId) => {
+        try {
+            const response = await fetch(`http://192.168.0.124:8888/api/team/deleteteam/${teamId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                console.log(`Team with ID ${teamId} deleted successfully`);
+            } else {
+                console.log(`Error deleting team with ID ${teamId}`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     useEffect(() => {
         fetchTeam()
     }, [])
-
+    const handleModalClose = () => {
+        setIsModalVisible(false);
+    };
     const onStateChange = ({ open }) => setOpen(open);
-
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const handleEditClick = () => {
+        setIsModalVisible(true);
+    };
     return (
         <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={refreshFetchTeam}
+                />
+            }>
                 <Portal>
                     <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
                         <View style={{ marginTop: 10 }}>
@@ -122,8 +191,39 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                     </Modal>
                 </Portal>
-
-
+                {/* edit title modal */}
+                <Portal>
+                    <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
+                        <View style={{ marginTop: 10 }}>
+                            <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
+                            <TextInput
+                                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                                placeholder="Team Name"
+                                placeholderTextColor="#8d98b0"
+                                value={formData.editTitle}
+                                onChangeText={(value) => setFormData({ ...formData, editTitle: value })}
+                            />
+                        </View>
+                        <View style={{ marginTop: 10 }}>
+                            <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
+                            <TextInput
+                                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                                placeholder="Team Description"
+                                placeholderTextColor="#8d98b0"
+                                value={formData.editDesc}
+                                onChangeText={(value) => setFormData({ ...formData, editDesc: value })}
+                            />
+                        </View>
+                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
+                            <Button icon="close" mode="contained" onPress={handleModalClose}>
+                                Close
+                            </Button>
+                            <Button icon="check" mode="contained" onPress={()=>editTeam(teamId)} style={{ marginLeft: 5 }}>
+                                Done
+                            </Button>
+                        </View>
+                    </Modal>
+                </Portal>
                 <View style={styles.fullscreen}>
                     <View style={styles.outer}>
                         <View style={styles.titleContainer}>
@@ -152,12 +252,16 @@ const HomeScreen = ({ navigation }) => {
                     ) : (
                         resultTeamData.map((items) => (
                             <TeamItem
+                                navigation={navigation}
                                 desc={items.teamDesc}
                                 setteamId={setteamId}
                                 teamId={teamId}
                                 items={items}
+                                handleEditClick={handleEditClick}
                                 person={items.members.length}
                                 title={items.teamName}
+                                deleteTeam={deleteTeam}
+                                setFormData={setFormData}
                                 refreshControl={
                                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                                 }

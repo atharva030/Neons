@@ -167,7 +167,7 @@ module.exports = {
   },
   iconStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: 80,
   },
