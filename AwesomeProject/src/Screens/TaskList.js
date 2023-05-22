@@ -25,6 +25,7 @@ const TaskList = ({ navigation, route }) => {
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
   const teamIdByItem = route.params.post //id by teamItem
+  const teamTitle = route.params.teamTitle //id by teamItem
 
   const showModal = () => {
     console.log("preesed")
@@ -311,7 +312,7 @@ const TaskList = ({ navigation, route }) => {
           <View style={[styles.fullscreen]}>
             <View style={styles.outer}>
               <View style={styles.titleContainer}>
-                <Text style={[styles.titleText]}>Tasks</Text>
+                <Text style={[styles.titleText]}>{teamTitle}</Text>
               </View>
               <View style={styles.dayContainer}>
                 <View style={styles.innerdayContainer}>
