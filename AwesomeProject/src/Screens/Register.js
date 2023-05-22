@@ -28,7 +28,7 @@ const RegisterScreen = ({navigation}) => {
     console.log(name,email,password, phone,role)
     if(password===cnfpassword){
       setSpinner(true);
-    fetch('http://192.168.0.133:5000/api/auth/createuser', {
+    fetch('http://172.20.10.5:8888/api/auth/createuser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

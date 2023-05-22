@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
         setRefreshing(false);
     };
     const addTeam = async () => {
-        fetch('http://192.168.0.124:8888/api/team/createteam', {
+        fetch('http://172.20.10.5:8888/api/team/createteam', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ const HomeScreen = ({ navigation }) => {
         setIsModalVisible(false);
         console.log(formData.editTitle);
         console.log(teamId);
-        fetch(`http://192.168.0.124:8888/api/team/updateteam/${teamId}`, {
+        fetch(`http://172.20.10.5:8888/api/team/updateteam/${teamId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
       
     const fetchTeam = async () => {
         // console.log("Hey")
-        fetch('http://192.168.0.124:8888/api/team/fetchallteams', {
+        fetch('http://172.20.10.5:8888/api/team/fetchallteams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ const HomeScreen = ({ navigation }) => {
     const refreshFetchTeam = async () => {
         // console.log("Hey")
         setRefreshing(true)
-        fetch('http://192.168.0.124:8888/api/team/fetchallteams', {
+        fetch('http://172.20.10.5:8888/api/team/fetchallteams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const HomeScreen = ({ navigation }) => {
     }
     const deleteTeam = async (teamId) => {
         try {
-            const response = await fetch(`http://192.168.0.124:8888/api/team/deleteteam/${teamId}`, {
+            const response = await fetch(`http://172.20.10.5:8888/api/team/deleteteam/${teamId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, RefreshControl } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, RefreshControl} from 'react-native';
 import styles from '../Styles/Home';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -9,6 +9,7 @@ import { FAB, Provider, DefaultTheme, Portal } from 'react-native-paper';
 import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
 const currentDate = moment().format('MMMM DD, YYYY');
+
 
 const TaskList = ({ navigation,route }) => {
 
@@ -41,7 +42,7 @@ const TaskList = ({ navigation,route }) => {
   const fetchTasks = async () => {
 
     try {
-      const response = await fetch(`http://192.168.0.124:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://172.20.10.5:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ const TaskList = ({ navigation,route }) => {
   const refreshfetchTasks = async () => {
     setRefreshing(true)
     try {
-      const response = await fetch(`http://192.168.0.124:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://172.20.10.5:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +89,7 @@ const TaskList = ({ navigation,route }) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.0.124:8888/api/members/getuser', {
+    fetch('http://172.20.10.5:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -113,7 +114,7 @@ const TaskList = ({ navigation,route }) => {
   }
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://192.168.0.124:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`http://172.20.10.5:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -141,7 +142,7 @@ const TaskList = ({ navigation,route }) => {
 
   const deleteTeam = async (teamId) => {
     try {
-        const response = await fetch(`http://192.168.0.124:8888/api/team/deleteteam/${teamId}`, {
+        const response = await fetch(`http://172.20.10.5:8888/api/team/deleteteam/${teamId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -160,7 +161,7 @@ const TaskList = ({ navigation,route }) => {
   // console.log("Final array",role)
   //This is sending the Members ID to the Backend 
   const handleAddMember = async () => {
-    fetch(`http://192.168.0.124:8888/api/team/${teamIdByItem}`, {
+    fetch(`http://172.20.10.5:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

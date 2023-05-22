@@ -153,4 +153,57 @@ module.exports = {
     alignItems: 'center',
     width: 80,
   },
+
+
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 5
+
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+
+  },
+
+  textInputStyle: {
+    height: 40,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    fontFamily: 'Poppins-Regular',
+    borderColor: 'grey',
+    backgroundColor:'white',
+    borderRadius: 5,
+  },
+
+  placeholderStyle: {
+    fontSize: 16,
+    color: 'grey'
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+
 };
