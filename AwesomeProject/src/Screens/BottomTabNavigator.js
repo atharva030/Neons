@@ -5,10 +5,11 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import Colors from '../../constant/Colors';
 import AddTask from './AddTask';
-import HomeScreen from './HomeScreen';
+// import HomeScreen from './Homescreen';
 import ProfileScreen from './ProfileScreen';
 // import Teamlist from './Homescreen';
 import TaskList from './TaskList';
+import HomeScreen from './HomeScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

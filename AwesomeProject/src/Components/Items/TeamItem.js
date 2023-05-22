@@ -6,11 +6,12 @@ import { useState, useEffect } from 'react';
 import { Button } from 'react-native-paper';
 
 const TeamItem = props => {
-    const appFun = (id) => {
+    const appFun = (id,teamTitle) => {
         console.log(id)
         props.setteamId(id)
         props.navigation.navigate("TaskList",{
-             post: id 
+             post: id ,
+             teamTitle:teamTitle
           });
     }
     const deleteId = (id) => {
@@ -35,7 +36,7 @@ const TeamItem = props => {
                     <View style={styles.secondSubFlex}>
                         <Text style={styles.teamBigText}>{props.title}</Text>
                         <TouchableOpacity>
-                            <Icon name='md-arrow-forward-circle-sharp' onPress={() => appFun(props.items._id)} size={30} color="black" />
+                            <Icon name='md-arrow-forward-circle-sharp' onPress={() => appFun(props.items._id,props.title)} size={30} color="black" />
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.taskText}>{props.desc}</Text>

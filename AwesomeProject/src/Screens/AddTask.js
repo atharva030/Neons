@@ -57,7 +57,7 @@ const AddTask = (props) => {
   const addTaskdb = () => {
     // console.log(email, password)
     // setSpinner(true)
-    fetch(`http://172.20.10.5:8888/api/task/${teamIdByItem}/tasks`, {
+    fetch(`http://192.168.137.109:8888/api/task/${teamIdByItem}/tasks`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

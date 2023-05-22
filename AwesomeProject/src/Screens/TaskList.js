@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, RefreshControl} from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ScrollView, RefreshControl } from 'react-native';
 import styles from '../Styles/Home';
 import moment from 'moment';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -8,10 +8,10 @@ import { Modal, Button } from 'react-native-paper';
 import { FAB, Provider, DefaultTheme, Portal } from 'react-native-paper';
 import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
+import styles1 from '../Styles/AddTaskStyle';
 const currentDate = moment().format('MMMM DD, YYYY');
 
-
-const TaskList = ({ navigation,route }) => {
+const TaskList = ({ navigation, route }) => {
 
   const [selectedIds, setSelectedIds] = useState([]);
   const [memberTeam, setmemberTeam] = useState(false)
@@ -24,7 +24,8 @@ const TaskList = ({ navigation,route }) => {
   const [refreshing, setRefreshing] = useState(false);
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
-  const teamIdByItem=route.params.post //id by teamItem
+  const teamIdByItem = route.params.post //id by teamItem
+  const teamTitle = route.params.teamTitle //id by teamItem
 
   const showModal = () => {
     console.log("preesed")
@@ -38,11 +39,32 @@ const TaskList = ({ navigation,route }) => {
     hideModal();
     handleAddMember();
   };
+  const handleEditClick = () => {
+    setIsModalVisible(true);
+  };
 
+  const editTask = async (teamId, taskId) => {
+    setIsModalVisible(false);
+    console.log(formData.editTitle);
+    console.log(teamId);
+    fetch(`http://192.168.0.124:8888/api/task/${teamId}/updatetask/${taskId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        taskName: formData.editTitle,
+        taskDesc: formData.editDesc,
+        endDate: formData.endDate
+      }),
+    }).catch((err) => {
+      console.log(err);
+    });
+  };
   const fetchTasks = async () => {
 
     try {
-      const response = await fetch(`http://172.20.10.5:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.137.109:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +84,7 @@ const TaskList = ({ navigation,route }) => {
   const refreshfetchTasks = async () => {
     setRefreshing(true)
     try {
-      const response = await fetch(`http://172.20.10.5:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.137.109:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +111,7 @@ const TaskList = ({ navigation,route }) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://172.20.10.5:8888/api/members/getuser', {
+    fetch('http://192.168.137.109:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -114,7 +136,7 @@ const TaskList = ({ navigation,route }) => {
   }
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://172.20.10.5:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`http://192.168.137.109:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -125,14 +147,6 @@ const TaskList = ({ navigation,route }) => {
       .then(response => response.json())
       .then(data => {
         setteamMembers(data)
-
-        // console.log(teamMembers); // this will log the array of objects returned by the API
-        // you can perform any additional logic here based on the returned data
-        //   navigation.navigate('NavigationScreen');
-        // for (let i = 0; i < resultTeamData.length; i++) {
-        //     const membersSize = resultTeamData[i].members.length;
-        //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
-        // }
       })
       .catch(err => {
         console.log(err);
@@ -140,9 +154,9 @@ const TaskList = ({ navigation,route }) => {
 
   }
 
-  const deleteTeam = async (teamId) => {
+  const deleteTask = async (teamId, taskId) => {
     try {
-        const response = await fetch(`http://172.20.10.5:8888/api/team/deleteteam/${teamId}`, {
+        const response = await fetch(`http://192.168.137.109:8888/api/team/deleteteam/${teamId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -155,13 +169,13 @@ const TaskList = ({ navigation,route }) => {
             console.log(`Error deleting team with ID ${teamId}`);
         }
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-};
+  };
   // console.log("Final array",role)
   //This is sending the Members ID to the Backend 
   const handleAddMember = async () => {
-    fetch(`http://172.20.10.5:8888/api/team/${teamIdByItem}`, {
+    fetch(`http://192.168.137.109:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -188,7 +202,7 @@ const TaskList = ({ navigation,route }) => {
         console.log("Error: " + err.message);
       });
   };
-// console.log(props.route)
+  // console.log(props.route)
   useEffect(() => {
     // fetchData()
     fetchMembers()
@@ -202,7 +216,11 @@ const TaskList = ({ navigation,route }) => {
     },
   ];
   // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+  };
+  const [formData, setFormData] = useState({ editTitle: "", editDesc: "", endDate: "" });
   return (
     <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
       <ScrollView refreshControl={
@@ -211,6 +229,49 @@ const TaskList = ({ navigation,route }) => {
           onRefresh={refreshfetchTasks}
         />
       }>
+        <Portal>
+          <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
+            <View style={{ marginTop: 10 }}>
+              <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
+              <TextInput
+                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                placeholder="Team Name"
+                placeholderTextColor="#8d98b0"
+                value={formData.editTitle}
+                onChangeText={(value) => setFormData({ ...formData, editTitle: value })}
+
+              />
+            </View>
+            <View style={{ marginTop: 10 }}>
+              <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
+              <TextInput
+                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                placeholder="Team Description"
+                placeholderTextColor="#8d98b0"
+                value={formData.editDesc}
+                onChangeText={(value) => setFormData({ ...formData, editDesc: value })}
+              />
+            </View>
+            <View style={{ marginTop: 10 }}>
+              <Text style={styles1.emaillabelStyle}>Edit End Date</Text>
+              <TextInput
+                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                placeholder="Team Enddate"
+                placeholderTextColor="#8d98b0"
+                value={formData.endDate}
+                onChangeText={(value) => setFormData({ ...formData, endDate: value })}
+              />
+            </View>
+            <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
+              <Button icon="close" mode="contained" onPress={handleModalClose}>
+                Close
+              </Button>
+              <Button icon="check" mode="contained" onPress={() => editTask(teamIdByItem, taskId)} style={{ marginLeft: 5 }}>
+                Done
+              </Button>
+            </View>
+          </Modal>
+        </Portal>
         <Portal>
           <Modal visible={memberTeam} onDismiss={() => setmemberTeam(false)} contentContainerStyle={containerMemberStyle} >
             <ScrollView>
@@ -245,14 +306,14 @@ const TaskList = ({ navigation,route }) => {
         </Portal>
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
-            <AddTask hideAddModal={hideModal} teamIdByItem={teamIdByItem}/>
+            <AddTask hideAddModal={hideModal} teamIdByItem={teamIdByItem} />
           </Modal>
         </Portal>
         <ScrollView>
           <View style={[styles.fullscreen]}>
             <View style={styles.outer}>
               <View style={styles.titleContainer}>
-                <Text style={[styles.titleText]}>Tasks</Text>
+                <Text style={[styles.titleText]}>{teamTitle}</Text>
               </View>
               <View style={styles.dayContainer}>
                 <View style={styles.innerdayContainer}>
@@ -299,15 +360,21 @@ const TaskList = ({ navigation,route }) => {
                 </View>
               )
             ) : fetchTask.map((items) => {
+
               return (
                 <TaskItem
                   status={items.status}
+                  handleEditClick={handleEditClick}
                   desc={items.taskDesc}
                   // person={items.person}
                   settaskId={settaskId}
+                  setIsModalVisible={setIsModalVisible}
+                  setFormData={setFormData}
                   id={items._id}
                   title={items.taskName}
                   time={items.endDate}
+                  teamIdByItem={teamIdByItem}
+                  deleteTask={deleteTask}
                 />)
             })}
 
