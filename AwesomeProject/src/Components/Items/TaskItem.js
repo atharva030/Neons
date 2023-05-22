@@ -9,22 +9,20 @@ const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20
 
 const TaskItem = props => {
   const [statusColor, setStatusColor] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-  };
+  const handleModal = (title, desc, id, time) => {
+    props.settaskId(id)
+    props.handleEditClick()
+    props.setFormData({ editTitle: title, editDesc: desc, endDate: time });
+  }
 
-  const handleEditClick = () => {
-    setIsModalVisible(true);
-  };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (teamId, id) => {
     // Implement delete functionality
-  };
-
-  const handleStatusUpdate = () => {
-    // Implement status update functionality
+    console.log(id)
+    props.settaskId(id)
+    props.deleteTask(id,teamId )
   };
 
   const status = props.status;
@@ -52,10 +50,10 @@ const TaskItem = props => {
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <Text style={{ color: `${statusColor}`, padding: 10 }}>{props.status}</Text>
         <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={handleEditClick}>
+          <TouchableOpacity onPress={() => handleModal(props.title, props.desc, props.id, props.time)}>
             <Icon name="md-pencil-sharp" color='grey' size={19} style={{ marginRight: 10 }} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleDeleteClick}>
+          <TouchableOpacity onPress={() => handleDeleteClick(props.id, props.teamIdByItem)}>
             <Icon name="md-trash-bin" color='grey' size={20} style={{ marginRight: 10 }} />
           </TouchableOpacity>
         </View>
@@ -70,15 +68,15 @@ const TaskItem = props => {
         </View>
         <View style={styles.flexIcon}>
           {/* <View style={styles.iconStyle}> */}
-            <Text style={styles.taskText}>{props.time}</Text>
-            <TouchableOpacity>
-              <Icon name="md-time-outline" size={15} color="grey" />
-            </TouchableOpacity>
+          <Text style={styles.taskText}>{props.time}</Text>
+          <TouchableOpacity>
+            <Icon name="md-time-outline" size={15} color="grey" />
+          </TouchableOpacity>
           {/* </View> */}
-       
+
         </View>
       </View>
-      
+
     </View>
   );
 };
