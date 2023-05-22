@@ -5,44 +5,45 @@ import {
   TouchableOpacity,
   Pressable,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Button } from 'react-native-paper';
-import { useState } from 'react';
-import { Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { IconButton } from 'react-native-paper';
-import { useValidation } from 'react-native-form-validator';
+import {Button} from 'react-native-paper';
+import {useState} from 'react';
+import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {IconButton} from 'react-native-paper';
+import {useValidation} from 'react-native-form-validator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const HideKeyboard = ({ children }) => (
+const HideKeyboard = ({children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
 );
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({navigation}) => {
   const [spinner, setSpinner] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   // const [showToast , setShowToast] = useState(false);
 
-  const { validate, isFieldInError, getErrorsInField, getErrorMessages } =
+  const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
-      state: { email, password },
+      state: {email, password},
     });
   const Validate1 = () => {
     validate({
-      email: { Email: true },
-      Password: { Password: true },
+      email: {Email: true},
+      Password: {Password: true},
     });
   };
   const handleLogin = () => {
-    console.log(email, password)
-    setSpinner(true)
-    fetch('http://192.168.137.109:8888/api/auth/login',
-   {
+    console.log(email, password);
+    setSpinner(true);
+    fetch('http://192.168.137.109:8888/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,19 +53,30 @@ const LoginScreen = ({ navigation }) => {
         password: password,
       }),
     })
-    .then((response) => response.json())
-    .then(async(data) => {
+      .then(response => response.json())
+      .then(async data => {
         console.log(data.authToken);
-        await AsyncStorage.setItem('auth-token',data.authToken)
-        setSpinner(false)
-        console.log("Next") 
-        navigation.navigate('NavigationScreen')
-    })
-    .catch((err) => {
-        setSpinner(false)
+        await AsyncStorage.setItem('auth-token', data.authToken);
+        setSpinner(false);
+        console.log('Next');
+        navigation.navigate('NavigationScreen');
+      })
+      .catch(err => {
+        setSpinner(false);
         console.log(err);
-    });
-  }
+      });
+  };
+
+  // This function will be triggered when the button is pressed
+  const handlePress = () => {
+    setIsLoading(true);
+  
+    // Simulating an asynchronous action
+    setTimeout(() => {
+      setIsLoading(false);
+      navigation.navigate("NavigationScreen")
+    }, 2000);
+  };
 
   // const [Password, setPassword] = useState('');
   return (
@@ -77,7 +89,7 @@ const LoginScreen = ({ navigation }) => {
             <View style={styles.Addfullscreen}>
               <View style={styles.Loginsubscreen}>
                 <TouchableOpacity
-                  style={{ flexDirection: 'row', marginTop: 20 }}
+                  style={{flexDirection: 'row', marginTop: 20}}
                   onPress={() => navigation.goBack()}>
                   <Icon name="chevron-back" size={30} color="white" />
                   <Text style={styles.AddtitleText}>Login</Text>
@@ -94,7 +106,7 @@ const LoginScreen = ({ navigation }) => {
                   }}>
                   Login with Email
                 </Text>
-                <View style={{ marginTop: 10 }}>
+                <View style={{marginTop: 10}}>
                   <Text style={styles.emaillabelStyle}>Email</Text>
                   <TextInput
                     style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
@@ -105,12 +117,13 @@ const LoginScreen = ({ navigation }) => {
                     value={email}
                     onChangeText={setEmail}
                   />
-                  {isFieldInError('date') && getErrorsInField('date').map(errorMessage => (
-                    <Text>{errorMessage}</Text>
-                  ))}
+                  {isFieldInError('date') &&
+                    getErrorsInField('date').map(errorMessage => (
+                      <Text>{errorMessage}</Text>
+                    ))}
                 </View>
                 <Text style={styles.labelStyle}>Password</Text>
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row'}}>
                   <TextInput
                     value={password}
                     onChangeText={setPassword}
@@ -143,12 +156,27 @@ const LoginScreen = ({ navigation }) => {
                     Forgot Password?
                   </Text>
                 </Pressable>
-                <Button
-                  style={styles.submitBtn}
+                {/* <Button
+                  style={[
+                    styles.submitBtn,
+                    {backgroundColor: isLoading ? '#4caf50' : '#8bc34a'},
+                  ]}
                   mode="contained"
-                  onPress={navigation.navigate('NavigationScreen')}>
+                  onPress={toggleLoading}>
                   Log In
-                </Button>
+                </Button> */}
+
+                <TouchableOpacity
+                  style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
+                  onPress={handlePress}
+                  disabled={isLoading}>
+                  {isLoading ? (
+                    <ActivityIndicator size="small" color="#ffffff"/>
+                    
+                  ) : (
+                    <Text style= {styles.loginText}>Log In</Text>
+                  )}
+                </TouchableOpacity>
 
                 <View
                   style={{
@@ -166,7 +194,8 @@ const LoginScreen = ({ navigation }) => {
                     }}>
                     Don't have an Account?
                   </Text>
-                  <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('Register')}>
                     <Text
                       style={{
                         color: '#5a55ca',
@@ -202,7 +231,7 @@ const LoginScreen = ({ navigation }) => {
                       name="ios-logo-google"
                       size={35}
                       color="#5a55ca"
-                      style={{ marginRight: 10 }}
+                      style={{marginRight: 10}}
                     />
                   </TouchableOpacity>
                   <TouchableOpacity
