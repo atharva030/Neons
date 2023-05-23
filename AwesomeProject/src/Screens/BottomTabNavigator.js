@@ -9,6 +9,7 @@ import AddTask from './AddTask';
 import AddTeamMember from './AddTeamMember';
 import HomeScreen from './HomeScreen';
 import ProfileScreen from './ProfileScreen';
+import Team_scr1 from './Team_scr1';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -27,7 +28,7 @@ function BottomTabNavigator() {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name == 'AddTask') {
             iconName = focused ? 'plus-circle' : 'plus-circle-outline';
-          } else if (route.name == 'Add TeamMember') {
+          } else if (route.name == 'Teams') {
             iconName = focused ? 'account-plus' : 'account-plus-outline';
           } else if (route.name == 'Profile') {
             iconName = focused ? 'account-circle' : 'account-circle-outline';
@@ -44,7 +45,7 @@ function BottomTabNavigator() {
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="AddTask" component={TaskStack} />
-      <Tab.Screen name="Add TeamMember" component={AddTeamMember} />
+      <Tab.Screen name="Teams" component={Team_scr1} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );

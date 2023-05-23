@@ -10,12 +10,11 @@ import { GoogleSignin, statusCodes } from 'react-native-google-signin';
 
 import styles from '../Styles/Welcome'
 GoogleSignin.configure({
-  webClientId: '1089530587229-074k6lbhrt1u61qheldv280fclhruh3u.apps.googleusercontent.com',
+  webClientId: '140988325102-3ajr3f20d91ucph9ohpq08ab2r6p3po6 WelcomeScreens.googleusercontent.com',
   offlineAccess: true,
   hostedDomain: '',
   forceCodeForRefreshToken: true,
   accountName: '',
-  // iosClientId:''
 });
 const Welcome = ({ navigation }) => {
   const [user, setUser] = useState(null);
