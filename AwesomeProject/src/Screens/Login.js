@@ -16,7 +16,7 @@ import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {useValidation} from 'react-native-form-validator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Seprator from '../Components/seprator/seprator';
+// import Seprator from '../Components/seprator/seprator';
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -44,7 +44,7 @@ const LoginScreen = ({navigation}) => {
   const handleLogin = () => {
     console.log(email, password);
     setSpinner(true);
-    fetch('http://192.168.137.109:8888/api/auth/login', {
+    fetch('http://192.168.0.120:8888/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -211,7 +211,7 @@ const LoginScreen = ({navigation}) => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <Seprator/>
+                {/* <Seprator/> */}
                 <Text style={styles.orText}>OR</Text>
                 
                 <Text

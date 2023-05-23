@@ -7,7 +7,7 @@ import styles1 from '../../Styles/AddTaskStyle';
 import { Dropdown } from 'react-native-element-dropdown';
 import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import Seprator from '../seprator/seprator';
+// import Seprator from '../seprator/seprator';
 
 const containerStyle = {
   backgroundColor: 'white',
