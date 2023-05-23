@@ -5,7 +5,7 @@ import {useState} from 'react';
 import {Button} from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const Time = () => {
+const Time = ({setendDate,setstDate}) => {
   const [settleEndTime, setsettleEndTime] = useState('');
   const [settleStartTime, setsettleStartTime] = useState('');
   const [isStDatePickerVisible, setStDatePickerVisibility] = useState(false);
@@ -21,7 +21,8 @@ const Time = () => {
 
   const handleStartDate = (StDate) => {
     const dt = new Date(StDate);
-    console.warn('A Start date has been picked: ', dt.toLocaleDateString('en-US'));
+    setstDate(dt.toLocaleDateString('en-US'))
+    // console.warn('A Start date has been picked: ', dt.toLocaleDateString('en-US'));
     setsettleStartTime(dt.toLocaleDateString('en-US'));
     hideStDatePicker();
   };
@@ -36,8 +37,9 @@ const Time = () => {
 
   const handleEndDate = (endDate) => {
     const end = new Date(endDate);
-    console.warn('An End date has been picked: ', end.toLocaleDateString('en-US'));
-
+    
+    // console.warn('An End date has been picked: ', end.toLocaleDateString('en-US'));
+    setendDate(end.toLocaleDateString('en-US'))
     // check if end date is greater than start date
     const start = new Date(settleStartTime);
     if (end <= start) {
@@ -53,7 +55,7 @@ const Time = () => {
   return (
     <View style={styles.timeContainer}>
       <View style={{marginTop: 10}}>
-        <Text style={styles.labelStyle}>START TIME</Text>
+        <Text style={styles.labelStyle}>START DATE</Text>
         <View style={{flexDirection: 'row'}}>
           <Pressable onPress={showStDatePicker} style={{width: '50%'}}>
             <TextInput
@@ -74,7 +76,7 @@ const Time = () => {
         </View>
       </View>
       <View style={{marginTop: 10}}>
-        <Text style={styles.labelStyle}>END TIME</Text>
+        <Text style={styles.labelStyle}>END DATE</Text>
         <View style={{flexDirection: 'row'}}>
           <Pressable onPress={showEndDatePicker} style={{width: '50%'}}>
             <TextInput

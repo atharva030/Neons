@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -18,13 +18,6 @@ GoogleSignin.configure({
 });
 const Welcome = ({ navigation }) => {
   const [user, setUser] = useState(null);
-
-  // useEffect(() => {
-  //   GoogleSignin.configure({
-  //     scopes: ['email'],
-  //     webClientId: '<your-web-client-id>',
-  //   });
-  // }, []);
 
   const handleSignIn = async () => {
     try {
