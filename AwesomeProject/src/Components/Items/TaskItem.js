@@ -7,6 +7,7 @@ import styles1 from '../../Styles/AddTaskStyle';
 import { Dropdown } from 'react-native-element-dropdown';
 import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import Seprator from '../seprator/seprator';
 
 const containerStyle = {
   backgroundColor: 'white',
@@ -294,9 +295,11 @@ const TaskItem = (props) => {
           {/* Task */}
           <View style={styles.taskContent}>
             {/* Task details */}
+            
           </View>
 
           {/* Toggle button */}
+          
           <TouchableOpacity onPress={handleToggleFlex}>
             {isExtended ? (
               <Icon name="chevron-up-outline" />
@@ -309,8 +312,14 @@ const TaskItem = (props) => {
         {/* Additional content */}
         <Collapsible collapsed={!isExtended}>
           <View style={styles.additionalContent}>
+          {/* {subtasks.map((subtask, index) => (
+          <Text key={index}>{subtask}</Text>
+        ))} */}
+    <Text>hello</Text>
           </View>
+
         </Collapsible>
+        
       </View>
     </View>
   );

@@ -16,7 +16,8 @@ import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {useValidation} from 'react-native-form-validator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const HideKeyboard = ({children}) => (
+import Seprator from '../Components/seprator/seprator';
+const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
   </TouchableWithoutFeedback>
@@ -183,6 +184,7 @@ const LoginScreen = ({navigation}) => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    marginBottom: 10
                   }}>
                   <Text
                     style={{
@@ -203,11 +205,15 @@ const LoginScreen = ({navigation}) => {
                         marginTop: 10,
                         fontFamily: 'Poppins-Medium',
                         marginLeft: 5,
+                        
                       }}>
                       Create New
                     </Text>
                   </TouchableOpacity>
                 </View>
+                <Seprator/>
+                <Text style={styles.orText}>OR</Text>
+                
                 <Text
                   style={{
                     color: 'black',
@@ -218,6 +224,7 @@ const LoginScreen = ({navigation}) => {
                   }}>
                   Sign In/ Register with:
                 </Text>
+               
 
                 <View
                   style={{
@@ -251,5 +258,13 @@ const LoginScreen = ({navigation}) => {
     </>
   );
 };
+// it just for hr line in react native 
+const sepratorstyles = {
+  height: 1,
+  width: '100%',
+  backgroundColor: '#ddd',
+}
+
+
 
 export default LoginScreen;

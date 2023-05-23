@@ -201,15 +201,13 @@ module.exports = {
     color: 'grey',
   },
 
+  orText:{
+    fontFamily: 'Poppins-Regular',
+    color: 'black',
+    fontSize: 14,
+    textAlign: 'center',
+    marginTop: 5
 
-
-  // code for loading button
-
-  buttonDisabled: {
-    opacity: 0.5,
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
   }
+  
 };
