@@ -1,13 +1,13 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Portal, Button, Modal, TextInput } from 'react-native-paper';
-import styles from '../../Styles/Home';
-import styles1 from '../../Styles/AddTaskStyle';
 import { Dropdown } from 'react-native-element-dropdown';
 import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-// import Seprator from '../seprator/seprator';
+
+import styles from '../../Styles/Home';
+import styles1, { error } from '../../Styles/AddTaskStyle';
 
 const containerStyle = {
   backgroundColor: 'white',
@@ -31,27 +31,44 @@ const data = [
 
 const TaskItem = (props) => {
   const [statusColor, setStatusColor] = useState('');
-
   const [isModal1Visible, setIsModal1Visible] = useState(false);
   const [isModal2Visible, setIsModal2Visible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('0');
   const [textInputCount, setTextInputCount] = useState(0);
-
   const [isExtended, setIsExtended] = useState(false);
+  const [fetchsubtask, setFetchSubtask] = useState([]);
+  // const [teamIdByItem, setTeamIdByItem] = useState('');
+  // const [taskIdByItem, setTaskIdByItem] = useState('');
 
-  const renderLabel = () => {
-    if (textInputCount || isExtended) {
-      return (
-        <Text style={[styles.label, isExtended && { color: 'blue' }]}>
-          No. of Subtasks
-        </Text>
-      );
-    }
-    return null;
-  };
+    const subtaskfetch = async () => {
+      try {
+        const response = await fetch(
+          // `http://192.168.29.161:8888/api/task/${teamIdByItem}/${taskIdByItem}/subtasks`,
+          `http://192.168.29.161:8888/api/task/646b5f3e3022a3d705d558f8/646b8d5202320ab7de5760df/subtasks`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
+        if (!response.ok) {
+          throw new Error('Failed to fetch subtasks');
+        }
+
+        const data = await response.json();
+        console.log (data)
+        setFetchSubtask(data.subtasks);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
   const handleToggleFlex = () => {
     setIsExtended(!isExtended);
+    subtaskfetch();
   };
 
   const handleDropdownChange = (value) => {
@@ -96,8 +113,6 @@ const TaskItem = (props) => {
         setStatusColor('#FF0000');
         break;
       case 'RUNNING':
-        setStatusColor('#55d9a8');
-        break;
       case 'STOPPED':
         setStatusColor('#55d9a8');
         break;
@@ -111,40 +126,17 @@ const TaskItem = (props) => {
 
   return (
     <View style={[styles.taskFlex, { height: isExtended ? 170 : 170 + textInputCount * 40 }]}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Text style={{ color: statusColor, padding: 10 }}>
-          {props.status}
-        </Text>
+      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ color: statusColor, padding: 10 }}>{props.status}</Text>
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity onPress={handleAddSubTaskClick}>
-            <Icon
-              name="reader"
-              color="black"
-              size={19}
-              style={{ marginRight: 10 }}
-            />
+            <Icon name="reader" color="black" size={19} style={{ marginRight: 10 }} />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleEditClick}>
-            <Icon
-              name="md-pencil-sharp"
-              color="grey"
-              size={19}
-              style={{ marginRight: 10 }}
-            />
+            <Icon name="md-pencil-sharp" color="grey" size={19} style={{ marginRight: 10 }} />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleDeleteClick}>
-            <Icon
-              name="md-trash-bin"
-              color="grey"
-              size={20}
-              style={{ marginRight: 10 }}
-            />
+            <Icon name="md-trash-bin" color="grey" size={20} style={{ marginRight: 10 }} />
           </TouchableOpacity>
         </View>
       </View>
@@ -172,12 +164,9 @@ const TaskItem = (props) => {
         >
           <View style={styles.container}>
             <ScrollView>
-              {renderLabel()}
+              <Text style={[styles.label, isExtended && { color: 'blue' }]}>No. of Subtasks</Text>
               <Dropdown
-                style={[
-                  styles.dropdown,
-                  isExtended && { borderColor: 'blue' },
-                ]}
+                style={[styles.dropdown, isExtended && { borderColor: 'blue' }]}
                 selectedValue={selectedOption}
                 onValueChange={handleDropdownChange}
                 placeholderStyle={styles.placeholderStyle}
@@ -205,28 +194,11 @@ const TaskItem = (props) => {
             </ScrollView>
           </View>
 
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: 290,
-              marginLeft: 15,
-              marginTop: 25,
-            }}
-          >
-            <Button
-              icon="close"
-              mode="contained"
-              onPress={() => setIsModal1Visible(false)}
-            >
+          <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
+            <Button icon="close" mode="contained" onPress={() => setIsModal1Visible(false)}>
               Close
             </Button>
-            <Button
-              icon="check"
-              mode="contained"
-              onPress={() => setIsModal1Visible(false)}
-              style={{ marginLeft: 5 }}
-            >
+            <Button icon="check" mode="contained" onPress={() => setIsModal1Visible(false)} style={{ marginLeft: 5 }}>
               Done
             </Button>
           </View>
@@ -242,10 +214,7 @@ const TaskItem = (props) => {
           <View style={{ marginTop: 10 }}>
             <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
             <TextInput
-              style={[
-                styles1.Emailinput,
-                { backgroundColor: 'transparent', height: 40 },
-              ]}
+              style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
               placeholder="Team Name"
               placeholderTextColor="#8d98b0"
             />
@@ -253,36 +222,16 @@ const TaskItem = (props) => {
           <View style={{ marginTop: 10 }}>
             <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
             <TextInput
-              style={[
-                styles1.Emailinput,
-                { backgroundColor: 'transparent', height: 40 },
-              ]}
+              style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
               placeholder="Team Description"
               placeholderTextColor="#8d98b0"
             />
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: 290,
-              marginLeft: 15,
-              marginTop: 25,
-            }}
-          >
-            <Button
-              icon="close"
-              mode="contained"
-              onPress={() => setIsModal2Visible(false)}
-            >
+          <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
+            <Button icon="close" mode="contained" onPress={() => setIsModal2Visible(false)}>
               Close
             </Button>
-            <Button
-              icon="check"
-              mode="contained"
-              onPress={() => setIsModal2Visible(false)}
-              style={{ marginLeft: 5 }}
-            >
+            <Button icon="check" mode="contained" onPress={() => setIsModal2Visible(false)} style={{ marginLeft: 5 }}>
               Done
             </Button>
           </View>
@@ -312,14 +261,11 @@ const TaskItem = (props) => {
         {/* Additional content */}
         <Collapsible collapsed={!isExtended} style={{color:'black'}}>
           <View style={styles.additionalContent}>
-            {/* {subtasks.map((subtask, index) => (
-          <Text key={index}>{subtask}</Text>
-        ))} */}
-            <Text style={{color:'black'}}>hello</Text>
+            {/* {fetchsubtask.map((subtask, index) => (
+              <Text key={index}>{subtask}</Text>
+            ))} */}
           </View>
-
         </Collapsible>
-
       </View>
     </View>
   );

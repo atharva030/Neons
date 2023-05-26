@@ -44,7 +44,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     console.log(email, password);
     setSpinner(true);
-    fetch('http://192.168.0.120:8888/api/auth/login', {
+    fetch('http://192.168.29.161:8888/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +71,8 @@ const LoginScreen = ({ navigation }) => {
   // This function will be triggered when the button is pressed
   const handlePress = () => {
     setIsLoading(true);
-
+    navigation.navigate("NavigationScreen")
+  
     // Simulating an asynchronous action
     setTimeout(() => {
       setIsLoading(false);
@@ -169,7 +170,6 @@ const LoginScreen = ({ navigation }) => {
                   onPress={toggleLoading}>
                   Log In
                 </Button> */}
-
                 <TouchableOpacity
                   style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
                   onPress={handlePress}

@@ -62,9 +62,8 @@ const TaskList = ({ navigation, route }) => {
     });
   };
   const fetchTasks = async () => {
-
     try {
-      const response = await fetch(`http://192.168.0.120:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.29.161:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -81,10 +80,11 @@ const TaskList = ({ navigation, route }) => {
       console.log(error);
     }
   };
+
   const refreshfetchTasks = async () => {
     setRefreshing(true)
     try {
-      const response = await fetch(`http://192.168.0.120:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.29.161:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const TaskList = ({ navigation, route }) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.0.120:8888/api/members/getuser', {
+    fetch('http://192.168.29.161:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ const TaskList = ({ navigation, route }) => {
   }
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://192.168.0.120:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ const TaskList = ({ navigation, route }) => {
 
   const deleteTask = async (teamId, taskId) => {
     try {
-        const response = await fetch(`http://192.168.0.120:8888/api/team/deleteteam/${teamId}`, {
+        const response = await fetch(`http://192.168.29.161:8888/api/team/deleteteam/${teamId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -175,7 +175,7 @@ const TaskList = ({ navigation, route }) => {
   // console.log("Final array",role)
   //This is sending the Members ID to the Backend 
   const handleAddMember = async () => {
-    fetch(`http://192.168.0.120:8888/api/team/${teamIdByItem}`, {
+    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
