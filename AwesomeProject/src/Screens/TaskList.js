@@ -15,6 +15,7 @@ const TaskList = ({ navigation, route }) => {
 
   const [selectedIds, setSelectedIds] = useState([]);
   const [memberTeam, setmemberTeam] = useState(false)
+  const [formData, setFormData] = useState({ editTitle: "", editDesc: "", endDate: "" });
   const [resultTeamMemberData, setresultTeamMemberData] = useState("")
   const [fetchTask, setfetchTask] = useState([])
   const [teamMembers, setteamMembers] = useState("")
@@ -45,9 +46,9 @@ const TaskList = ({ navigation, route }) => {
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
-    console.log(formData.editTitle);
+    console.log(formData);
     console.log(teamId);
-    fetch(`http://192.168.0.124:8888/api/task/${teamId}/updatetask/${taskId}`, {
+    fetch(`http://192.168.172.113:8888/api/task/${teamId}/updatetask/${taskId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ const TaskList = ({ navigation, route }) => {
   const fetchTasks = async () => {
 
     try {
-      const response = await fetch(`http://192.168.0.120:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.172.113:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ const TaskList = ({ navigation, route }) => {
   const refreshfetchTasks = async () => {
     setRefreshing(true)
     try {
-      const response = await fetch(`http://192.168.0.120:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.172.113:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +112,7 @@ const TaskList = ({ navigation, route }) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.0.120:8888/api/members/getuser', {
+    fetch('http://192.168.172.113:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -136,7 +137,7 @@ const TaskList = ({ navigation, route }) => {
   }
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://192.168.0.120:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`http://192.168.172.113:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -156,7 +157,7 @@ const TaskList = ({ navigation, route }) => {
 
   const deleteTask = async (teamId, taskId) => {
     try {
-        const response = await fetch(`http://192.168.0.120:8888/api/team/deleteteam/${teamId}`, {
+        const response = await fetch(`http://192.168.172.113:8888/api/team/deleteteam/${teamId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -175,7 +176,7 @@ const TaskList = ({ navigation, route }) => {
   // console.log("Final array",role)
   //This is sending the Members ID to the Backend 
   const handleAddMember = async () => {
-    fetch(`http://192.168.0.120:8888/api/team/${teamIdByItem}`, {
+    fetch(`http://192.168.172.113:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -220,7 +221,6 @@ const TaskList = ({ navigation, route }) => {
   const handleModalClose = () => {
     setIsModalVisible(false);
   };
-  const [formData, setFormData] = useState({ editTitle: "", editDesc: "", endDate: "" });
   return (
     <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
       <ScrollView refreshControl={
@@ -229,6 +229,9 @@ const TaskList = ({ navigation, route }) => {
           onRefresh={refreshfetchTasks}
         />
       }>
+
+
+        {/* Edit Task Modal Starts */}
         <Portal>
           <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
             <View style={{ marginTop: 10 }}>
@@ -272,6 +275,8 @@ const TaskList = ({ navigation, route }) => {
             </View>
           </Modal>
         </Portal>
+         {/* Edit Task Modal Ends */}
+         {/* Listing to add team members starts */}
         <Portal>
           <Modal visible={memberTeam} onDismiss={() => setmemberTeam(false)} contentContainerStyle={containerMemberStyle} >
             <ScrollView>
@@ -304,11 +309,15 @@ const TaskList = ({ navigation, route }) => {
             </View>
           </Modal>
         </Portal>
+         {/* Listing to add team members end */}
+        {/* Add task Modal start */}
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
             <AddTask hideAddModal={hideModal} teamIdByItem={teamIdByItem} />
           </Modal>
         </Portal>
+        {/* Add task Modal end */}
+
         <ScrollView>
           <View style={[styles.fullscreen]}>
             <View style={styles.outer}>
@@ -365,13 +374,13 @@ const TaskList = ({ navigation, route }) => {
                 <TaskItem
                   status={items.status}
                   handleEditClick={handleEditClick}
-                  desc={items.taskDesc}
                   // person={items.person}
                   settaskId={settaskId}
                   setIsModalVisible={setIsModalVisible}
                   setFormData={setFormData}
                   id={items._id}
                   title={items.taskName}
+                  desc={items.taskDesc}
                   time={items.endDate}
                   teamIdByItem={teamIdByItem}
                   deleteTask={deleteTask}

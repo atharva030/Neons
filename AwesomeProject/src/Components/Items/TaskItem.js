@@ -59,6 +59,7 @@ const TaskItem = (props) => {
     setTextInputCount(Number(value));
   };
 
+
   const renderTextInputs = () => {
     const textInputs = [];
     for (let i = 0; i < textInputCount; i++) {
@@ -77,8 +78,11 @@ const TaskItem = (props) => {
     setIsModal1Visible(true);
   };
 
-  const handleEditClick = () => {
-    setIsModal2Visible(true);
+  const handleEditClick = (title,desc,endDate) => {
+    props.setIsModalVisible(true);
+    // props.setteamId(id)
+    // props.handleEditClick()
+    props.setFormData({ editTitle: title ,editDesc:desc,endDate:endDate});
   };
 
   const handleDeleteClick = () => {
@@ -130,7 +134,7 @@ const TaskItem = (props) => {
               style={{ marginRight: 10 }}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleEditClick}>
+          <TouchableOpacity onPress={()=>handleEditClick(props.title,props.desc,props.time)}>
             <Icon
               name="md-pencil-sharp"
               color="grey"
@@ -233,7 +237,7 @@ const TaskItem = (props) => {
         </Modal>
       </Portal>
 
-      <Portal>
+      {/* <Portal>
         <Modal
           visible={isModal2Visible}
           onDismiss={() => setIsModal2Visible(false)}
@@ -287,7 +291,7 @@ const TaskItem = (props) => {
             </Button>
           </View>
         </Modal>
-      </Portal>
+      </Portal> */}
 
       <View>
         {/* Task content */}
