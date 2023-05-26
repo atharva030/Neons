@@ -48,6 +48,7 @@ const TaskList = ({ navigation, route }) => {
     setIsModalVisible(false);
     console.log(formData);
     console.log(teamId);
+    console.log(taskId);
     fetch(`http://192.168.172.113:8888/api/task/${teamId}/updatetask/${taskId}`, {
       method: 'PATCH',
       headers: {

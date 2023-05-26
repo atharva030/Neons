@@ -95,9 +95,9 @@ const TaskItem = (props) => {
     setIsModal1Visible(true);
   };
 
-  const handleEditClick = (title,desc,endDate) => {
+  const handleEditClick = (id,title,desc,endDate) => {
     props.setIsModalVisible(true);
-    // props.setteamId(id)
+    props.settaskId(id)
     // props.handleEditClick()
     props.setFormData({ editTitle: title ,editDesc:desc,endDate:endDate});
   };
@@ -136,7 +136,7 @@ const TaskItem = (props) => {
           <TouchableOpacity onPress={handleAddSubTaskClick}>
             <Icon name="reader" color="black" size={19} style={{ marginRight: 10 }} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>handleEditClick(props.title,props.desc,props.time)}>
+          <TouchableOpacity onPress={()=>handleEditClick(props.id,props.title,props.desc,props.time)}>
             <Icon
               name="md-pencil-sharp"
               color="grey"
