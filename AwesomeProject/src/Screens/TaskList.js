@@ -63,7 +63,6 @@ const TaskList = ({ navigation, route }) => {
     });
   };
   const fetchTasks = async () => {
-
     try {
       const response = await fetch(`http://192.168.172.113:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
@@ -82,6 +81,7 @@ const TaskList = ({ navigation, route }) => {
       console.log(error);
     }
   };
+
   const refreshfetchTasks = async () => {
     setRefreshing(true)
     try {
