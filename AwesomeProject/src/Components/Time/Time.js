@@ -5,93 +5,119 @@ import {useState} from 'react';
 import {Button} from 'react-native-paper';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const Time = () => {
+const Time = ({setendDate,setstDate}) => {
   const [settleEndTime, setsettleEndTime] = useState('');
   const [settleStartTime, setsettleStartTime] = useState('');
-  const [isStTimePickerVisible, setStTimePickerVisibility] = useState(false);
-  const [isEndTimePickerVisible, setEndTimePickerVisibility] = useState(false);
+  const [isStDatePickerVisible, setStDatePickerVisibility] = useState(false);
+  const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
 
-  const showStPicker = () => {
-    setStTimePickerVisibility(true);
-    console.log(isStTimePickerVisible);
-  };
-
-  const hidestTimePicker = () => {
-    setStTimePickerVisibility(false);
+  const showStDatePicker = () => {
+    setStDatePickerVisibility(true);
   };
 
-  const handleStartTime = StTime => {
-    const dt = new Date(StTime);
-    dt.toLocaleString();
-    console.warn('A Start has been picked: ', dt.toLocaleString().split(',')[1]);
-    setsettleStartTime(dt.toLocaleString().split(',')[1]);
-    console.log(settleStartTime);
-    hidestTimePicker();
-  };
-  const showEndPicker = () => {
-    setEndTimePickerVisibility(true);
-    console.log(isEndTimePickerVisible);
+  const hideStDatePicker = () => {
+    setStDatePickerVisibility(false);
   };
 
-  const hideEndTimePicker = () => {
-    setEndTimePickerVisibility(false);
+  const handleStartDate = (StDate) => {
+    const dt = new Date(StDate);
+    setstDate(dt.toLocaleDateString('en-US'))
+    // console.warn('A Start date has been picked: ', dt.toLocaleDateString('en-US'));
+    setsettleStartTime(dt.toLocaleDateString('en-US'));
+    hideStDatePicker();
   };
 
-  const handleEndTime = endTime => {
-    const end = new Date(endTime);
-    end.toLocaleString();
-    console.warn('A End has been picked: ', end.toLocaleString().split(',')[1]);
-    setsettleEndTime(end.toLocaleString().split(',')[1]);
-    console.log(settleEndTime);
-    hideEndTimePicker();
+  const showEndDatePicker = () => {
+    setEndDatePickerVisibility(true);
   };
+
+  const hideEndDatePicker = () => {
+    setEndDatePickerVisibility(false);
+  };
+
+  const handleEndDate = (endDate) => {
+    const end = new Date(endDate);
+    
+    // console.warn('An End date has been picked: ', end.toLocaleDateString('en-US'));
+    setendDate(end.toLocaleDateString('en-US'))
+    // check if end date is greater than start date
+    const start = new Date(settleStartTime);
+    if (end <= start) {
+      console.warn('End date must be greater than Start date');
+      // return or display an error message
+      return;
+    }
+
+    setsettleEndTime(end.toLocaleDateString('en-US'));
+    hideEndDatePicker();
+  };
+
   return (
     <View style={styles.timeContainer}>
       <View style={{marginTop: 10}}>
-        <Text style={styles.labelStyle}>START TIME</Text>
+        <Text style={styles.labelStyle}>START DATE</Text>
         <View style={{flexDirection: 'row'}}>
-          <Pressable onPress={showStPicker} style={{width: '50%'}}>
+          <Pressable onPress={showStDatePicker} style={{width: '50%'}}>
             <TextInput
               style={styles.timeInput}
               value={settleStartTime}
-              onPress={handleStartTime}
               editable={false} // Adding hint in TextInput using Placeholder option.
               placeholder=""
               placeholderTextColor="#8d98b0"
             />
           </Pressable>
-          <Button icon="clock-time-three" 
-            isVisible={isStTimePickerVisible}
-            mode="time"
-            onConfirm={handleStartTime}
-            onCancel={hidestTimePicker}
+          <Button icon="calendar" onPress={showStDatePicker}></Button>
+          <DateTimePickerModal
+            isVisible={isStDatePickerVisible}
+            mode="date"
+            onConfirm={handleStartDate}
+            onCancel={hideStDatePicker}
           />
         </View>
       </View>
       <View style={{marginTop: 10}}>
-        <Text style={styles.labelStyle}>END TIME</Text>
+        <Text style={styles.labelStyle}>END DATE</Text>
         <View style={{flexDirection: 'row'}}>
-          <Pressable onPress={showEndPicker} style={{width: '50%'}}>
+          <Pressable onPress={showEndDatePicker} style={{width: '50%'}}>
             <TextInput
               style={styles.timeInput}
               value={settleEndTime}
-              onPress={handleEndTime}
               editable={false} // Adding hint in TextInput using Placeholder option.
               placeholder=""
-              // Making the Under line Transparent.
               placeholderTextColor="#8d98b0"
-              //   underlineColorAndroid="transparent"
             />
           </Pressable>
-          <Button icon="clock-time-three" onPress={showEndPicker}></Button>
+          <Button icon="calendar" onPress={showEndDatePicker}></Button>
           <DateTimePickerModal
-            isVisible={isEndTimePickerVisible}
-            mode="time"
-            onConfirm={handleEndTime}
-            onCancel={hideEndTimePicker}
+            isVisible={isEndDatePickerVisible}
+            mode="date"
+            onConfirm={handleEndDate}
+            onCancel={hideEndDatePicker}
           />
         </View>
       </View>
+      {/* <View style={{marginTop: 10}}>
+        <Text style={styles.labelStyle}>END DATE</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Pressable onPress={showEndDatePicker} style={{width: '50%'}}>
+            <TextInput
+              style={styles.timeInput}
+              value={settleEndTime}
+              editable={false} // Adding hint in TextInput using Placeholder option.
+              placeholder=""
+              placeholderTextColor="#8d98b0"
+            />
+          </Pressable>
+          <Button icon="calendar" onPress={showEndDatePicker}></Button>
+          <DateTimePickerModal
+            isVisible={isEndDatePickerVisible}
+            mode="date"
+            onConfirm={handleEndDate}
+            onCancel={hideEndDatePicker}
+            minimumDate={new Date(settleStartTime)}
+          />
+        </View>
+      </View> */}
     </View>
   );
 };

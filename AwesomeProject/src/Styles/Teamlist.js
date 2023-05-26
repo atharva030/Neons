@@ -1,19 +1,18 @@
-const { red100 } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
-
+import { Dimensions } from 'react-native';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
     height: '100%',
   },
-
   flexBox: {
     margin: 15,
     flexDirection: 'columns',
   },
   outer: {
-    margin: 25,
+    margin: 20
   },
-
   titleContainer: {
     height: 50,
     width: '100%',
@@ -27,7 +26,12 @@ module.exports = {
     width: 35,
     borderRadius: 1000,
   },
-
+  fabContainer: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  }
+  ,
   titleText: {
     width: '40%',
     height: 50,
@@ -41,20 +45,19 @@ module.exports = {
     width: '50%',
     height: 50,
     maxWidth: 300,
-    fontSize: 23,
+    fontSize: 27,
     borderRadius: 30,
-    fontFamily: 'Poppins-ExtraBold',
-    color: 'black',
+    fontFamily: 'Poppins-SemiBold',
+    color: '#5a55ca',
   },
   dayContainer: {
     height: 50,
-    // justifyContent:'space-evenly',
     flexDirection: 'row',
   },
   innerdayContainer: {
     height: 50,
     width: '65%',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
   },
   dateText: {
@@ -96,6 +99,17 @@ module.exports = {
   },
   //TaskItem Styling Starts
 
+  teamFlex: {
+    width: 300,
+    height: 130,
+    flexDirection: 'column',
+    borderColor: 'black',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    marginLeft: 30,
+    marginBottom: 10,
+  },
   taskFlex: {
     width: 300,
     height: 170,
@@ -104,7 +118,7 @@ module.exports = {
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 10,
-    marginLeft: 30,
+    marginLeft: 10,
     marginBottom: 10,
   },
   hairline: {
@@ -120,10 +134,14 @@ module.exports = {
   taskText: {
     color: '#8d98b0',
   },
-  taskBigText: {
+  personText: {
+    color: '#8d98b0',
+    marginLeft: 10
+  },
+  teamBigText: {
     color: 'black',
-    fontSize: 16,
-    fontFamily: 'Poppins-ExtraBold',
+    fontSize: 20,
+    fontFamily: 'Poppins-Regular',
   },
   secondSubFlex: {
     flexDirection: 'row',
@@ -144,132 +162,13 @@ module.exports = {
   },
   flexIcon: {
     marginTop: 25,
-    display:"flex",
     flexDirection: 'row',
-    // justifyContent: 'center',
-    alignItems:'center'
+    justifyContent: 'space-between',
   },
   iconStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'center',
     width: 80,
   },
-
-
-  dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    marginBottom: 5
-
-  },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
-    fontFamily: 'Poppins-Regular',
-
-  },
-
-  textInputStyle: {
-    height: 40,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    fontFamily: 'Poppins-Regular',
-    borderColor: 'grey',
-    backgroundColor:'white',
-    borderRadius: 5,
-  },
-
-  placeholderStyle: {
-    fontSize: 16,
-    color: 'grey'
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-  },
-
-
-  dropdown: {
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    marginBottom: 5
-
-  },
-  icon: {
-    marginRight: 5,
-  },
-  label: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    left: 22,
-    top: 8,
-    zIndex: 999,
-    paddingHorizontal: 8,
-    fontSize: 14,
-    fontFamily: 'Poppins-Regular',
-
-  },
-
-  textInputStyle: {
-    height: 40,
-    borderRadius: 5,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    fontFamily: 'Poppins-Regular',
-    borderColor: 'grey',
-    backgroundColor:'white',
-    borderRadius: 5,
-  },
-
-  placeholderStyle: {
-    fontSize: 16,
-    color: 'grey'
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
-  inputSearchStyle: {
-    height: 40,
-    fontSize: 16,
-  },
-  taskContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  taskContent: {
-    flex: 1,
-  },
-  additionalContent: {
-    marginLeft: 20,
-
-  },
-
 };

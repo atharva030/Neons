@@ -3,28 +3,71 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Pressable,
   ScrollView,
+  ToastAndroid
 } from 'react-native';
 import React from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button} from 'react-native-paper';
+import {Button, IconButton} from 'react-native-paper';
 import {useState} from 'react';
-import {IconButton} from 'react-native-paper';
-
-import LoginScreen from './Login';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterScreen = ({navigation}) => {
   const [hidePassword, sethidePassword] = useState(true);
   const [hidecnfPassword, sethidecnfPassword] = useState(true);
+  const [spinner, setSpinner] = useState(false);
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [role, setRole] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [cnfpassword, setCnfPassword] = useState('');
+
+  const handleSubmitRegister = () => {
+    console.log(name,email,password, phone,role)
+    if(password===cnfpassword){
+      setSpinner(true);
+    fetch('http://172.20.10.5:8888/api/auth/createuser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        phone: phone,
+        userRole: role,
+        password: password,
+      }),
+    })
+      .then(async response => {
+        res = await response.json();
+        console.log(res);
+        await AsyncStorage.setItem('auth-token', res.authToken);
+        auth = await AsyncStorage.getItem('auth-token');
+        console.log(auth);
+        setSpinner(false);
+        ToastAndroid.show('Registered successfully!', ToastAndroid.SHORT);
+        navigation.navigate('Login');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+    else{
+      console.log("password Not Matched")
+    }
+  };
+
   return (
-    <ScrollView style={styles.Addfullscreen}>
+    <>
+    {spinner ? (<Loader/>):(
+      <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
-        <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}
-        onPress={() => navigation.navigate('Welcome')}>
+        <TouchableOpacity
+          style={{flexDirection: 'row', marginTop: 20}}
+          onPress={() => navigation.navigate('Welcome')}>
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Register</Text>
         </TouchableOpacity>
@@ -46,29 +89,48 @@ const RegisterScreen = ({navigation}) => {
           <TextInput
             style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
+            value={name}
+            onChangeText={text => setName(text)}
           />
         </View>
-        <View>
-          <Text style={styles.emaillabelStyle}>Phone</Text>
-          <TextInput
-            style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
-            placeholder=""
-            // Making the Under line Transparent.
-            placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
-          />
+        <View
+          style={{
+            width: 280,
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}>
+          <View style={{width: 138}}>
+            <Text style={styles.emaillabelStyle}>Phone</Text>
+            <TextInput
+              style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+              placeholder=""
+              placeholderTextColor="#8d98b0"
+              value={phone}
+              onChangeText={text => setPhone(text)}
+            />
+          </View>
+          <View style={{width: 138}}>
+            <Text style={styles.emaillabelStyle}>Choose your Role</Text>
+            <TextInput
+              style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+              placeholder=""
+              // Making the Under line Transparent.
+              placeholderTextColor="#8d98b0"
+              //   underlineColorAndroid="transparent"
+              value={role}
+              onChangeText={text => setRole(text)}
+            />
+          </View>
         </View>
         <View>
           <Text style={styles.emaillabelStyle}>Email</Text>
           <TextInput
             style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
+            value={email}
+            onChangeText={text => setEmail(text)}
           />
         </View>
         <Text style={styles.labelStyle}>Password</Text>
@@ -78,9 +140,7 @@ const RegisterScreen = ({navigation}) => {
             onChangeText={setPassword}
             style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
             secureTextEntry={hidePassword}
           />
           <IconButton
@@ -98,10 +158,9 @@ const RegisterScreen = ({navigation}) => {
           <View style={{flexDirection: 'row'}}>
             <TextInput
               style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
-              placeholder=""
-              // Making the Under line Transparent.
+              value={cnfpassword}
+              onChangeText={text => setCnfPassword(text)}
               placeholderTextColor="#8d98b0"
-              //   underlineColorAndroid="transparent"
               secureTextEntry={hidecnfPassword}
             />
             <IconButton
@@ -116,14 +175,9 @@ const RegisterScreen = ({navigation}) => {
           </View>
         </View>
         <Button
-          onPress={() => navigation.navigate('Login')}
+          onPress={handleSubmitRegister}
           style={styles.submitBtn}
-
           mode="contained">
-
-          mode="contained"
-          onPress={() => navigation.navigate('Login')}>
-
           Register
         </Button>
         <View
@@ -185,6 +239,9 @@ const RegisterScreen = ({navigation}) => {
         </View>
       </View>
     </ScrollView>
+    )}
+    </>
+    
   );
 };
 

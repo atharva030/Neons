@@ -1,5 +1,4 @@
 const { Dimensions } = require("react-native");
-const { white } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
 
 const deviceHeight=Dimensions.get('window').height;
 const deviceWidth=Dimensions.get('window').width;
@@ -19,23 +18,15 @@ module.exports = {
     marginBottom: 20,
   },
 
-  modalSecondScreen: {
-    backgroundColor: 'white',
-    // padding: 30,
-    marginLeft: 21,
-    marginRight: 21,
-    flexDirection: 'column',
-  },
   addSecondScreen: {
+    flex: 2,
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
     // paddingTop: 7,
     flexDirection: 'column',
-  },
-  error:{
-    color:"red"
+    backgroundColor:'#f0f4fd'
   },
   AddtitleText: {
     height: 50,
@@ -74,7 +65,6 @@ module.exports = {
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
-    height:32,
     fontFamily: 'Poppins-Regular',
   },
   labelStyle: {
@@ -82,7 +72,6 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    marginTop:10
   },
 
   commonPadding: {},
@@ -103,27 +92,11 @@ module.exports = {
     width: '100%',
     paddingVertical: 0,
   },
-  // submitBtn: {
-  //   width: '100%',
-  //   marginTop: 20,
-  //   backgroundColor: '#5a55ca',
-  //   color: 'white',
-  // },
-  submitBtn1: {
+  submitBtn: {
     width: '100%',
     marginTop: 20,
     backgroundColor: '#5a55ca',
     color: 'white',
-    borderRadius: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 45
-  },
-  loginText:{
-    fontSize: 16,
-    color: 'white',
-    textAlign: 'center',
-    fontFamily: 'Poppins-Regular'
   },
   sendOtp: {
     width: '100%',
@@ -179,7 +152,6 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    marginTop:15
   },
 
   containerStyle: {
@@ -203,32 +175,4 @@ module.exports = {
     textAlign: 'center',
     color: 'grey',
   },
-
-  orText:{
-    fontFamily: 'Poppins-Regular',
-    color: 'black',
-    fontSize: 14,
-    textAlign: 'center',
-    marginTop: 5
-
-  },
-  lineContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom:10,
-    marginTop:15
-  },
-  grayLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: 'gray',
-    marginHorizontal: 10,
-  },
-  orText: {
-    color: 'black',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  
 };

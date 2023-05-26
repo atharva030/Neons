@@ -3,7 +3,6 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Pressable,
   ScrollView,
 } from 'react-native';
 import React from 'react';
@@ -11,8 +10,32 @@ import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import TeamItems from '../Components/TeamItems/TeamItems';
+import { TouchableWithoutFeedback } from 'react-native';
+import { useState, useEffect } from 'react';
 
+const HideKeyboard = ({children}) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+);
 const AddTeamMember = ({navigation}) => {
+
+  const [members, setMembers] = useState([])
+
+  const fetchData = () => {
+    fetch('https://raw.githubusercontent.com/hindavilande05/testAPI/master/members.json')
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        setMembers(data.members)
+      })
+  }
+console.log(members);
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
     <HideKeyboard>
@@ -67,19 +90,15 @@ const AddTeamMember = ({navigation}) => {
           </TouchableOpacity>
         </View>
 
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
-        <TeamItems userName="John Wick" userDesignation="UI/UX Designer" />
+        {members.map((items)=>{
+            return(
+              <TeamItems userName={items.userName} userDesignation={items.userDesignation}/>)
+            })}
 
         <Button
           style={styles.submitBtn}
           mode="contained"
-          onPress={() => console.log('Pressed')}>
+          onPress={() => navigation.navigate("AddTask")}>
           Done
         </Button>
       </View>
