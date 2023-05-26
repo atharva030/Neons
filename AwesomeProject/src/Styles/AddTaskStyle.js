@@ -74,6 +74,7 @@ module.exports = {
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
+    height:32,
     fontFamily: 'Poppins-Regular',
   },
   labelStyle: {
@@ -81,6 +82,7 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
+    marginTop:10
   },
 
   commonPadding: {},
@@ -177,6 +179,7 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
+    marginTop:15
   },
 
   containerStyle: {
@@ -208,6 +211,24 @@ module.exports = {
     textAlign: 'center',
     marginTop: 5
 
-  }
+  },
+  lineContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom:10,
+    marginTop:15
+  },
+  grayLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'gray',
+    marginHorizontal: 10,
+  },
+  orText: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   
 };

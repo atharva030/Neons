@@ -110,7 +110,7 @@ const TaskItem = (props) => {
   }, [status]);
 
   return (
-    <View style={[styles.taskFlex, { height: isExtended ? 170 : 170 + textInputCount * 40  }]}>
+    <View style={[styles.taskFlex, { height: isExtended ? 170 : 170 + textInputCount * 40 }]}>
       <View
         style={{
           flexDirection: 'row',
@@ -295,11 +295,11 @@ const TaskItem = (props) => {
           {/* Task */}
           <View style={styles.taskContent}>
             {/* Task details */}
-            
+
           </View>
 
           {/* Toggle button */}
-          
+
           <TouchableOpacity onPress={handleToggleFlex}>
             {isExtended ? (
               <Icon name="chevron-up-outline" />
@@ -310,16 +310,16 @@ const TaskItem = (props) => {
         </View>
 
         {/* Additional content */}
-        <Collapsible collapsed={!isExtended}>
+        <Collapsible collapsed={!isExtended} style={{color:'black'}}>
           <View style={styles.additionalContent}>
-          {/* {subtasks.map((subtask, index) => (
+            {/* {subtasks.map((subtask, index) => (
           <Text key={index}>{subtask}</Text>
         ))} */}
-    <Text>hello</Text>
+            <Text style={{color:'black'}}>hello</Text>
           </View>
 
         </Collapsible>
-        
+
       </View>
     </View>
   );
