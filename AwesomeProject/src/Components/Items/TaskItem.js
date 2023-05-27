@@ -32,43 +32,39 @@ const data = [
 const TaskItem = (props) => {
   const [statusColor, setStatusColor] = useState('');
   const [isModal1Visible, setIsModal1Visible] = useState(false);
-  const [isModal2Visible, setIsModal2Visible] = useState(false);
+  // const [isModal2Visible, setIsModal2Visible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('0');
   const [textInputCount, setTextInputCount] = useState(0);
   const [isExtended, setIsExtended] = useState(false);
   const [fetchsubtask, setFetchSubtask] = useState([]);
-  // const [teamIdByItem, setTeamIdByItem] = useState('');
-  // const [taskIdByItem, setTaskIdByItem] = useState('');
-
-    const subtaskfetch = async () => {
-      try {
-        const response = await fetch(
-          // `http://192.168.29.161:8888/api/task/${teamIdByItem}/${taskIdByItem}/subtasks`,
-          `http://192.168.29.161:8888/api/task/646b5f3e3022a3d705d558f8/646b8d5202320ab7de5760df/subtasks`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch subtasks');
+  const [taskIdbyItem, settaskIdbyItem] = useState("")
+  const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
+    try {
+      const response = await fetch(
+        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
         }
+      );
 
-        const data = await response.json();
-        console.log (data)
-        setFetchSubtask(data.subtasks);
-
-      } catch (error) {
-        console.log(error);
+      if (!response.ok) {
+        throw new Error('Failed to update subtasks');
       }
-    };
-  
+
+      console.log("This is response",response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const handleToggleFlex = () => {
     setIsExtended(!isExtended);
-    subtaskfetch();
+    // subtaskfetch();
   };
 
   const handleDropdownChange = (value) => {
@@ -77,37 +73,54 @@ const TaskItem = (props) => {
   };
 
 
+  const [subtaskValues, setSubtaskValues] = useState([]);
+
+  const handleSubmitModal = () => {
+    const formattedSubtasks = subtaskValues.map((value) => ({ title: value }));
+    const payload = { subTasks: formattedSubtasks };
+    addSubtask(props.teamIdByItem, taskIdbyItem, payload)
+    setIsModal1Visible(false);
+  };
+
+
+  const handleSubtaskChange = (index, value) => {
+    const updatedSubtaskValues = [...subtaskValues];
+    updatedSubtaskValues[index] = value;
+    setSubtaskValues(updatedSubtaskValues);
+  };
+
   const renderTextInputs = () => {
     const textInputs = [];
+
     for (let i = 0; i < textInputCount; i++) {
       textInputs.push(
         <TextInput
           style={styles.textInputStyle}
           key={i}
           placeholder={`SubTask ${i + 1}`}
+          onChangeText={(value) => handleSubtaskChange(i, value)}
         />
       );
     }
+
     return textInputs;
   };
 
-  const handleAddSubTaskClick = () => {
+  const handleAddSubTaskClick = (taskid) => {
     setIsModal1Visible(true);
+    settaskIdbyItem(taskid)
   };
 
-  const handleEditClick = (id,title,desc,endDate) => {
+  const handleEditClick = (id, title, desc, endDate) => {
     props.setIsModalVisible(true);
     props.settaskId(id)
     // props.handleEditClick()
-    props.setFormData({ editTitle: title ,editDesc:desc,endDate:endDate});
+    props.setFormData({ editTitle: title, editDesc: desc, endDate: endDate });
   };
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (taskId, teamId) => {
     // Implement delete functionality
-  };
-
-  const handleStatusUpdate = () => {
-    // Implement status update functionality
+    props.deleteTask(teamId, taskId)
   };
 
   const status = props.status;
@@ -133,10 +146,10 @@ const TaskItem = (props) => {
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
         <Text style={{ color: statusColor, padding: 10 }}>{props.status}</Text>
         <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={handleAddSubTaskClick}>
+          <TouchableOpacity onPress={() => handleAddSubTaskClick(props.id)}>
             <Icon name="reader" color="black" size={19} style={{ marginRight: 10 }} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={()=>handleEditClick(props.id,props.title,props.desc,props.time)}>
+          <TouchableOpacity onPress={() => handleEditClick(props.id, props.title, props.desc, props.time)}>
             <Icon
               name="md-pencil-sharp"
               color="grey"
@@ -144,7 +157,7 @@ const TaskItem = (props) => {
               style={{ marginRight: 10 }}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleDeleteClick}>
+          <TouchableOpacity onPress={() => handleDeleteClick(props.id, props.teamIdByItem)}>
             <Icon name="md-trash-bin" color="grey" size={20} style={{ marginRight: 10 }} />
           </TouchableOpacity>
         </View>
@@ -173,14 +186,15 @@ const TaskItem = (props) => {
         >
           <View style={styles.container}>
             <ScrollView>
-              <Text style={[styles.label, isExtended && { color: 'blue' }]}>No. of Subtasks</Text>
+              {/* <Text style={[styles.label, isExtended && { color: 'blue' }]}>No. of Subtasks</Text> */}
               <Dropdown
                 style={[styles.dropdown, isExtended && { borderColor: 'blue' }]}
                 selectedValue={selectedOption}
                 onValueChange={handleDropdownChange}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
+                placeholderStyle={[styles.placeholderStyle, { color: 'black' }]}
+                selectedTextStyle={[styles.selectedTextStyle, { color: 'black' }]}
+                inputSearchStyle={[styles.inputSearchStyle, { color: 'black' }]}
+                optionTextStyle={{ color: 'black' }}
                 iconStyle={styles.iconStyle}
                 data={data}
                 search
@@ -207,7 +221,7 @@ const TaskItem = (props) => {
             <Button icon="close" mode="contained" onPress={() => setIsModal1Visible(false)}>
               Close
             </Button>
-            <Button icon="check" mode="contained" onPress={() => setIsModal1Visible(false)} style={{ marginLeft: 5 }}>
+            <Button icon="check" mode="contained" onPress={handleSubmitModal} style={{ marginLeft: 5 }}>
               Done
             </Button>
           </View>
@@ -257,22 +271,24 @@ const TaskItem = (props) => {
           </View>
 
           {/* Toggle button */}
-
           <TouchableOpacity onPress={handleToggleFlex}>
             {isExtended ? (
-              <Icon name="chevron-up-outline" />
+              <Icon name="chevron-up-outline" color="black" size={20} />
             ) : (
-              <Icon name="chevron-down-outline" />
+              <Icon name="chevron-down-outline" color="black" size={20} />
             )}
           </TouchableOpacity>
+
+
         </View>
 
         {/* Additional content */}
-        <Collapsible collapsed={!isExtended} style={{color:'black'}}>
+        <Collapsible collapsed={!isExtended} style={{ color: 'black' }}>
           <View style={styles.additionalContent}>
             {/* {fetchsubtask.map((subtask, index) => (
               <Text key={index}>{subtask}</Text>
             ))} */}
+            <Text>naldnkadnkasndaksjna</Text>
           </View>
         </Collapsible>
       </View>

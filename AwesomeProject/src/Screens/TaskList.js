@@ -46,10 +46,7 @@ const TaskList = ({ navigation, route }) => {
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
-    console.log(formData);
-    console.log(teamId);
-    console.log(taskId);
-    fetch(`http://192.168.172.113:8888/api/task/${teamId}/updatetask/${taskId}`, {
+    fetch(`http://192.168.43.70:8888/api/task/${teamId}/updatetask/${taskId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -65,19 +62,21 @@ const TaskList = ({ navigation, route }) => {
   };
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://192.168.172.113:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
       }
-
       const data = await response.json();
       setfetchTask(data.tasks);
+      setTimeout(() => {
+        setRefreshing(false)
+        console.log("after", refreshing)
+      }, 1200);
     } catch (error) {
       console.log(error);
     }
@@ -85,35 +84,12 @@ const TaskList = ({ navigation, route }) => {
 
   const refreshfetchTasks = async () => {
     setRefreshing(true)
-    try {
-      const response = await fetch(`http://192.168.172.113:8888/api/task/${teamIdByItem}/fetchtasks`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch tasks');
-      }
-
-      const data = await response.json();
-      setfetchTask(data.tasks);
-      console.log("Data", fetchTask);
-      console.log("Before", refreshing)
-      setTimeout(() => {
-        setRefreshing(false)
-        console.log("after", refreshing)
-      }, 1200);
-
-    } catch (error) {
-      console.log(error);
-    }
+    fetchTasks();
   };
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.172.113:8888/api/members/getuser', {
+    fetch('http://192.168.43.70:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -122,14 +98,6 @@ const TaskList = ({ navigation, route }) => {
       .then(response => response.json())
       .then(data => {
         setresultTeamMemberData(data)
-
-        // console.log(resultTeamMemberData); // this will log the array of objects returned by the API
-        // you can perform any additional logic here based on the returned data
-        //   navigation.navigate('NavigationScreen');
-        // for (let i = 0; i < resultTeamData.length; i++) {
-        //     const membersSize = resultTeamData[i].members.length;
-        //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
-        // }
       })
       .catch(err => {
         console.log(err);
@@ -138,7 +106,7 @@ const TaskList = ({ navigation, route }) => {
   }
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://192.168.172.113:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -158,26 +126,26 @@ const TaskList = ({ navigation, route }) => {
 
   const deleteTask = async (teamId, taskId) => {
     try {
-        const response = await fetch(`http://192.168.172.113:8888/api/team/deleteteam/${teamId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamId}/deletetask/${taskId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
-        if (response.ok) {
-            console.log(`Team with ID ${teamId} deleted successfully`);
-        } else {
-            console.log(`Error deleting team with ID ${teamId}`);
-        }
+      if (response.ok) {
+        console.log(`Team with ID ${teamId} deleted successfully`);
+        fetchTasks();
+      } else {
+        console.log(`Error deleting team with ID ${teamId}`);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-  // console.log("Final array",role)
-  //This is sending the Members ID to the Backend 
+
   const handleAddMember = async () => {
-    fetch(`http://192.168.172.113:8888/api/team/${teamIdByItem}`, {
+    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -276,8 +244,8 @@ const TaskList = ({ navigation, route }) => {
             </View>
           </Modal>
         </Portal>
-         {/* Edit Task Modal Ends */}
-         {/* Listing to add team members starts */}
+        {/* Edit Task Modal Ends */}
+        {/* Listing to add team members starts */}
         <Portal>
           <Modal visible={memberTeam} onDismiss={() => setmemberTeam(false)} contentContainerStyle={containerMemberStyle} >
             <ScrollView>
@@ -310,7 +278,7 @@ const TaskList = ({ navigation, route }) => {
             </View>
           </Modal>
         </Portal>
-         {/* Listing to add team members end */}
+        {/* Listing to add team members end */}
         {/* Add task Modal start */}
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
@@ -375,7 +343,6 @@ const TaskList = ({ navigation, route }) => {
                 <TaskItem
                   status={items.status}
                   handleEditClick={handleEditClick}
-                  // person={items.person}
                   settaskId={settaskId}
                   setIsModalVisible={setIsModalVisible}
                   setFormData={setFormData}
@@ -385,6 +352,7 @@ const TaskList = ({ navigation, route }) => {
                   time={items.endDate}
                   teamIdByItem={teamIdByItem}
                   deleteTask={deleteTask}
+                  taskI
                 />)
             })}
 
