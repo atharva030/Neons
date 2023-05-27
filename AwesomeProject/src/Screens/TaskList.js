@@ -71,13 +71,15 @@ const TaskList = ({ navigation, route }) => {
           'Content-Type': 'application/json',
         },
       });
-
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
       }
-
       const data = await response.json();
       setfetchTask(data.tasks);
+      setTimeout(() => {
+        setRefreshing(false)
+        console.log("after", refreshing)
+      }, 1200);
     } catch (error) {
       console.log(error);
     }
@@ -122,14 +124,6 @@ const TaskList = ({ navigation, route }) => {
       .then(response => response.json())
       .then(data => {
         setresultTeamMemberData(data)
-
-        // console.log(resultTeamMemberData); // this will log the array of objects returned by the API
-        // you can perform any additional logic here based on the returned data
-        //   navigation.navigate('NavigationScreen');
-        // for (let i = 0; i < resultTeamData.length; i++) {
-        //     const membersSize = resultTeamData[i].members.length;
-        //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
-        // }
       })
       .catch(err => {
         console.log(err);
@@ -165,17 +159,17 @@ const TaskList = ({ navigation, route }) => {
             },
         });
 
-        if (response.ok) {
-            console.log(`Team with ID ${teamId} deleted successfully`);
-        } else {
-            console.log(`Error deleting team with ID ${teamId}`);
-        }
+      if (response.ok) {
+        console.log(`Team with ID ${teamId} deleted successfully`);
+        fetchTasks();
+      } else {
+        console.log(`Error deleting team with ID ${teamId}`);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-  // console.log("Final array",role)
-  //This is sending the Members ID to the Backend 
+
   const handleAddMember = async () => {
     fetch(`http://192.168.43.60:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
@@ -276,8 +270,8 @@ const TaskList = ({ navigation, route }) => {
             </View>
           </Modal>
         </Portal>
-         {/* Edit Task Modal Ends */}
-         {/* Listing to add team members starts */}
+        {/* Edit Task Modal Ends */}
+        {/* Listing to add team members starts */}
         <Portal>
           <Modal visible={memberTeam} onDismiss={() => setmemberTeam(false)} contentContainerStyle={containerMemberStyle} >
             <ScrollView>
@@ -310,7 +304,7 @@ const TaskList = ({ navigation, route }) => {
             </View>
           </Modal>
         </Portal>
-         {/* Listing to add team members end */}
+        {/* Listing to add team members end */}
         {/* Add task Modal start */}
         <Portal>
           <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
@@ -375,7 +369,6 @@ const TaskList = ({ navigation, route }) => {
                 <TaskItem
                   status={items.status}
                   handleEditClick={handleEditClick}
-                  // person={items.person}
                   settaskId={settaskId}
                   setIsModalVisible={setIsModalVisible}
                   setFormData={setFormData}
@@ -385,6 +378,7 @@ const TaskList = ({ navigation, route }) => {
                   time={items.endDate}
                   teamIdByItem={teamIdByItem}
                   deleteTask={deleteTask}
+                  taskI
                 />)
             })}
 
