@@ -395,7 +395,7 @@ const TaskList = ({ navigation, route }) => {
                 icon: 'plus',
                 label: 'Add Task',
                 onPress: () => showModal(),
-              },
+              }, 
               {
                 icon: 'plus',
                 label: 'Add Team Members',
