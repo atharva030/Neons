@@ -144,10 +144,10 @@ module.exports = {
   },
   flexIcon: {
     marginTop: 25,
-    display:"flex",
+    display: "flex",
     flexDirection: 'row',
     // justifyContent: 'center',
-    alignItems:'center'
+    alignItems: 'center'
   },
   iconStyle: {
     flexDirection: 'row',
@@ -188,7 +188,7 @@ module.exports = {
     paddingHorizontal: 10,
     fontFamily: 'Poppins-Regular',
     borderColor: 'grey',
-    backgroundColor:'white',
+    backgroundColor: 'white',
     borderRadius: 5,
   },
 
@@ -240,7 +240,7 @@ module.exports = {
     paddingHorizontal: 10,
     fontFamily: 'Poppins-Regular',
     borderColor: 'grey',
-    backgroundColor:'white',
+    backgroundColor: 'white',
     borderRadius: 5,
   },
 

@@ -121,6 +121,11 @@ const HomeScreen = ({ navigation }) => {
             });
 
     }
+    const refreshFetchTeam = async () => {
+        // console.log("Hey")
+        setRefreshing(true)
+        fetchTeam();
+    }
     const deleteTeam = async (teamId) => {
         try {
             const response = await fetch(`http://192.168.43.60:8888/api/team/deleteteam/${teamId}`, {
