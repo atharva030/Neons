@@ -44,7 +44,7 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     console.log(email, password);
     setSpinner(true);
-    fetch('http://192.168.172.113:8888/api/auth/login', {
+    fetch('http://192.168.29.161:8888/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

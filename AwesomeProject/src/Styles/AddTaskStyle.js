@@ -1,5 +1,5 @@
 const { Dimensions } = require("react-native");
-const { white } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
+const { white, blueGrey100 } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
 
 const deviceHeight=Dimensions.get('window').height;
 const deviceWidth=Dimensions.get('window').width;
@@ -230,5 +230,39 @@ module.exports = {
     fontSize: 16,
     fontWeight: 'bold',
   },
-  
+  // confirmationModal:{
+  //   background:'blueGrey100',
+  //   backgroundColor: 'white',
+  //   padding: 20,
+  //   height: '100%',
+  //   width: '100%',
+  //   borderRadius: 18,
+  //   justifyContent: 'center',
+  //   alignSelf: 'center',
+  //   alignItems: 'center',
+  //   zindex : 50
+  // },
+  confirmationModal: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 8,
+    height:'40%',
+    width:'100%',
+    zindex : 70
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  confirmButton: {
+    width: 100,
+  },
+  cancelButton: {
+    width: 100,
+  },
+  confomationtex:{
+    color:'black',
+    fontFamily: 'Poppins-Regular', 
+  }
 };
