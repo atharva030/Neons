@@ -30,6 +30,7 @@ const data = [
 ];
 
 const TaskItem = (props) => {
+  const status = props.status;
   const [statusColor, setStatusColor] = useState('');
   const [isModal1Visible, setIsModal1Visible] = useState(false);
   // const [isModal2Visible, setIsModal2Visible] = useState(false);
@@ -37,11 +38,12 @@ const TaskItem = (props) => {
   const [textInputCount, setTextInputCount] = useState(0);
   const [isExtended, setIsExtended] = useState(false);
   const [fetchsubtask, setFetchSubtask] = useState([]);
+  const [subtaskValues, setSubtaskValues] = useState([]);
   const [taskIdbyItem, settaskIdbyItem] = useState("")
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        `http://192.168.97.229:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
           headers: {
@@ -55,15 +57,15 @@ const TaskItem = (props) => {
         throw new Error('Failed to update subtasks');
       }
 
-      console.log("This is response",response);
+      console.log("This is response", response);
     } catch (error) {
       console.log(error);
     }
   };
 
-
-  const handleToggleFlex = () => {
+  const handleToggleFlex = (taskId) => {
     setIsExtended(!isExtended);
+    fetchSubtask(props.teamIdByItem, taskId)
     // subtaskfetch();
   };
 
@@ -72,16 +74,12 @@ const TaskItem = (props) => {
     setTextInputCount(Number(value));
   };
 
-
-  const [subtaskValues, setSubtaskValues] = useState([]);
-
   const handleSubmitModal = () => {
     const formattedSubtasks = subtaskValues.map((value) => ({ title: value }));
     const payload = { subTasks: formattedSubtasks };
     addSubtask(props.teamIdByItem, taskIdbyItem, payload)
     setIsModal1Visible(false);
   };
-
 
   const handleSubtaskChange = (index, value) => {
     const updatedSubtaskValues = [...subtaskValues];
@@ -119,11 +117,27 @@ const TaskItem = (props) => {
   };
 
   const handleDeleteClick = (taskId, teamId) => {
-    // Implement delete functionality
     props.deleteTask(teamId, taskId)
   };
+  const fetchSubtask = async (teamId, taskId) => {
+    try {
+      const response = await fetch(`http://192.168.97.229:8888/api/task/${teamId}/fetchsubtasks/${taskId}`, {
+        method: 'GET',
+      });
 
-  const status = props.status;
+      if (!response.ok) {
+        throw new Error('Failed to fetch subtasks');
+      }
+
+      const data = await response.json();
+      setFetchSubtask(data);
+      console.log(fetchsubtask);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   useEffect(() => {
     switch (status) {
       case 'URGENT':
@@ -271,7 +285,7 @@ const TaskItem = (props) => {
           </View>
 
           {/* Toggle button */}
-          <TouchableOpacity onPress={handleToggleFlex}>
+          <TouchableOpacity onPress={() => handleToggleFlex(props.id)} >
             {isExtended ? (
               <Icon name="chevron-up-outline" color="black" size={20} />
             ) : (
@@ -285,10 +299,9 @@ const TaskItem = (props) => {
         {/* Additional content */}
         <Collapsible collapsed={!isExtended} style={{ color: 'black' }}>
           <View style={styles.additionalContent}>
-            {/* {fetchsubtask.map((subtask, index) => (
-              <Text key={index}>{subtask}</Text>
-            ))} */}
-            <Text>naldnkadnkasndaksjna</Text>
+            {fetchsubtask.map((subtask) => (
+              <Text key={subtask._id}>{subtask.title}</Text>
+            ))}
           </View>
         </Collapsible>
       </View>
