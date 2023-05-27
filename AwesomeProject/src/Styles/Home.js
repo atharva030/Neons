@@ -262,7 +262,7 @@ module.exports = {
   taskContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 50,
   },
   taskContent: {
     flex: 1,
@@ -272,4 +272,11 @@ module.exports = {
 
   },
 
+  downArrowText:{
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+   
+
+
+  }
 };

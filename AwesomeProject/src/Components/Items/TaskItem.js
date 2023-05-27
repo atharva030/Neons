@@ -43,7 +43,7 @@ const TaskItem = (props) => {
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        `http://192.168.29.161:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
           headers: {
@@ -65,13 +65,15 @@ const TaskItem = (props) => {
 
   const handleToggleFlex = (taskId) => {
     setIsExtended(!isExtended);
-    fetchSubtask(props.teamIdByItem, taskId)
     // subtaskfetch();
+    fetchSubtask(props.teamIdByItem, taskId)
+
   };
 
   const handleDropdownChange = (value) => {
     setSelectedOption(value);
     setTextInputCount(Number(value));
+    
   };
 
   const handleSubmitModal = () => {
@@ -100,13 +102,13 @@ const TaskItem = (props) => {
         />
       );
     }
-
     return textInputs;
   };
 
   const handleAddSubTaskClick = (taskid) => {
     setIsModal1Visible(true);
     settaskIdbyItem(taskid)
+    
   };
 
   const handleEditClick = (id, title, desc, endDate) => {
@@ -121,7 +123,7 @@ const TaskItem = (props) => {
   };
   const fetchSubtask = async (teamId, taskId) => {
     try {
-      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamId}/fetchsubtasks/${taskId}`, {
+      const response = await fetch(`http://192.168.29.161:8888/api/task/${teamId}/fetchsubtasks/${taskId}`, {
         method: 'GET',
       });
 
@@ -275,16 +277,16 @@ const TaskItem = (props) => {
         </Modal>
       </Portal> */}
 
+
       <View>
         {/* Task content */}
         <View style={styles.taskContainer}>
           {/* Task */}
           <View style={styles.taskContent}>
             {/* Task details */}
-
+            <Text style={styles.downArrowText}>View More</Text>
           </View>
 
-          {/* Toggle button */}
           <TouchableOpacity onPress={() => handleToggleFlex(props.id)} >
             {isExtended ? (
               <Icon name="chevron-up-outline" color="black" size={20} />
@@ -292,18 +294,15 @@ const TaskItem = (props) => {
               <Icon name="chevron-down-outline" color="black" size={20} />
             )}
           </TouchableOpacity>
-
-
         </View>
-
         {/* Additional content */}
-        <Collapsible collapsed={!isExtended} style={{ color: 'black' }}>
-          <View style={styles.additionalContent}>
-            {fetchsubtask.map((subtask) => (
+        <Collapsible collapsed={!isExtended } style={{ color: 'black' }}  >
+          {/* <View style={styles.additionalContent}>
+          </View> */}
+        </Collapsible>
+        {fetchsubtask.map((subtask) => (
               <Text key={subtask._id}>{subtask.title}</Text>
             ))}
-          </View>
-        </Collapsible>
       </View>
     </View>
   );
