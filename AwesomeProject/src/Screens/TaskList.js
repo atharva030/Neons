@@ -85,7 +85,30 @@ const TaskList = ({ navigation, route }) => {
 
   const refreshfetchTasks = async () => {
     setRefreshing(true)
-    fetchTasks();
+    try {
+      const response = await fetch(`http://192.168.43.60:8888/api/task/${teamIdByItem}/fetchtasks`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch tasks');
+      }
+
+      const data = await response.json();
+      setfetchTask(data.tasks);
+      console.log("Data", fetchTask);
+      console.log("Before", refreshing)
+      setTimeout(() => {
+        setRefreshing(false)
+        console.log("after", refreshing)
+      }, 1200);
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchMembers = async () => {
