@@ -316,7 +316,7 @@ module.exports = {
   uploadbtnTxt:{
     
     fontSize: 16
-  }
+  },
 
   downArrowText:{
     fontSize: 12,
