@@ -71,13 +71,15 @@ const TaskItem = props => {
 
   const handleToggleFlex = taskId => {
     setIsExtended(!isExtended);
-    fetchSubtask(props.teamIdByItem, taskId);
     // subtaskfetch();
+    fetchSubtask(props.teamIdByItem, taskId)
+
   };
 
   const handleDropdownChange = value => {
     setSelectedOption(value);
     setTextInputCount(Number(value));
+    
   };
 
   const handleSubmitModal = () => {
@@ -106,13 +108,13 @@ const TaskItem = props => {
         />,
       );
     }
-
     return textInputs;
   };
 
   const handleAddSubTaskClick = taskid => {
     setIsModal1Visible(true);
-    settaskIdbyItem(taskid);
+    settaskIdbyItem(taskid)
+    
   };
 
   const handleEditClick = (id, title, desc, endDate) => {
@@ -331,6 +333,7 @@ const TaskItem = props => {
           </View>
         </Modal>
       </Portal> */}
+
 
       <View>
         {/* Task content */}
