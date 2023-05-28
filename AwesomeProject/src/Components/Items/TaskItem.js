@@ -1,13 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Portal, Button, Modal, TextInput} from 'react-native-paper';
-import {Dropdown} from 'react-native-element-dropdown';
-import {ScrollView} from 'react-native';
+import { Portal, Button, Modal, TextInput } from 'react-native-paper';
+import { Dropdown } from 'react-native-element-dropdown';
+import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 
 import styles from '../../Styles/Home';
-import styles1, {error} from '../../Styles/AddTaskStyle';
+import styles1, { error } from '../../Styles/AddTaskStyle';
 
 const containerStyle = {
   backgroundColor: 'white',
@@ -22,14 +22,14 @@ const containerStyle = {
 // const subtaskCount = fetchsubtask.length;
 
 const data = [
-  {label: '1', value: '1'},
-  {label: '2', value: '2'},
-  {label: '3', value: '3'},
-  {label: '4', value: '4'},
-  {label: '5', value: '5'},
-  {label: '6', value: '6'},
-  {label: '7', value: '7'},
-  {label: '8', value: '8'},
+  { label: '1', value: '1' },
+  { label: '2', value: '2' },
+  { label: '3', value: '3' },
+  { label: '4', value: '4' },
+  { label: '5', value: '5' },
+  { label: '6', value: '6' },
+  { label: '7', value: '7' },
+  { label: '8', value: '8' },
 ];
 
 const TaskItem = props => {
@@ -49,7 +49,7 @@ const TaskItem = props => {
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
       const response = await fetch(
-        `http://192.168.43.60:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
           headers: {
@@ -79,12 +79,12 @@ const TaskItem = props => {
   const handleDropdownChange = value => {
     setSelectedOption(value);
     setTextInputCount(Number(value));
-    
+
   };
 
   const handleSubmitModal = () => {
-    const formattedSubtasks = subtaskValues.map(value => ({title: value}));
-    const payload = {subTasks: formattedSubtasks};
+    const formattedSubtasks = subtaskValues.map(value => ({ title: value }));
+    const payload = { subTasks: formattedSubtasks };
     addSubtask(props.teamIdByItem, taskIdbyItem, payload);
     setIsModal1Visible(false);
   };
@@ -114,14 +114,14 @@ const TaskItem = props => {
   const handleAddSubTaskClick = taskid => {
     setIsModal1Visible(true);
     settaskIdbyItem(taskid)
-    
+
   };
 
   const handleEditClick = (id, title, desc, endDate) => {
     props.setIsModalVisible(true);
     props.settaskId(id);
     // props.handleEditClick()
-    props.setFormData({editTitle: title, editDesc: desc, endDate: endDate});
+    props.setFormData({ editTitle: title, editDesc: desc, endDate: endDate });
   };
 
   //this is the function for subtask checkboxes and upload button
@@ -143,7 +143,7 @@ const TaskItem = props => {
   const fetchSubtask = async (teamId, taskId) => {
     try {
       const response = await fetch(
-        `http://192.168.43.60:8888/api/task/${teamId}/fetchsubtasks/${taskId}`,
+        `http://192.168.43.70:8888/api/task/${teamId}/fetchsubtasks/${taskId}`,
         {
           method: 'GET',
         },
@@ -183,22 +183,22 @@ const TaskItem = props => {
   }, [status, isExtended, fetchsubtask]);
 
   return (
-    <View style={[styles.taskFlex, {height: taskFlexHeight}]}>
+    <View style={[styles.taskFlex, { height: taskFlexHeight }]}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <Text style={{color: statusColor, padding: 10}}>{props.status}</Text>
-        <View style={{flexDirection: 'row'}}>
+        <Text style={{ color: statusColor, padding: 10 }}>{props.status}</Text>
+        <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity onPress={() => handleAddSubTaskClick(props.id)}>
-            <Icon
+            {fetchsubtask.length > 0 ? "" : <Icon
               name="reader"
               color="black"
               size={19}
-              style={{marginRight: 10}}
-            />
+              style={{ marginRight: 10 }}
+            />}
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() =>
@@ -208,7 +208,7 @@ const TaskItem = props => {
               name="md-pencil-sharp"
               color="grey"
               size={19}
-              style={{marginRight: 10}}
+              style={{ marginRight: 10 }}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -217,7 +217,7 @@ const TaskItem = props => {
               name="md-trash-bin"
               color="grey"
               size={20}
-              style={{marginRight: 10}}
+              style={{ marginRight: 10 }}
             />
           </TouchableOpacity>
         </View>
@@ -247,13 +247,13 @@ const TaskItem = props => {
             <ScrollView>
               {/* <Text style={[styles.label, isExtended && { color: 'blue' }]}>No. of Subtasks</Text> */}
               <Dropdown
-                style={[styles.dropdown, isExtended && {borderColor: 'blue'}]}
+                style={[styles.dropdown, isExtended && { borderColor: 'blue' }]}
                 selectedValue={selectedOption}
                 onValueChange={handleDropdownChange}
-                placeholderStyle={[styles.placeholderStyle, {color: 'black'}]}
-                selectedTextStyle={[styles.selectedTextStyle, {color: 'black'}]}
-                inputSearchStyle={[styles.inputSearchStyle, {color: 'black'}]}
-                optionTextStyle={{color: 'black'}}
+                placeholderStyle={[styles.placeholderStyle, { color: 'black' }]}
+                selectedTextStyle={[styles.selectedTextStyle, { color: 'black' }]}
+                inputSearchStyle={[styles.inputSearchStyle, { color: 'black' }]}
+                optionTextStyle={{ color: 'black' }}
                 iconStyle={styles.iconStyle}
                 data={data}
                 search
@@ -294,46 +294,12 @@ const TaskItem = props => {
               icon="check"
               mode="contained"
               onPress={handleSubmitModal}
-              style={{marginLeft: 5}}>
+              style={{ marginLeft: 5 }}>
               Done
             </Button>
           </View>
         </Modal>
       </Portal>
-
-      {/* <Portal>
-        <Modal
-          visible={isModal2Visible}
-          onDismiss={() => setIsModal2Visible(false)}
-          contentContainerStyle={containerStyle}
-        >
-          <View style={{ marginTop: 10 }}>
-            <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
-            <TextInput
-              style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
-              placeholder="Team Name"
-              placeholderTextColor="#8d98b0"
-            />
-          </View>
-          <View style={{ marginTop: 10 }}>
-            <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
-            <TextInput
-              style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
-              placeholder="Team Description"
-              placeholderTextColor="#8d98b0"
-            />
-          </View>
-          <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
-            <Button icon="close" mode="contained" onPress={() => setIsModal2Visible(false)}>
-              Close
-            </Button>
-            <Button icon="check" mode="contained" onPress={() => setIsModal2Visible(false)} style={{ marginLeft: 5 }}>
-              Done
-            </Button>
-          </View>
-        </Modal>
-      </Portal> */}
-
 
       <View>
         {/* Task content */}
@@ -346,62 +312,65 @@ const TaskItem = props => {
           <TouchableOpacity onPress={() => handleToggleFlex(props.id)}>
             {isExtended ? (
               <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon name="chevron-up-outline" color="black" size={20} />
                   <Text style={styles.taskText}> See less</Text>
                 </View>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon name="chevron-down-outline" color="black" size={20} />
-                  <Text style={styles.taskText}> See More</Text>
+                  <Text style={styles.taskText}>See Subtasks</Text>
                 </View>
               </React.Fragment>
             )}
           </TouchableOpacity>
         </View>
 
-        <Collapsible collapsed={!isExtended} style={{color: 'black'}}>
+        <Collapsible collapsed={!isExtended} style={{ color: 'black' }}>
           <View style={styles.additionalContent}>
             <View style={styles.subtaskBlockView}>
-              <Text style={styles.subtaskTitle}>Subtasks</Text>
-              {fetchsubtask.map(subtask => (
-                <View
-                  key={subtask._id}
-                  style={[styles.individualSubT, {flexDirection: 'row', alignItems: 'center'}]}>
-                  <TouchableOpacity
-                    style={styles.subTaskSelectCheck}
-                    onPress={
-                      () => toggleCheckbox(subtask._id) // Pass the subtask ID to the toggleCheckbox function
-                    }>
-                    <Icon
-                      name={
-                        isChecked(subtask._id)
-                          ? 'md-checkbox'
-                          : 'md-checkbox-outline'
-                      }
-                      size={30}
-                      color={isChecked(subtask._id) ? '#097969' : '#8d98b0'}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.subTTitle}>{subtask.title}</Text>
-                  <TouchableOpacity
-                    style={[
-                      styles.uploadButton,
-                      {
-                        backgroundColor: isChecked(subtask._id)
-                          ? '#00A36C'
-                          : 'lightgrey',
-                      },
-                    ]}
-                    disabled={!isChecked(subtask._id)}
+              {fetchsubtask.length === 0 ? (<Text style={{ color: "black" }}>You don't have subtask to show</Text>
+              ) :
+                // <Text style={styles.subtaskTitle}>Subtasks</Text>
+                fetchsubtask.map(subtask => (
+                  
+                  <View
+                    key={subtask._id}
+                    style={[styles.individualSubT, { flexDirection: 'row', alignItems: 'center' }]}>
+                    <TouchableOpacity
+                      style={styles.subTaskSelectCheck}
+                      onPress={
+                        () => toggleCheckbox(subtask._id) // Pass the subtask ID to the toggleCheckbox function
+                      }>
+                      <Icon
+                        name={
+                          isChecked(subtask._id)
+                            ? 'md-checkbox'
+                            : 'md-checkbox-outline'
+                        }
+                        size={30}
+                        color={isChecked(subtask._id) ? '#097969' : '#8d98b0'}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.subTTitle}>{subtask.title}</Text>
+                    <TouchableOpacity
+                      style={[
+                        styles.uploadButton,
+                        {
+                          backgroundColor: isChecked(subtask._id)
+                            ? '#00A36C'
+                            : 'lightgrey',
+                        },
+                      ]}
+                      disabled={!isChecked(subtask._id)}
                     //onPress={handleUpload}
-                  >
-                    <Text style={[styles.uploadbtnTxt, {color: isChecked(subtask._id) ? '#fff' : 'grey'}]}>Upload</Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
+                    >
+                      <Text style={[styles.uploadbtnTxt, { color: isChecked(subtask._id) ? '#fff' : 'grey' }]}>Upload</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
             </View>
           </View>
         </Collapsible>
