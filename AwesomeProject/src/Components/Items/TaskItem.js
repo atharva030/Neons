@@ -187,10 +187,10 @@ const TaskItem = (props) => {
           <Text style={styles.taskText}>{props.desc}</Text>
         </View>
         <View style={styles.flexIcon}>
-          <Text style={styles.taskText}>{props.time}</Text>
           <TouchableOpacity>
             <Icon name="md-time-outline" size={15} color="grey" />
           </TouchableOpacity>
+          <Text style={styles.taskText}>{props.time}</Text>
         </View>
       </View>
 

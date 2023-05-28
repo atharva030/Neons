@@ -114,7 +114,6 @@ const AddTask = (props) => {
         </Portal>
 
         <View style={styles.modalSecondScreen}>
-          <View style={{ marginTop: 10 }}>
             <Text style={styles.labelStyle}>TASK NAME</Text>
             <TextInput
               style={styles.input}
@@ -123,7 +122,6 @@ const AddTask = (props) => {
               value={taskName}
               onChangeText={setTaskName}
             />
-          </View>
 
           <View style={{ marginTop: 10 }}>
             <Time setstDate={setStDate} setendDate={setEndDate} />

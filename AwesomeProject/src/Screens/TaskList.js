@@ -8,7 +8,7 @@ import { Modal, Button } from 'react-native-paper';
 import { FAB, Provider, DefaultTheme, Portal } from 'react-native-paper';
 import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
-import styles1 from '../Styles/AddTaskStyle';
+import styles1 from '../Styles/TasklistStyle';
 const currentDate = moment().format('MMMM DD, YYYY');
 
 const TaskList = ({ navigation, route }) => {
@@ -34,7 +34,8 @@ const TaskList = ({ navigation, route }) => {
   };
   const hideModal = () => setVisible(false);
   const containerMemberStyle = { backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 10, borderRadius: 20, width: 330, marginLeft: 10, height: 600 };
-  const containerStyle = { backgroundColor: 'white', paddingTop: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 370 };
+  const containerStyle = { backgroundColor: 'white', padding: 30, borderRadius: 20, width: 340, marginLeft: 10, height: 300 };
+  const addtaskcontainerStyle = { backgroundColor: 'white', padding: 30, borderRadius: 20, width: 340, marginLeft: 10, height: 450 };
 
   const handleSubmit = () => {
     hideModal();
@@ -46,7 +47,7 @@ const TaskList = ({ navigation, route }) => {
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
-    fetch(`http://192.168.29.161:8888/api/task/${teamId}/updatetask/${taskId}`, {
+    fetch(`http://192.168.43.70:8888/api/task/${teamId}/updatetask/${taskId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ const TaskList = ({ navigation, route }) => {
   };
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://192.168.29.161:8888/api/task/${teamIdByItem}/fetchtasks`, {
+      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamIdByItem}/fetchtasks`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +90,7 @@ const TaskList = ({ navigation, route }) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.29.161:8888/api/members/getuser', {
+    fetch('http://192.168.43.70:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -106,7 +107,7 @@ const TaskList = ({ navigation, route }) => {
   }
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -126,7 +127,7 @@ const TaskList = ({ navigation, route }) => {
 
   const deleteTask = async (teamId, taskId) => {
     try {
-      const response = await fetch(`http://192.168.29.161:8888/api/task/${teamId}/deletetask/${taskId}`, {
+      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamId}/deletetask/${taskId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +146,7 @@ const TaskList = ({ navigation, route }) => {
   };
 
   const handleAddMember = async () => {
-    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}`, {
+    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -203,7 +204,7 @@ const TaskList = ({ navigation, route }) => {
         {/* Edit Task Modal Starts */}
         <Portal>
           <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
-            <View style={{ marginTop: 10 }}>
+            
               <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
               <TextInput
                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
@@ -213,8 +214,7 @@ const TaskList = ({ navigation, route }) => {
                 onChangeText={(value) => setFormData({ ...formData, editTitle: value })}
 
               />
-            </View>
-            <View style={{ marginTop: 10 }}>
+            
               <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
               <TextInput
                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
@@ -223,8 +223,7 @@ const TaskList = ({ navigation, route }) => {
                 value={formData.editDesc}
                 onChangeText={(value) => setFormData({ ...formData, editDesc: value })}
               />
-            </View>
-            <View style={{ marginTop: 10 }}>
+            <View>
               <Text style={styles1.emaillabelStyle}>Edit End Date</Text>
               <TextInput
                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
@@ -234,7 +233,7 @@ const TaskList = ({ navigation, route }) => {
                 onChangeText={(value) => setFormData({ ...formData, endDate: value })}
               />
             </View>
-            <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
+            <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15 }}>
               <Button icon="close" mode="contained" onPress={handleModalClose}>
                 Close
               </Button>
@@ -261,6 +260,7 @@ const TaskList = ({ navigation, route }) => {
                   <TeamMember
                     designation={items.designation}
                     id={items._id}
+                    name={items.name}
                     selectedIds={selectedIds}
                     setSelectedIds={setSelectedIds}
                   />
@@ -281,7 +281,7 @@ const TaskList = ({ navigation, route }) => {
         {/* Listing to add team members end */}
         {/* Add task Modal start */}
         <Portal>
-          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle} >
+          <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={addtaskcontainerStyle} >
             <AddTask hideAddModal={hideModal} teamIdByItem={teamIdByItem} />
           </Modal>
         </Portal>
