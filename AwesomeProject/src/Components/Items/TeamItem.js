@@ -4,7 +4,6 @@ import styles from '../../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { Button } from 'react-native-paper';
-
 const TeamItem = props => {
     const appFun = (id,teamTitle) => {
         console.log(id)
