@@ -299,7 +299,9 @@ module.exports = {
     fontFamily:'Poppins-Regular',
     marginLeft: 10,
     fontSize: 12,
-    color: 'black'
+    color: 'black',
+    width: 150,
+    textAlign: 'justify'
 
   },
   uploadButton:{
