@@ -1,4 +1,8 @@
-const { red100 } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
+const { red100, black } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
+import { Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+
 
 module.exports = {
   fullscreen: {
@@ -97,7 +101,7 @@ module.exports = {
   //TaskItem Styling Starts
 
   taskFlex: {
-    width: 300,
+    width: screenWidth -60,
     height: 170,
     flexDirection: 'column',
     borderColor: 'black',
@@ -105,12 +109,13 @@ module.exports = {
     padding: 10,
     borderRadius: 10,
     marginLeft: 30,
+    marginRight: 30,
     marginBottom: 10,
   },
   hairline: {
     backgroundColor: '#A2A2A2',
     height: 1,
-    width: 250,
+    width: screenWidth - 100,
     marginLeft: 10,
   },
   firstflex: {
@@ -262,7 +267,7 @@ module.exports = {
   taskContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 50,
   },
   taskContent: {
     flex: 1,
@@ -271,5 +276,55 @@ module.exports = {
     marginLeft: 20,
 
   },
+  showbtn:{
+    display: "flex",
+    flexDirection: 'row', 
+    backgroundColor: 'red'
+    
+  },
+  subtaskTitle:{
+    fontFamily:'Poppins-Bold',
+    fontSize: 20,
+    color: 'black'
 
+  },
+
+  individualSubT:{
+    backgroundColor:'#f0f4fd',
+    marginBottom: 5,
+    borderRadius: 10,
+    padding: 5
+  },
+  subTTitle:{
+    fontFamily:'Poppins-Regular',
+    marginLeft: 10,
+    fontSize: 12,
+    color: 'black',
+    width: 150,
+    textAlign: 'justify'
+
+  },
+  uploadButton:{
+    backgroundColor: '#097969',
+    borderRadius: 5,
+    margin: 10,
+    width: 100,
+    height: 40,
+    position: 'absolute',
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  uploadbtnTxt:{
+    
+    fontSize: 16
+  },
+
+  downArrowText:{
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+   
+
+
+  }
 };

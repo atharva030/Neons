@@ -179,7 +179,7 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    marginTop:15
+    // marginTop:15
   },
 
   containerStyle: {
