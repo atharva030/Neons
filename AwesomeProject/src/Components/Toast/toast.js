@@ -1,17 +1,12 @@
-import { showMessage } from 'react-native-flash-message';
-const Toast = ({ type, message, description }) => {
-    const showToast = () => {
-      showMessage({
-        message: message,
-        description: description,
-        type: type,
-        icon: 'auto',
-        duration: 3000,
-        floating: true,
-        position: 'top',
-      });
-    };
-  
-    return null;
+import React from 'react';
+import { ToastAndroid } from 'react-native';
+
+const ToastComponent = ({ message }) => {
+  const showToast = () => {
+    ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.TOP);
   };
-  export default Toast;
+
+  return showToast();
+};
+
+export default ToastComponent;

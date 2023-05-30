@@ -9,6 +9,14 @@ import { FAB, Provider, DefaultTheme, Portal } from 'react-native-paper';
 import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
 import styles1 from '../Styles/TasklistStyle';
+import ToastComponent from '../Components/Toast/toast';
+const handleSuccess = () => {
+    ToastComponent({ message: 'Task Updated Sucessfull' });
+  };
+
+  const handleBackendError = () => {
+    ToastComponent({ message: '⚠️ Please Try again later!' });
+  };;
 const currentDate = moment().format('MMMM DD, YYYY');
 
 const TaskList = ({ navigation, route }) => {
@@ -57,8 +65,11 @@ const TaskList = ({ navigation, route }) => {
         taskDesc: formData.editDesc,
         endDate: formData.endDate
       }),
-    }).catch((err) => {
+    })
+    .then( ToastComponent({ message: 'Task Edited sucessfully !' }) )
+    .catch((err) => {
       console.log(err);
+      handleBackendError()
     });
   };
   const fetchTasks = async () => {
@@ -68,21 +79,26 @@ const TaskList = ({ navigation, route }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-      });
+      }
+
+      );
+      
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
       }
+
       const data = await response.json();
       setfetchTask(data.tasks);
+      ToastComponent({ message: 'Task Fetched !' }) 
       setTimeout(() => {
-        setRefreshing(false)
-        console.log("after", refreshing)
+      setRefreshing(false)
+      console.log("after", refreshing)
       }, 1200);
     } catch (error) {
       console.log(error);
+      handleBackendError()
     }
   };
-
   const refreshfetchTasks = async () => {
     setRefreshing(true)
     try {
@@ -91,7 +107,10 @@ const TaskList = ({ navigation, route }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-      });
+        
+      }
+      // .then( ToastComponent({ message: '' }) )
+      );
 
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
@@ -108,6 +127,7 @@ const TaskList = ({ navigation, route }) => {
 
     } catch (error) {
       console.log(error);
+      handleBackendError()
     }
   };
 
@@ -123,8 +143,10 @@ const TaskList = ({ navigation, route }) => {
       .then(data => {
         setresultTeamMemberData(data)
       })
+      .then( ToastComponent({ message: 'Members Fetched' }) )
       .catch(err => {
         console.log(err);
+        handleBackendError()
       });
 
   }
@@ -135,15 +157,17 @@ const TaskList = ({ navigation, route }) => {
       headers: {
         'Content-Type': 'application/json',
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og"
-
       },
     })
       .then(response => response.json())
       .then(data => {
         setteamMembers(data)
       })
+       
+      .then( ToastComponent({ message: ' Team Members Fetched' }) )
       .catch(err => {
         console.log(err);
+        handleBackendError()
       });
 
   }
@@ -160,14 +184,15 @@ const TaskList = ({ navigation, route }) => {
       if (response.ok) {
         console.log(`Team with ID ${teamId} deleted successfully`);
         fetchTasks();
+        ToastComponent({ message: 'Team Deleted successfully' })
       } else {
         console.log(`Error deleting team with ID ${teamId}`);
       }
     } catch (error) {
       console.log(error);
+      handleBackendError()
     }
   };
-
   const handleAddMember = async () => {
     fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}`, {
       method: "PATCH",
@@ -191,9 +216,10 @@ const TaskList = ({ navigation, route }) => {
         } catch (err) {
           console.log("Error parsing JSON:", err.message);
         }
-      })
+      }).then( ToastComponent({ message: 'Members added sucessfully ' }))
       .catch((err) => {
         console.log("Error: " + err.message);
+        handleBackendError()
       });
   };
   // console.log(props.route)

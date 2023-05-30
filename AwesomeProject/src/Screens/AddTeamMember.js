@@ -12,9 +12,13 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-paper';
 import TeamItems from '../Components/TeamItems/TeamItems';
-import ToastAndroid from 'react-native-toast-message';
+
+import { ToastAndroid } from 'react-native';
 const showSuccessToast = () => {
-  ToastAndroid.show('Team Member added  successfully', ToastAndroid.SHORT);
+  ToastAndroid.showWithGravity('Fetched Team Members sucessfully  ', ToastAndroid.SHORT, ToastAndroid.TOP);
+};
+const showBackendErrorToast = () => {
+  { ToastAndroid.showWithGravity('Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP) }
 };
 const AddTeamMember = ({ navigation }) => {
   const [members, setMembers] = useState([]);
@@ -23,26 +27,22 @@ const AddTeamMember = ({ navigation }) => {
     fetch(
       'https://raw.githubusercontent.com/hindavilande05/testAPI/master/members.json'
     )
-      .then((response) => response.json())
+      .then((response) => response.json() )
       .then((data) => {
         setMembers(data.members);
-        
+        showSuccessToast()
       })
       .catch((error) => {
         console.log(error);
-        showBackendErrorPopup();
+        showBackendErrorToast()
       });
-  
-  };
-  const showBackendErrorPopup = () => {
-    Alert.alert('Error', 'There was an error in adding members', [{ text: 'OK' }], {
-      cancelable: false,
-    });
   };
   useEffect(() => {
     fetchData();
   }, []);
-
+const handlePress = () => {
+  showSuccessToast()
+}
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <ScrollView style={styles.Addfullscreen}>
@@ -114,7 +114,7 @@ const AddTeamMember = ({ navigation }) => {
             Done
           </Button>
         </View>
-        <Toast ref={(ref) => Toast.setRef(ref)} />
+
       </ScrollView>
     </TouchableWithoutFeedback>
   );

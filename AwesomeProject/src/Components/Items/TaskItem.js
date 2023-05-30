@@ -5,10 +5,12 @@ import { Portal, Button, Modal, TextInput } from 'react-native-paper';
 import { Dropdown } from 'react-native-element-dropdown';
 import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
-
+import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
 import styles1, { error } from '../../Styles/AddTaskStyle';
-
+const handleBackendError = () => {
+  ToastComponent({ message: '⚠️ Please Try again later!' });
+};
 const containerStyle = {
   backgroundColor: 'white',
   padding: 20,
@@ -62,10 +64,11 @@ const TaskItem = props => {
       if (!response.ok) {
         throw new Error('Failed to update subtasks');
       }
-
+      ToastComponent({ message: 'SubTask Added Sucessfully' }) 
       console.log('This is response', response);
     } catch (error) {
       console.log(error);
+      handleBackendError()
     }
   };
 
@@ -152,12 +155,13 @@ const TaskItem = props => {
       if (!response.ok) {
         throw new Error('Failed to fetch subtasks');
       }
-
+      ToastComponent({ message: 'SubTask Fetched Sucessfully' }) 
       const data = await response.json();
       setFetchSubtask(data);
       console.log(fetchsubtask);
     } catch (error) {
       console.log(error);
+      handleBackendError()
     }
   };
 

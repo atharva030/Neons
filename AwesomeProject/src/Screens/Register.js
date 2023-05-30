@@ -13,7 +13,15 @@ import { Button, IconButton, shadow } from 'react-native-paper';
 import styles  from '../Styles/registerstyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native';
-import { grayLine } from '../Styles/AddTaskStyle';
+import { grayLine } from '../Styles/AddTaskStyle'
+import ToastComponent from '../Components/Toast/toast';
+const handleSuccess = () => {
+    ToastComponent({ message: 'Registration Sucessfull' });
+  };
+
+  const handleBackendError = () => {
+    ToastComponent({ message: '⚠️ Please Try again later!' });
+  };;
 const RegisterScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hideCnfPassword, setHideCnfPassword] = useState(true);
@@ -49,11 +57,12 @@ const RegisterScreen = ({ navigation }) => {
           const auth = await AsyncStorage.getItem('auth-token');
           console.log(auth);
           setSpinner(false);
-          ToastAndroid.show('Registered successfully!', ToastAndroid.SHORT);
+          handleSuccess()
           navigation.navigate('Login');
         })
         .catch((error) => {
           console.error(error);
+          handleBackendError()
         });
     } else {
       console.log('Password Not Matched');
