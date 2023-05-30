@@ -28,6 +28,15 @@ const EditTask = () => {
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     };
   }, [navigation]);
+  const handleEditTask = () => {
+    // logic here 
+    Toast.show({
+      type: 'success',
+      text1: 'Success',
+      text2: 'Task edited successfully',
+      position: 'top',
+    });
+  };
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>

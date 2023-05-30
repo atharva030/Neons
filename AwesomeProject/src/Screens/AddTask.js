@@ -12,7 +12,8 @@ import { Modal, Portal, Provider, Button, RadioButton } from 'react-native-paper
 import Icon from 'react-native-vector-icons/Ionicons';
 import Time from '../Components/Time/Time';
 import styles from '../Styles/AddTaskStyle';
-
+import { ToastAndroid, Alert } from 'react-native';
+import Toast from '../Components/Toast/toast';
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -60,7 +61,15 @@ const AddTask = (props) => {
       setConfirmationVisible(true);
     }
   };
-
+  const showBackendErrorPopup = () => {
+    Alert.alert(
+      'Error',
+      'There was an error in creating the task. Please try again later.',
+      [{ text: 'OK' }],
+      { cancelable: false }
+    );
+  };
+  
   const addTaskdb = () => {
     // console.log(email, password)
     // setSpinner(true)
@@ -83,9 +92,13 @@ const AddTask = (props) => {
     })
       .then((response) => response.text())
       .then((text) => console.log(text))
-      .catch((error) => console.log(error));
-
-    hideAddModal();
+      .catch((error) => {
+        console.log( error )
+        showBackendErrorPopup()
+      }
+      );
+      showSuccessToast();
+       hideAddModal();
   };
 
   useEffect(() => {
@@ -97,7 +110,10 @@ const AddTask = (props) => {
   }, []);
 
   const hideModal = () => setVisible(false);
-
+  const showSuccessToast = () => {
+    ToastAndroid.show('Task created successfully', ToastAndroid.SHORT);
+  };
+  
   return (
     <HideKeyboard>
       <Provider>

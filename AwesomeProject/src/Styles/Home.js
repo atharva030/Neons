@@ -101,7 +101,7 @@ module.exports = {
   //TaskItem Styling Starts
 
   taskFlex: {
-    width: screenWidth -60,
+    width: screenWidth - 60,
     height: 170,
     flexDirection: 'column',
     borderColor: 'black',
@@ -267,7 +267,7 @@ module.exports = {
   taskContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 50,
+    marginBottom: 15,
   },
   taskContent: {
     flex: 1,
@@ -276,27 +276,27 @@ module.exports = {
     marginLeft: 20,
 
   },
-  showbtn:{
+  showbtn: {
     display: "flex",
-    flexDirection: 'row', 
+    flexDirection: 'row',
     backgroundColor: 'red'
-    
+
   },
-  subtaskTitle:{
-    fontFamily:'Poppins-Bold',
+  subtaskTitle: {
+    fontFamily: 'Poppins-Bold',
     fontSize: 20,
     color: 'black'
 
   },
 
-  individualSubT:{
-    backgroundColor:'#f0f4fd',
+  individualSubT: {
+    backgroundColor: '#f0f4fd',
     marginBottom: 5,
     borderRadius: 10,
     padding: 5
   },
-  subTTitle:{
-    fontFamily:'Poppins-Regular',
+  subTTitle: {
+    fontFamily: 'Poppins-Regular',
     marginLeft: 10,
     fontSize: 12,
     color: 'black',
@@ -304,7 +304,7 @@ module.exports = {
     textAlign: 'justify'
 
   },
-  uploadButton:{
+  uploadButton: {
     backgroundColor: '#097969',
     borderRadius: 5,
     margin: 10,
@@ -315,16 +315,13 @@ module.exports = {
     alignItems: 'center',
     justifyContent: 'center'
   },
-  uploadbtnTxt:{
-    
+  uploadbtnTxt: {
+
     fontSize: 16
   },
 
-  downArrowText:{
+  downArrowText: {
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
-   
-
-
   }
 };
