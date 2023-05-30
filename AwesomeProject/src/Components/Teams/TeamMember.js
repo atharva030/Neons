@@ -81,8 +81,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'thistle',
     borderRadius: 20,
-    marginTop: 10,
-    width: 280, // Adjust the width as desired
+    marginTop: 20,
+    width: 280,
+    height:70
   },
   chipPressed: {
     backgroundColor: '#ebdefa',
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+
   },
   avatar: {
     marginRight: 10,
