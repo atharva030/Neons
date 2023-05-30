@@ -13,6 +13,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Time from '../Components/Time/Time';
 import styles from '../Styles/AddTaskStyle';
 
+import { ToastAndroid } from 'react-native';
+const showSuccessToast = () => {
+  ToastAndroid.showWithGravity('Task Addded Sucessfully ', ToastAndroid.SHORT, ToastAndroid.TOP);
+};
+const showBackendErrorToast = () => {
+  { ToastAndroid.showWithGravity('Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP) }
+};
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -60,7 +67,6 @@ const AddTask = (props) => {
       setConfirmationVisible(true);
     }
   };
-
   const addTaskdb = () => {
     // console.log(email, password)
     // setSpinner(true)
@@ -83,8 +89,12 @@ const AddTask = (props) => {
     })
       .then((response) => response.text())
       .then((text) => console.log(text))
-      .catch((error) => console.log(error));
-
+      .catch((error) => {
+        console.log(error)
+        showBackendErrorToast()
+      }
+      );
+    showSuccessToast();
     hideAddModal();
   };
 
@@ -97,7 +107,6 @@ const AddTask = (props) => {
   }, []);
 
   const hideModal = () => setVisible(false);
-
   return (
     <HideKeyboard>
       <Provider>
@@ -116,14 +125,14 @@ const AddTask = (props) => {
         </Portal>
 
         <View style={styles.modalSecondScreen}>
-            <Text style={styles.labelStyle}>TASK NAME</Text>
-            <TextInput
-              style={styles.input}
-              placeholder=""
-              placeholderTextColor="#8d98b0"
-              value={taskName}
-              onChangeText={setTaskName}
-            />
+          <Text style={styles.labelStyle}>TASK NAME</Text>
+          <TextInput
+            style={styles.input}
+            placeholder=""
+            placeholderTextColor="#8d98b0"
+            value={taskName}
+            onChangeText={setTaskName}
+          />
 
           <View style={{ marginTop: 10 }}>
             <Time setstDate={setStDate} setendDate={setEndDate} />

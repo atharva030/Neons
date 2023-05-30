@@ -2,10 +2,16 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Chip, Avatar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { ToastAndroid } from 'react-native';
+const showSuccessToast = () => {
+  ToastAndroid.showWithGravity('Task Addded Sucessfully ', ToastAndroid.SHORT, ToastAndroid.TOP);
+};
+const showBackendErrorToast = () => {
+  { ToastAndroid.showWithGravity('Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP) }
+};
 const TeamMember = (props) => {
   const [isSelected, setIsSelected] = useState(false);
-console.log(props.name)
+  // console.log(props.name)
   const handlePress = () => {
     if (!isSelected) {
       setIsSelected(true);
@@ -31,7 +37,11 @@ console.log(props.name)
     console.log('Deselected:', newIds);
     props.setSelectedIds(newIds);
   };
-
+  // try {
+  //   console.log(props.name)
+  // } catch (error) {
+  //   console.log("no titel name of  add memebers ")
+  // }
   return (
     <Chip
       onPress={handlePress}
@@ -57,7 +67,12 @@ console.log(props.name)
             style={styles.avatar}
           />
           <View style={styles.textContainer}>
-            <Text style={styles.nameText}>{props.name}</Text>
+            {/* try {
+                
+            } catch (error) {
+              console.log("no name ")
+            } */}
+          <Text style={styles.nameText}>{props.name}</Text>
             <Text style={styles.designationText}>{props.designation}</Text>
           </View>
         </View>
@@ -72,8 +87,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'thistle',
     borderRadius: 20,
-    marginTop: 10,
-    width: 280, // Adjust the width as desired
+    marginTop: 20,
+    width: 280,
+    height:70
   },
   chipPressed: {
     backgroundColor: '#ebdefa',
@@ -102,6 +118,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+
   },
   avatar: {
     marginRight: 10,

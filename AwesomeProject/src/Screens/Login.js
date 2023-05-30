@@ -16,6 +16,15 @@ import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import { useValidation } from 'react-native-form-validator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { positionStyle } from 'react-native-flash-message';
+import ToastComponent from '../Components/Toast/toast';
+const handleSuccess = () => {
+    ToastComponent({ message: 'Login Sucessfull' });
+  };
+
+  const handleBackendError = () => {
+    ToastComponent({ message: '⚠️ Please Try again later!' });
+  };
 // import Seprator from '../Components/seprator/seprator';
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -30,7 +39,6 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   // const [showToast , setShowToast] = useState(false);
-
   const { validate, isFieldInError, getErrorsInField, getErrorMessages } =
     useValidation({
       state: { email, password },
@@ -61,10 +69,13 @@ const LoginScreen = ({ navigation }) => {
         setSpinner(false);
         console.log('Next');
         navigation.navigate('NavigationScreen');
+        
       })
+      .then(handleSuccess())
       .catch(err => {
         setSpinner(false);
         console.log(err);
+        handleBackendError()
       });
   }
 
@@ -72,8 +83,8 @@ const LoginScreen = ({ navigation }) => {
   const handlePress = () => {
     setIsLoading(true);
     navigation.navigate("NavigationScreen")
-  
     // Simulating an asynchronous action
+    handleSuccess()
     setTimeout(() => {
       setIsLoading(false);
       navigation.navigate("NavigationScreen")

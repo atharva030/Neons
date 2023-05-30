@@ -159,7 +159,7 @@ const CircularProgressBar = ({
         <Text
           style={{
             color: textColor,
-            fontSize: valueFontSize,
+            fontSize: valueFontSize - 8,
             fontWeight: 'bold',
             textAlign: 'center',
             textAlignVertical: 'center',

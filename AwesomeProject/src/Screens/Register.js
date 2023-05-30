@@ -13,7 +13,15 @@ import { Button, IconButton, shadow } from 'react-native-paper';
 import styles  from '../Styles/registerstyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native';
-import { grayLine } from '../Styles/AddTaskStyle';
+import { grayLine } from '../Styles/AddTaskStyle'
+import ToastComponent from '../Components/Toast/toast';
+const handleSuccess = () => {
+    ToastComponent({ message: 'Registration Sucessfull' });
+  };
+
+  const handleBackendError = () => {
+    ToastComponent({ message: '⚠️ Please Try again later!' });
+  };;
 const RegisterScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hideCnfPassword, setHideCnfPassword] = useState(true);
@@ -29,7 +37,7 @@ const RegisterScreen = ({ navigation }) => {
     console.log(name, email, password, phone, role);
     if (password === cnfpassword) {
       setSpinner(true);
-      fetch('http://192.168.29.161:8888/api/auth/createuser', {
+      fetch('http://192.168.43.60:8888/api/auth/createuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,11 +57,12 @@ const RegisterScreen = ({ navigation }) => {
           const auth = await AsyncStorage.getItem('auth-token');
           console.log(auth);
           setSpinner(false);
-          ToastAndroid.show('Registered successfully!', ToastAndroid.SHORT);
+          handleSuccess()
           navigation.navigate('Login');
         })
         .catch((error) => {
           console.error(error);
+          handleBackendError()
         });
     } else {
       console.log('Password Not Matched');
