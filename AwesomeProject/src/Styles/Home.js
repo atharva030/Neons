@@ -20,7 +20,7 @@ module.exports = {
 
   titleContainer: {
     height: 50,
-    width: '100%',
+    width: '70%',
     marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   titleText: {
-    width: '40%',
+    width: '100%',
     height: 50,
     maxWidth: 300,
     fontSize: 23,

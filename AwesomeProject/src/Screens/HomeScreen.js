@@ -230,7 +230,7 @@ const HomeScreen = ({ navigation }) => {
                                 onChangeText={(value) => setFormData({ ...formData, editDesc: value })}
                             />
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25, position: 'absolute', right: 0 }}>
                             <Button icon="close" mode="contained" onPress={handleModalClose}>
                                 Close
                             </Button>

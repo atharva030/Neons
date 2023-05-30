@@ -264,5 +264,22 @@ module.exports = {
   confomationtex:{
     color:'black',
     fontFamily: 'Poppins-Regular', 
+  },
+
+  pbView:{
+    backgroundColor: '#ffff',
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    height: 120
+  },
+  pbTitle:{
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+  },
+  pbStyle:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+
   }
 };
