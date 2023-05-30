@@ -24,6 +24,7 @@ module.exports = {
     // padding: 30,
     marginLeft: 21,
     marginRight: 21,
+    marginTop:25,
     flexDirection: 'column',
   },
   addSecondScreen: {

@@ -158,6 +158,7 @@ const AddTask = (props) => {
                 justifyContent: 'space-around',
                 marginLeft: 45,
                 marginTop: 5,
+                marginBottom:10
               }}
             >
               <View
@@ -257,7 +258,7 @@ const AddTask = (props) => {
               display: 'flex',
               flexDirection: 'row',
               width: 290,
-              marginLeft: 15,
+              // marginLeft: 15,
               marginBottom: 15,
             }}
           >

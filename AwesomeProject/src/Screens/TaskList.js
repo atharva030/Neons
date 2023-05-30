@@ -53,33 +53,9 @@ const TaskList = ({navigation, route}) => {
     setVisible(true);
   };
   const hideModal = () => setVisible(false);
-  const containerMemberStyle = {
-    backgroundColor: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingTop: 10,
-    borderRadius: 20,
-    width: 330,
-    marginLeft: 10,
-    height: 600,
-  };
-  const containerStyle = {
-    backgroundColor: 'white',
-    padding: 30,
-    borderRadius: 20,
-    width: 340,
-    marginLeft: 10,
-    height: 300,
-  };
-  const addtaskcontainerStyle = {
-    backgroundColor: 'white',
-    padding: 30,
-    borderRadius: 20,
-    width: 340,
-    marginLeft: 10,
-    height: 450,
-  };
+  const containerMemberStyle = { backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 10, borderRadius: 20, width: 330, marginLeft: 10, height: 600 };
+  const containerStyle = { backgroundColor: 'white', padding: 30, borderRadius: 20, width: 340, marginLeft: 10 };
+  const addtaskcontainerStyle = { backgroundColor: 'white',  borderRadius: 20, width: 340, marginLeft: 10, height: 450 };
 
   const handleSubmit = () => {
     hideModal();
@@ -282,18 +258,14 @@ const TaskList = ({navigation, route}) => {
     setIsModalVisible(false);
   };
   return (
-    <Provider
-      theme={{
-        ...DefaultTheme,
-        colors: {...DefaultTheme.colors, accent: 'transparent'},
-      }}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={refreshfetchTasks}
-          />
-        }>
+    <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
+      <ScrollView refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={refreshfetchTasks}
+        />
+      }>
+
         {/* Edit Task Modal Starts */}
         <Portal>
           <Modal

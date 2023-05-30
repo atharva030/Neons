@@ -197,10 +197,11 @@ const TaskItem = props => {
         <Text style={{ color: statusColor, padding: 10 }}>{props.status}</Text>
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity onPress={() => handleAddSubTaskClick(props.id)}>
-            {fetchsubtask.length > 0 ? "" : <Icon
-              name="reader"
+            {fetchsubtask.length > 0 ? "" : 
+            <Icon
+              name="md-add"
               color="black"
-              size={19}
+              size={20}
               style={{ marginRight: 10 }}
             />}
           </TouchableOpacity>
@@ -218,7 +219,7 @@ const TaskItem = props => {
           <TouchableOpacity
             onPress={() => handleDeleteClick(props.id, props.teamIdByItem)}>
             <Icon
-              name="md-trash-bin"
+              name="md-trash"
               color="grey"
               size={20}
               style={{ marginRight: 10 }}

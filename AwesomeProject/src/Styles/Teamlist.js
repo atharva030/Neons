@@ -4,7 +4,9 @@ const windowHeight = Dimensions.get('window').height;
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
-    height: '100%',
+    height:windowHeight,
+    widht:windowWidth,
+    flex: 1,
   },
   flexBox: {
     margin: 15,
@@ -167,8 +169,7 @@ module.exports = {
   },
   iconStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    width: 80,
+    width: '100%',
   },
 };
