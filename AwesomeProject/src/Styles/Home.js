@@ -277,6 +277,7 @@ module.exports = {
   },
   additionalContent: {
     marginLeft: 20,
+    marginTop: 8
 
   },
   showbtn: {

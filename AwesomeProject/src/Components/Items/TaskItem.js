@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
+import { ProgressBar, MD3Colors } from 'react-native-paper';
 import styles1, { error } from '../../Styles/AddTaskStyle';
 const handleBackendError = () => {
   ToastComponent({ message: '⚠️ Please Try again later!' });
@@ -19,6 +20,10 @@ const containerStyle = {
   marginLeft: 10,
   height: 320,
 };
+
+const totalSubtasks = 10;
+const completedSubtasks = 6
+const subtaskProgress =  (completedSubtasks / totalSubtasks ) ;
 
 // //length of the subtask fetched so that to increase the height of container
 // const subtaskCount = fetchsubtask.length;
@@ -332,6 +337,8 @@ const TaskItem = props => {
             )}
           </TouchableOpacity>
         </View>
+
+        <ProgressBar progress={subtaskProgress} color={MD3Colors.error50} />
 
         <Collapsible collapsed={!isExtended} style={{ color: 'black' }}>
           <View style={styles.additionalContent}>
