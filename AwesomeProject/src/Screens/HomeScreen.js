@@ -6,6 +6,14 @@ import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
 import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'react-native-paper';
 import styles1 from '../Styles/AddTaskStyle';
+import ToastComponent from '../Components/Toast/toast';
+const handleSuccess = () => {
+    ToastComponent({ message: 'Team Added successfully' });
+  };
+
+  const handleBackendError = () => {
+    ToastComponent({ message: '⚠️ Please Try again later!' });
+  };
 const currentDate = moment().format('MMMM DD, YYYY');
 const HomeScreen = ({ navigation }) => {
     const [teamName, setteamName] = useState('');
@@ -47,8 +55,10 @@ const HomeScreen = ({ navigation }) => {
                 setteamDesc('')
                 fetchTeam()
             })
+            .then(handleSuccess())
             .catch((err) => {
                 console.log(err);
+                handleBackendError()
             });
 
     }
@@ -93,6 +103,7 @@ const HomeScreen = ({ navigation }) => {
                 //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
                 // }
             })
+            .then(showSuccessToast())
             .catch(err => {
                 console.log(err);
             });

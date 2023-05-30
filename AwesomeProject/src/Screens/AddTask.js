@@ -12,8 +12,14 @@ import { Modal, Portal, Provider, Button, RadioButton } from 'react-native-paper
 import Icon from 'react-native-vector-icons/Ionicons';
 import Time from '../Components/Time/Time';
 import styles from '../Styles/AddTaskStyle';
-import { ToastAndroid, Alert } from 'react-native';
-import Toast from '../Components/Toast/toast';
+
+import { ToastAndroid } from 'react-native';
+const showSuccessToast = () => {
+  ToastAndroid.showWithGravity('Task Addded Sucessfully ', ToastAndroid.SHORT, ToastAndroid.TOP);
+};
+const showBackendErrorToast = () => {
+  { ToastAndroid.showWithGravity('Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP) }
+};
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -61,15 +67,6 @@ const AddTask = (props) => {
       setConfirmationVisible(true);
     }
   };
-  const showBackendErrorPopup = () => {
-    Alert.alert(
-      'Error',
-      'There was an error in creating the task. Please try again later.',
-      [{ text: 'OK' }],
-      { cancelable: false }
-    );
-  };
-  
   const addTaskdb = () => {
     // console.log(email, password)
     // setSpinner(true)
@@ -93,12 +90,12 @@ const AddTask = (props) => {
       .then((response) => response.text())
       .then((text) => console.log(text))
       .catch((error) => {
-        console.log( error )
-        showBackendErrorPopup()
+        console.log(error)
+        showBackendErrorToast()
       }
       );
-      showSuccessToast();
-       hideAddModal();
+    showSuccessToast();
+    hideAddModal();
   };
 
   useEffect(() => {
@@ -110,10 +107,6 @@ const AddTask = (props) => {
   }, []);
 
   const hideModal = () => setVisible(false);
-  const showSuccessToast = () => {
-    ToastAndroid.show('Task created successfully', ToastAndroid.SHORT);
-  };
-  
   return (
     <HideKeyboard>
       <Provider>
@@ -132,14 +125,14 @@ const AddTask = (props) => {
         </Portal>
 
         <View style={styles.modalSecondScreen}>
-            <Text style={styles.labelStyle}>TASK NAME</Text>
-            <TextInput
-              style={styles.input}
-              placeholder=""
-              placeholderTextColor="#8d98b0"
-              value={taskName}
-              onChangeText={setTaskName}
-            />
+          <Text style={styles.labelStyle}>TASK NAME</Text>
+          <TextInput
+            style={styles.input}
+            placeholder=""
+            placeholderTextColor="#8d98b0"
+            value={taskName}
+            onChangeText={setTaskName}
+          />
 
           <View style={{ marginTop: 10 }}>
             <Time setstDate={setStDate} setendDate={setEndDate} />
