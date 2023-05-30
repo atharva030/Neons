@@ -2,12 +2,12 @@ const { red100, black } = require("react-native-paper/lib/typescript/src/styles/
 import { Dimensions } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
-
+const windowHeight = Dimensions.get('window').height;
 
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
-    height: '100%',
+    minHeight: Dimensions.get('window').height,
   },
 
   flexBox: {
@@ -16,6 +16,7 @@ module.exports = {
   },
   outer: {
     margin: 25,
+    // flexGrow: 1
   },
 
   titleContainer: {
@@ -33,9 +34,8 @@ module.exports = {
   },
 
   titleText: {
-    width: '40%',
-    height: 50,
-    maxWidth: 300,
+    flexDirection: "row",
+    alignSelf: "flex-start",
     fontSize: 23,
     borderRadius: 30,
     fontFamily: 'Poppins-ExtraBold',
@@ -124,6 +124,8 @@ module.exports = {
   },
   taskText: {
     color: '#8d98b0',
+     flexDirection:"row",
+    alignSelf:"flex-start",
   },
   taskBigText: {
     color: 'black',
@@ -131,7 +133,8 @@ module.exports = {
     fontFamily: 'Poppins-ExtraBold',
   },
   secondSubFlex: {
-    flexDirection: 'row',
+    flexDirection:"row",
+    alignSelf:"flex-start",
     justifyContent: 'space-between',
     alignItems: 'center',
   },

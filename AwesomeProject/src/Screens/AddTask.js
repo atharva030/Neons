@@ -70,7 +70,7 @@ const AddTask = (props) => {
   const addTaskdb = () => {
     // console.log(email, password)
     // setSpinner(true)
-    fetch(`http://192.168.29.161:8888/api/task/${teamIdByItem}/tasks`, {
+    fetch(`http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -158,6 +158,7 @@ const AddTask = (props) => {
                 justifyContent: 'space-around',
                 marginLeft: 45,
                 marginTop: 5,
+                marginBottom:10
               }}
             >
               <View
@@ -257,7 +258,7 @@ const AddTask = (props) => {
               display: 'flex',
               flexDirection: 'row',
               width: 290,
-              marginLeft: 15,
+              // marginLeft: 15,
               marginBottom: 15,
             }}
           >
