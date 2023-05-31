@@ -4,7 +4,6 @@ import styles from '../../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { Button } from 'react-native-paper';
-
 const TeamItem = props => {
     const appFun = (id,teamTitle) => {
         console.log(id)
@@ -43,21 +42,24 @@ const TeamItem = props => {
                 </View>
                 <View style={styles.flexIcon}>
 
-                    <View style={styles.iconStyle}>
+                    {/* <View style={styles.iconStyle}> */}
                         <View style={{flexDirection:"row"}}>
                         <TouchableOpacity>
                             <Icon name="people" size={18} color="black" />
                         </TouchableOpacity>
                         <Text style={styles.personText}>{props.person} Persons</Text>
                         </View>
-                        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+                        <View style={{flexDirection:'row'}}>
+                        <TouchableOpacity onPress={()=>handleModal(props.title,props.desc,props.items._id)}>
 
-                            <Button icon="pencil" onPress={()=>handleModal(props.title,props.desc,props.items._id)}>
-                            </Button>
-                            <Button icon="delete" onPress={() => deleteId(props.items._id)}>
-                            </Button>
+                            <Icon name="md-pencil-outline" size={20} style={{color:'black',marginRight:15}} />
+                        </TouchableOpacity>
+                           <TouchableOpacity onPress={() => deleteId(props.items._id)}>
+
+                            <Icon name='md-trash' size={20} style={{color:'black'}} icon="delete" />
+                           </TouchableOpacity>
                         </View>
-                    </View>
+                    {/* </View> */}
                 </View>
             </View>
         </View>

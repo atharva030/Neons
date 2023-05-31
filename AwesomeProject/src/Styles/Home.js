@@ -1,7 +1,13 @@
+const { red100, black } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
+import { Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',
-    height: '100%',
+    minHeight: Dimensions.get('window').height,
   },
 
   flexBox: {
@@ -10,11 +16,12 @@ module.exports = {
   },
   outer: {
     margin: 25,
+    // flexGrow: 1
   },
 
   titleContainer: {
     height: 50,
-    width: '100%',
+    width: '70%',
     marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -27,9 +34,8 @@ module.exports = {
   },
 
   titleText: {
-    width: '40%',
-    height: 50,
-    maxWidth: 300,
+    flexDirection: "row",
+    alignSelf: "flex-start",
     fontSize: 23,
     borderRadius: 30,
     fontFamily: 'Poppins-ExtraBold',
@@ -95,7 +101,7 @@ module.exports = {
   //TaskItem Styling Starts
 
   taskFlex: {
-    width: 300,
+    width: screenWidth - 60,
     height: 170,
     flexDirection: 'column',
     borderColor: 'black',
@@ -103,12 +109,13 @@ module.exports = {
     padding: 10,
     borderRadius: 10,
     marginLeft: 30,
+    marginRight: 30,
     marginBottom: 10,
   },
   hairline: {
     backgroundColor: '#A2A2A2',
     height: 1,
-    width: 250,
+    width: screenWidth - 100,
     marginLeft: 10,
   },
   firstflex: {
@@ -117,6 +124,8 @@ module.exports = {
   },
   taskText: {
     color: '#8d98b0',
+     flexDirection:"row",
+    alignSelf:"flex-start",
   },
   taskBigText: {
     color: 'black',
@@ -124,7 +133,8 @@ module.exports = {
     fontFamily: 'Poppins-ExtraBold',
   },
   secondSubFlex: {
-    flexDirection: 'row',
+    flexDirection:"row",
+    alignSelf:"flex-start",
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -142,10 +152,10 @@ module.exports = {
   },
   flexIcon: {
     marginTop: 25,
-    display:"flex",
+    display: "flex",
     flexDirection: 'row',
     // justifyContent: 'center',
-    alignItems:'center'
+    alignItems: 'center'
   },
   iconStyle: {
     flexDirection: 'row',
@@ -153,4 +163,169 @@ module.exports = {
     alignItems: 'center',
     width: 80,
   },
+
+
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 5
+
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+
+  },
+
+  textInputStyle: {
+    height: 40,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    fontFamily: 'Poppins-Regular',
+    borderColor: 'grey',
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
+
+  placeholderStyle: {
+    fontSize: 16,
+    color: 'grey'
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+
+
+  dropdown: {
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 5
+
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+    fontFamily: 'Poppins-Regular',
+
+  },
+
+  textInputStyle: {
+    height: 40,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    fontFamily: 'Poppins-Regular',
+    borderColor: 'grey',
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
+
+  placeholderStyle: {
+    fontSize: 16,
+    color: 'grey'
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  taskContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  taskContent: {
+    flex: 1,
+  },
+  additionalContent: {
+    marginLeft: 20,
+    marginTop: 8
+
+  },
+  showbtn: {
+    display: "flex",
+    flexDirection: 'row',
+    backgroundColor: 'red'
+
+  },
+  subtaskTitle: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: 20,
+    color: 'black'
+
+  },
+
+  individualSubT: {
+    backgroundColor: '#f0f4fd',
+    marginBottom: 5,
+    borderRadius: 10,
+    padding: 5
+  },
+  subTTitle: {
+    fontFamily: 'Poppins-Regular',
+    marginLeft: 10,
+    fontSize: 12,
+    color: 'black',
+    width: 150,
+    textAlign: 'justify'
+
+  },
+  uploadButton: {
+    backgroundColor: '#097969',
+    borderRadius: 5,
+    margin: 10,
+    width: 100,
+    height: 40,
+    position: 'absolute',
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  uploadbtnTxt: {
+
+    fontSize: 16
+  },
+
+  downArrowText: {
+    fontSize: 12,
+    fontFamily: 'Poppins-Regular',
+  }
 };

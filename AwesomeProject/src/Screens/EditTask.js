@@ -15,7 +15,13 @@ import {RadioButton} from 'react-native-paper';
 import {Button} from 'react-native-paper';
 import {Avatar} from 'react-native-paper';
 import {useState,useEffect} from 'react';
-
+import { ToastAndroid } from 'react-native';
+const showSuccessToast = () => {
+  ToastAndroid.showWithGravity('Task Edited sucessfully ', ToastAndroid.SHORT, ToastAndroid.TOP);
+};
+const showBackendErrorToast = () => {
+  { ToastAndroid.showWithGravity('⚠️ Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP) }
+};
 const EditTask = () => {
   const [checked, setChecked] = useState('first');
   useEffect(() => {
@@ -28,6 +34,10 @@ const EditTask = () => {
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     };
   }, [navigation]);
+  const handleEditTask = () => {
+    // logic here 
+    showSuccessToast()
+  };
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>

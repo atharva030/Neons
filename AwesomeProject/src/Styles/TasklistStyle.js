@@ -24,7 +24,6 @@ module.exports = {
     // padding: 30,
     marginLeft: 21,
     marginRight: 21,
-    marginTop:25,
     flexDirection: 'column',
   },
   addSecondScreen: {
@@ -180,7 +179,7 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    marginTop:15
+    // marginTop:15
   },
 
   containerStyle: {
@@ -265,5 +264,22 @@ module.exports = {
   confomationtex:{
     color:'black',
     fontFamily: 'Poppins-Regular', 
+  },
+
+  pbView:{
+    backgroundColor: '#ffff',
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    height: 120
+  },
+  pbTitle:{
+    fontFamily: 'Poppins-Regular',
+    fontSize: 16,
+  },
+  pbStyle:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+
   }
 };
