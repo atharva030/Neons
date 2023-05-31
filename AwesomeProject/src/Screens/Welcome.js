@@ -5,8 +5,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { GoogleSignin, statusCodes } from 'react-native-google-signin';
-
+import { statusCodes } from 'react-native-google-signin';
+import { GoogleSignin } from 'react-native-google-signin';
 
 import styles from '../Styles/Welcome'
 GoogleSignin.configure({

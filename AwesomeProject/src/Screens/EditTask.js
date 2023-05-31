@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import styles from '../Styles/AddTaskStyle';
+import styles from '../Styles/EditTaskStyle';
 import AvatarImage from '../Components/Avatar/Avatar';
 import {RadioButton} from 'react-native-paper';
 import {Button} from 'react-native-paper';

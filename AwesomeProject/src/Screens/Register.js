@@ -13,8 +13,9 @@ import { Button, IconButton, shadow } from 'react-native-paper';
 import styles  from '../Styles/registerstyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native';
-import { grayLine } from '../Styles/AddTaskStyle'
+// import { grayLine } from '../Styles/AddTaskStyle'
 import ToastComponent from '../Components/Toast/toast';
+
 const handleSuccess = () => {
     ToastComponent({ message: 'Registration Sucessfull' });
   };

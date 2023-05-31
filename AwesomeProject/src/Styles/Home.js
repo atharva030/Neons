@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
+//This is for Team Scr1 and TaskList
 module.exports = {
   fullscreen: {
     backgroundColor: '#f0f4fd',

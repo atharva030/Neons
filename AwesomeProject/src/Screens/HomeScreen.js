@@ -5,7 +5,7 @@ import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
 import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'react-native-paper';
-import styles1 from '../Styles/AddTaskStyle';
+import styles1 from '../Styles/HomeScreenStyle';
 import ToastComponent from '../Components/Toast/toast';
 const handleSuccess = () => {
     ToastComponent({ message: 'Team Added successfully' });
@@ -28,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
 
-    const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
+    const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 300,flexDirection:'column' };
     const onRefresh = () => {
         setRefreshing(true);
         fetchTeam()
@@ -94,14 +94,6 @@ const HomeScreen = ({ navigation }) => {
             .then(response => response.json())
             .then(data => {
                 setresultTeamData(data)
-
-                // console.log(resultTeamData); // this will log the array of objects returned by the API
-                // you can perform any additional logic here based on the returned data
-                //   navigation.navigate('NavigationScreen');
-                // for (let i = 0; i < resultTeamData.length; i++) {
-                //     const membersSize = resultTeamData[i].members.length;
-                //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
-                // }
             })
             .then(showSuccessToast())
             .catch(err => {
@@ -132,11 +124,7 @@ const HomeScreen = ({ navigation }) => {
             });
 
     }
-    // const refreshFetchTeam = async () => {
-    //     // console.log("Hey")
-    //     setRefreshing(true)
-    //     fetchTeam();
-    // }
+
     const deleteTeam = async (teamId) => {
         try {
             const response = await fetch(`http://192.168.43.70:8888/api/team/deleteteam/${teamId}`, {
@@ -210,7 +198,6 @@ const HomeScreen = ({ navigation }) => {
                 {/* edit title modal */}
                 <Portal>
                     <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
-                        <View style={{ marginTop: 10 }}>
                             <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
                             <TextInput
                                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
@@ -219,7 +206,6 @@ const HomeScreen = ({ navigation }) => {
                                 value={formData.editTitle}
                                 onChangeText={(value) => setFormData({ ...formData, editTitle: value })}
                             />
-                        </View>
                         <View style={{ marginTop: 10 }}>
                             <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
                             <TextInput
@@ -230,7 +216,7 @@ const HomeScreen = ({ navigation }) => {
                                 onChangeText={(value) => setFormData({ ...formData, editDesc: value })}
                             />
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25, position: 'absolute', right: 0 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25,  right: 0 }}>
                             <Button icon="close" mode="contained" onPress={handleModalClose}>
                                 Close
                             </Button>

@@ -1,3 +1,22 @@
+// import { View, Text, TouchableOpacity } from 'react-native';
+// import React from 'react';
+// import styles from '../../Styles/Home';
+// import Icon from 'react-native-vector-icons/Ionicons';
+// import { useState, useEffect } from 'react';
+// import { Portal, Button, Modal, TextInput } from 'react-native-paper';
+// import styles1 from '../../Styles/AddTaskStyle';
+// const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
+
+// const TaskItem = props => {
+//   const [statusColor, setStatusColor] = useState("");
+//   // const [isModalVisible, setIsModalVisible] = useState(false);
+
+//   const handleModal = (title, desc, id, time) => {
+//     props.settaskId(id)
+//     props.handleEditClick()
+//     props.setFormData({ editTitle: title, editDesc: desc, endDate: time });
+//   }
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,12 +39,6 @@ const containerStyle = {
   marginLeft: 10,
   height: 320,
 };
-import styles1 from '../../Styles/AddTaskStyle';
-const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
-
-const TaskItem = props => {
-  const [statusColor, setStatusColor] = useState("");
-  // const [isModalVisible, setIsModalVisible] = useState(false);
 
 const totalSubtasks = 10;
 const completedSubtasks = 6
@@ -62,7 +75,7 @@ const TaskItem = props => {
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
       const response = await fetch(
-        `http://192.168.43.60:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
           headers: {
@@ -157,7 +170,7 @@ const TaskItem = props => {
   const fetchSubtask = async (teamId, taskId) => {
     try {
       const response = await fetch(
-        `http://192.168.43.60:8888/api/task/${teamId}/fetchsubtasks/${taskId}`,
+        `http://192.168.43.70:8888/api/task/${teamId}/fetchsubtasks/${taskId}`,
         {
           method: 'GET',
         },
@@ -181,8 +194,10 @@ const TaskItem = props => {
       case "URGENT":
         setStatusColor('#FF0000');
         break;
-      case 'RUNNING':
-      case 'STOPPED':
+      case "RUNNING":
+        setStatusColor('#55d9a8');
+        break;
+      case "STOPPED":
         setStatusColor('#55d9a8');
         break;
       case "ONGOING":
