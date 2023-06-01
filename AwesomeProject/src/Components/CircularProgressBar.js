@@ -14,7 +14,6 @@ function shadeColor(color, percent) {
   R = R < 255 ? R : 255;
   G = G < 255 ? G : 255;
   B = B < 255 ? B : 255;
-
   const RR =
     R.toString(16).length === 1 ? `0${R.toString(16)}` : R.toString(16);
   const GG =

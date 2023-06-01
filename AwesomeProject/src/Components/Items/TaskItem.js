@@ -41,7 +41,7 @@ const containerStyle = {
 };
 
 const totalSubtasks = 10;
-const completedSubtasks = 6
+const completedSubtasks = 1
 const subtaskProgress =  (completedSubtasks / totalSubtasks ) ;
 
 // //length of the subtask fetched so that to increase the height of container
@@ -76,6 +76,7 @@ const TaskItem = props => {
     try {
       const response = await fetch(
         `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        `http://192.168.29.161:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
           headers: {
@@ -360,7 +361,6 @@ const TaskItem = props => {
         </View>
 
         <ProgressBar progress={subtaskProgress} color={MD3Colors.error50} />
-
         <Collapsible collapsed={!isExtended} style={{ color: 'black' }}>
           <View style={styles.additionalContent}>
             <View style={styles.subtaskBlockView}>

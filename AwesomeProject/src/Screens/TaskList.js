@@ -67,9 +67,7 @@ const TaskList = ({navigation, route}) => {
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
-    console.log(formData.editTitle);
-    console.log(teamId);
-    fetch(`http://192.168.43.70:8888/api/task/${teamId}/updatetask/${taskId}`, {
+    fetch(`http://192.168.29.161:8888/api/task/${teamId}/updatetask/${taskId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -88,12 +86,15 @@ const TaskList = ({navigation, route}) => {
   };
   const fetchTasks = async () => {
     try {
-      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamIdByItem}/fetchtasks`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `http://192.168.29.161:8888/api/task/${teamIdByItem}/fetchtasks`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
@@ -106,7 +107,8 @@ const TaskList = ({navigation, route}) => {
         setRefreshing(false);
         console.log('after', refreshing);
       }, 1200);
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
       handleBackendError();
     }
@@ -114,12 +116,15 @@ const TaskList = ({navigation, route}) => {
   const refreshfetchTasks = async () => {
     setRefreshing(true);
     try {
-      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamIdByItem}/fetchtasks`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `http://192.168.29.161:8888/api/task/${teamIdByItem}/fetchtasks`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         throw new Error('Failed to fetch tasks');
@@ -141,7 +146,7 @@ const TaskList = ({navigation, route}) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.43.70:8888/api/members/getuser', {
+    fetch('http://192.168.29.161:8888/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -159,7 +164,7 @@ const TaskList = ({navigation, route}) => {
   };
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -181,12 +186,16 @@ const TaskList = ({navigation, route}) => {
 
   const deleteTask = async (teamId, taskId) => {
     try {
-      const response = await fetch(`http://192.168.43.70:8888/api/task/${teamId}/deletetask/${taskId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch (
+        `http://192.168.29.161:8888/api/task/${teamId}/deletetask/${taskId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      
       if (response.ok) {
         console.log(`Team with ID ${teamId} deleted successfully`);
       } else {
@@ -196,10 +205,10 @@ const TaskList = ({navigation, route}) => {
       console.log(error);
       handleBackendError();
     }
-  };
+  }
   const handleAddMember = async () => {
-    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}`, {
-      method: "PATCH",
+    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'auth-token':
