@@ -107,8 +107,7 @@ const TaskList = ({navigation, route}) => {
         setRefreshing(false);
         console.log('after', refreshing);
       }, 1200);
-    }
-    catch (error) {
+    } catch (error) {
       console.log(error);
       handleBackendError();
     }
@@ -124,6 +123,7 @@ const TaskList = ({navigation, route}) => {
             'Content-Type': 'application/json',
           },
         },
+        // .then( ToastComponent({ message: '' }) )
       );
 
       if (!response.ok) {
@@ -186,18 +186,20 @@ const TaskList = ({navigation, route}) => {
 
   const deleteTask = async (teamId, taskId) => {
     try {
-      const response = await fetch (
+      const response = await fetch(
         `http://192.168.29.161:8888/api/task/${teamId}/deletetask/${taskId}`,
         {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
           },
-        }
-      )
-      
+        },
+      );
+
       if (response.ok) {
         console.log(`Team with ID ${teamId} deleted successfully`);
+        fetchTasks();
+        ToastComponent({message: 'Team Deleted successfully'});
       } else {
         console.log(`Error deleting team with ID ${teamId}`);
       }
@@ -205,7 +207,7 @@ const TaskList = ({navigation, route}) => {
       console.log(error);
       handleBackendError();
     }
-  }
+  };
   const handleAddMember = async () => {
     fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}`, {
       method: 'PATCH',

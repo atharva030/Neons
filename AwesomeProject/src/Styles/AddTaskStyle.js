@@ -265,5 +265,6 @@ module.exports = {
   confomationtex:{
     color:'black',
     fontFamily: 'Poppins-Regular', 
-  }
+  },
+  
 };

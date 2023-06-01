@@ -5,15 +5,16 @@ import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
 import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'react-native-paper';
-import styles1 from '../Styles/HomeScreenStyle';
+import styles1 from '../Styles/AddTaskStyle';
 import ToastComponent from '../Components/Toast/toast';
+import Avatardropmodal from '../Components/Avatardropmodal'
 const handleSuccess = () => {
     ToastComponent({ message: 'Team Added successfully' });
-  };
+};
 
-  const handleBackendError = () => {
+const handleBackendError = () => {
     ToastComponent({ message: '⚠️ Please Try again later!' });
-  };
+};
 const currentDate = moment().format('MMMM DD, YYYY');
 const HomeScreen = ({ navigation }) => {
     const [teamName, setteamName] = useState('');
@@ -27,8 +28,8 @@ const HomeScreen = ({ navigation }) => {
     const [teamId, setteamId] = useState("")
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
-
-    const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 300,flexDirection:'column' };
+    const [isModalVisibleavatar, setIsModalVisibleavatar] = useState(false);
+    const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
     const onRefresh = () => {
         setRefreshing(true);
         fetchTeam()
@@ -69,19 +70,19 @@ const HomeScreen = ({ navigation }) => {
         console.log(formData.editTitle);
         console.log(teamId);
         fetch(`http://192.168.29.161:8888/api/team/updateteam/${teamId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            teamName: formData.editTitle,
-            teamDesc: formData.editDesc,
-          }),
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                teamName: formData.editTitle,
+                teamDesc: formData.editDesc,
+            }),
         }).catch((err) => {
-          console.log(err);
+            console.log(err);
         });
-      };
-      
+    };
+
     const fetchTeam = async () => {
         // console.log("Hey")
         fetch('http://192.168.29.161:8888/api/team/fetchallteams', {
@@ -94,6 +95,14 @@ const HomeScreen = ({ navigation }) => {
             .then(response => response.json())
             .then(data => {
                 setresultTeamData(data)
+
+                // console.log(resultTeamData); // this will log the array of objects returned by the API
+                // you can perform any additional logic here based on the returned data
+                //   navigation.navigate('NavigationScreen');
+                // for (let i = 0; i < resultTeamData.length; i++) {
+                //     const membersSize = resultTeamData[i].members.length;
+                //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
+                // }
             })
             .then(showSuccessToast())
             .catch(err => {
@@ -124,7 +133,11 @@ const HomeScreen = ({ navigation }) => {
             });
 
     }
-
+    // const refreshFetchTeam = async () => {
+    //     // console.log("Hey")
+    //     setRefreshing(true)
+    //     fetchTeam();
+    // }
     const deleteTeam = async (teamId) => {
         try {
             const response = await fetch(`http://192.168.29.161:8888/api/team/deleteteam/${teamId}`, {
@@ -155,6 +168,17 @@ const HomeScreen = ({ navigation }) => {
     const handleEditClick = () => {
         setIsModalVisible(true);
     };
+    const toggleModal = () => {
+        setIsModalVisibleavatar(!isModalVisibleavatar);
+      };
+      const handleLogout = () => {
+        // Perform logout logic here
+        // For example, call an API to invalidate the session or clear the authentication token
+        // Then redirect the user to the login screen
+        // You can use navigation or any other method specific to your app's navigation setup
+        toggleModal();
+        // perform logout logic and redirect user to the login screen
+      };
     return (
         <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
             <ScrollView refreshControl={
@@ -198,6 +222,7 @@ const HomeScreen = ({ navigation }) => {
                 {/* edit title modal */}
                 <Portal>
                     <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
+                        <View style={{ marginTop: 10 }}>
                             <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
                             <TextInput
                                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
@@ -206,6 +231,7 @@ const HomeScreen = ({ navigation }) => {
                                 value={formData.editTitle}
                                 onChangeText={(value) => setFormData({ ...formData, editTitle: value })}
                             />
+                        </View>
                         <View style={{ marginTop: 10 }}>
                             <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
                             <TextInput
@@ -216,86 +242,97 @@ const HomeScreen = ({ navigation }) => {
                                 onChangeText={(value) => setFormData({ ...formData, editDesc: value })}
                             />
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25,  right: 0 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25, position: 'absolute', right: 0 }}>
                             <Button icon="close" mode="contained" onPress={handleModalClose}>
                                 Close
                             </Button>
-                            <Button icon="check" mode="contained" onPress={()=>editTeam(teamId)} style={{ marginLeft: 5 }}>
+                            <Button icon="check" mode="contained" onPress={() => editTeam(teamId)} style={{ marginLeft: 5 }}>
                                 Done
                             </Button>
                         </View>
                     </Modal>
                 </Portal>
-                <View style={styles.fullscreen}>
-                    <View style={styles.outer}>
-                        <View style={styles.titleContainer}>
-                            <Text style={[styles.teamtitleText]}>TaskStack</Text>
-                            <TouchableOpacity>
-                                <Image source={avatar} style={styles.logo} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.dayContainer}>
-                            <View style={styles.innerdayContainer}>
-                                <Text style={[styles.dateText]}>{currentDate}</Text>
-                            </View>
+                <View style={styles.outer}>
+                    <View style={styles.titleContainer}>
+                        <Text style={[styles.teamtitleText]}>TaskStack</Text>
+                        <TouchableOpacity >
+                        <Avatardropmodal navigation={navigation} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.dayContainer}>
+                        <View style={styles.innerdayContainer}>
+                            <Text style={[styles.dateText]}>{currentDate}</Text>
                         </View>
                     </View>
-
-                    {resultTeamData.length === 0 ? (
-                        (
-
-                            <View style={{ width: 360, height: 500, display: 'flex', alignItems: 'center' }}>
-                                <Text style={{ color: 'grey', fontSize: 20, padding: 20, marginTop: 140, textAlign: 'center', letterSpacing: 1.5 }}>You don't have Teams to Display</Text>
-                                <Button icon="plus" mode="contained" onPress={() => console.log('Pressed')} style={{ width: 100 }}>
-                                    ADD
-                                </Button>
-                            </View>
-                        )
-                    ) : (
-                        resultTeamData.map((items) => (
-                            <TeamItem
-                                navigation={navigation}
-                                desc={items.teamDesc}
-                                setteamId={setteamId}
-                                teamId={teamId}
-                                items={items}
-                                handleEditClick={handleEditClick}
-                                person={items.members.length}
-                                title={items.teamName}
-                                deleteTeam={deleteTeam}
-                                setFormData={setFormData}
-                                refreshControl={
-                                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                                }
-                            />
-                        ))
-                    )}
-
                 </View>
-                <Portal>
-                    <FAB.Group
-                        open={open}
-                        visible
-                        icon={open ? 'chevron-down' : 'plus'}
-                        actions={[
-                            {
-                                icon: 'account-plus',
-                                label: 'New Team',
-                                onPress: () => showModal()
-                            },
-                        ]}
-                        onStateChange={onStateChange}
-                        onPress={() => {
 
-                            // if (open) {
-                            //     // do something if the speed dial is open
-                            // }
-                        }}
-                        overlayColor='transparent'
-                    />
-                </Portal>
-            </ScrollView>
-        </Provider>
+                {/* {isModalVisibleavatar && (
+                   <View style={styles.logoutmaicontainer}>
+                         <View style={styles.logoutContainer}>
+                        <TouchableOpacity onPress={handleLogout}>
+                            <Text style={styles.logoutText} 
+                           >Logout
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                   </View>
+                )} */}
+
+                {resultTeamData.length === 0 ? (
+                    (
+
+                        <View style={{ width: 360, height: 500, display: 'flex', alignItems: 'center' }}>
+                            <Text style={{ color: 'grey', fontSize: 20, padding: 20, marginTop: 140, textAlign: 'center', letterSpacing: 1.5 }}>You don't have Teams to Display</Text>
+                            <Button icon="plus" mode="contained" onPress={() => console.log('Pressed')} style={{ width: 100 }}>
+                                ADD
+                            </Button>
+                        </View>
+                    )
+                ) : (
+                    resultTeamData.map((items) => (
+                        <TeamItem
+                            navigation={navigation}
+                            desc={items.teamDesc}
+                            setteamId={setteamId}
+                            teamId={teamId}
+                            items={items}
+                            handleEditClick={handleEditClick}
+                            person={items.members.length}
+                            title={items.teamName}
+                            deleteTeam={deleteTeam}
+                            setFormData={setFormData}
+                            refreshControl={
+                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                            }
+                        />
+                    ))
+                )}
+
+
+            <Portal>
+                <FAB.Group
+                    open={open}
+                    visible
+                    icon={open ? 'chevron-down' : 'plus'}
+                    actions={[
+                        {
+                            icon: 'account-plus',
+                            label: 'New Team',
+                            onPress: () => showModal()
+                        },
+                    ]}
+                    onStateChange={onStateChange}
+                    onPress={() => {
+
+                        // if (open) {
+                        //     // do something if the speed dial is open
+                        // }
+                    }}
+                    overlayColor='transparent'
+                />
+            </Portal>
+        </ScrollView>
+        </Provider >
     );
 };
 

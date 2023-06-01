@@ -31,7 +31,6 @@ const HideKeyboard = ({ children }) => (
     {children}
   </TouchableWithoutFeedback>
 );
-
 const LoginScreen = ({ navigation }) => {
   const [spinner, setSpinner] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
