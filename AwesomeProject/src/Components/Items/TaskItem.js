@@ -75,7 +75,6 @@ const TaskItem = props => {
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         `http://192.168.29.161:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
@@ -171,7 +170,7 @@ const TaskItem = props => {
   const fetchSubtask = async (teamId, taskId) => {
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamId}/fetchsubtasks/${taskId}`,
+        `http://192.168.29.161:8888/api/task/${teamId}/fetchsubtasks/${taskId}`,
         {
           method: 'GET',
         },

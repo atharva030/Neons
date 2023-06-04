@@ -35,6 +35,7 @@
     "react-native-easy-toast": "^2.3.0",
     "react-native-element-dropdown": "^2.9.0",
     "react-native-elements": "^3.4.3",
+    "react-native-exit-app": "^1.1.0",
     "react-native-flash-message": "^0.4.1",
     "react-native-form-validator": "^0.5.1",
     "react-native-google-signin": "^2.1.1",
