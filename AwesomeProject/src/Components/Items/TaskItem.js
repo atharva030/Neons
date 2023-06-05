@@ -75,7 +75,7 @@ const TaskItem = props => {
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
       const response = await fetch(
-        `http://192.168.29.161:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
           headers: {
@@ -95,7 +95,6 @@ const TaskItem = props => {
       handleBackendError()
     }
   };
-
   const handleToggleFlex = taskId => {
     setIsExtended(!isExtended);
     // subtaskfetch();
@@ -170,7 +169,7 @@ const TaskItem = props => {
   const fetchSubtask = async (teamId, taskId) => {
     try {
       const response = await fetch(
-        `http://192.168.29.161:8888/api/task/${teamId}/fetchsubtasks/${taskId}`,
+        `https://tsk-final-backend.vercel.app/api/task/${teamId}/fetchsubtasks/${taskId}`,
         {
           method: 'GET',
         },

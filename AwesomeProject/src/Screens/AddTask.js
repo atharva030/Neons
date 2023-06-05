@@ -70,7 +70,7 @@ const AddTask = (props) => {
   const addTaskdb = () => {
     // console.log(email, password)
     // setSpinner(true)
-    fetch(`http://192.168.29.161:8888/api/task/${teamIdByItem}/tasks`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -97,7 +97,6 @@ const AddTask = (props) => {
     showSuccessToast();
     hideAddModal();
   };
-
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
 
