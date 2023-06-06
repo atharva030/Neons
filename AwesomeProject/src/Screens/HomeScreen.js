@@ -36,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
         setRefreshing(false);
     };
     const addTeam = async () => {
-        fetch('http://192.168.29.161:8888/api/team/createteam', {
+        fetch('http://192.168.43.70:8888/api/team/createteam', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const HomeScreen = ({ navigation }) => {
         setIsModalVisible(false);
         console.log(formData.editTitle);
         console.log(teamId);
-        fetch(`http://192.168.29.161:8888/api/team/updateteam/${teamId}`, {
+        fetch(`http://192.168.43.70:8888/api/team/updateteam/${teamId}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ const HomeScreen = ({ navigation }) => {
 
     const fetchTeam = async () => {
         // console.log("Hey")
-        fetch('http://192.168.29.161:8888/api/team/fetchallteams', {
+        fetch('http://192.168.43.70:8888/api/team/fetchallteams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -95,14 +95,6 @@ const HomeScreen = ({ navigation }) => {
             .then(response => response.json())
             .then(data => {
                 setresultTeamData(data)
-
-                // console.log(resultTeamData); // this will log the array of objects returned by the API
-                // you can perform any additional logic here based on the returned data
-                //   navigation.navigate('NavigationScreen');
-                // for (let i = 0; i < resultTeamData.length; i++) {
-                //     const membersSize = resultTeamData[i].members.length;
-                //     console.log(`The size of members array in ${data[i].name} is ${membersSize}`);
-                // }
             })
             .then(showSuccessToast())
             .catch(err => {
@@ -113,7 +105,7 @@ const HomeScreen = ({ navigation }) => {
     const refreshFetchTeam = async () => {
         // console.log("Hey")
         setRefreshing(true)
-        fetch('http://192.168.29.161:8888/api/team/fetchallteams', {
+        fetch('http://192.168.43.70:8888/api/team/fetchallteams', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -140,7 +132,7 @@ const HomeScreen = ({ navigation }) => {
     // }
     const deleteTeam = async (teamId) => {
         try {
-            const response = await fetch(`http://192.168.29.161:8888/api/team/deleteteam/${teamId}`, {
+            const response = await fetch(`http://192.168.43.70:8888/api/team/deleteteam/${teamId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

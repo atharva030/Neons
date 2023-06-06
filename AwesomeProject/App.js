@@ -16,6 +16,8 @@ import AddTask from './src/Screens/AddTask';
 import HomeScreen from './src/Screens/HomeScreen';
 import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import Loader from './src/Screens/Loader';
+import TaskContext from './src/Context/taskContext';
+import Context from './src/Screens/Context';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -33,8 +35,8 @@ const App = () => {
   }, [])
 
   return (
-    <>
-      {spinner ? <Loader/> :
+    <TaskContext>
+      {/* {spinner ? <Loader/> :
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
@@ -73,9 +75,10 @@ const App = () => {
             options={{headerShown: false}}
           />
         </Stack.Navigator>
-      </NavigationContainer>
-      }
-    </>
+      </NavigationContainer> */}
+      {/* } */}
+      <Context/>
+    </TaskContext>
   );
 };
 
