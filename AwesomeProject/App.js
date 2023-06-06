@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, BackHandler, ToastAndroid } from 'react-native';
+import { StyleSheet, BackHandler, ToastAndroid, Platform } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './src/Screens/Login';
 import RegisterScreen from './src/Screens/Register';
 import Welcome from './src/Screens/Welcome';
-// import NavigationScreen from './src/Screens/NavigationScreen';
 import AddTeamMember from './src/Screens/AddTeamMember';
 import EditTask from './src/Screens/EditTask';
 import EmailValid from './src/Components/ForgotPassword/EmailValid';
@@ -18,11 +17,15 @@ import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import Loader from './src/Screens/Loader';
 import TaskContext from './src/Context/taskContext';
 import Context from './src/Screens/Context';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [spinner, setSpinner] = useState(true);
-
+  const taskContextValue = {
+    // Add any values or functions you want to provide
+    // These will be accessible to the components consuming the TaskContext
+  };
   let backPressTimer = null;
 
   const handleBackPress = () => {
@@ -31,13 +34,13 @@ const App = () => {
         BackHandler.exitApp();
         return true;
       } else {
-        ToastAndroid.show('Press back again to exit !', ToastAndroid.SHORT);
+        ToastAndroid.show('Press back again to exit!', ToastAndroid.SHORT);
         backPressTimer = Date.now();
         return true;
       }
     }
   };
-  
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -51,57 +54,57 @@ const App = () => {
       setTimeout(() => {
         setSpinner(false);
       }, 500);
-      // setSpinner(false)
     };
 
     loaderEffect();
   }, []);
 
   return (
-    <TaskContext>
-      {/* {spinner ? <Loader/> :
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Welcome"
-            component={Welcome}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Register"
-            component={RegisterScreen}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="NavigationScreen"
-            component={BottomTabNavigator}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="EmailValid"
-            component={EmailValid}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="OtpValid"
-            component={OtpValid}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Newpassword"
-            component={Newpassword}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer> */}
-      {/* } */}
-      <Context/>
-    </TaskContext>
+    <TaskContext.Provider value={taskContextValue} >
+      {spinner ? (
+        <Loader />
+      ) : (
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Welcome"
+              component={Welcome}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={RegisterScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="NavigationScreen"
+              component={BottomTabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="EmailValid"
+              component={EmailValid}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="OtpValid"
+              component={OtpValid}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Newpassword"
+              component={Newpassword}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )}
+    </TaskContext.Provider>
   );
 };
 
