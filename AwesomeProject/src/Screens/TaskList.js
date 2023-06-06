@@ -67,7 +67,7 @@ const TaskList = ({navigation, route}) => {
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
-    fetch(`http://192.168.43.70:8888/api/task/${teamId}/updatetask/${taskId}`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/task/${teamId}/updatetask/${taskId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const TaskList = ({navigation, route}) => {
   const fetchTasks = async () => {
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamIdByItem}/fetchtasks`,
+        `https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/fetchtasks`,
         {
           method: 'GET',
           headers: {
@@ -116,7 +116,7 @@ const TaskList = ({navigation, route}) => {
     setRefreshing(true);
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamIdByItem}/fetchtasks`,
+        `https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/fetchtasks`,
         {
           method: 'GET',
           headers: {
@@ -146,7 +146,7 @@ const TaskList = ({navigation, route}) => {
 
   const fetchMembers = async () => {
     // console.log("Hey")
-    fetch('http://192.168.43.70:8888/api/members/getuser', {
+    fetch('https://tsk-final-backend.vercel.app/api/members/getuser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -164,7 +164,7 @@ const TaskList = ({navigation, route}) => {
   };
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}/getmembers`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ const TaskList = ({navigation, route}) => {
   const deleteTask = async (teamId, taskId) => {
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamId}/deletetask/${taskId}`,
+        `https://tsk-final-backend.vercel.app/api/task/${teamId}/deletetask/${taskId}`,
         {
           method: 'DELETE',
           headers: {
@@ -209,7 +209,7 @@ const TaskList = ({navigation, route}) => {
     }
   };
   const handleAddMember = async () => {
-    fetch(`http://192.168.43.70:8888/api/team/${teamIdByItem}`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

@@ -38,7 +38,7 @@ const RegisterScreen = ({ navigation }) => {
     console.log(name, email, password, phone, role);
     if (password === cnfpassword) {
       setSpinner(true);
-      fetch('http://192.168.43.70:8888/api/auth/createuser', {
+      fetch('https://tsk-final-backend.vercel.app/api/auth/createuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

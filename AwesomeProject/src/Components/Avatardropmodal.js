@@ -1,31 +1,33 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, Modal, StyleSheet ,Image} from 'react-native';
+import { View, TouchableOpacity, Text, Modal, StyleSheet, Image } from 'react-native';
 import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Avatardropmodal = ({navigation}) => {
+const Avatardropmodal = ({ navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     console.log('presed')
 
   };
-const toggleMenulogout =()=>{
+  const toggleMenulogout = () => {
     console.log('logut presed')
     setIsOpen(!isOpen);
     // logout logic .. @atharva dada 
-}
+    navigation.navigate('    LoginScreen    ')
 
-const toggleMenuprofile =()=>{
+  }
+
+  const toggleMenuprofile = () => {
     console.log('profile presed')
     setIsOpen(!isOpen);
-    navigation.navigate('ProfileScreen')
-}
+    navigation.navigate('Profile')
+  }
   return (
     <View>
       <TouchableOpacity onPress={toggleMenu}>
-        <Image source={avatar} style={styles.logo} />     
+        <Image source={avatar} style={styles.logo} />
       </TouchableOpacity>
       <Modal
         visible={isOpen}
@@ -35,10 +37,10 @@ const toggleMenuprofile =()=>{
       >
         <View style={avatarstyles.avatarmodalContainer}>
           <TouchableOpacity style={avatarstyles.avatarmenuItem} onPress={toggleMenuprofile} >
-            <Text style={avatarstyles.avatarmenuText}><Icon name="user" size={16} color="black"style={avatarstyles.avatarmenuIcon }/> Profile</Text>
+            <Text style={avatarstyles.avatarmenuText}><Icon name="user" size={16} color="black" style={avatarstyles.avatarmenuIcon} /> Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity style={avatarstyles.avatarmenuItem} onPress={toggleMenulogout}>
-            <Text style={avatarstyles.avatarmenuText}><Icon name="sign-out" size={16} color="black" style={avatarstyles.avatarmenuIcon }/>Logout</Text>
+            <Text style={avatarstyles.avatarmenuText}><Icon name="sign-out" size={16} color="black" style={avatarstyles.avatarmenuIcon} />Logout</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -47,14 +49,14 @@ const toggleMenuprofile =()=>{
 };
 const avatarstyles = StyleSheet.create({
   avatarmodalContainer: {
-    marginTop:80,
+    marginTop: 80,
     alignSelf: 'flex-end',
-    backgroundColor:'white',
-    width:110,
-    height:100,
-    borderRadius:10,
-    gap:4,
-    justifyContent:'center',
+    backgroundColor: 'white',
+    width: 110,
+    height: 100,
+    borderRadius: 10,
+    gap: 4,
+    justifyContent: 'center',
     elevation: 2,
     shadowOpacity: 0.2,
     shadowOffset: {
@@ -64,12 +66,12 @@ const avatarstyles = StyleSheet.create({
     shadowColor: 'black',
   },
   avatarmenuItem: {
-    backgroundColor:'white',
-    borderRadius:5,
-    width:80,
-    height:38,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    width: 80,
+    height: 38,
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     alignSelf: 'flex-end',
     elevation: 2,
     marginRight: 15,

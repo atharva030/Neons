@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {StyleSheet} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { StyleSheet, BackHandler, ToastAndroid } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './src/Screens/Login';
 import RegisterScreen from './src/Screens/Register';
 import Welcome from './src/Screens/Welcome';
 // import NavigationScreen from './src/Screens/NavigationScreen';
-import {NavigationContainer} from '@react-navigation/native';
 import AddTeamMember from './src/Screens/AddTeamMember';
 import EditTask from './src/Screens/EditTask';
 import EmailValid from './src/Components/ForgotPassword/EmailValid';
@@ -21,18 +21,41 @@ import Context from './src/Screens/Context';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const [spinner, setSpinner] = useState(true)
+  const [spinner, setSpinner] = useState(true);
+
+  let backPressTimer = null;
+
+  const handleBackPress = () => {
+    if (Platform.OS === 'android') {
+      if (backPressTimer && backPressTimer + 2000 >= Date.now()) {
+        BackHandler.exitApp();
+        return true;
+      } else {
+        ToastAndroid.show('Press back again to exit !', ToastAndroid.SHORT);
+        backPressTimer = Date.now();
+        return true;
+      }
+    }
+  };
   
-  const loaderEffect = () => {
-    setTimeout(() => {
-      setSpinner(false)
-    }, 500);
-    // setSpinner(false)
-  }
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBackPress
+    );
+    return () => backHandler.remove();
+  }, []);
 
   useEffect(() => {
+    const loaderEffect = () => {
+      setTimeout(() => {
+        setSpinner(false);
+      }, 500);
+      // setSpinner(false)
+    };
+
     loaderEffect();
-  }, [])
+  }, []);
 
   return (
     <TaskContext>
@@ -86,7 +109,7 @@ const styles = StyleSheet.create({
   barStyle: {
     backgroundColor: '#8d98b0',
     height: 70,
-    borderTopLeftRadius:20,
+    borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   iconStyle: {
