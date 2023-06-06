@@ -102,15 +102,24 @@ module.exports = {
   //TaskItem Styling Starts
 
   teamFlex: {
-    width: 300,
-    height: 130,
+    width: windowWidth * 0.8,
+    height: windowHeight * 0.186,
     flexDirection: 'column',
-    borderColor: 'black',
+    // border:1,
+    // borderWidth:1,
+    // borderColor: 'black',
     backgroundColor: 'white',
+    justifyContent:'center',
     padding: 10,
     borderRadius: 10,
-    marginLeft: 30,
     marginBottom: 10,
+    marginLeft:'10%',
+    marginRight:'10%',
+    marginBottom:'5.58%',
+    elivation:1,
+    offset:999,
+    shadow:10,
+    shadowColor:'gray'
   },
   taskFlex: {
     width: 300,

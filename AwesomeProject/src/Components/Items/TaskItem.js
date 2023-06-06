@@ -75,7 +75,7 @@ const TaskItem = props => {
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
       const response = await fetch(
-        `http://192.168.43.70:8888/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        `https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
         {
           method: 'PATCH',
           headers: {

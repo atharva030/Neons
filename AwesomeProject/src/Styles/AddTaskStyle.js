@@ -1,6 +1,4 @@
 const { Dimensions } = require("react-native");
-const { white, blueGrey100 } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
-
 const deviceHeight=Dimensions.get('window').height;
 const deviceWidth=Dimensions.get('window').width;
 module.exports = {
@@ -9,6 +7,20 @@ module.exports = {
     widht:deviceWidth,
     flex: 1,
     backgroundColor: '#5a55ca',
+
+  },
+  addteamcontainerStyle: {
+    width: deviceWidth * 0.85,
+    height: deviceHeight * 0.45,
+    // borderWidth: 1,
+    // borderColor: 'black',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: (deviceHeight - (deviceHeight * 0.45)) / 2,
+    left: (deviceWidth - (deviceWidth * 0.85)) / 2,
   },
   flexBox: {
     flexDirection: 'columns',

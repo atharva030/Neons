@@ -1,4 +1,4 @@
-const { red100, black } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
+
 import { Dimensions } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;

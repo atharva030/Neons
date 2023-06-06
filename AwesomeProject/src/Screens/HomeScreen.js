@@ -8,6 +8,7 @@ import { FAB, Provider, DefaultTheme, Portal, Button, Modal, TextInput } from 'r
 import styles1 from '../Styles/AddTaskStyle';
 import ToastComponent from '../Components/Toast/toast';
 import Avatardropmodal from '../Components/Avatardropmodal'
+
 const handleSuccess = () => {
     ToastComponent({ message: 'Team Added successfully' });
 };
@@ -16,6 +17,7 @@ const handleBackendError = () => {
     ToastComponent({ message: '⚠️ Please Try again later!' });
 };
 const currentDate = moment().format('MMMM DD, YYYY');
+
 const HomeScreen = ({ navigation }) => {
     const [teamName, setteamName] = useState('');
     const [teamDesc, setteamDesc] = useState('');
@@ -35,6 +37,21 @@ const HomeScreen = ({ navigation }) => {
         fetchTeam()
         setRefreshing(false);
     };
+    const FadeScreen = () => {
+        const fadeAnim = useRef(new Animated.Value(1)).current;
+      
+        useEffect(() => {
+          const fadeOut = () => {
+            Animated.timing(fadeAnim, {
+              toValue: 0,
+              duration: 2000, // Duration in milliseconds
+              useNativeDriver: true, // Enable native driver for performance
+            }).start();
+          };
+        })
+        const fadeOutTimeout = setTimeout(fadeOut, 5000);
+        return () =>{ clearTimeout(fadeOutTimeout);
+    }, [fadeAnim]};
     const addTeam = async () => {
         fetch('https://tsk-final-backend.vercel.app/api/team/createteam', {
             method: 'POST',
@@ -180,7 +197,7 @@ const HomeScreen = ({ navigation }) => {
                 />
             }>
                 <Portal>
-                    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
+                    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles1.addteamcontainerStyle}>
                         <View style={{ marginTop: 10 }}>
                             <Text style={styles1.emaillabelStyle}>Enter Team Name</Text>
                             <TextInput
@@ -294,7 +311,7 @@ const HomeScreen = ({ navigation }) => {
                             deleteTeam={deleteTeam}
                             setFormData={setFormData}
                             refreshControl={
-                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                             }
                         />
                     ))
@@ -323,6 +340,8 @@ const HomeScreen = ({ navigation }) => {
                     overlayColor='transparent'
                 />
             </Portal>
+
+
         </ScrollView>
         </Provider >
     );
