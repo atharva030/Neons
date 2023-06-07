@@ -39,7 +39,6 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const [showToast , setShowToast] = useState(false);
   const { handleLogin } = context
   const { validate, isFieldInError, getErrorsInField, getErrorMessages } =
     useValidation({
@@ -51,35 +50,6 @@ const LoginScreen = ({ navigation }) => {
       Password: { Password: true },
     });
   };
-  // const handleLogin = () => {
-  //   console.log(email, password);
-  //   setSpinner(true);
-  //   fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then(async data => {
-  //       console.log(data.authToken);
-  //       await AsyncStorage.setItem('auth-token', data.authToken);
-  //       setSpinner(false);
-  //       console.log('Next');
-  //       navigation.navigate('NavigationScreen');
-
-  //     })
-  //     .then(handleSuccess())
-  //     .catch(err => {
-  //       setSpinner(false);
-  //       console.log(err);
-  //       handleBackendError()
-  //     });
-  // }
 
   // This function will be triggered when the button is pressed
 
@@ -105,13 +75,6 @@ const LoginScreen = ({ navigation }) => {
 
       });
 
-    // setIsLoading(true);
-    // navigation.navigate("NavigationScreen")
-    // // Simulating an asynchronous action
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    //   navigation.navigate("NavigationScreen")
-    // }, 2000);
   };
 
   // const [Password, setPassword] = useState('');
