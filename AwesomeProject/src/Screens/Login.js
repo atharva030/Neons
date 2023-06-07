@@ -7,7 +7,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-paper';
@@ -17,14 +17,15 @@ import { IconButton } from 'react-native-paper';
 import { useValidation } from 'react-native-form-validator';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { positionStyle } from 'react-native-flash-message';
+import TaskContext from '../Context/taskContext';
 import ToastComponent from '../Components/Toast/toast';
 const handleSuccess = () => {
-    ToastComponent({ message: 'Login Sucessfull' });
-  };
+  ToastComponent({ message: 'Login Sucessfull' });
+};
 
-  const handleBackendError = () => {
-    ToastComponent({ message: '⚠️ Please Try again later!' });
-  };
+const handleBackendError = () => {
+  ToastComponent({ message: '⚠️ Please Try again later!' });
+};
 // import Seprator from '../Components/seprator/seprator';
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -32,12 +33,14 @@ const HideKeyboard = ({ children }) => (
   </TouchableWithoutFeedback>
 );
 const LoginScreen = ({ navigation }) => {
+  const context = useContext(TaskContext);
   const [spinner, setSpinner] = useState(false);
   const [hidePassword, sethidePassword] = useState(true);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   // const [showToast , setShowToast] = useState(false);
+  const { handleLogin } = context
   const { validate, isFieldInError, getErrorsInField, getErrorMessages } =
     useValidation({
       state: { email, password },
@@ -48,46 +51,67 @@ const LoginScreen = ({ navigation }) => {
       Password: { Password: true },
     });
   };
-  const handleLogin = () => {
-    console.log(email, password);
-    setSpinner(true);
-    fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })
-      .then(response => response.json())
-      .then(async data => {
-        console.log(data.authToken);
-        await AsyncStorage.setItem('auth-token', data.authToken);
-        setSpinner(false);
-        console.log('Next');
-        navigation.navigate('NavigationScreen');
-        
-      })
-      .then(handleSuccess())
-      .catch(err => {
-        setSpinner(false);
-        console.log(err);
-        handleBackendError()
-      });
-  }
+  // const handleLogin = () => {
+  //   console.log(email, password);
+  //   setSpinner(true);
+  //   fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       email: email,
+  //       password: password,
+  //     }),
+  //   })
+  //     .then(response => response.json())
+  //     .then(async data => {
+  //       console.log(data.authToken);
+  //       await AsyncStorage.setItem('auth-token', data.authToken);
+  //       setSpinner(false);
+  //       console.log('Next');
+  //       navigation.navigate('NavigationScreen');
+
+  //     })
+  //     .then(handleSuccess())
+  //     .catch(err => {
+  //       setSpinner(false);
+  //       console.log(err);
+  //       handleBackendError()
+  //     });
+  // }
 
   // This function will be triggered when the button is pressed
-  const handlePress = () => {
+
+  const handlePress = (email, password) => {
     setIsLoading(true);
-    navigation.navigate("NavigationScreen")
-    // Simulating an asynchronous action
-    handleSuccess()
-    setTimeout(() => {
-      setIsLoading(false);
-      navigation.navigate("NavigationScreen")
-    }, 2000);
+    handleLogin(email, password)
+      .then(success => {
+        if (success) {
+          // Login successful, navigate to the next screen or perform any other actions
+          navigation.navigate('NavigationScreen');
+          setIsLoading(false);
+          handleSuccess()
+
+        } else {
+          setIsLoading(false);
+          // Login failed, display an error message or perform any other actions
+        }
+      })
+      .catch(error => {
+        // An error occurred during the login process, handle the error
+        setIsLoading(false);
+        console.log(error)
+
+      });
+
+    // setIsLoading(true);
+    // navigation.navigate("NavigationScreen")
+    // // Simulating an asynchronous action
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    //   navigation.navigate("NavigationScreen")
+    // }, 2000);
   };
 
   // const [Password, setPassword] = useState('');
@@ -182,7 +206,7 @@ const LoginScreen = ({ navigation }) => {
                 </Button> */}
                 <TouchableOpacity
                   style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
-                  onPress={handlePress}
+                  onPress={() => handlePress(email, password)}
                   disabled={isLoading}>
                   {isLoading ? (
                     <ActivityIndicator size="small" color="#ffffff" />
