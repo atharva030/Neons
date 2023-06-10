@@ -10,7 +10,7 @@ const Avatar = ({ text="Atharva", size=50 }) => {
     borderRadius: size / 2,
   };
 
-  return (
+  return (  
     <TouchableOpacity>
     <View style={{flexDirection:'column',alignItems:'center',marginRight:9,marginTop:10}}>
       <Image source={profile} style={avatarStyle} />
