@@ -3,7 +3,6 @@ import TaskContext from "./taskContext";
 // import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const TaskState = ({ children ,navigation}) => {
-    // const navigation = useNavigation();
 
     const handleLogin = async (email, password) => {
       console.log("From the context API", email, password);
@@ -26,10 +25,10 @@ const TaskState = ({ children ,navigation}) => {
         console.log(data.authToken);
         await AsyncStorage.setItem('auth-token', data.authToken);
         console.log('Next');
-        return await true;
+        return  true;
       } catch (err) {
-        console.log(err);
-        return false;
+        // console.log);
+        return err;
       }
     };
     

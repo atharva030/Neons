@@ -113,7 +113,7 @@ const HomeScreen = ({ navigation }) => {
             .then(data => {
                 setresultTeamData(data)
             })
-            .then(showSuccessToast())
+            // .then(showSuccessToast())
             .catch(err => {
                 console.log(err);
             });
@@ -300,6 +300,7 @@ const HomeScreen = ({ navigation }) => {
                 ) : (
                     resultTeamData.map((items) => (
                         <TeamItem
+                             key={items._id}
                             navigation={navigation}
                             desc={items.teamDesc}
                             setteamId={setteamId}

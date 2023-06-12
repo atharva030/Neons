@@ -365,6 +365,7 @@ const TaskList = ({navigation, route}) => {
               ) : (
                 resultTeamMemberData.map(items => (
                   <TeamMember
+                  key={items._id}
                     designation={items.designation}
                     id={items._id}
                     name={items.name}
@@ -560,6 +561,7 @@ const TaskList = ({navigation, route}) => {
               fetchTask.map(items => {
                 return (
                   <TaskItem
+                  key={items._id}
                     status={items.status}
                     handleEditClick={handleEditClick}
                     settaskId={settaskId}
