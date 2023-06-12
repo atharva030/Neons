@@ -18,12 +18,15 @@ import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import Loader from './src/Screens/Loader';
 import TaskContext from './src/Context/taskContext';
 import Context from './src/Screens/Context';
-import TaskState from './src/Context/taskState';
+import Onbording from './src/Components/Onboarding/onbording';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [spinner, setSpinner] = useState(true);
-
+  const taskContextValue = {
+    // Add any values or functions you want to provide
+  };
   let backPressTimer = null;
 
   const handleBackPress = () => {
@@ -65,6 +68,11 @@ const App = () => {
         <Loader />
       ) : (
           <Stack.Navigator>
+          {/* <Stack.Screen
+              name="Onbording"
+              component={Onbording}
+              options={{ headerShown: false }}
+            /> */}
             <Stack.Screen
               name="Welcome"
               component={Welcome}
