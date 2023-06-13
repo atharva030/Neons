@@ -28,6 +28,7 @@ import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
 import { ProgressBar, MD3Colors } from 'react-native-paper';
 import styles1, { error } from '../../Styles/AddTaskStyle';
+import DocumentPicker from 'react-native-document-picker'
 const handleBackendError = () => {
   ToastComponent({ message: '⚠️ Please Try again later!' });
 };
@@ -136,7 +137,13 @@ const TaskItem = props => {
     }
     return textInputs;
   };
+// function for uploading files and opening the dialog box fro the same opening system file manager .
+const handleUpload = () => {
+ console.log('upload button clicked')
+ DocumentPicker.pick({}).then((res) => {
+ })
 
+}
   const handleAddSubTaskClick = taskid => {
     setIsModal1Visible(true);
     settaskIdbyItem(taskid)
@@ -395,8 +402,8 @@ const TaskItem = props => {
                             : 'lightgrey',
                         },
                       ]}
-                      disabled={!isChecked(subtask._id)}
-                    //onPress={handleUpload}
+                      enable={isChecked(subtask._id)}
+                      onPress={handleUpload}
                     >
                       <Text style={[styles.uploadbtnTxt, { color: isChecked(subtask._id) ? '#fff' : 'grey' }]}>Upload</Text>
                     </TouchableOpacity>
