@@ -29,6 +29,8 @@ import styles from '../../Styles/Home';
 import { ProgressBar, MD3Colors } from 'react-native-paper';
 import styles1, { error } from '../../Styles/AddTaskStyle';
 import DocumentPicker from 'react-native-document-picker'
+import ExpandingPanel from '../ExpandingPanel/ExpandingPanel';
+import { Animated, Easing } from 'react-native';
 const handleBackendError = () => {
   ToastComponent({ message: '⚠️ Please Try again later!' });
 };
@@ -43,7 +45,7 @@ const containerStyle = {
 
 const totalSubtasks = 10;
 const completedSubtasks = 1
-const subtaskProgress =  (completedSubtasks / totalSubtasks ) ;
+const subtaskProgress = (completedSubtasks / totalSubtasks);
 
 // //length of the subtask fetched so that to increase the height of container
 // const subtaskCount = fetchsubtask.length;
@@ -89,7 +91,7 @@ const TaskItem = props => {
       if (!response.ok) {
         throw new Error('Failed to update subtasks');
       }
-      ToastComponent({ message: 'SubTask Added Sucessfully' }) 
+      ToastComponent({ message: 'SubTask Added Sucessfully' })
       console.log('This is response', response);
     } catch (error) {
       console.log(error);
@@ -137,13 +139,13 @@ const TaskItem = props => {
     }
     return textInputs;
   };
-// function for uploading files and opening the dialog box fro the same opening system file manager .
-const handleUpload = () => {
- console.log('upload button clicked')
- DocumentPicker.pick({}).then((res) => {
- })
+  // function for uploading files and opening the dialog box fro the same opening system file manager .
+  const handleUpload = () => {
+    console.log('upload button clicked')
+    DocumentPicker.pick({}).then((res) => {
+    })
 
-}
+  }
   const handleAddSubTaskClick = taskid => {
     setIsModal1Visible(true);
     settaskIdbyItem(taskid)
@@ -185,7 +187,7 @@ const handleUpload = () => {
       if (!response.ok) {
         throw new Error('Failed to fetch subtasks');
       }
-      ToastComponent({ message: 'SubTask Fetched Sucessfully' }) 
+      ToastComponent({ message: 'SubTask Fetched Sucessfully' })
       const data = await response.json();
       setFetchSubtask(data);
       console.log(fetchsubtask);
@@ -217,7 +219,23 @@ const handleUpload = () => {
     const newHeight = isExtended ? 220 + subtaskCount * 80 : 200;
     setTaskFlexHeight(newHeight);
   }, [status, isExtended, fetchsubtask]);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const panelWidth = useState(new Animated.Value(0))[0];
 
+  const handleIconPress = () => {
+    setIsExpanded(!isExpanded);
+    Animated.timing(panelWidth, {
+      toValue: isExpanded ? 0 : 120,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const panelOpacity = panelWidth.interpolate({
+    inputRange: [0, 120],
+    outputRange: [0, 1],
+  });
   return (
     <View style={[styles.taskFlex, { height: taskFlexHeight }]}>
       <View
@@ -228,35 +246,50 @@ const handleUpload = () => {
         }}>
         <Text style={{ color: statusColor, padding: 10 }}>{props.status}</Text>
         <View style={{ flexDirection: 'row' }}>
-          <TouchableOpacity onPress={() => handleAddSubTaskClick(props.id)}>
-            {fetchsubtask.length > 0 ? "" : 
-            <Icon
-              name="md-add"
-              color="black"
-              size={20}
-              style={{ marginRight: 10 }}
-            />}
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              handleEditClick(props.id, props.title, props.desc, props.time)
-            }>
-            <Icon
-              name="md-pencil-sharp"
-              color="grey"
-              size={19}
-              style={{ marginRight: 10 }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleDeleteClick(props.id, props.teamIdByItem)}>
-            <Icon
-              name="md-trash"
-              color="grey"
-              size={20}
-              style={{ marginRight: 10 }}
-            />
-          </TouchableOpacity>
+{/* expanding panel for the  three dot icon  whn pressed it iwill grow and show the three icons which  will perform the crud operation for subtask  */}
+          <View>
+            <TouchableOpacity onPress={handleIconPress}>
+              <View style={{
+                flexDirection: 'row',
+                alignContent: 'center',
+                justifyContent: 'center',
+                alignSelf: 'center',
+              }}>
+                {isExpanded && (
+                  <Animated.View
+                    style={{
+                      flexDirection: 'row',
+                      backgroundColor: 'pink',
+                      padding: 5,
+                      borderRadius: 5,
+                      overflow: 'hidden',
+                      opacity: panelOpacity,
+                      alignItems: 'center',
+                    }}>
+                    <TouchableOpacity onPress={() => handleAddSubTaskClick(props.id)} >
+                      {fetchsubtask.length > 0 ? "" :
+                        <Icon name="add" color="black" size={20} style={{ marginRight: 10 }} />}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleEditClick(props.id, props.title, props.desc, props.time)
+                      }>
+                      <Icon name="pencil-sharp" color="black" size={20} style={{ marginRight: 10 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDeleteClick(props.id, props.teamIdByItem)}>
+                      <Icon name="trash" color="black" size={20} style={{ marginRight: 10 }} />
+                    </TouchableOpacity>
+                  </Animated.View>
+                )}
+                <Icon name="ellipsis-vertical" color="grey" size={20} style={{
+                  marginRight: 10, backgroundColor: 'pink',
+                  padding: 5,
+                  borderRadius: 6,
+                  alignItems: 'center',
+                }} />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.hairline} />
@@ -373,7 +406,7 @@ const handleUpload = () => {
               ) :
                 // <Text style={styles.subtaskTitle}>Subtasks</Text>
                 fetchsubtask.map(subtask => (
-                  
+
                   <View
                     key={subtask._id}
                     style={[styles.individualSubT, { flexDirection: 'row', alignItems: 'center' }]}>
