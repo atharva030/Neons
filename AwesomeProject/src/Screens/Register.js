@@ -7,68 +7,70 @@ import {
   ToastAndroid,
   StyleSheet,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, IconButton, shadow } from 'react-native-paper';
-import styles  from '../Styles/registerstyles';
+import styles from '../Styles/registerstyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Image } from 'react-native';
 // import { grayLine } from '../Styles/AddTaskStyle'
 import ToastComponent from '../Components/Toast/toast';
+import TaskContext from '../Context/taskContext';
 
 const handleSuccess = () => {
-    ToastComponent({ message: 'Registration Sucessfull' });
-  };
+  ToastComponent({ message: 'Registration Sucessfull' });
+};
 
-  const handleBackendError = () => {
-    ToastComponent({ message: '⚠️ Please Try again later!' });
-  };;
+const handleBackendError = () => {
+  ToastComponent({ message: '⚠️ Please Try again later!' });
+};;
 const RegisterScreen = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hideCnfPassword, setHideCnfPassword] = useState(true);
   const [spinner, setSpinner] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  // const [role, setRole] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cnfpassword, setCnfPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
-  const handleSubmitRegister = () => {
-    console.log(name, email, password, phone, role);
-    if (password === cnfpassword) {
-      setSpinner(true);
-      fetch('https://tsk-final-backend.vercel.app/api/auth/createuser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: name,
-          email: email,
-          phone: phone,
-          userRole: role,
-          password: password,
-        }),
-      })
-        .then(async (response) => {
-          const res = await response.json();
-          console.log(res);
-          await AsyncStorage.setItem('auth-token', res.authToken);
-          const auth = await AsyncStorage.getItem('auth-token');
-          console.log(auth);
-          setSpinner(false);
-          handleSuccess()
-          navigation.navigate('Login');
-        })
-        .catch((error) => {
-          console.error(error);
-          handleBackendError()
-        });
-    } else {
-      console.log('Password Not Matched');
-    }
+  const context = useContext(TaskContext)
+  const { handleSubmitRegister } = context
+
+  const handleSuccess = () => {
+    ToastComponent({ message: 'Registration Successful' });
   };
+  
+  const handleBackendError = (error) => {
+    let errorMessage = '⚠️ Please try again later!';
+  
+    // Check the error message received from the backend and customize the toast message accordingly
+    if (error.message === 'Email already exists') {
+      errorMessage = '⚠️ Email already exists';
+    } else if (error.message === 'Phone number already exists') {
+      errorMessage = '⚠️ Phone number already exists';
+    }
+  
+    ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+  };
+const handlePressRegister = (name, email, password, phone, selectedRole, cnfpassword) => {
+  console.log('added');
+  handleSubmitRegister(name, email, password, phone, selectedRole, cnfpassword)
+    .then((success) => {
+      if (success) {
+        handleSuccess();
+        navigation.navigate('Login');
+      } else {
+        // Registration failed, handle the error or display an error message
+        handleBackendError(new Error('Registration failed'));
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      // An error occurred during registration, handle the error or display an error message
+      handleBackendError(error);
+    });
+};
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
     console.log(role)
@@ -206,7 +208,7 @@ const RegisterScreen = ({ navigation }) => {
               </View>
             </View>
             <Button
-              onPress={handleSubmitRegister}
+              onPress={()=>handlePressRegister(name, email, password, phone, selectedRole, cnfpassword)}
               style={styles.submitBtn}
               mode="contained"
             >

@@ -1,22 +1,3 @@
-// import { View, Text, TouchableOpacity } from 'react-native';
-// import React from 'react';
-// import styles from '../../Styles/Home';
-// import Icon from 'react-native-vector-icons/Ionicons';
-// import { useState, useEffect } from 'react';
-// import { Portal, Button, Modal, TextInput } from 'react-native-paper';
-// import styles1 from '../../Styles/AddTaskStyle';
-// const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
-
-// const TaskItem = props => {
-//   const [statusColor, setStatusColor] = useState("");
-//   // const [isModalVisible, setIsModalVisible] = useState(false);
-
-//   const handleModal = (title, desc, id, time) => {
-//     props.settaskId(id)
-//     props.handleEditClick()
-//     props.setFormData({ editTitle: title, editDesc: desc, endDate: time });
-//   }
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';

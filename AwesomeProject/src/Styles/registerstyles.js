@@ -69,6 +69,7 @@ const RegisterStyle = StyleSheet.create({
     borderColor: '#8d98b0',
     borderRadius: 5,
     paddingHorizontal: 10,
+    color: 'black'
   },
   passwordInputContainer: {
     flexDirection: 'row',
@@ -81,6 +82,7 @@ const RegisterStyle = StyleSheet.create({
   passwordInputStyle: {
     flex: 1,
     height: 40,
+    color: "black"
   },
   submitBtn: {
     marginTop: 20,

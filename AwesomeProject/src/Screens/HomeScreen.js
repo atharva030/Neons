@@ -23,14 +23,14 @@ const HomeScreen = ({ navigation }) => {
     const [teamDesc, setteamDesc] = useState('');
     const [refreshing, setRefreshing] = useState(false);
     const [resultTeamData, setresultTeamData] = useState("");
-    const [spinner, setSpinner] = useState(false);
+    // const [spinner, setSpinner] = useState(false);
     const [open, setOpen] = useState(false);
     const [visible, setVisible] = useState(false);
     const [formData, setFormData] = useState({ editTitle: "", editDesc: "" });
     const [teamId, setteamId] = useState("")
+    const [isModalVisibleavatar, setIsModalVisibleavatar] = useState(false);
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
-    const [isModalVisibleavatar, setIsModalVisibleavatar] = useState(false);
     const containerStyle = { backgroundColor: 'white', padding: 20, borderRadius: 20, width: 340, marginLeft: 10, height: 320 };
     const onRefresh = () => {
         setRefreshing(true);
@@ -39,19 +39,21 @@ const HomeScreen = ({ navigation }) => {
     };
     const FadeScreen = () => {
         const fadeAnim = useRef(new Animated.Value(1)).current;
-      
+
         useEffect(() => {
-          const fadeOut = () => {
-            Animated.timing(fadeAnim, {
-              toValue: 0,
-              duration: 2000, // Duration in milliseconds
-              useNativeDriver: true, // Enable native driver for performance
-            }).start();
-          };
+            const fadeOut = () => {
+                Animated.timing(fadeAnim, {
+                    toValue: 0,
+                    duration: 2000, // Duration in milliseconds
+                    useNativeDriver: true, // Enable native driver for performance
+                }).start();
+            };
         })
         const fadeOutTimeout = setTimeout(fadeOut, 5000);
-        return () =>{ clearTimeout(fadeOutTimeout);
-    }, [fadeAnim]};
+        return () => {
+            clearTimeout(fadeOutTimeout);
+        }, [fadeAnim]
+    };
     const addTeam = async () => {
         fetch('https://tsk-final-backend.vercel.app/api/team/createteam', {
             method: 'POST',
@@ -142,11 +144,7 @@ const HomeScreen = ({ navigation }) => {
             });
 
     }
-    // const refreshFetchTeam = async () => {
-    //     // console.log("Hey")
-    //     setRefreshing(true)
-    //     fetchTeam();
-    // }
+  
     const deleteTeam = async (teamId) => {
         try {
             const response = await fetch(`https://tsk-final-backend.vercel.app/api/team/deleteteam/${teamId}`, {
@@ -179,15 +177,10 @@ const HomeScreen = ({ navigation }) => {
     };
     const toggleModal = () => {
         setIsModalVisibleavatar(!isModalVisibleavatar);
-      };
-      const handleLogout = () => {
-        // Perform logout logic here
-        // For example, call an API to invalidate the session or clear the authentication token
-        // Then redirect the user to the login screen
-        // You can use navigation or any other method specific to your app's navigation setup
+    };
+    const handleLogout = () => {
         toggleModal();
-        // perform logout logic and redirect user to the login screen
-      };
+    };
     return (
         <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
             <ScrollView refreshControl={
@@ -265,7 +258,7 @@ const HomeScreen = ({ navigation }) => {
                     <View style={styles.titleContainer}>
                         <Text style={[styles.teamtitleText]}>TaskStack</Text>
                         <TouchableOpacity >
-                        <Avatardropmodal navigation={navigation} />
+                            <Avatardropmodal navigation={navigation} />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.dayContainer}>
@@ -274,7 +267,7 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-                
+
                 {/* {isModalVisibleavatar && (
                    <View style={styles.logoutmaicontainer}>
                          <View style={styles.logoutContainer}>
@@ -300,7 +293,7 @@ const HomeScreen = ({ navigation }) => {
                 ) : (
                     resultTeamData.map((items) => (
                         <TeamItem
-                             key={items._id}
+                            key={items._id}
                             navigation={navigation}
                             desc={items.teamDesc}
                             setteamId={setteamId}
@@ -312,38 +305,38 @@ const HomeScreen = ({ navigation }) => {
                             deleteTeam={deleteTeam}
                             setFormData={setFormData}
                             refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                             }
                         />
                     ))
                 )}
 
 
-            <Portal>
-                <FAB.Group
-                    open={open}
-                    visible
-                    icon={open ? 'chevron-down' : 'plus'}
-                    actions={[
-                        {
-                            icon: 'account-plus',
-                            label: 'New Team',
-                            onPress: () => showModal()
-                        },
-                    ]}
-                    onStateChange={onStateChange}
-                    onPress={() => {
+                <Portal>
+                    <FAB.Group
+                        open={open}
+                        visible
+                        icon={open ? 'chevron-down' : 'plus'}
+                        actions={[
+                            {
+                                icon: 'account-plus',
+                                label: 'New Team',
+                                onPress: () => showModal()
+                            },
+                        ]}
+                        onStateChange={onStateChange}
+                        onPress={() => {
 
-                        // if (open) {
-                        //     // do something if the speed dial is open
-                        // }
-                    }}
-                    overlayColor='transparent'
-                />
-            </Portal>
+                            // if (open) {
+                            //     // do something if the speed dial is open
+                            // }
+                        }}
+                        overlayColor='transparent'
+                    />
+                </Portal>
 
 
-        </ScrollView>
+            </ScrollView>
         </Provider >
     );
 };

@@ -18,8 +18,8 @@ import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import Loader from './src/Screens/Loader';
 import TaskContext from './src/Context/taskContext';
 import Context from './src/Screens/Context';
-import Onbording from './src/Components/Onboarding/onbording';
-
+// import Onbording from './src/Components/Onboarding/onbording';
+import TaskState from './src/Context/taskState';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
