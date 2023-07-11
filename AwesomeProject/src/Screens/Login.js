@@ -19,6 +19,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { positionStyle } from 'react-native-flash-message';
 import TaskContext from '../Context/taskContext';
 import ToastComponent from '../Components/Toast/toast';
+import { assets } from '../../react-native.config';
+import { Image } from 'react-native-svg';
 const handleSuccess = () => {
   ToastComponent({ message: 'Login Sucessfull' });
 };
@@ -86,13 +88,16 @@ const LoginScreen = ({ navigation }) => {
         <HideKeyboard>
           <ScrollView>
             <View style={styles.Addfullscreen}>
+              
               <View style={styles.Loginsubscreen}>
-                <TouchableOpacity
+              {/* <ImageBackground source={require('../assets/Image/bgapp.jpg')} resizeMode="cover"> */}
+              <TouchableOpacity
                   style={{ flexDirection: 'row', marginTop: 20 }}
                   onPress={() => navigation.goBack()}>
                   <Icon name="chevron-back" size={30} color="white" />
                   <Text style={styles.AddtitleText}>Login</Text>
                 </TouchableOpacity>
+              {/* </ImageBackground> */}
               </View>
 
               <View style={styles.loginSecondScreen}>

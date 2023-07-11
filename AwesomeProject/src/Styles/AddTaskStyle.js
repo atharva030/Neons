@@ -1,4 +1,6 @@
 const { Dimensions } = require("react-native");
+const { LinearGradient } = require("react-native-svg");
+
 const deviceHeight=Dimensions.get('window').height;
 const deviceWidth=Dimensions.get('window').width;
 module.exports = {
@@ -6,8 +8,10 @@ module.exports = {
     height:deviceHeight,
     widht:deviceWidth,
     flex: 1,
-    backgroundColor: '#5a55ca',
-
+    //backgroundColor: LinearGradient
+    //backgroundImage: ".../assets/Image/bgapp.jpg"
+    //backgroundImage: 'url(".../assets/Image/bgapp.jpg")',
+    //backgroundColor: '#5a55ca',
   },
   addteamcontainerStyle: {
     width: deviceWidth * 0.85,

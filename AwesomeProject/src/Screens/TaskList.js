@@ -444,7 +444,6 @@ const TaskList = ({ navigation, route }) => {
                     style={{
                       fontFamily: 'Poppins-Regular',
                       fontSize: 16,
-                      fontStyle: 'Bold',
                       color: 'black',
                       textAlign: 'center',
                     }}>
