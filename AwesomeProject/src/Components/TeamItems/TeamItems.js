@@ -13,7 +13,7 @@ const TeamItems = (props) => {
         borderRadius: 10,
         padding: 12,
         paddingTop: 10,
-        paddingLeft: 17,
+        paddingLeft: 17, 
         flexDirection: 'row',
         alignItems:'center',
         marginBottom:15

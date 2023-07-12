@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { Chip, Avatar } from 'react-native-paper';
+import { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ToastAndroid } from 'react-native';
 const showSuccessToast = () => {
@@ -11,19 +12,19 @@ const showBackendErrorToast = () => {
 };
 const TeamMember = (props) => {
   const [isSelected, setIsSelected] = useState(false);
-  // console.log(props.name)
+
+  useEffect(() => {
+    setIsSelected(props.selectedIds.includes(props.id));
+  }, [props.selectedIds]);
+
   const handlePress = () => {
     if (!isSelected) {
       setIsSelected(true);
       handleSelect(props.id);
     } else {
+      setIsSelected(false);
       handleDeselect(props.id);
     }
-  };
-
-  const handleLongPress = () => {
-    setIsSelected(true);
-    handleSelect(props.id);
   };
 
   const handleSelect = (id) => {
@@ -37,15 +38,10 @@ const TeamMember = (props) => {
     console.log('Deselected:', newIds);
     props.setSelectedIds(newIds);
   };
-  // try {
-  //   console.log(props.name)
-  // } catch (error) {
-  //   console.log("no titel name of  add memebers ")
-  // }
+
   return (
     <Chip
       onPress={handlePress}
-      onLongPress={handleLongPress}
       style={[
         styles.chip,
         isSelected && styles.chipPressed,
@@ -56,7 +52,7 @@ const TeamMember = (props) => {
           <Icon
             name="checkmark"
             size={20}
-            color="white"
+            color={isSelected ? 'green' : 'white'}
             style={isSelected ? styles.checkmarkSelected : styles.checkmarkNotSelected}
           />
         </View>
@@ -67,14 +63,15 @@ const TeamMember = (props) => {
             style={styles.avatar}
           />
           <View style={styles.textContainer}>
-            {/* try {
-                
-            } catch (error) {
-              console.log("no name ")
-            } */}
-          <Text style={styles.nameText}>{props.name}</Text>
+            <Text style={styles.nameText}>{props.name}</Text>
             <Text style={styles.designationText}>{props.designation}</Text>
           </View>
+          <Icon
+            name="trash-outline"
+            size={20}
+            color="red"
+            // onPress={() => handleDelete(props.id)}
+          />
         </View>
       </View>
     </Chip>
