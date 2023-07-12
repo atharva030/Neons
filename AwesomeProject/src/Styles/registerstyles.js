@@ -84,6 +84,7 @@ const RegisterStyle = StyleSheet.create({
     height: 40,
     color: "black"
   },
+  
   submitBtn: {
     marginTop: 20,
     width: 280,

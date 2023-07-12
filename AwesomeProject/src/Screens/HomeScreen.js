@@ -224,10 +224,10 @@ const HomeScreen = ({ navigation }) => {
                 {/* edit title modal */}
                 <Portal>
                     <Modal visible={isModalVisible} onDismiss={handleModalClose} contentContainerStyle={containerStyle}>
-                        <View style={{ marginTop: 10 }}>
-                            <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
+                        <View style={{ marginTop: 2 }}>
+                            <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
                             <TextInput
-                                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
+                                style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 20 }]}
                                 placeholder="Team Name"
                                 placeholderTextColor="#8d98b0"
                                 value={formData.editTitle}
@@ -235,7 +235,7 @@ const HomeScreen = ({ navigation }) => {
                             />
                         </View>
                         <View style={{ marginTop: 10 }}>
-                            <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
+                            <Text style={styles1.emaillabelStyle}>Edit Team Description</Text>
                             <TextInput
                                 style={[styles1.Emailinput, { backgroundColor: 'transparent', height: 40 }]}
                                 placeholder="Team Description"
@@ -244,7 +244,7 @@ const HomeScreen = ({ navigation }) => {
                                 onChangeText={(value) => setFormData({ ...formData, editDesc: value })}
                             />
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, marginLeft: 15, marginTop: 25, position: 'absolute', right: 0 }}>
+                        <View style={{ display: 'flex', flexDirection: 'row', width: 290, alignItems: 'center' }}>
                             <Button icon="close" mode="contained" onPress={handleModalClose}>
                                 Close
                             </Button>
