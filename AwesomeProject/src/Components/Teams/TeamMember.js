@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Chip, Avatar } from 'react-native-paper';
+import { useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ToastAndroid } from 'react-native';
 const showSuccessToast = () => {
@@ -11,19 +12,19 @@ const showBackendErrorToast = () => {
 };
 const TeamMember = (props) => {
   const [isSelected, setIsSelected] = useState(false);
-  // console.log(props.name)
+
+  useEffect(() => {
+    setIsSelected(props.selectedIds.includes(props.id));
+  }, [props.selectedIds]);
+
   const handlePress = () => {
     if (!isSelected) {
       setIsSelected(true);
       handleSelect(props.id);
     } else {
+      setIsSelected(false);
       handleDeselect(props.id);
     }
-  };
-
-  const handleLongPress = () => {
-    setIsSelected(true);
-    handleSelect(props.id);
   };
 
   const handleSelect = (id) => {
@@ -37,51 +38,44 @@ const TeamMember = (props) => {
     console.log('Deselected:', newIds);
     props.setSelectedIds(newIds);
   };
-  // try {
-  //   console.log(props.name)
-  // } catch (error) {
-  //   console.log("no titel name of  add memebers ")
-  // }
+
   return (
-    <Chip
-      onPress={handlePress}
-      onLongPress={handleLongPress}
-      style={[
-        styles.chip,
-        isSelected && styles.chipPressed,
-      ]}
-    >
-      <View style={styles.container}>
-        <View style={styles.tickIconContainer}>
-          <Icon
-            name="checkmark"
-            size={20}
-            color="white"
-            style={isSelected ? styles.checkmarkSelected : styles.checkmarkNotSelected}
-          />
-        </View>
-        <View style={styles.contentContainer}>
-          <Avatar.Image
-            size={40}
-            source={require('../../../assets/Image/profile1.png')}
-            style={styles.avatar}
-          />
-          <View style={styles.textContainer}>
-            {/* try {
-                
-            } catch (error) {
-              console.log("no name ")
-            } */}
-          <Text style={styles.nameText}>{props.name}</Text>
-            <Text style={styles.designationText}>{props.designation}</Text>
+    <View style={styles.chipWrapper}>
+      <Chip
+        onPress={handlePress}
+        style={[
+          styles.chip,
+          isSelected && styles.chipPressed,
+        ]}
+      >
+        <View style={styles.container}>
+          <View style={styles.tickIconContainer}>
+            <Icon
+              name="checkmark"
+              size={20}
+              color={isSelected ? 'green' : 'white'}
+              style={isSelected ? styles.checkmarkSelected : styles.checkmarkNotSelected}
+            />
+          </View>
+          <View style={styles.contentContainer}>
+            <Avatar.Image
+              size={40}
+              source={require('../../../assets/Image/profile1.png')}
+              style={styles.avatar}
+            />
+            <View style={styles.textContainer}>
+              <Text style={styles.nameText}>{props.name}</Text>
+              <Text style={styles.designationText}>{props.designation}</Text>
+            </View>
           </View>
         </View>
-      </View>
-    </Chip>
+      </Chip>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  chipWrapper: { flexDirection: 'row',alignItems: 'center', },
   chip: {
     backgroundColor: 'white',
     borderWidth: 1,
@@ -89,7 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 20,
     width: 280,
-    height:70
+    height: 70
   },
   chipPressed: {
     backgroundColor: '#ebdefa',

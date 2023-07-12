@@ -59,7 +59,6 @@ const Welcome = ({ navigation }) => {
               name="logo-google"
               size={25}
               color="#6b8cff"
-
               style={styles.google_logo}></IonIcon>
             <View style={styles.rightIcon}>
               <IonIcon

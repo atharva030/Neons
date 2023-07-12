@@ -1,19 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Portal, Button, Modal, TextInput} from 'react-native-paper';
-import {Dropdown} from 'react-native-element-dropdown';
-import {ScrollView} from 'react-native';
+import { Portal, Button, Modal, TextInput } from 'react-native-paper';
+import { Dropdown } from 'react-native-element-dropdown';
+import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
-import {ProgressBar, MD3Colors} from 'react-native-paper';
-import styles1, {error} from '../../Styles/AddTaskStyle';
+import { ProgressBar, MD3Colors } from 'react-native-paper';
+import styles1, { error } from '../../Styles/AddTaskStyle';
 //import DocumentPicker from 'react-native-document-picker'
 import ExpandingPanel from '../ExpandingPanel/ExpandingPanel';
-import {Animated, Easing} from 'react-native';
+import { Animated, Easing } from 'react-native';
+import { Alert } from 'react-native';
 const handleBackendError = () => {
-  ToastComponent({message: '⚠️ Please Try again later!'});
+  ToastComponent({ message: '⚠️ Please Try again later!' });
 };
 const containerStyle = {
   backgroundColor: 'white',
@@ -32,14 +33,14 @@ const subtaskProgress = completedSubtasks / totalSubtasks;
 // const subtaskCount = fetchsubtask.length;
 
 const data = [
-  {label: '1', value: '1'},
-  {label: '2', value: '2'},
-  {label: '3', value: '3'},
-  {label: '4', value: '4'},
-  {label: '5', value: '5'},
-  {label: '6', value: '6'},
-  {label: '7', value: '7'},
-  {label: '8', value: '8'},
+  { label: '1', value: '1' },
+  { label: '2', value: '2' },
+  { label: '3', value: '3' },
+  { label: '4', value: '4' },
+  { label: '5', value: '5' },
+  { label: '6', value: '6' },
+  { label: '7', value: '7' },
+  { label: '8', value: '8' },
 ];
 
 const TaskItem = props => {
@@ -74,7 +75,7 @@ const TaskItem = props => {
       if (!response.ok) {
         throw new Error('Failed to update subtasks');
       }
-      ToastComponent({message: 'SubTask Added Sucessfully'});
+      ToastComponent({ message: 'SubTask Added Sucessfully' });
       console.log('This is response', response);
     } catch (error) {
       console.log(error);
@@ -94,8 +95,8 @@ const TaskItem = props => {
   };
 
   const handleSubmitModal = () => {
-    const formattedSubtasks = subtaskValues.map(value => ({title: value}));
-    const payload = {subTasks: formattedSubtasks};
+    const formattedSubtasks = subtaskValues.map(value => ({ title: value }));
+    const payload = { subTasks: formattedSubtasks };
     addSubtask(props.teamIdByItem, taskIdbyItem, payload);
     setIsModal1Visible(false);
   };
@@ -136,7 +137,7 @@ const TaskItem = props => {
     props.setIsModalVisible(true);
     props.settaskId(id);
     // props.handleEditClick()
-    props.setFormData({editTitle: title, editDesc: desc, endDate: endDate});
+    props.setFormData({ editTitle: title, editDesc: desc, endDate: endDate });
   };
 
   //this is the function for subtask checkboxes and upload button
@@ -160,9 +161,42 @@ const TaskItem = props => {
   //     },
   //   }));
   // };
+  const handleChangeVariable = async (teamId, taskId, subtaskId) => {
+    try {
+      const response = await fetch(`https://tsk-final-backend.vercel.app/api/team/${teamId}/tasks/${taskId}/subtasks/${subtaskId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status code ${response.status}`);
+      }
+
+      const text = await response.text();
+      console.log('Response body text:', text); // Log the response body for debugging
+
+      try {
+        const data = JSON.parse(text);
+        console.log(data);
+        // Call any other functions or update the UI based on the response data
+      } catch (err) {
+        console.log('Error parsing JSON:', err.message);
+      }
+
+      // ToastComponent({ message: 'Members added successfully' });
+    } catch (err) {
+      console.log('Error:', err.message);
+    }
+  };
+
 
   const toggleCheckbox = (subtaskId, taskIdByItem) => {
-
+    console.log(subtaskId);
+    console.log(props.teamIdByItem);
+    console.log(taskIdByItem);
+    handleChangeVariable(props.teamIdByItem, taskIdByItem, subtaskId);
     setSubtaskStatus((prevState) => ({
       ...prevState,
       [subtaskId]: {
@@ -171,7 +205,7 @@ const TaskItem = props => {
       },
     }));
   };
-  
+
   // const isChecked = subtaskId => {
   //   return ((checkboxState[subtaskId] === true) || (subtaskId.uploaded === true));
   // };
@@ -214,7 +248,7 @@ const TaskItem = props => {
       if (!response.ok) {
         throw new Error('Failed to fetch subtasks');
       }
-      ToastComponent({message: 'SubTask Fetched Successfully'});
+      // ToastComponent({ message: 'SubTask Fetched Successfully' });
       const data = await response.json();
       // console.log(data)0
       setFetchSubtask(data);
@@ -295,15 +329,15 @@ const TaskItem = props => {
     outputRange: [0, 1],
   });
   return (
-    <View style={[styles.taskFlex, {height: taskFlexHeight}]}>
+    <View style={[styles.taskFlex, { height: taskFlexHeight }]}>
       <View
         style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <Text style={{color: statusColor, padding: 10}}>{props.status}</Text>
-        <View style={{flexDirection: 'row'}}>
+        <Text style={{ color: statusColor, padding: 10 }}>{props.status}</Text>
+        <View style={{ flexDirection: 'row' }}>
           {/* expanding panel for the  three dot icon  whn pressed it iwill grow and show the three icons which  will perform the crud operation for subtask  */}
           <View>
             <TouchableOpacity onPress={handleIconPress}>
@@ -334,7 +368,7 @@ const TaskItem = props => {
                           name="add"
                           color="black"
                           size={20}
-                          style={{marginRight: 10}}
+                          style={{ marginRight: 10 }}
                         />
                       )}
                     </TouchableOpacity>
@@ -351,20 +385,36 @@ const TaskItem = props => {
                         name="pencil-sharp"
                         color="black"
                         size={20}
-                        style={{marginRight: 10}}
+                        style={{ marginRight: 10 }}
                       />
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={() =>
-                        handleDeleteClick(props.id, props.teamIdByItem)
-                      }>
-                      <Icon
-                        name="trash"
-                        color="black"
-                        size={20}
-                        style={{marginRight: 10}}
-                      />
-                    </TouchableOpacity>
+  onPress={() =>
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => handleDeleteClick(props.id, props.teamIdByItem),
+          style: 'destructive',
+        },
+      ],
+      { cancelable: false }
+    )
+  }
+>
+  <Icon
+    name="trash"
+    color="black"
+    size={20}
+    style={{ marginRight: 10 }}
+  />
+</TouchableOpacity>
                   </Animated.View>
                 )}
                 <Icon
@@ -409,13 +459,13 @@ const TaskItem = props => {
             <ScrollView>
               {/* <Text style={[styles.label, isExtended && { color: 'blue' }]}>No. of Subtasks</Text> */}
               <Dropdown
-                style={[styles.dropdown, isExtended && {borderColor: 'blue'}]}
+                style={[styles.dropdown, isExtended && { borderColor: 'blue' }]}
                 selectedValue={selectedOption}
                 onValueChange={handleDropdownChange}
-                placeholderStyle={[styles.placeholderStyle, {color: 'black'}]}
-                selectedTextStyle={[styles.selectedTextStyle, {color: 'black'}]}
-                inputSearchStyle={[styles.inputSearchStyle, {color: 'black'}]}
-                optionTextStyle={{color: 'black'}}
+                placeholderStyle={[styles.placeholderStyle, { color: 'black' }]}
+                selectedTextStyle={[styles.selectedTextStyle, { color: 'black' }]}
+                inputSearchStyle={[styles.inputSearchStyle, { color: 'black' }]}
+                optionTextStyle={{ color: 'black' }}
                 iconStyle={styles.iconStyle}
                 data={data}
                 search
@@ -456,7 +506,7 @@ const TaskItem = props => {
               icon="check"
               mode="contained"
               onPress={handleSubmitModal}
-              style={{marginLeft: 5}}>
+              style={{ marginLeft: 5 }}>
               Done
             </Button>
           </View>
@@ -474,14 +524,14 @@ const TaskItem = props => {
           <TouchableOpacity onPress={() => handleToggleFlex(props.id)}>
             {isExtended ? (
               <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon name="chevron-up-outline" color="black" size={20} />
                   <Text style={styles.taskText}> See less</Text>
                 </View>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Icon name="chevron-down-outline" color="black" size={20} />
                   <Text style={styles.taskText}>See Subtasks</Text>
                 </View>
@@ -491,11 +541,11 @@ const TaskItem = props => {
         </View>
 
         <ProgressBar progress={subtaskProgress} color={MD3Colors.error50} />
-        <Collapsible collapsed={!isExtended} style={{color: 'black'}}>
+        <Collapsible collapsed={!isExtended} style={{ color: 'black' }}>
           <View style={styles.additionalContent}>
             <View style={styles.subtaskBlockView}>
               {fetchsubtask.length === 0 ? (
-                <Text style={{color: 'black'}}>
+                <Text style={{ color: 'black' }}>
                   You don't have subtask to show
                 </Text>
               ) : (
@@ -505,13 +555,28 @@ const TaskItem = props => {
                     key={subtask._id}
                     style={[
                       styles.individualSubT,
-                      {flexDirection: 'row', alignItems: 'center'},
+                      { flexDirection: 'row', alignItems: 'center' },
                     ]}>
                     <TouchableOpacity
                       style={styles.subTaskSelectCheck}
-                      onPress={
-                        () => toggleCheckbox(subtask._id, props.id) // Pass the subtask ID to the toggleCheckbox function
-                      }>
+                      onPress={() => {
+                        Alert.alert(
+                          'Confirmation',
+                          'Are you sure to submit check the box?',
+                          [
+                            {
+                              text: 'Cancel',
+                              style: 'cancel',
+                            },
+                            {
+                              text: 'Confirm',
+                              onPress: () => toggleCheckbox(subtask._id, props.id),
+                            },
+                          ],
+                          { cancelable: false }
+                        );
+                      }}
+                    >
                       <Icon
                         name={
                           isChecked(subtask._id)

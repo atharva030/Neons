@@ -1,27 +1,27 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
 import styles from '../../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { Button } from 'react-native-paper';
 const TeamItem = props => {
-    const appFun = (id,teamTitle) => {
+    const appFun = (id, teamTitle) => {
         console.log(id)
         props.setteamId(id)
-        props.navigation.navigate("TaskList",{
-             post: id ,
-             teamTitle:teamTitle
-          });
+        props.navigation.navigate("TaskList", {
+            post: id,
+            teamTitle: teamTitle
+        });
     }
     const deleteId = (id) => {
         console.log(id)
         props.setteamId(id)
-       props.deleteTeam(id)
+        props.deleteTeam(id)
     }
-    const handleModal=(title,desc,id)=>{
+    const handleModal = (title, desc, id) => {
         props.setteamId(id)
         props.handleEditClick()
-        props.setFormData({ editTitle: title ,editDesc:desc});
+        props.setFormData({ editTitle: title, editDesc: desc });
     }
     // props.setFormData({ fieldName: "existingValue" });
     // const [statusColor, setStatusColor] = useState("");
@@ -35,7 +35,7 @@ const TeamItem = props => {
                     <View style={styles.secondSubFlex}>
                         <Text style={styles.teamBigText}>{props.title}</Text>
                         <TouchableOpacity>
-                            <Icon name='md-arrow-forward-circle-sharp' onPress={() => appFun(props.items._id,props.title)} size={30} color="black" />
+                            <Icon name='md-arrow-forward-circle-sharp' onPress={() => appFun(props.items._id, props.title)} size={30} color="black" />
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.taskText}>{props.desc}</Text>
@@ -43,22 +43,40 @@ const TeamItem = props => {
                 <View style={styles.flexIcon}>
 
                     {/* <View style={styles.iconStyle}> */}
-                        <View style={{flexDirection:"row"}}>
+                    <View style={{ flexDirection: "row" }}>
                         <TouchableOpacity>
                             <Icon name="people" size={18} color="black" />
                         </TouchableOpacity>
                         <Text style={styles.personText}>{props.person} Persons</Text>
-                        </View>
-                        <View style={{flexDirection:'row'}}>
-                        <TouchableOpacity onPress={()=>handleModal(props.title,props.desc,props.items._id)}>
+                    </View>
+                    <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={() => handleModal(props.title, props.desc, props.items._id)}>
 
-                            <Icon name="md-pencil-outline" size={20} style={{color:'black',marginRight:15}} />
+                            <Icon name="md-pencil-outline" size={20} style={{ color: 'black', marginRight: 15 }} />
                         </TouchableOpacity>
-                           <TouchableOpacity onPress={() => deleteId(props.items._id)}>
-
-                            <Icon name='md-trash' size={20} style={{color:'black'}} icon="delete" />
-                           </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity
+                            onPress={() =>
+                                Alert.alert(
+                                    'Confirmation',
+                                    'Are you sure you want to delete team Permanantly?',
+                                    [
+                                        {
+                                            text: 'Cancel',
+                                            style: 'cancel',
+                                        },
+                                        {
+                                            text: 'Delete',
+                                            onPress: () => deleteId(props.items._id),
+                                            style: 'destructive',
+                                        },
+                                    ],
+                                    { cancelable: false }
+                                )
+                            }
+                        >
+                            <Icon name='md-trash' size={20} style={{ color: 'black' }} />
+                        </TouchableOpacity>
+                    </View>
                     {/* </View> */}
                 </View>
             </View>

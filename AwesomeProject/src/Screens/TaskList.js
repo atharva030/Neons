@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,8 +6,10 @@ import {
   TextInput,
   ScrollView,
   RefreshControl,
+  Alert
 } from 'react-native';
 import styles from '../Styles/Home';
+import BottomSheet from 'react-native-raw-bottom-sheet';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -22,6 +24,7 @@ import CircularProgressBar from '../Components/CircularProgressBar';
 // import Spinner from './Spinner';
 import AppLoader from '../Components/AppLoader';
 
+import MemberFilter from '../Components/Teams/MemberFilter';
 const handleSuccess = () => {
   ToastComponent({message: 'Task Updated Sucessfull'});
 };
@@ -57,38 +60,32 @@ const TaskList = ({navigation, route}) => {
     setVisible(true);
   };
   const hideModal = () => setVisible(false);
-  const containerMemberStyle = {
-    backgroundColor: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingTop: 10,
-    borderRadius: 20,
-    width: 330,
-    marginLeft: 10,
-    height: 600,
-  };
-  const containerStyle = {
-    backgroundColor: 'white',
-    padding: 30,
-    borderRadius: 20,
-    width: 340,
-    marginLeft: 10,
-  };
-  const addtaskcontainerStyle = {
-    backgroundColor: 'white',
-    borderRadius: 20,
-    width: 340,
-    marginLeft: 10,
-    height: 450,
-  };
+  const containerMemberStyle = {  backgroundColor: 'white',
+  marginHorizontal: 20,
+  padding: 20,
+  width:"90%",
+  borderRadius:10,
+  alignItems: 'center',
+  justifyContent: 'center',};
+  const containerStyle = { backgroundColor: 'white', padding: 30, borderRadius: 20, width: 340, marginLeft: 10 };
+  const addtaskcontainerStyle = { backgroundColor: 'white', borderRadius: 20, width: 340, marginLeft: 10, height: 450 };
 
   const handleSubmit = () => {
+    setmemberTeam(false)
     hideModal();
     handleAddMember();
   };
   const handleEditClick = () => {
     setIsModalVisible(true);
+  };
+  const bottomSheetRef = useRef(null);
+
+  const openBottomSheet = () => {
+    bottomSheetRef.current.open();
+  };
+
+  const closeBottomSheet = () => {
+    bottomSheetRef.current.close();
   };
 
   const editTask = async (teamId, taskId) => {
@@ -177,39 +174,39 @@ const TaskList = ({navigation, route}) => {
   };
 
   const fetchMembers = async () => {
+    try {
+      const response = await fetch(
+        `http://192.168.0.103:8888/api/members/getuser/${teamIdByItem}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      const data = await response.json();
+      console.log(data)
+      setresultTeamMemberData(data)
+    } catch (error) {
+      console.log(error);
+      handleBackendError();
+    }
+
+  };
+const [filterMember, setFilterMember] = useState([])
+  const fetchTeamMembers = async () => {
     // console.log("Hey")
-    fetch('https://tsk-final-backend.vercel.app/api/members/getuser', {
+    openBottomSheet();
+    fetch(`http://192.168.0.103:8888/api/members/getmembers/${teamIdByItem}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
     })
       .then(response => response.json())
       .then(data => {
-        setresultTeamMemberData(data);
-      })
-      .then(ToastComponent({message: 'Members Fetched'}))
-      .catch(err => {
-        console.log(err);
-        handleBackendError();
-      });
-  };
-  const fetchTeamMembers = async () => {
-    // console.log("Hey")
-    fetch(
-      `https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}/getmembers`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'auth-token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og',
-        },
-      },
-    )
-      .then(response => response.json())
-      .then(data => {
-        setteamMembers(data);
+        console.log(data)
+        setFilterMember(data);
       })
 
       .then(ToastComponent({message: ' Team Members Fetched'}))
@@ -244,7 +241,7 @@ const TaskList = ({navigation, route}) => {
     }
   };
   const handleAddMember = async () => {
-    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}`, {
+    fetch(`http://192.168.0.103:8888/api/team/${teamIdByItem}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -293,18 +290,61 @@ const TaskList = ({navigation, route}) => {
     setIsModalVisible(false);
   };
   return (
-    <Provider
-      theme={{
-        ...DefaultTheme,
-        colors: {...DefaultTheme.colors, accent: 'transparent'},
-      }}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={refreshfetchTasks}
-          />
-        }>
+    <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
+      <View style={styles.bottomContainer}>
+      <BottomSheet
+        ref={bottomSheetRef}
+        closeOnDragDown={true}
+        closeOnPressMask={true}
+        customStyles={{
+          wrapper: styles.bottomSheetWrapper,
+          draggableIcon: styles.bottomSheetDraggableIcon,
+          container: styles.bottomSheetContainer,
+        }}
+      >
+        <View style={styles.bottomSheetContent}>
+        <ScrollView>
+          
+              {filterMember.length === 0 ? (
+                <View>
+                  <Text
+                    style={{
+                      color: 'grey',
+                      fontSize: 20,
+                      padding: 20,
+                      marginTop: 140,
+                      textAlign: 'center',
+                      letterSpacing: 1.5,
+                    }}>
+                    You don't have Teams to Display
+                  </Text>
+                </View>
+              ) : (
+                filterMember.map(items => (
+                  <MemberFilter
+                    key={items._id}
+                    designation={items.designation}
+                    id={items._id}
+                    name={items.name}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
+                  />
+                ))
+              )}
+            </ScrollView>
+          {/* <TouchableOpacity style={styles.closeButton} onPress={closeBottomSheet}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity> */}
+        </View>
+      </BottomSheet>
+      </View>
+      <ScrollView refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={refreshfetchTasks}
+        />
+      }>
+
         {/* Edit Task Modal Starts */}
         <Portal>
           <Modal
@@ -376,69 +416,85 @@ const TaskList = ({navigation, route}) => {
         {/* Edit Task Modal Ends */}
         {/* Listing to add team members starts */}
         <Portal>
-          <Modal
-            visible={memberTeam}
-            onDismiss={() => setmemberTeam(false)}
-            contentContainerStyle={containerMemberStyle}>
-            <ScrollView>
-              {resultTeamMemberData.length === 0 ? (
-                <View
-                  style={{
-                    width: 360,
-                    height: 500,
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      color: 'grey',
-                      fontSize: 20,
-                      padding: 20,
-                      marginTop: 140,
-                      textAlign: 'center',
-                      letterSpacing: 1.5,
-                    }}>
-                    You don't have Teams to Display
-                  </Text>
-                </View>
-              ) : (
-                resultTeamMemberData.map(items => (
-                  <TeamMember
-                    key={items._id}
-                    designation={items.designation}
-                    id={items._id}
-                    name={items.name}
-                    selectedIds={selectedIds}
-                    setSelectedIds={setSelectedIds}
-                  />
-                ))
-              )}
-            </ScrollView>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: 290,
-                marginTop: 15,
-                marginBottom: 10,
-              }}>
-              <Button
-                icon="close"
-                mode="contained"
-                onPress={() => setmemberTeam(false)}
-                style={{marginLeft: 25}}>
-                Close
-              </Button>
-              <Button
-                icon="check"
-                mode="contained"
-                onPress={handleSubmit}
-                style={{marginLeft: 5}}>
-                Add Member
-              </Button>
-            </View>
-          </Modal>
-        </Portal>
+  <Modal
+    visible={memberTeam}
+    onDismiss={() => setmemberTeam(false)}
+    contentContainerStyle={[containerMemberStyle, { alignItems: 'center', justifyContent: 'center' }]}
+  >
+    <ScrollView>
+      {resultTeamMemberData.length === 0 ? (
+        <View>
+          <Text
+            style={{
+              color: 'grey',
+              fontSize: 20,
+              padding: 20,
+              // marginTop: 140,
+              textAlign: 'center',
+              letterSpacing: 1.5,
+            }}
+          >
+            You don't have Teams to Display
+          </Text>
+        </View>
+      ) : (
+        resultTeamMemberData.map((items) => (
+          <TeamMember
+            key={items._id}
+            designation={items.designation}
+            id={items._id}
+            name={items.name}
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
+          />
+        ))
+      )}
+    </ScrollView>
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        width: 290,
+        marginTop: 15,
+        marginBottom: 10,
+      }}
+    >
+      <Button
+        icon="close"
+        mode="contained"
+        onPress={() => setmemberTeam(false)}
+        style={{ marginLeft: 25 }}
+      >
+        Close
+      </Button>
+      <Button
+        icon="check"
+        mode="contained"
+        onPress={() => {
+          Alert.alert(
+            'Confirmation',
+            'Are you sure you want to add the selected members?',
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+              },
+              {
+                text: 'Add',
+                onPress: handleSubmit,
+              },
+            ],
+            { cancelable: false }
+          );
+        }}
+        style={{ marginLeft: 5 }}
+      >
+        Add Member
+      </Button>
+    </View>
+  </Modal>
+</Portal>
+
         {/* Listing to add team members end */}
         {/* Add task Modal start */}
         <Portal>
@@ -460,7 +516,9 @@ const TaskList = ({navigation, route}) => {
                 </View>
                 <TouchableOpacity
                   style={styles.addButton}
-                  onPress={fetchTeamMembers}>
+                  onPress={fetchTeamMembers}
+                  // onPress={openBottomSheet}
+                >
                   <Text style={styles.addText}>View Team</Text>
                 </TouchableOpacity>
               </View>
