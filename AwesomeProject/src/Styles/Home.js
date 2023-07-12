@@ -5,6 +5,38 @@ const screenWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 //This is for Team Scr1 and TaskList
 module.exports = {
+  bottomContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomSheetWrapper: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  bottomSheetDraggableIcon: {
+    backgroundColor: 'gray',
+  },
+  bottomSheetContainer: {
+    backgroundColor: 'white',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    height: 400, 
+  },
+  bottomSheetContent: {
+    padding: 16,
+  },
+  closeButton: {
+    marginTop: 16,
+    backgroundColor: '#4287f5',
+    padding: 10,
+    borderRadius: 5,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   fullscreen: {
     backgroundColor: '#f0f4fd',
     minHeight: Dimensions.get('window').height,
