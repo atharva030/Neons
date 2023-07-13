@@ -64,7 +64,6 @@ const LoginScreen = ({ navigation }) => {
           navigation.navigate('NavigationScreen');
           setIsLoading(false);
           handleSuccess()
-
         } else {
           setIsLoading(false);
           // Login failed, display an error message or perform any other actions
