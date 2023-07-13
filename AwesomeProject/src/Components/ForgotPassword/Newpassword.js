@@ -1,16 +1,60 @@
+import React, {useState} from 'react';
 import {
   View,
   Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 import styles from '../../Styles/AddTaskStyle';
-import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
+import {useRoute} from '@react-navigation/native';
 
 const Newpassword = ({navigation}) => {
+  const route = useRoute();
+  const email = route.params?.email || '';
+
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  // console.log(email);
+  // console.log(newPassword===confirmPassword);
+  const handlePasswordReset = () => {
+    if (newPassword === confirmPassword) {
+      fetch('https://tsk-final-backend.vercel.app/api/auth/login/reset_password', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: confirmPassword,
+        }),
+      })
+        .then(response => {
+          if (response.ok) {
+            Alert.alert('Success','Password updated successfully');
+          }
+          if (!response.ok) {
+            console.log(response);
+            throw new Error('Network Error');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data); 
+          navigation.navigate('Login');
+        })
+        .catch(error => {
+          console.error(error);
+          Alert.alert('Error', 'An error occurred. Please try again later.');
+        });
+    } else {
+      Alert.alert('Error', 'Passwords do not match. Please try again.');
+    }
+  };
+
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
@@ -35,26 +79,28 @@ const Newpassword = ({navigation}) => {
         <View>
           <Text style={styles.emaillabelStyle}>Create New Password</Text>
           <TextInput
-            style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+            style={styles.Emailinput}
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
+            secureTextEntry={true}
+            value={newPassword}
+            onChangeText={setNewPassword}
           />
         </View>
         <View>
           <Text style={styles.emaillabelStyle}>Confirm New Password</Text>
           <TextInput
-            style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+            style={styles.Emailinput}
             placeholder=""
-            // Making the Under line Transparent.
             placeholderTextColor="#8d98b0"
-            //   underlineColorAndroid="transparent"
+            secureTextEntry={true}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
           />
         </View>
 
         <Button
-          onPress={() => navigation.navigate('Login')}
+          onPress={handlePasswordReset}
           style={styles.sendOtp}
           mode="contained">
           Create New
