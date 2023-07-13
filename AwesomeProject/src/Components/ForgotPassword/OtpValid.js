@@ -3,7 +3,6 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-nativ
 import styles from '../../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-paper';
-import axios from 'axios';
 import { useRoute } from '@react-navigation/native';
 import Newpassword from './Newpassword';
 
