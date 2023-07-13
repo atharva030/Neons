@@ -14,8 +14,8 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CalendarStrip from 'react-native-calendar-strip';
 import TaskItem from '../Components/Items/TaskItem';
-import {Modal, Button} from 'react-native-paper';
-import {FAB, Provider, DefaultTheme, Portal} from 'react-native-paper';
+import { Modal, Button } from 'react-native-paper';
+import { FAB, Provider, DefaultTheme, Portal } from 'react-native-paper';
 import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
 import styles1 from '../Styles/TasklistStyle';
@@ -26,15 +26,15 @@ import AppLoader from '../Components/AppLoader';
 
 import MemberFilter from '../Components/Teams/MemberFilter';
 const handleSuccess = () => {
-  ToastComponent({message: 'Task Updated Sucessfull'});
+  ToastComponent({ message: 'Task Updated Sucessfull' });
 };
 
 const handleBackendError = () => {
-  ToastComponent({message: '⚠️ Please Try again later!'});
+  ToastComponent({ message: '⚠️ Please Try again later!' });
 };
 const currentDate = moment().format('MMMM DD, YYYY');
 
-const TaskList = ({navigation, route}) => {
+const TaskList = ({ navigation, route }) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [memberTeam, setmemberTeam] = useState(false);
   const [formData, setFormData] = useState({
@@ -47,26 +47,28 @@ const TaskList = ({navigation, route}) => {
   const [teamMembers, setteamMembers] = useState('');
   const [taskId, settaskId] = useState('');
   const [visible, setVisible] = useState(false);
-  const [state, setState] = useState({open: false});
+  const [state, setState] = useState({ open: false });
   const [refreshing, setRefreshing] = useState(false);
-  const onStateChange = ({open}) => setState({open});
-  const {open} = state;
+  const onStateChange = ({ open }) => setState({ open });
+  const { open } = state;
   const teamIdByItem = route.params.post; //id by teamItem
   const teamTitle = route.params.teamTitle; //id by teamItem
-  const [isLoading, setIsLoading] = useState(' ');
+  const [isLoading, setIsLoading] = useState(false);
 
   const showModal = () => {
-    console.log('preesed');
+    // console.log('preesed');
     setVisible(true);
   };
   const hideModal = () => setVisible(false);
-  const containerMemberStyle = {  backgroundColor: 'white',
-  marginHorizontal: 20,
-  padding: 20,
-  width:"90%",
-  borderRadius:10,
-  alignItems: 'center',
-  justifyContent: 'center',};
+  const containerMemberStyle = {
+    backgroundColor: 'white',
+    marginHorizontal: 20,
+    padding: 20,
+    width: "90%",
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
   const containerStyle = { backgroundColor: 'white', padding: 30, borderRadius: 20, width: 340, marginLeft: 10 };
   const addtaskcontainerStyle = { backgroundColor: 'white', borderRadius: 20, width: 340, marginLeft: 10, height: 450 };
 
@@ -104,7 +106,7 @@ const TaskList = ({navigation, route}) => {
         }),
       },
     )
-      .then(ToastComponent({message: 'Task Edited sucessfully !'}))
+      .then(ToastComponent({ message: 'Task Edited sucessfully !' }))
       .catch(err => {
         console.log(err);
         handleBackendError();
@@ -112,7 +114,7 @@ const TaskList = ({navigation, route}) => {
   };
   const fetchTasks = async () => {
     setIsLoading(true);
-    console.log(isLoading);
+    // console.log(isLoading);
     try {
       const response = await fetch(
         `https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/fetchtasks`,
@@ -131,10 +133,10 @@ const TaskList = ({navigation, route}) => {
       const data = await response.json();
       setfetchTask(data.tasks);
       setIsLoading(false);
-      ToastComponent({message: 'Task Fetched !'}); 
+      ToastComponent({ message: 'Task Fetched !' });
       setTimeout(() => {
         setRefreshing(false);
-        console.log('after', refreshing);
+        // console.log('after', refreshing);
       }, 1200);
     } catch (error) {
       console.log(error);
@@ -143,34 +145,7 @@ const TaskList = ({navigation, route}) => {
   };
   const refreshfetchTasks = async () => {
     setRefreshing(true);
-    try {
-      const response = await fetch(
-        `https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/fetchtasks`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-        // .then( ToastComponent({ message: '' }) )
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch tasks');
-      }
-
-      const data = await response.json();
-      setfetchTask(data.tasks);
-      console.log('Data', fetchTask);
-      console.log('Before', refreshing);
-      setTimeout(() => {
-        setRefreshing(false);
-        console.log('after', refreshing);
-      }, 1200);
-    } catch (error) {
-      console.log(error);
-      handleBackendError();
-    }
+    fetchTasks();
   };
 
   const fetchMembers = async () => {
@@ -185,7 +160,7 @@ const TaskList = ({navigation, route}) => {
         },
       );
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       setresultTeamMemberData(data)
     } catch (error) {
       console.log(error);
@@ -193,11 +168,11 @@ const TaskList = ({navigation, route}) => {
     }
 
   };
-const [filterMember, setFilterMember] = useState([])
+  const [filterMember, setFilterMember] = useState([])
   const fetchTeamMembers = async () => {
     // console.log("Hey")
     openBottomSheet();
-    fetch(`http://192.168.0.103:8888/api/members/getmembers/${teamIdByItem}`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/members/getmembers/${teamIdByItem}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -205,11 +180,11 @@ const [filterMember, setFilterMember] = useState([])
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
+        // console.log(data)
         setFilterMember(data);
       })
 
-      .then(ToastComponent({message: ' Team Members Fetched'}))
+      .then(ToastComponent({ message: ' Team Members Fetched' }))
       .catch(err => {
         console.log(err);
         handleBackendError();
@@ -229,11 +204,11 @@ const [filterMember, setFilterMember] = useState([])
       );
 
       if (response.ok) {
-        console.log(`Team with ID ${teamId} deleted successfully`);
-        fetchTasks();
-        ToastComponent({message: 'Team Deleted successfully'});
+        // console.log(`Team with ID ${teamId} deleted successfully`);
+        // fetchTasks();
+        ToastComponent({ message: 'Team Deleted successfully' });
       } else {
-        console.log(`Error deleting team with ID ${teamId}`);
+        // console.log(`Error deleting team with ID ${teamId}`);
       }
     } catch (error) {
       console.log(error);
@@ -241,7 +216,7 @@ const [filterMember, setFilterMember] = useState([])
     }
   };
   const handleAddMember = async () => {
-    fetch(`http://192.168.0.103:8888/api/team/${teamIdByItem}`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -253,19 +228,19 @@ const [filterMember, setFilterMember] = useState([])
       }),
     })
       .then(response => {
-        console.log('Response status code:', response.status);
+        // console.log('Response status code:', response.status);
         return response.text();
       })
       .then(text => {
-        console.log('Response body text:', text);
+        // console.log('Response body text:', text);
         try {
           const data = JSON.parse(text);
-          console.log(data);
+          // console.log(data);
         } catch (err) {
           console.log('Error parsing JSON:', err.message);
         }
       })
-      .then(ToastComponent({message: 'Members added sucessfully '}))
+      .then(ToastComponent({ message: 'Members added sucessfully ' }))
       .catch(err => {
         console.log('Error: ' + err.message);
         handleBackendError();
@@ -274,7 +249,7 @@ const [filterMember, setFilterMember] = useState([])
   // console.log(props.route)
   useEffect(() => {
     // fetchData()
-    fetchMembers();
+    // fetchMembers();
     fetchTasks();
   }, []);
 
@@ -292,19 +267,19 @@ const [filterMember, setFilterMember] = useState([])
   return (
     <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
       <View style={styles.bottomContainer}>
-      <BottomSheet
-        ref={bottomSheetRef}
-        closeOnDragDown={true}
-        closeOnPressMask={true}
-        customStyles={{
-          wrapper: styles.bottomSheetWrapper,
-          draggableIcon: styles.bottomSheetDraggableIcon,
-          container: styles.bottomSheetContainer,
-        }}
-      >
-        <View style={styles.bottomSheetContent}>
-        <ScrollView>
-          
+        <BottomSheet
+          ref={bottomSheetRef}
+          closeOnDragDown={true}
+          closeOnPressMask={true}
+          customStyles={{
+            wrapper: styles.bottomSheetWrapper,
+            draggableIcon: styles.bottomSheetDraggableIcon,
+            container: styles.bottomSheetContainer,
+          }}
+        >
+          <View style={styles.bottomSheetContent}>
+            <ScrollView>
+
               {filterMember.length === 0 ? (
                 <View>
                   <Text
@@ -328,15 +303,18 @@ const [filterMember, setFilterMember] = useState([])
                     name={items.name}
                     selectedIds={selectedIds}
                     setSelectedIds={setSelectedIds}
+                    fetchTeamMembers={fetchTeamMembers}
+                    fetchMembers={fetchMembers}
+                    teamIdByItem={teamIdByItem}
                   />
                 ))
               )}
             </ScrollView>
-          {/* <TouchableOpacity style={styles.closeButton} onPress={closeBottomSheet}>
+            {/* <TouchableOpacity style={styles.closeButton} onPress={closeBottomSheet}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity> */}
-        </View>
-      </BottomSheet>
+          </View>
+        </BottomSheet>
       </View>
       <ScrollView refreshControl={
         <RefreshControl
@@ -355,13 +333,13 @@ const [filterMember, setFilterMember] = useState([])
             <TextInput
               style={[
                 styles1.Emailinput,
-                {backgroundColor: 'transparent', height: 40},
+                { backgroundColor: 'transparent', height: 40 },
               ]}
               placeholder="Team Name"
               placeholderTextColor="#8d98b0"
               value={formData.editTitle}
               onChangeText={value =>
-                setFormData({...formData, editTitle: value})
+                setFormData({ ...formData, editTitle: value })
               }
             />
 
@@ -369,13 +347,13 @@ const [filterMember, setFilterMember] = useState([])
             <TextInput
               style={[
                 styles1.Emailinput,
-                {backgroundColor: 'transparent', height: 40},
+                { backgroundColor: 'transparent', height: 40 },
               ]}
               placeholder="Team Description"
               placeholderTextColor="#8d98b0"
               value={formData.editDesc}
               onChangeText={value =>
-                setFormData({...formData, editDesc: value})
+                setFormData({ ...formData, editDesc: value })
               }
             />
             <View>
@@ -383,13 +361,13 @@ const [filterMember, setFilterMember] = useState([])
               <TextInput
                 style={[
                   styles1.Emailinput,
-                  {backgroundColor: 'transparent', height: 40},
+                  { backgroundColor: 'transparent', height: 40 },
                 ]}
                 placeholder="Team Enddate"
                 placeholderTextColor="#8d98b0"
                 value={formData.endDate}
                 onChangeText={value =>
-                  setFormData({...formData, endDate: value})
+                  setFormData({ ...formData, endDate: value })
                 }
               />
             </View>
@@ -407,7 +385,7 @@ const [filterMember, setFilterMember] = useState([])
                 icon="check"
                 mode="contained"
                 onPress={() => editTask(teamIdByItem, taskId)}
-                style={{marginLeft: 5}}>
+                style={{ marginLeft: 5 }}>
                 Done
               </Button>
             </View>
@@ -416,12 +394,12 @@ const [filterMember, setFilterMember] = useState([])
         {/* Edit Task Modal Ends */}
         {/* Listing to add team members starts */}
         <Portal>
-  <Modal
-    visible={memberTeam}
-    onDismiss={() => setmemberTeam(false)}
-    contentContainerStyle={[containerMemberStyle, { alignItems: 'center', justifyContent: 'center' }]}
-  >
-    <ScrollView>
+          <Modal
+            visible={memberTeam}
+            onDismiss={() => setmemberTeam(false)}
+            contentContainerStyle={[containerMemberStyle, { alignItems: 'center', justifyContent: 'center' }]}
+          >
+            {/* <ScrollView>
       {resultTeamMemberData.length === 0 ? (
         <View>
           <Text
@@ -449,51 +427,51 @@ const [filterMember, setFilterMember] = useState([])
           />
         ))
       )}
-    </ScrollView>
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        width: 290,
-        marginTop: 15,
-        marginBottom: 10,
-      }}
-    >
-      <Button
-        icon="close"
-        mode="contained"
-        onPress={() => setmemberTeam(false)}
-        style={{ marginLeft: 25 }}
-      >
-        Close
-      </Button>
-      <Button
-        icon="check"
-        mode="contained"
-        onPress={() => {
-          Alert.alert(
-            'Confirmation',
-            'Are you sure you want to add the selected members?',
-            [
-              {
-                text: 'Cancel',
-                style: 'cancel',
-              },
-              {
-                text: 'Add',
-                onPress: handleSubmit,
-              },
-            ],
-            { cancelable: false }
-          );
-        }}
-        style={{ marginLeft: 5 }}
-      >
-        Add Member
-      </Button>
-    </View>
-  </Modal>
-</Portal>
+    </ScrollView> */}
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: 290,
+                marginTop: 15,
+                marginBottom: 10,
+              }}
+            >
+              <Button
+                icon="close"
+                mode="contained"
+                onPress={() => setmemberTeam(false)}
+                style={{ marginLeft: 25 }}
+              >
+                Close
+              </Button>
+              <Button
+                icon="check"
+                mode="contained"
+                onPress={() => {
+                  Alert.alert(
+                    'Confirmation',
+                    'Are you sure you want to add the selected members?',
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Add',
+                        onPress: handleSubmit,
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+                style={{ marginLeft: 5 }}
+              >
+                Add Member
+              </Button>
+            </View>
+          </Modal>
+        </Portal>
 
         {/* Listing to add team members end */}
         {/* Add task Modal start */}
@@ -510,14 +488,14 @@ const [filterMember, setFilterMember] = useState([])
         <ScrollView>
           <View style={[styles.fullscreen]}>
             <View style={styles.outer}>
-              <View style={{display: 'flex', flexDirection: 'row'}}>
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
                 <View style={styles.titleContainer}>
                   <Text style={[styles.titleText]}>{teamTitle}</Text>
                 </View>
                 <TouchableOpacity
                   style={styles.addButton}
                   onPress={fetchTeamMembers}
-                  // onPress={openBottomSheet}
+                // onPress={openBottomSheet}
                 >
                   <Text style={styles.addText}>View Team</Text>
                 </TouchableOpacity>
@@ -527,7 +505,7 @@ const [filterMember, setFilterMember] = useState([])
                   <Text style={[styles.dateText]}>{currentDate}</Text>
                 </View>
               </View>
-              <View style={{display: 'flex', flexDirection: 'row'}}>
+              <View style={{ display: 'flex', flexDirection: 'row' }}>
                 <View
                   style={{
                     backgroundColor: '#ffff',
@@ -560,7 +538,6 @@ const [filterMember, setFilterMember] = useState([])
                         fontSize: 14,
                         color: 'black',
                       }}>
-                      {' '}
                       Completed
                     </Text>
                   </View>
@@ -578,7 +555,6 @@ const [filterMember, setFilterMember] = useState([])
                         fontSize: 14,
                         color: 'black',
                       }}>
-                      {' '}
                       Pending
                     </Text>
                   </View>
@@ -587,7 +563,7 @@ const [filterMember, setFilterMember] = useState([])
                 <View
                   style={[
                     styles1.pbView,
-                    {width: '50%', justifyContent: 'center'},
+                    { width: '50%', justifyContent: 'center' },
                   ]}>
                   <View style={styles1.pbStyle}>
                     <CircularProgressBar
@@ -603,7 +579,7 @@ const [filterMember, setFilterMember] = useState([])
 
               <CalendarStrip
                 onDateSelected={date => console.log(date)}
-                calendarAnimation={{type: 'sequence', duration: 30}}
+                calendarAnimation={{ type: 'sequence', duration: 30 }}
                 daySelectionAnimation={{
                   type: 'border',
                   duration: 200,
@@ -611,19 +587,19 @@ const [filterMember, setFilterMember] = useState([])
                   borderHighlightColor: 'black',
                 }}
                 style={styles.calenderStyle}
-                calendarHeaderStyle={{color: 'black'}}
+                calendarHeaderStyle={{ color: 'black' }}
                 // calendarColor={'#7743CE'}
-                dateNumberStyle={{color: 'black'}}
-                dateNameStyle={{color: '#8d98b0'}}
-                highlightDateNumberStyle={{color: '#5a55ca'}}
-                highlightDateNameStyle={{color: '#5a55ca'}}
-                disabledDateNameStyle={{color: 'black'}}
-                disabledDateNumberStyle={{color: 'black'}}
+                dateNumberStyle={{ color: 'black' }}
+                dateNameStyle={{ color: '#8d98b0' }}
+                highlightDateNumberStyle={{ color: '#5a55ca' }}
+                highlightDateNameStyle={{ color: '#5a55ca' }}
+                disabledDateNameStyle={{ color: 'black' }}
+                disabledDateNumberStyle={{ color: 'black' }}
                 datesWhitelist={datesWhitelist}
                 // datesBlacklist={datesBlacklist}
                 // iconLeft={require('./img/left-arrow.png')}
                 // iconRight={require('./img/right-arrow.png')}
-                iconContainer={{flex: 0.1}}
+                iconContainer={{ flex: 0.1 }}
               />
             </View>
             {isLoading ? (
@@ -653,7 +629,7 @@ const [filterMember, setFilterMember] = useState([])
                       icon="plus"
                       mode="contained"
                       onPress={() => showModal()}
-                      style={{width: 150}}>
+                      style={{ width: 150 }}>
                       Add Task
                     </Button>
                   </View>

@@ -44,6 +44,7 @@ const data = [
 ];
 
 const TaskItem = props => {
+
   const status = props.status;
 
   const [statusColor, setStatusColor] = useState('');
@@ -122,6 +123,7 @@ const TaskItem = props => {
     }
     return textInputs;
   };
+
   // function for uploading files and opening the dialog box fro the same opening system file manager .
   // const handleUpload = () => {
   //   console.log('upload button clicked');
@@ -270,21 +272,17 @@ const TaskItem = props => {
     }
   };
 
-  const calculateProgress = fetchsubtask => {
+  const calculateProgress = (fetchsubtask) => {
     try {
-      // console.log("This is fetched subtask in calculatedprogress", fetchsubtask);
-      const completedSubtasks = fetchsubtask.filter(
-        subtask => subtask.uploaded === true,
-      ).length;
+      const completedSubtasks = fetchsubtask.filter(subtask => subtask.uploaded === true).length;
       const totalSubtasks = fetchsubtask.length;
-      // console.log("Completed true Subtask", completedSubtasks);
-      // console.log("Completed all Subtask", totalSubtasks);
-      const progress = completedSubtasks / totalSubtasks;
+      const progress = totalSubtasks > 0 ? completedSubtasks / totalSubtasks : 0;
       setSubtaskProgress(progress);
     } catch (error) {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     switch (status) {
@@ -305,7 +303,7 @@ const TaskItem = props => {
     }
 
     const subtaskCount = fetchsubtask.length;
-    const newHeight = isExtended ? 220 + subtaskCount * 80 : 200;
+    const newHeight = isExtended ? 180 + subtaskCount * 70 : 200;
     setTaskFlexHeight(newHeight);
 
     fetchSubtask(props.teamIdByItem, props.id);
@@ -336,7 +334,8 @@ const TaskItem = props => {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-        <Text style={{ color: statusColor, padding: 10 }}>{props.status}</Text>
+        <Text style={{ color: statusColor || 'black', padding: 10 }}>{props.status}</Text>
+
         <View style={{ flexDirection: 'row' }}>
           {/* expanding panel for the  three dot icon  whn pressed it iwill grow and show the three icons which  will perform the crud operation for subtask  */}
           <View>
@@ -389,32 +388,32 @@ const TaskItem = props => {
                       />
                     </TouchableOpacity>
                     <TouchableOpacity
-  onPress={() =>
-    Alert.alert(
-      'Confirmation',
-      'Are you sure you want to delete?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Delete',
-          onPress: () => handleDeleteClick(props.id, props.teamIdByItem),
-          style: 'destructive',
-        },
-      ],
-      { cancelable: false }
-    )
-  }
->
-  <Icon
-    name="trash"
-    color="black"
-    size={20}
-    style={{ marginRight: 10 }}
-  />
-</TouchableOpacity>
+                      onPress={() =>
+                        Alert.alert(
+                          'Confirmation',
+                          'Are you sure you want to delete?',
+                          [
+                            {
+                              text: 'Cancel',
+                              style: 'cancel',
+                            },
+                            {
+                              text: 'Delete',
+                              onPress: () => handleDeleteClick(props.id, props.teamIdByItem),
+                              style: 'destructive',
+                            },
+                          ],
+                          { cancelable: false }
+                        )
+                      }
+                    >
+                      <Icon
+                        name="trash"
+                        color="black"
+                        size={20}
+                        style={{ marginRight: 10 }}
+                      />
+                    </TouchableOpacity>
                   </Animated.View>
                 )}
                 <Icon
