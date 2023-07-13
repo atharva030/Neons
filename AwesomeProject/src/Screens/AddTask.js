@@ -12,13 +12,13 @@ import { Modal, Portal, Provider, Button, RadioButton } from 'react-native-paper
 import Icon from 'react-native-vector-icons/Ionicons';
 import Time from '../Components/Time/Time';
 import styles from '../Styles/AddTaskStyle';
-
+import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
 const showSuccessToast = () => {
   ToastAndroid.showWithGravity('Task Addded Sucessfully ', ToastAndroid.SHORT, ToastAndroid.TOP);
 };
 const showBackendErrorToast = () => {
-  { ToastAndroid.showWithGravity('Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP) }
+  ToastAndroid.showWithGravity('Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP);
 };
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -63,11 +63,22 @@ const AddTask = (props) => {
   };
 
   const submitForm = () => {
+    const currentDate = new Date();
+    const yesterday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 1);
+
     if (taskName.trim() !== '') {
-      setConfirmationVisible(true);
+      if (new Date(stDate) > yesterday && new Date(endDate) > new Date(stDate)) {
+        setConfirmationVisible(true);
+      } else {
+        Alert.alert(
+          'Invalid Dates',
+          'Please ensure that the start date is greater than yesterday and the end date is greater than the start date.'
+        );
+      }
     }
   };
-  const addTaskdb = () => {
+
+  const addTaskdb = (taskName,description,status,stDate,endDate) => {
     // console.log(email, password)
     // setSpinner(true)
     fetch(`https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks`, {
@@ -92,11 +103,11 @@ const AddTask = (props) => {
       .catch((error) => {
         console.log(error)
         showBackendErrorToast()
-      }
-      );
+      });
     showSuccessToast();
     hideAddModal();
   };
+
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', handleBackPress);
 
@@ -106,6 +117,7 @@ const AddTask = (props) => {
   }, []);
 
   const hideModal = () => setVisible(false);
+
   return (
     <HideKeyboard>
       <Provider>
@@ -157,7 +169,7 @@ const AddTask = (props) => {
                 justifyContent: 'space-around',
                 marginLeft: 45,
                 marginTop: 5,
-                marginBottom:10
+                marginBottom: 10,
               }}
             >
               <View
@@ -231,27 +243,6 @@ const AddTask = (props) => {
               </View>
             </View>
           </View>
-
-          {/* <Modal
-            visible={confirmationVisible}
-            onDismiss={hideConfirmationModal}
-            contentContainerStyle={styles.confirmationModal}
-          >
-            <Text>Task Name: {taskName}</Text>
-            <Text>Start Date: {stDate}</Text>
-            <Text>End Date: {endDate}</Text>
-            <Text>Description: {description}</Text>
-            <Text>Status: {status}</Text>
-
-            <Button onPress={submitForm} mode="contained">
-              Confirm
-            </Button>
-
-            <Button onPress={hideConfirmationModal} mode="contained">
-              Cancel
-            </Button>
-          </Modal> */}
-
           <View
             style={{
               display: 'flex',
@@ -273,7 +264,18 @@ const AddTask = (props) => {
             <Button
               icon="check"
               mode="contained"
-              onPress={submitForm}
+              onPress={() =>
+                Alert.alert('Confirmation', 'Are you sure you want to create the task?', [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Create',
+                    onPress: submitForm,
+                  },
+                ])
+              }
               style={{ marginLeft: 5 }}
             >
               Create Task

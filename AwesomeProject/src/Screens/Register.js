@@ -53,24 +53,60 @@ const RegisterScreen = ({ navigation }) => {
   
     ToastAndroid.show(errorMessage, ToastAndroid.LONG);
   };
-const handlePressRegister = (name, email, password, phone, selectedRole, cnfpassword) => {
-  console.log('added');
-  handleSubmitRegister(name, email, password, phone, selectedRole, cnfpassword)
-    .then((success) => {
-      if (success) {
-        handleSuccess();
-        navigation.navigate('Login');
-      } else {
-        // Registration failed, handle the error or display an error message
-        handleBackendError(new Error('Registration failed'));
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      // An error occurred during registration, handle the error or display an error message
-      handleBackendError(error);
-    });
-};
+  const handlePressRegister = (name, email, password, phone, selectedRole, cnfpassword) => {
+    // Validate the form fields
+    if (!name || !email || !password || !phone || !selectedRole || !cnfpassword) {
+      ToastComponent({ message: 'Please fill in all fields' });
+      return;
+    }
+  
+    // Validate the email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      ToastComponent({ message: 'Please enter a valid email address' });
+      return;
+    }
+  
+    // Validate the password length and format
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+    if (password.length < 6 || !passwordRegex.test(password)) {
+      ToastComponent({
+        message: 'Password must be at least 6 characters long and contain letters, numbers, and symbols',
+      });
+      return;
+    }
+  
+    // Validate the password and confirm password match
+    if (password !== cnfpassword) {
+      ToastComponent({ message: 'Passwords do not match' });
+      return;
+    }
+  
+    // Validate the phone number length
+    if (phone.length !== 10) {
+      ToastComponent({ message: 'Phone number must be 10 digits long' });
+      return;
+    }
+  
+    console.log('added');
+    handleSubmitRegister(name, email, password, phone, selectedRole, cnfpassword)
+      .then((success) => {
+        if (success) {
+          handleSuccess();
+          navigation.navigate('Login');
+        } else {
+          // Registration failed, handle the error or display an error message
+          handleBackendError(new Error('Registration failed'));
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // An error occurred during registration, handle the error or display an error message
+        handleBackendError(error);
+      });
+  };
+  
+  
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
     console.log(role)
@@ -158,6 +194,7 @@ const handlePressRegister = (name, email, password, phone, selectedRole, cnfpass
                 placeholderTextColor="#8d98b0"
                 value={phone}
                 onChangeText={text => setPhone(text)}
+                keyboardType="numeric" 
               />
             </View>
             <View style={styles.inputContainer}>

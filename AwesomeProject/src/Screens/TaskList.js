@@ -399,35 +399,36 @@ const TaskList = ({ navigation, route }) => {
             onDismiss={() => setmemberTeam(false)}
             contentContainerStyle={[containerMemberStyle, { alignItems: 'center', justifyContent: 'center' }]}
           >
-            {/* <ScrollView>
-      {resultTeamMemberData.length === 0 ? (
-        <View>
-          <Text
-            style={{
-              color: 'grey',
-              fontSize: 20,
-              padding: 20,
-              // marginTop: 140,
-              textAlign: 'center',
-              letterSpacing: 1.5,
-            }}
-          >
-            You don't have Teams to Display
-          </Text>
-        </View>
-      ) : (
-        resultTeamMemberData.map((items) => (
-          <TeamMember
-            key={items._id}
-            designation={items.designation}
-            id={items._id}
-            name={items.name}
-            selectedIds={selectedIds}
-            setSelectedIds={setSelectedIds}
-          />
-        ))
-      )}
-    </ScrollView> */}
+            <ScrollView>
+              {resultTeamMemberData.length === 0 ? (
+                <View>
+                  <Text
+                    style={{
+                      color: 'grey',
+                      fontSize: 20,
+                      padding: 20,
+                      // marginTop: 140,
+                      textAlign: 'center',
+                      letterSpacing: 1.5,
+                    }}
+                  >
+                    Team members are already Added
+                  </Text>
+                </View>
+              ) : (
+                resultTeamMemberData.map((items) => (
+                  <TeamMember
+                    key={items._id}
+                    designation={items.designation}
+                    id={items._id}
+                    name={items.name}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
+
+                  />
+                ))
+              )}
+            </ScrollView>
             <View
               style={{
                 display: 'flex',
@@ -466,6 +467,7 @@ const TaskList = ({ navigation, route }) => {
                   );
                 }}
                 style={{ marginLeft: 5 }}
+                disabled={resultTeamMemberData.length === 0}
               >
                 Add Member
               </Button>

@@ -46,38 +46,46 @@ const LoginScreen = ({ navigation }) => {
     useValidation({
       state: { email, password },
     });
-  const Validate1 = () => {
-    validate({
-      email: { Email: true },
-      Password: { Password: true },
-    });
-  };
 
   // This function will be triggered when the button is pressed
 
   const handlePress = (email, password) => {
-    setIsLoading(true);
-    handleLogin(email, password)
-      .then(success => {
-        if (success) {
-          // Login successful, navigate to the next screen or perform any other actions
-          navigation.navigate('NavigationScreen');
+    navigation.navigate('NavigationScreen'); 
+    validate({
+      email: { email: true, required: true },
+      password: { required: true, minlength: 6, pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/ },
+    });
+  
+    const emailErrors = getErrorsInField('email');
+    const passwordErrors = getErrorsInField('password');
+  
+    if (emailErrors.length === 0 && passwordErrors.length === 0) {
+      setIsLoading(true);
+      handleLogin(email, password)
+        .then(response => {                                             
+          if (response.success) {                                                                       //
+            // Login successful, navigate to the next screen or perform any other actions            // |
+            // navigation.navigate('NavigationScreen');       //<<<<<<<----------------------------------------------------------------
+            setIsLoading(false);
+            handleSuccess();
+          } else {
+            setIsLoading(false);
+            // Login failed, display an error message or perform any other actions
+            ToastComponent({ message: response.error || 'Invalid email or password' });
+          }
+        })
+        .catch(error => {
+          // An error occurred during the login process, handle the error
           setIsLoading(false);
-          handleSuccess()
-
-        } else {
-          setIsLoading(false);
-          // Login failed, display an error message or perform any other actions
-        }
-      })
-      .catch(error => {
-        // An error occurred during the login process, handle the error
-        setIsLoading(false);
-        console.log(error)
-
-      });
-
+          console.log(error);
+          handleBackendError();
+        });
+    } else {
+      const errorMessages = [...emailErrors, ...passwordErrors];
+      ToastComponent({ message: errorMessages[0] });
+    }
   };
+  
 
   // const [Password, setPassword] = useState('');
   return (

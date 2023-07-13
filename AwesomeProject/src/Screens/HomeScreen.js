@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -27,15 +27,15 @@ import Spinner from './Spinner';
 import AppLoader from '../Components/AppLoader';
 
 const handleSuccess = () => {
-  ToastComponent({message: 'Team Added successfully'});
+  ToastComponent({ message: 'Team Added successfully' });
 };
 
 const handleBackendError = () => {
-  ToastComponent({message: '⚠️ Please Try again later!'});
+  ToastComponent({ message: '⚠️ Please Try again later!' });
 };
 const currentDate = moment().format('MMMM DD, YYYY');
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
   const [teamName, setteamName] = useState('');
   const [teamDesc, setteamDesc] = useState('');
   const [refreshing, setRefreshing] = useState(false);
@@ -43,7 +43,7 @@ const HomeScreen = ({navigation}) => {
   // const [spinner, setSpinner] = useState(false);
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [formData, setFormData] = useState({editTitle: '', editDesc: ''});
+  const [formData, setFormData] = useState({ editTitle: '', editDesc: '' });
   const [teamId, setteamId] = useState('');
   const [isModalVisibleavatar, setIsModalVisibleavatar] = useState(false);
   const showModal = () => setVisible(true);
@@ -84,13 +84,18 @@ const HomeScreen = ({navigation}) => {
     );
   };
   const addTeam = async () => {
+    if (teamName.length < 4 || teamDesc.length < 6) {
+      ToastComponent({
+        message: 'Team Name must be at least 4 characters and Team Description must be at least 6 characters long.',
+      });
+      return;
+    }
+
     fetch('https://tsk-final-backend.vercel.app/api/team/createteam', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og',
-        //    await AsyncStorage.getItem('auth-token'),
+        'auth-token': 'YOUR_AUTH_TOKEN',
       },
       body: JSON.stringify({
         teamName: teamName,
@@ -99,24 +104,36 @@ const HomeScreen = ({navigation}) => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
-        hideModal();
-        setteamName('');
-        setteamDesc('');
-        fetchTeam();
+        if (data.error) {
+          ToastComponent({ message: data.error });
+        } else {
+          console.log(data);
+          hideModal();
+          setteamName('');
+          setteamDesc('');
+          fetchTeam();
+          handleSuccess();
+        }
       })
-      .then(handleSuccess())
       .catch(err => {
         console.log(err);
         handleBackendError();
       });
   };
 
+
   // console.log("sadaddaddasdad",teamId)
-  const editTeam = async teamId => {
+  const editTeam = async (teamId) => {
     setIsModalVisible(false);
+
+    if (!formData.editTitle || !formData.editDesc) {
+      ToastComponent({ message: 'Please fill in all fields' });
+      return;
+    }
+
     console.log(formData.editTitle);
     console.log(teamId);
+
     fetch(
       `https://tsk-final-backend.vercel.app/api/team/updateteam/${teamId}`,
       {
@@ -128,10 +145,11 @@ const HomeScreen = ({navigation}) => {
           teamName: formData.editTitle,
           teamDesc: formData.editDesc,
         }),
-      },
-    ).catch(err => {
-      console.log(err);
-    });
+      }
+    )
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const fetchTeam = async () => {
@@ -209,7 +227,7 @@ const HomeScreen = ({navigation}) => {
   const handleModalClose = () => {
     setIsModalVisible(false);
   };
-  const onStateChange = ({open}) => setOpen(open);
+  const onStateChange = ({ open }) => setOpen(open);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleEditClick = () => {
     setIsModalVisible(true);
@@ -224,7 +242,7 @@ const HomeScreen = ({navigation}) => {
     <Provider
       theme={{
         ...DefaultTheme,
-        colors: {...DefaultTheme.colors, accent: 'transparent'},
+        colors: { ...DefaultTheme.colors, accent: 'transparent' },
       }}>
       {isLoading ? (
         <AppLoader />
@@ -242,12 +260,12 @@ const HomeScreen = ({navigation}) => {
                 visible={visible}
                 onDismiss={hideModal}
                 contentContainerStyle={styles1.addteamcontainerStyle}>
-                <View style={{marginTop: 10}}>
+                <View style={{ marginTop: 10 }}>
                   <Text style={styles1.emaillabelStyle}>Enter Team Name</Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      {backgroundColor: 'transparent', height: 40},
+                      { backgroundColor: 'transparent', height: 40 },
                     ]}
                     placeholder="Team Name"
                     placeholderTextColor="#8d98b0"
@@ -255,14 +273,14 @@ const HomeScreen = ({navigation}) => {
                     onChangeText={setteamName}
                   />
                 </View>
-                <View style={{marginTop: 10}}>
+                <View style={{ marginTop: 10 }}>
                   <Text style={styles1.emaillabelStyle}>
                     Enter Team Description
                   </Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      {backgroundColor: 'transparent', height: 40},
+                      { backgroundColor: 'transparent', height: 40 },
                     ]}
                     placeholder="Team Description"
                     placeholderTextColor="#8d98b0"
@@ -285,7 +303,7 @@ const HomeScreen = ({navigation}) => {
                     icon="check"
                     mode="contained"
                     onPress={addTeam}
-                    style={{marginLeft: 5}}>
+                    style={{ marginLeft: 5 }}>
                     Create Team
                   </Button>
                 </View>
@@ -297,35 +315,35 @@ const HomeScreen = ({navigation}) => {
                 visible={isModalVisible}
                 onDismiss={handleModalClose}
                 contentContainerStyle={containerStyle}>
-                <View style={{marginTop: 2}}>
+                <View style={{ marginTop: 2 }}>
                   <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      {backgroundColor: 'transparent', height: 20},
+                      { backgroundColor: 'transparent', height: 20 },
                     ]}
                     placeholder="Team Name"
                     placeholderTextColor="#8d98b0"
                     value={formData.editTitle}
                     onChangeText={value =>
-                      setFormData({...formData, editTitle: value})
+                      setFormData({ ...formData, editTitle: value })
                     }
                   />
                 </View>
-                <View style={{marginTop: 10}}>
+                <View style={{ marginTop: 10 }}>
                   <Text style={styles1.emaillabelStyle}>
                     Edit Team Description
                   </Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      {backgroundColor: 'transparent', height: 40},
+                      { backgroundColor: 'transparent', height: 40 },
                     ]}
                     placeholder="Team Description"
                     placeholderTextColor="#8d98b0"
                     value={formData.editDesc}
                     onChangeText={value =>
-                      setFormData({...formData, editDesc: value})
+                      setFormData({ ...formData, editDesc: value })
                     }
                   />
                 </View>
@@ -346,7 +364,7 @@ const HomeScreen = ({navigation}) => {
                     icon="check"
                     mode="contained"
                     onPress={() => editTeam(teamId)}
-                    style={{marginLeft: 5}}>
+                    style={{ marginLeft: 5 }}>
                     Done
                   </Button>
                 </View>
@@ -390,7 +408,7 @@ const HomeScreen = ({navigation}) => {
                   icon="plus"
                   mode="contained"
                   onPress={() => console.log('Pressed')}
-                  style={{width: 100}}>
+                  style={{ width: 100 }}>
                   ADD
                 </Button>
               </View>
