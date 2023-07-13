@@ -24,6 +24,9 @@ import CircularProgressBar from '../Components/CircularProgressBar';
 // import Spinner from './Spinner';
 import AppLoader from '../Components/AppLoader';
 
+
+
+
 import MemberFilter from '../Components/Teams/MemberFilter';
 const handleSuccess = () => {
   ToastComponent({ message: 'Task Updated Sucessfull' });
@@ -54,6 +57,8 @@ const TaskList = ({ navigation, route }) => {
   const teamIdByItem = route.params.post; //id by teamItem
   const teamTitle = route.params.teamTitle; //id by teamItem
   const [isLoading, setIsLoading] = useState(false);
+
+  const [totalProgress, setTotalProgress] = useState(0);
 
   const showModal = () => {
     // console.log('preesed');
@@ -89,6 +94,10 @@ const TaskList = ({ navigation, route }) => {
   const closeBottomSheet = () => {
     bottomSheetRef.current.close();
   };
+  const handleProgress = (progress) =>{
+    setTotalProgress(progress);
+    console.log(totalProgress);
+  }
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
@@ -251,6 +260,7 @@ const TaskList = ({ navigation, route }) => {
     // fetchData()
     // fetchMembers();
     fetchTasks();
+    
   }, []);
 
   let datesWhitelist = [
@@ -651,6 +661,7 @@ const TaskList = ({ navigation, route }) => {
                         time={items.endDate}
                         teamIdByItem={teamIdByItem}
                         deleteTask={deleteTask}
+                        handleProgress={handleProgress}
                       />
                     );
                   })

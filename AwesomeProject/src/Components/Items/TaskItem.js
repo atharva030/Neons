@@ -141,6 +141,7 @@ const TaskItem = props => {
     // props.handleEditClick()
     props.setFormData({ editTitle: title, editDesc: desc, endDate: endDate });
   };
+  
 
   //this is the function for subtask checkboxes and upload button
 
@@ -283,7 +284,10 @@ const TaskItem = props => {
     }
   };
 
+  useEffect(() => {
+    props.handleProgress(subtaskProgress);
 
+  },[subtaskProgress]);
   useEffect(() => {
     switch (status) {
       case 'URGENT':
@@ -308,7 +312,9 @@ const TaskItem = props => {
 
     fetchSubtask(props.teamIdByItem, props.id);
 
-  }, [status, isExtended, fetchsubtask, props.teamIdByItem, props.id]);
+    
+
+  }, [status, isExtended, fetchsubtask, props.teamIdByItem, props.id ]);
   const [isExpanded, setIsExpanded] = useState(false);
   const panelWidth = useState(new Animated.Value(0))[0];
 
