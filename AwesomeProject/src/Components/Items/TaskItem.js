@@ -152,9 +152,11 @@ const TaskItem = props => {
       const text = await response.text();
       console.log('Response body text:', text); // Log the response body for debugging
 
+      updateTaskStatus(teamId, taskId);
       try {
         const data = JSON.parse(text);
         console.log(data);
+
         // Call any other functions or update the UI based on the response data
       } catch (err) {
         console.log('Error parsing JSON:', err.message);
@@ -230,7 +232,6 @@ const TaskItem = props => {
       });
 
       setSubtaskStatus(subtaskStatus);
-      updateTaskStatus(teamId, taskId);
     } catch (error) {
       console.log(error);
       handleBackendError();
@@ -239,7 +240,7 @@ const TaskItem = props => {
   const updateTaskStatus = async (teamId, taskId) => {
     try {
       const response = await fetch(
-        `https://tsk-final-backend.vercel.app/api/task/${teamId}/updatestatus/${taskId}`,
+        `http://192.168.0.101:8888/api/task/${teamId}/updatestatus/${taskId}`,
         {
           method: 'PATCH',
         },
@@ -282,10 +283,6 @@ const TaskItem = props => {
         break;
       case 'UPCOMING':
         setStatusColor('#ff0096');
-      case 'INCOMPLETE':
-        setStatusColor('red');
-        case 'COMPLETED':
-          setStatusColor('green');
         break;
       default:
         break;
