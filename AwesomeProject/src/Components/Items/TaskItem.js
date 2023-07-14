@@ -124,12 +124,6 @@ const TaskItem = props => {
     return textInputs;
   };
 
-  // function for uploading files and opening the dialog box fro the same opening system file manager .
-  // const handleUpload = () => {
-  //   console.log('upload button clicked');
-  //   DocumentPicker.pick({}).then(res => {});
-  // };
-
   const handleAddSubTaskClick = taskid => {
     setIsModal1Visible(true);
     settaskIdbyItem(taskid);
@@ -142,28 +136,6 @@ const TaskItem = props => {
     props.setFormData({ editTitle: title, editDesc: desc, endDate: endDate });
   };
   
-
-  //this is the function for subtask checkboxes and upload button
-
-  // const toggleCheckbox = (subtaskId, taskIdByItem) => {
-  //   console.log(subtaskId);
-  //   console.log(props.teamIdByItem);
-  //   console.log(taskIdByItem);
-  //   setCheckboxState('aksndkajndk', prevState => ({
-  //     ...prevState,
-  //     [subtaskId]: !prevState[subtaskId],
-  //   }));
-  // };
-
-  // const toggleCheckbox = (subtaskId, taskIdByItem) => {
-  //   setSubtaskStatus(prevState => ({
-  //     ...prevState,
-  //     [subtaskId]: {
-  //       isChecked: !prevState[subtaskId]?.isChecked,
-  //       uploaded: prevState[subtaskId]?.uploaded || false,
-  //     },
-  //   }));
-  // };
   const handleChangeVariable = async (teamId, taskId, subtaskId) => {
     try {
       const response = await fetch(`https://tsk-final-backend.vercel.app/api/team/${teamId}/tasks/${taskId}/subtasks/${subtaskId}`, {
@@ -194,7 +166,6 @@ const TaskItem = props => {
     }
   };
 
-
   const toggleCheckbox = (subtaskId, taskIdByItem) => {
     console.log(subtaskId);
     console.log(props.teamIdByItem);
@@ -208,14 +179,6 @@ const TaskItem = props => {
       },
     }));
   };
-
-  // const isChecked = subtaskId => {
-  //   return ((checkboxState[subtaskId] === true) || (subtaskId.uploaded === true));
-  // };
-  // const isChecked = subtaskId => {
-  //   const subtask = fetchsubtask.find(item => item._id === subtaskId);
-  //   return subtask && subtask.uploaded;
-  // };
 
   const isChecked = subtaskId => {
     const subtask = subtaskStatus[subtaskId];
@@ -255,6 +218,7 @@ const TaskItem = props => {
       const data = await response.json();
       // console.log(data)0
       setFetchSubtask(data);
+      
       calculateProgress(data); // Pass the fetched data to the calculateProgress function
 
       const subtaskStatus = {};
@@ -266,13 +230,30 @@ const TaskItem = props => {
       });
 
       setSubtaskStatus(subtaskStatus);
-
+      updateTaskStatus(teamId, taskId);
     } catch (error) {
       console.log(error);
       handleBackendError();
     }
   };
-
+  const updateTaskStatus = async (teamId, taskId) => {
+    try {
+      const response = await fetch(
+        `https://tsk-final-backend.vercel.app/api/task/${teamId}/updatestatus/${taskId}`,
+        {
+          method: 'PATCH',
+        },
+      );
+  
+      if (!response.ok) {
+        throw new Error('Failed to update task status');
+      }
+  
+    } catch (error) {
+      console.log(error);
+   
+    }
+  };
   const calculateProgress = (fetchsubtask) => {
     try {
       const completedSubtasks = fetchsubtask.filter(subtask => subtask.uploaded === true).length;
@@ -299,13 +280,13 @@ const TaskItem = props => {
       case 'STOPPED':
         setStatusColor('#55d9a8');
         break;
-      case 'ONGOING':
+      case 'UPCOMING':
         setStatusColor('#ff0096');
         break;
       default:
         break;
     }
-
+    
     const subtaskCount = fetchsubtask.length;
     const newHeight = isExtended ? 180 + subtaskCount * 70 : 200;
     setTaskFlexHeight(newHeight);

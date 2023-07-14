@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Modal, Portal, Provider, Button, RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Time from '../Components/Time/Time';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import styles from '../Styles/AddTaskStyle';
 import { ToastAndroid } from 'react-native';
 
@@ -39,6 +39,8 @@ const HideKeyboard = ({ children }) => (
 
 const AddTask = (props) => {
   const { navigation, hideAddModal, teamIdByItem } = props;
+  const [isStDatePickerVisible, setStDatePickerVisibility] = useState(false);
+  const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
 
   const [visible, setVisible] = useState(false);
   const [checked, setChecked] = useState('');
@@ -65,7 +67,7 @@ const AddTask = (props) => {
 
   const third = () => {
     setChecked('third');
-    setStatus('ONGOING');
+    setStatus('UPCOMING');
   };
 
   const validateForm = () => {
@@ -97,11 +99,31 @@ const AddTask = (props) => {
       return false;
     }
 
+    if (new Date(stDate) < currentDate) {
+      Alert.alert(
+        'Invalid Start Date',
+        'Start Date must be greater than or equal to today.'
+      );
+      return false;
+    }
+
     return true;
   };
 
   const submitForm = () => {
     if (validateForm()) {
+      const startDate = new Date(stDate);
+      const endDate = new Date(endDate);
+      console.log(startDate);
+      console.log(endDate);
+      if (endDate <= startDate) {
+        Alert.alert(
+          'Invalid Dates',
+          'Please ensure that the end date is greater than the start date.'
+        );
+        return;
+      }
+
       addTaskdb();
     }
   };
@@ -116,10 +138,6 @@ const AddTask = (props) => {
 
     if (taskName.trim() !== '') {
       if (new Date(stDate) > yesterday && new Date(endDate) > new Date(stDate)) {
-        // Add the API call here to add the task
-        // You can pass the required values to the API call
-        // Example: addTaskdb(taskName, description, status, stDate, endDate);
-
         // Sample API call
         fetch(`https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks`, {
           method: 'PATCH',
@@ -165,6 +183,30 @@ const AddTask = (props) => {
   }, []);
 
   const hideModal = () => setVisible(false);
+  const showStDatePicker = () => {
+    setStDatePickerVisibility(true);
+  };
+
+  const hideStDatePicker = () => {
+    setStDatePickerVisibility(false);
+  };
+  const showEndDatePicker = () => {
+    setEndDatePickerVisibility(true);
+  };
+
+  const hideEndDatePicker = () => {
+    setEndDatePickerVisibility(false);
+  };
+
+  const handleStDateConfirm = (date) => {
+    setStDate(date.toISOString());
+    hideStDatePicker();
+  };
+
+  const handleEndDateConfirm = (date) => {
+    setEndDate(date.toISOString());
+    hideEndDatePicker();
+  };
 
   return (
     <HideKeyboard>
@@ -195,7 +237,50 @@ const AddTask = (props) => {
           />
 
           <View style={{ marginTop: 10 }}>
-            <Time setstDate={setStDate} setendDate={setEndDate} />
+            <View style={styles.timeContainer}>
+              <View style={{ marginTop: 10 }}>
+                <Text style={styles.labelStyle}>START DATE</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Pressable onPress={showStDatePicker} style={{ width: '50%' }}>
+                    <TextInput
+                      style={styles.timeInput}
+                      editable={false}
+                      placeholder=""
+                      placeholderTextColor="#8d98b0"
+                      value={stDate}
+                    />
+                  </Pressable>
+                  <Button icon="calendar" onPress={showStDatePicker}></Button>
+                  <DateTimePickerModal
+                    isVisible={isStDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleStDateConfirm}
+                    onCancel={hideStDatePicker}
+                  />
+                </View>
+              </View>
+              <View style={{ marginTop: 10 }}>
+                <Text style={styles.labelStyle}>END DATE</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Pressable onPress={showEndDatePicker} style={{ width: '50%' }}>
+                    <TextInput
+                      style={styles.timeInput}
+                      editable={false}
+                      placeholder=""
+                      placeholderTextColor="#8d98b0"
+                      value={endDate}
+                    />
+                  </Pressable>
+                  <Button icon="calendar" onPress={showEndDatePicker}></Button>
+                  <DateTimePickerModal
+                    isVisible={isEndDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleEndDateConfirm}
+                    onCancel={hideEndDatePicker}
+                  />
+                </View>
+              </View>
+            </View>
 
             <View style={{ marginTop: 10 }}>
               <Text style={styles.labelStyle}>DESCRIPTION</Text>
@@ -287,7 +372,7 @@ const AddTask = (props) => {
                       fontFamily: 'Poppins-Medium',
                     }}
                   >
-                    ONGOING
+                    UPCOMING
                   </Text>
                 </Pressable>
               </View>

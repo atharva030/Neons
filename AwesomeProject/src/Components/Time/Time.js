@@ -96,28 +96,7 @@ const Time = ({setendDate,setstDate}) => {
           />
         </View>
       </View>
-      {/* <View style={{marginTop: 10}}>
-        <Text style={styles.labelStyle}>END DATE</Text>
-        <View style={{flexDirection: 'row'}}>
-          <Pressable onPress={showEndDatePicker} style={{width: '50%'}}>
-            <TextInput
-              style={styles.timeInput}
-              value={settleEndTime}
-              editable={false} // Adding hint in TextInput using Placeholder option.
-              placeholder=""
-              placeholderTextColor="#8d98b0"
-            />
-          </Pressable>
-          <Button icon="calendar" onPress={showEndDatePicker}></Button>
-          <DateTimePickerModal
-            isVisible={isEndDatePickerVisible}
-            mode="date"
-            onConfirm={handleEndDate}
-            onCancel={hideEndDatePicker}
-            minimumDate={new Date(settleStartTime)}
-          />
-        </View>
-      </View> */}
+   
     </View>
   );
 };
