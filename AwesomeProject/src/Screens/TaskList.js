@@ -91,9 +91,6 @@ const TaskList = ({ navigation, route }) => {
     bottomSheetRef.current.open();
   };
 
-  const closeBottomSheet = () => {
-    bottomSheetRef.current.close();
-  };
   const handleProgress = (progress) =>{
     setTotalProgress(progress);
     console.log(totalProgress);
@@ -160,7 +157,7 @@ const TaskList = ({ navigation, route }) => {
   const fetchMembers = async () => {
     try {
       const response = await fetch(
-        `http://192.168.0.103:8888/api/members/getuser/${teamIdByItem}`,
+        `https://tsk-final-backend.vercel.app/api/members/getuser/${teamIdByItem}`,
         {
           method: 'GET',
           headers: {
@@ -169,7 +166,7 @@ const TaskList = ({ navigation, route }) => {
         },
       );
       const data = await response.json();
-      // console.log(data)
+      console.log(data)
       setresultTeamMemberData(data)
     } catch (error) {
       console.log(error);
@@ -258,7 +255,7 @@ const TaskList = ({ navigation, route }) => {
   // console.log(props.route)
   useEffect(() => {
     // fetchData()
-    // fetchMembers();
+    fetchMembers();
     fetchTasks();
     
   }, []);
@@ -301,7 +298,7 @@ const TaskList = ({ navigation, route }) => {
                       textAlign: 'center',
                       letterSpacing: 1.5,
                     }}>
-                    You don't have Teams to Display
+                    You don't have Team Members to Display
                   </Text>
                 </View>
               ) : (
@@ -404,86 +401,83 @@ const TaskList = ({ navigation, route }) => {
         {/* Edit Task Modal Ends */}
         {/* Listing to add team members starts */}
         <Portal>
-          <Modal
-            visible={memberTeam}
-            onDismiss={() => setmemberTeam(false)}
-            contentContainerStyle={[containerMemberStyle, { alignItems: 'center', justifyContent: 'center' }]}
+  <Modal
+    visible={memberTeam}
+    onDismiss={() => setmemberTeam(false)}
+    contentContainerStyle={containerMemberStyle}
+  >
+    <Text style={{color:"#9E9E9E", fontSize:15}}>Tap to select/deselect the members</Text>
+    <ScrollView style={{ maxHeight: 400 }}>
+      {resultTeamMemberData.length === 0 ? (
+        <View>
+          <Text
+            style={{
+              color: 'grey',
+              fontSize: 20,
+              padding: 20,
+              textAlign: 'center',
+              letterSpacing: 1.5,
+            }}
           >
-            <ScrollView>
-              {resultTeamMemberData.length === 0 ? (
-                <View>
-                  <Text
-                    style={{
-                      color: 'grey',
-                      fontSize: 20,
-                      padding: 20,
-                      // marginTop: 140,
-                      textAlign: 'center',
-                      letterSpacing: 1.5,
-                    }}
-                  >
-                    Team members are already Added
-                  </Text>
-                </View>
-              ) : (
-                resultTeamMemberData.map((items) => (
-                  <TeamMember
-                    key={items._id}
-                    designation={items.designation}
-                    id={items._id}
-                    name={items.name}
-                    selectedIds={selectedIds}
-                    setSelectedIds={setSelectedIds}
+            Team members are already added.
+          </Text>
+        </View>
+      ) : (
+        resultTeamMemberData.map((items) => (
+          <TeamMember
+            key={items._id}
+            designation={items.designation}
+            id={items._id}
+            name={items.name}
+            selectedIds={selectedIds}
+            setSelectedIds={setSelectedIds}
+          />
+        ))
+      )}
+    </ScrollView>
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        padding: 10,
+      }}
+    >
+      <Button
+        icon="close"
+        mode="contained"
+        onPress={() => setmemberTeam(false)}
+        style={{ marginRight: 10 }}
+      >
+        Close
+      </Button>
+      <Button
+        icon="check"
+        mode="contained"
+        onPress={() => {
+          Alert.alert(
+            'Confirmation',
+            'Are you sure you want to add the selected members?',
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+              },
+              {
+                text: 'Add',
+                onPress: handleSubmit,
+              },
+            ],
+            { cancelable: false }
+          );
+        }}
+        disabled={resultTeamMemberData.length === 0}
+      >
+        Add Member
+      </Button>
+    </View>
+  </Modal>
+</Portal>
 
-                  />
-                ))
-              )}
-            </ScrollView>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: 290,
-                marginTop: 15,
-                marginBottom: 10,
-              }}
-            >
-              <Button
-                icon="close"
-                mode="contained"
-                onPress={() => setmemberTeam(false)}
-                style={{ marginLeft: 25 }}
-              >
-                Close
-              </Button>
-              <Button
-                icon="check"
-                mode="contained"
-                onPress={() => {
-                  Alert.alert(
-                    'Confirmation',
-                    'Are you sure you want to add the selected members?',
-                    [
-                      {
-                        text: 'Cancel',
-                        style: 'cancel',
-                      },
-                      {
-                        text: 'Add',
-                        onPress: handleSubmit,
-                      },
-                    ],
-                    { cancelable: false }
-                  );
-                }}
-                style={{ marginLeft: 5 }}
-                disabled={resultTeamMemberData.length === 0}
-              >
-                Add Member
-              </Button>
-            </View>
-          </Modal>
-        </Portal>
 
         {/* Listing to add team members end */}
         {/* Add task Modal start */}

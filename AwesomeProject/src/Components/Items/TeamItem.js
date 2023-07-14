@@ -20,7 +20,7 @@ const TeamItem = props => {
     }
     const handleModal = (title, desc, id) => {
         props.setteamId(id)
-        props.handleEditClick()
+        props.openBottomSheet()
         props.setFormData({ editTitle: title, editDesc: desc });
     }
     // props.setFormData({ fieldName: "existingValue" });

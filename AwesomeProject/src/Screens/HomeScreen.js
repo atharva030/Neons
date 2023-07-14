@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
+import RBSheet from 'react-native-raw-bottom-sheet';
+
 import {
   FAB,
   Provider,
@@ -49,6 +51,18 @@ const HomeScreen = ({ navigation }) => {
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const [isLoading, setIsLoading] = useState(' ');
+  const bottomSheetRef = useRef(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const openBottomSheet = () => {
+    bottomSheetRef.current.open();
+    setIsBottomSheetOpen(true);
+  };
+
+  const closeBottomSheet = () => {
+    bottomSheetRef.current.close();
+    setIsBottomSheetOpen(false);
+  };
+
   const containerStyle = {
     backgroundColor: 'white',
     padding: 20,
@@ -120,9 +134,7 @@ const HomeScreen = ({ navigation }) => {
         handleBackendError();
       });
   };
-
-
-  // console.log("sadaddaddasdad",teamId)
+  
   const editTeam = async (teamId) => {
     setIsModalVisible(false);
 
@@ -174,31 +186,7 @@ const HomeScreen = ({ navigation }) => {
         console.log(err);
       });
   };
-  const refreshFetchTeam = async () => {
-    // console.log("Hey")
-    setRefreshing(true);
-    fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        setresultTeamData(data);
-
-        setTimeout(() => {
-          setRefreshing(false);
-          console.log('after', refreshing);
-        }, 2000);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
+  
   const deleteTeam = async teamId => {
     try {
       const response = await fetch(
@@ -209,9 +197,9 @@ const HomeScreen = ({ navigation }) => {
             'Content-Type': 'application/json',
           },
         },
-      );
-
-      if (response.ok) {
+        );
+        
+        if (response.ok) {
         console.log(`Team with ID ${teamId} deleted successfully`);
       } else {
         console.log(`Error deleting team with ID ${teamId}`);
@@ -220,7 +208,10 @@ const HomeScreen = ({ navigation }) => {
       console.log(error);
     }
   };
-
+  
+  const refreshFetchTeam = async () => {
+    fetchTeam();
+  };
   useEffect(() => {
     fetchTeam();
   }, []);
@@ -310,17 +301,30 @@ const HomeScreen = ({ navigation }) => {
               </Modal>
             </Portal>
             {/* edit title modal */}
-            <Portal>
-              <Modal
-                visible={isModalVisible}
-                onDismiss={handleModalClose}
-                contentContainerStyle={containerStyle}>
+            <RBSheet
+              ref={bottomSheetRef}
+              height={300} // Set the desired height of the bottom sheet
+              closeOnDragDown={true}
+              customStyles={{
+                wrapper: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                },
+                container: {
+                  borderTopLeftRadius: 20,
+                  borderTopRightRadius: 20,
+                },
+                draggableIcon: {
+                  backgroundColor: '#000',
+                },
+              }}
+            >
+              <View style={styles1.btmeditsheet}>
                 <View style={{ marginTop: 2 }}>
                   <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      { backgroundColor: 'transparent', height: 20 },
+                      { backgroundColor: 'transparent', height: 25 },
                     ]}
                     placeholder="Team Name"
                     placeholderTextColor="#8d98b0"
@@ -331,13 +335,19 @@ const HomeScreen = ({ navigation }) => {
                   />
                 </View>
                 <View style={{ marginTop: 10 }}>
-                  <Text style={styles1.emaillabelStyle}>
+                  <Text style={{
+                    color: 'black',
+                    marginLeft: 4,
+                    color: '#8d98b0',
+                    fontFamily: 'Poppins-Medium',
+                    
+                  }}>
                     Edit Team Description
                   </Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      { backgroundColor: 'transparent', height: 40 },
+                      { backgroundColor: 'transparent', height: 25 },
                     ]}
                     placeholder="Team Description"
                     placeholderTextColor="#8d98b0"
@@ -351,13 +361,14 @@ const HomeScreen = ({ navigation }) => {
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    width: 290,
+                    width: "100%",
                     alignItems: 'center',
+                    justifyContent: 'flex-start'
                   }}>
                   <Button
                     icon="close"
                     mode="contained"
-                    onPress={handleModalClose}>
+                    onPress={closeBottomSheet}>
                     Close
                   </Button>
                   <Button
@@ -368,8 +379,8 @@ const HomeScreen = ({ navigation }) => {
                     Done
                   </Button>
                 </View>
-              </Modal>
-            </Portal>
+              </View>
+            </RBSheet>
 
             <View style={styles.outer}>
               <View style={styles.titleContainer}>
@@ -402,7 +413,7 @@ const HomeScreen = ({ navigation }) => {
                     textAlign: 'center',
                     letterSpacing: 1.5,
                   }}>
-                  You don't have Teams to Display
+                  You don't have Team to Display
                 </Text>
                 <Button
                   icon="plus"
@@ -421,7 +432,7 @@ const HomeScreen = ({ navigation }) => {
                   setteamId={setteamId}
                   teamId={teamId}
                   items={items}
-                  handleEditClick={handleEditClick}
+                  openBottomSheet={openBottomSheet}
                   person={items.members.length}
                   title={items.teamName}
                   deleteTeam={deleteTeam}

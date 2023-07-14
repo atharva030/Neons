@@ -8,10 +8,14 @@ module.exports = {
     height:deviceHeight,
     widht:deviceWidth,
     flex: 1,
-    //backgroundColor: LinearGradient
-    //backgroundImage: ".../assets/Image/bgapp.jpg"
-    //backgroundImage: 'url(".../assets/Image/bgapp.jpg")',
-    //backgroundColor: '#5a55ca',
+  },
+  btmeditsheet:{
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'white',
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   addteamcontainerStyle: {
     width: deviceWidth * 0.85,
@@ -78,12 +82,13 @@ module.exports = {
   },
   Emailinput: {
     borderColor: '#8d98b0',
-    width: '94%',
+    width: '100%',
     marginBottom: 10,
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
+    alignSelf: 'flex-start',
   },
   passwordinput: {
     borderColor: '#8d98b0',
@@ -99,7 +104,8 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    marginTop:10
+    marginTop: 15,
+    alignSelf: 'flex-start',
   },
 
   commonPadding: {},
@@ -271,12 +277,16 @@ module.exports = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
+    width: '100%',
   },
+
   confirmButton: {
     width: 100,
+    alignSelf: 'center',
   },
   cancelButton: {
     width: 100,
+    alignSelf: 'center',
   },
   confomationtex:{
     color:'black',

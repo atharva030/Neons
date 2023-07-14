@@ -7,19 +7,30 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   BackHandler,
+  Alert,
 } from 'react-native';
 import { Modal, Portal, Provider, Button, RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Time from '../Components/Time/Time';
 import styles from '../Styles/AddTaskStyle';
-import { Alert } from 'react-native';
 import { ToastAndroid } from 'react-native';
+
 const showSuccessToast = () => {
-  ToastAndroid.showWithGravity('Task Addded Sucessfully ', ToastAndroid.SHORT, ToastAndroid.TOP);
+  ToastAndroid.showWithGravity(
+    'Task Added Successfully',
+    ToastAndroid.SHORT,
+    ToastAndroid.TOP
+  );
 };
+
 const showBackendErrorToast = () => {
-  ToastAndroid.showWithGravity('Please Try again later !', ToastAndroid.SHORT, ToastAndroid.TOP);
+  ToastAndroid.showWithGravity(
+    'Please Try again later!',
+    ToastAndroid.SHORT,
+    ToastAndroid.TOP
+  );
 };
+
 const HideKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -36,11 +47,6 @@ const AddTask = (props) => {
   const [endDate, setEndDate] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
-  const [confirmationVisible, setConfirmationVisible] = useState(false);
-
-  const hideConfirmationModal = () => {
-    setConfirmationVisible(false);
-  };
 
   const handleBackPress = () => {
     navigation.goBack();
@@ -62,13 +68,85 @@ const AddTask = (props) => {
     setStatus('ONGOING');
   };
 
-  const submitForm = () => {
+  const validateForm = () => {
+    if (taskName.trim().length < 6) {
+      Alert.alert('Invalid Task Name', 'Task Name must be at least 6 characters long.');
+      return false;
+    }
+
     const currentDate = new Date();
-    const yesterday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 1);
+    const yesterday = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - 1
+    );
+
+    if (new Date(stDate) <= yesterday) {
+      Alert.alert(
+        'Invalid Start Date',
+        'Start Date must be greater than the current date.'
+      );
+      return false;
+    }
+
+    if (new Date(endDate) <= new Date(stDate)) {
+      Alert.alert(
+        'Invalid End Date',
+        'End Date must be greater than the Start Date.'
+      );
+      return false;
+    }
+
+    return true;
+  };
+
+  const submitForm = () => {
+    if (validateForm()) {
+      addTaskdb();
+    }
+  };
+
+  const addTaskdb = () => {
+    const currentDate = new Date();
+    const yesterday = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() - 1
+    );
 
     if (taskName.trim() !== '') {
       if (new Date(stDate) > yesterday && new Date(endDate) > new Date(stDate)) {
-        setConfirmationVisible(true);
+        // Add the API call here to add the task
+        // You can pass the required values to the API call
+        // Example: addTaskdb(taskName, description, status, stDate, endDate);
+
+        // Sample API call
+        fetch(`https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            tasks: [
+              {
+                taskName: taskName,
+                taskDesc: description,
+                status: status,
+                startDate: stDate,
+                endDate: endDate,
+              },
+            ],
+          }),
+        })
+          .then((response) => response.text())
+          .then((text) => console.log(text))
+          .catch((error) => {
+            console.log(error);
+            showBackendErrorToast();
+          });
+
+        showSuccessToast();
+        hideAddModal();
       } else {
         Alert.alert(
           'Invalid Dates',
@@ -76,36 +154,6 @@ const AddTask = (props) => {
         );
       }
     }
-  };
-
-  const addTaskdb = (taskName,description,status,stDate,endDate) => {
-    // console.log(email, password)
-    // setSpinner(true)
-    fetch(`https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        tasks: [
-          {
-            taskName: taskName,
-            taskDesc: description,
-            status: status,
-            startDate: stDate,
-            endDate: endDate,
-          },
-        ],
-      }),
-    })
-      .then((response) => response.text())
-      .then((text) => console.log(text))
-      .catch((error) => {
-        console.log(error)
-        showBackendErrorToast()
-      });
-    showSuccessToast();
-    hideAddModal();
   };
 
   useEffect(() => {
@@ -143,6 +191,7 @@ const AddTask = (props) => {
             placeholderTextColor="#8d98b0"
             value={taskName}
             onChangeText={setTaskName}
+            required
           />
 
           <View style={{ marginTop: 10 }}>
@@ -156,6 +205,7 @@ const AddTask = (props) => {
                 placeholderTextColor="#8d98b0"
                 value={description}
                 onChangeText={setDescription}
+                required
               />
             </View>
 
@@ -243,12 +293,12 @@ const AddTask = (props) => {
               </View>
             </View>
           </View>
+
           <View
             style={{
               display: 'flex',
               flexDirection: 'row',
               width: 290,
-              // marginLeft: 15,
               marginBottom: 15,
             }}
           >
@@ -264,44 +314,29 @@ const AddTask = (props) => {
             <Button
               icon="check"
               mode="contained"
-              onPress={() =>
-                Alert.alert('Confirmation', 'Are you sure you want to create the task?', [
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'Create',
-                    onPress: submitForm,
-                  },
-                ])
-              }
+              onPress={() => {
+                Alert.alert(
+                  'Confirmation',
+                  'Are you sure you want to add the Task?',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Add',
+                      onPress: submitForm,
+                    },
+                  ],
+                  { cancelable: false }
+                );
+              }}
               style={{ marginLeft: 5 }}
             >
               Create Task
             </Button>
           </View>
         </View>
-
-        <Modal
-          visible={confirmationVisible}
-          onDismiss={hideConfirmationModal}
-          contentContainerStyle={styles.confirmationModal}
-        >
-          <Text style={styles.confirmationText}>
-            Are you sure you want to assign a task?
-          </Text>
-
-          <View style={styles.buttonContainer}>
-            <Button onPress={addTaskdb} mode="contained" style={styles.confirmButton}>
-              Confirm
-            </Button>
-
-            <Button onPress={hideConfirmationModal} mode="contained" style={styles.cancelButton}>
-              Cancel
-            </Button>
-          </View>
-        </Modal>
       </Provider>
     </HideKeyboard>
   );
