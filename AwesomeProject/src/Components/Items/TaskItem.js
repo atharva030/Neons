@@ -282,6 +282,10 @@ const TaskItem = props => {
         break;
       case 'UPCOMING':
         setStatusColor('#ff0096');
+      case 'INCOMPLETE':
+        setStatusColor('red');
+        case 'COMPLETED':
+          setStatusColor('green');
         break;
       default:
         break;
