@@ -57,7 +57,11 @@ const TaskList = ({ navigation, route }) => {
   const teamIdByItem = route.params.post; //id by teamItem
   const teamTitle = route.params.teamTitle; //id by teamItem
   const [isLoading, setIsLoading] = useState(false);
-
+  var sum =0;
+  var subtaskLength=0;
+  var totalSubtasks = 0;
+  var taskLength = null;
+  var totalProgress1 = 0;
   const [totalProgress, setTotalProgress] = useState(0);
 
   const showModal = () => {
@@ -252,6 +256,17 @@ const TaskList = ({ navigation, route }) => {
         handleBackendError();
       });
   };
+  const calculateCirP = (progress, subtaskLength, taskLength) =>{
+    // console.log(progress);
+    
+    sum += progress;
+    // const completedSubtask = sum * 10;
+    totalSubtasks += subtaskLength;
+    
+    setTotalProgress((sum * 10 / (taskLength * totalSubtasks)) * 100 );
+    
+  }
+  console.log(totalProgress);
   // console.log(props.route)
   useEffect(() => {
     // fetchData()
@@ -573,7 +588,7 @@ const TaskList = ({ navigation, route }) => {
                   ]}>
                   <View style={styles1.pbStyle}>
                     <CircularProgressBar
-                      selectedValue={60}
+                      selectedValue={totalProgress}
                       maxValue={100}
                       radius={50}
                       activeStrokeColor="#0f4fff"
@@ -641,6 +656,12 @@ const TaskList = ({ navigation, route }) => {
                   </View>
                 ) : (
                   fetchTask.map(items => {
+                    {/* console.log('Progress for Task:', items.taskName, items.Progress); */}
+                    
+                    subtaskLength = items.subTask.length;
+                    {/* console.log(subtaskLength); */}
+                    calculateCirP(items.Progress , subtaskLength, fetchTask.length);
+                    
                     return (
                       <TaskItem
                         key={items._id}
