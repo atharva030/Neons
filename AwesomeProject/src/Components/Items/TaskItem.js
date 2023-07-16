@@ -185,6 +185,7 @@ const TaskItem = props => {
   const isChecked = subtaskId => {
     const subtask = subtaskStatus[subtaskId];
     return subtask && subtask.isChecked;
+    
   };
 
   const handleUpload = subtaskId => {
@@ -240,7 +241,7 @@ const TaskItem = props => {
   const updateTaskStatus = async (teamId, taskId) => {
     try {
       const response = await fetch(
-        `http://192.168.0.101:8888/api/task/${teamId}/updatestatus/${taskId}`,
+        `https://tsk-final-backend.vercel.app/api/task/${teamId}/updatestatus/${taskId}`,
         {
           method: 'PATCH',
         },
@@ -249,10 +250,32 @@ const TaskItem = props => {
       if (!response.ok) {
         throw new Error('Failed to update task status');
       }
-  
     } catch (error) {
       console.log(error);
    
+    }
+  };
+  
+  const updateProgress = async (teamId, taskId ,subtaskProgress ) => {
+    try {
+      const response = await fetch(
+
+        `https://tsk-final-backend.vercel.app/api/task/${teamId}/updateProgress/${taskId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ Progress: subtaskProgress }),
+        },
+      );
+        
+      if (!response.ok) {
+        throw new Error('Failed to update task Progress');
+      }
+  
+    } catch (error) {
+      console.log(error);
     }
   };
   const calculateProgress = (fetchsubtask) => {
@@ -261,15 +284,12 @@ const TaskItem = props => {
       const totalSubtasks = fetchsubtask.length;
       const progress = totalSubtasks > 0 ? completedSubtasks / totalSubtasks : 0;
       setSubtaskProgress(progress);
+      updateProgress(props.teamIdByItem, props.id ,subtaskProgress);
+      // console.log(props.teamIdByItem,props.id,subtaskProgress);
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    props.handleProgress(subtaskProgress);
-
-  },[subtaskProgress]);
   useEffect(() => {
     switch (status) {
       case 'URGENT':
