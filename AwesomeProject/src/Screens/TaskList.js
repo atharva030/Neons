@@ -95,10 +95,7 @@ const TaskList = ({ navigation, route }) => {
     bottomSheetRef.current.open();
   };
 
-  const handleProgress = (progress) =>{
-    setTotalProgress(progress);
-    console.log(totalProgress);
-  }
+ 
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
@@ -155,7 +152,7 @@ const TaskList = ({ navigation, route }) => {
   };
   const refreshfetchTasks = async () => {
     setRefreshing(true);
-    fetchTasks();
+    await fetchTasks();
   };
 
   const fetchMembers = async () => {
@@ -256,17 +253,22 @@ const TaskList = ({ navigation, route }) => {
         handleBackendError();
       });
   };
-  const calculateCirP = (progress, subtaskLength, taskLength) =>{
-    // console.log(progress);
+  // const calculateCirP = (progress, subtaskLength, taskLength) =>{
+  //   // console.log(progress);
     
-    sum += progress;
-    // const completedSubtask = sum * 10;
-    totalSubtasks += subtaskLength;
+  //   sum += progress;
+  //   // const completedSubtask = sum * 10;
+  //   totalSubtasks += subtaskLength;
+  //   totalProgress1 = (sum * 10 / (taskLength * totalSubtasks)) * 100;
     
-    setTotalProgress((sum * 10 / (taskLength * totalSubtasks)) * 100 );
-    
-  }
-  console.log(totalProgress);
+  //   // setTotalProgress((sum * 10 / (taskLength * totalSubtasks)) * 100 );
+  //   return totalProgress1;
+  // }
+  
+  // const handleProgress = (progress) => {
+  //   setTotalProgress(progress);
+  //   console.log(totalProgress);
+  // }
   // console.log(props.route)
   useEffect(() => {
     // fetchData()
@@ -275,6 +277,20 @@ const TaskList = ({ navigation, route }) => {
     
   }, []);
 
+  useEffect(() => {
+    let sum = 0;
+    let totalSubtasks = 0;
+    let taskLength = fetchTask.length;
+    
+    fetchTask.forEach(item => {
+      totalSubtasks += item.subTask.length;
+      sum += item.Progress;
+    });
+
+    const totalProgress = Math.round((sum * 10 / (taskLength * totalSubtasks)) * 100);
+    setTotalProgress(totalProgress);
+  }, [fetchTask]);
+  console.log(totalProgress);
   let datesWhitelist = [
     {
       start: moment(),
@@ -286,6 +302,7 @@ const TaskList = ({ navigation, route }) => {
   const handleModalClose = () => {
     setIsModalVisible(false);
   };
+
   return (
     <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
       <View style={styles.bottomContainer}>
@@ -587,6 +604,7 @@ const TaskList = ({ navigation, route }) => {
                     { width: '50%', justifyContent: 'center' },
                   ]}>
                   <View style={styles1.pbStyle}>
+                
                     <CircularProgressBar
                       selectedValue={totalProgress}
                       maxValue={100}
@@ -656,11 +674,12 @@ const TaskList = ({ navigation, route }) => {
                   </View>
                 ) : (
                   fetchTask.map(items => {
-                    {/* console.log('Progress for Task:', items.taskName, items.Progress); */}
+                    {/* console.log('Progress for Task:', items.taskName, items.Progress);
                     
                     subtaskLength = items.subTask.length;
                     {/* console.log(subtaskLength); */}
-                    calculateCirP(items.Progress , subtaskLength, fetchTask.length);
+                    {/* totalProgress1 = calculateCirP(items.Progress , subtaskLength, fetchTask.length); */}
+                    
                     
                     return (
                       <TaskItem
@@ -676,10 +695,11 @@ const TaskList = ({ navigation, route }) => {
                         time={items.endDate}
                         teamIdByItem={teamIdByItem}
                         deleteTask={deleteTask}
-                        handleProgress={handleProgress}
+                      
                       />
                     );
                   })
+                  
                 )}
               </>
             )}
