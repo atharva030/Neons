@@ -178,11 +178,11 @@ const TaskItem = props => {
     console.log(taskIdByItem);
     handleChangeVariable(props.teamIdByItem, taskIdByItem, subtaskId);
     setSubtaskStatus((prevState) => ({
-      // ...prevState,
-      // [subtaskId]: {
-      //   ...prevState[subtaskId],
-      //   isChecked: !prevState[subtaskId]?.isChecked,
-      // },
+      ...prevState,
+      [subtaskId]: {
+        ...prevState[subtaskId],
+        isChecked: !prevState[subtaskId]?.isChecked,
+      },
     }));
   };
 
@@ -247,11 +247,10 @@ const TaskItem = props => {
 
   const handleUpload = async (teamId, taskId, subtaskId) => {
     try {
-      const res = await DocumentPicker.pick({
+      const res = await DocumentPiwcker.pick({
         type: [DocumentPicker.types.allFiles],
       });
       setSingleFile(res);
-  
       if (res) {
         const formData = new FormData();
         formData.append('file', res);
@@ -674,8 +673,8 @@ const TaskItem = props => {
                             },
                             {
                               text: 'Confirm',
-                              // onPress: () => toggleCheckbox(subtask._id, props.id),
-                              onPress: () => { selectFile(subtask._id, props.id) },
+                              onPress: () => toggleCheckbox(subtask._id, props.id),
+                              // onPress: () => { selectFile(subtask._id, props.id) },
                             },
                           ],
                           { cancelable: false }
