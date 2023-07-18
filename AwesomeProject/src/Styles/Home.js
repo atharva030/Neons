@@ -203,8 +203,8 @@ module.exports = {
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
-    marginBottom: 5
-
+    marginBottom: 5,
+    color:"black"
   },
   icon: {
     marginRight: 5,

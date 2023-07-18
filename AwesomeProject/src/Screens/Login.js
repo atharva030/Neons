@@ -49,6 +49,7 @@ const LoginScreen = ({ navigation }) => {
 
   // This function will be triggered when the button is pressed
  const handlePress = async (email, password) => {
+  navigation.navigate('NavigationScreen');
   try {
     setIsLoading(true);
     const response = await fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
@@ -68,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
     if (response.ok) {
       // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
       handleSuccess();
-      navigation.navigate('NavigationScreen');
+      // navigation.navigate('NavigationScreen');
     } else {
       // Login failed, display an error message or perform any other actions
       ToastComponent({ message: data.error || 'Invalid email or password' });

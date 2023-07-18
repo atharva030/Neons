@@ -9,10 +9,13 @@ import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
 import { ProgressBar, MD3Colors } from 'react-native-paper';
 import styles1, { error } from '../../Styles/AddTaskStyle';
+
 import DocumentPicker from 'react-native-document-picker'
 import ExpandingPanel from '../ExpandingPanel/ExpandingPanel';
 import { Animated, Easing } from 'react-native';
 import { Alert } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+
 const handleBackendError = () => {
   ToastComponent({ message: '⚠️ Please Try again later!' });
 };
@@ -33,6 +36,7 @@ const subtaskProgress = completedSubtasks / totalSubtasks;
 // const subtaskCount = fetchsubtask.length;
 
 const data = [
+  { label: 'Select Subtask', value: '0' },
   { label: '1', value: '1' },
   { label: '2', value: '2' },
   { label: '3', value: '3' },
@@ -41,6 +45,8 @@ const data = [
   { label: '6', value: '6' },
   { label: '7', value: '7' },
   { label: '8', value: '8' },
+  { label: '9', value: '9' },
+  { label: '10', value: '10' },
 ];
 
 const TaskItem = props => {
@@ -59,13 +65,14 @@ const TaskItem = props => {
   const [checkboxState, setCheckboxState] = useState({});
   const [taskFlexHeight, setTaskFlexHeight] = useState(200);
   const [subtaskStatus, setSubtaskStatus] = useState({});
+  const [modalHeight, setModalHeight] = useState(320); // Initial base height
 
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
 
       const response = await fetch(
         `https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
-        
+
         {
           method: 'PATCH',
           headers: {
@@ -85,17 +92,20 @@ const TaskItem = props => {
       handleBackendError();
     }
   };
-  const handleToggleFlex = taskId => {
+  const handleToggleFlex = (taskId) => {
     setIsExtended(!isExtended);
-    // subtaskfetch();
     fetchSubtask(props.teamIdByItem, taskId);
-    // calculateProgress(fetchsubtask);
+
+    // Get the count of subtasks fetched
+    const subtaskCount = fetchsubtask.length;
+
+    // Calculate the height for the modal container
+    const modalHeight = calculateModalHeight(subtaskCount);
+
+    // Set the height of the modal container
+    setModalHeight(modalHeight);
   };
 
-  const handleDropdownChange = value => {
-    setSelectedOption(value);
-    setTextInputCount(Number(value));
-  };
 
   const handleSubmitModal = () => {
     const formattedSubtasks = subtaskValues.map(value => ({ title: value }));
@@ -137,7 +147,7 @@ const TaskItem = props => {
     // props.handleEditClick()
     props.setFormData({ editTitle: title, editDesc: desc, endDate: endDate });
   };
-  
+
   const handleChangeVariable = async (teamId, taskId, subtaskId) => {
     try {
 
@@ -172,17 +182,17 @@ const TaskItem = props => {
   };
 
   const toggleCheckbox = (subtaskId, taskIdByItem) => {
-    
+
     console.log(subtaskId);
     console.log(props.teamIdByItem);
     console.log(taskIdByItem);
     handleChangeVariable(props.teamIdByItem, taskIdByItem, subtaskId);
     setSubtaskStatus((prevState) => ({
-      ...prevState,
-      [subtaskId]: {
-        ...prevState[subtaskId],
-        isChecked: !prevState[subtaskId]?.isChecked,
-      },
+      // ...prevState,
+      // [subtaskId]: {
+      //   ...prevState[subtaskId],
+      //   isChecked: !prevState[subtaskId]?.isChecked,
+      // },
     }));
   };
 
@@ -190,7 +200,7 @@ const TaskItem = props => {
 
     const subtask = subtaskStatus[subtaskId];
     return subtask && subtask.isChecked;
-    
+
   };
   //upload a file to cloudinary 
   // const handleUpload = async (teamIdByItem, taskIdbyItem, subtask) => {
@@ -199,10 +209,10 @@ const TaskItem = props => {
   //     const file = await DocumentPicker.pick({
   //       type: [DocumentPicker.types.allFiles],
   //     });
-      
+
   //     if (file) {
 
-        
+
   //       try {
   //         console.log('Sending API request...');
   //         const response = await fetch(
@@ -221,7 +231,7 @@ const TaskItem = props => {
   //           }
   //         );
   //         console.log('API request completed.');
-  
+
   //         // Handle the response here
   //         // if (!response.ok) {
   //         //   throw new Error(`Request failed with status code ${response.status}`);
@@ -247,17 +257,18 @@ const TaskItem = props => {
 
   const handleUpload = async (teamId, taskId, subtaskId) => {
     try {
-      const res = await DocumentPiwcker.pick({
+      const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
       setSingleFile(res);
+
       if (res) {
         const formData = new FormData();
         formData.append('file', res);
         formData.append('teamId', teamId);
         formData.append('taskId', taskId);
         formData.append('subtaskId', subtaskId);
-    
+
         const uploadRes = await fetch(
           `http://192.168.29.161:8888/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`,
           {
@@ -271,7 +282,7 @@ const TaskItem = props => {
         console.log('File upload response:', uploadRes);
         const responseJson = await uploadRes.json();
         console.log('Upload response:', responseJson);
-  
+
         if (uploadRes.ok) {
           Alert('Upload Successful');
         }
@@ -287,9 +298,9 @@ const TaskItem = props => {
       }
     }
   };
-  
-  
-  
+
+
+
 
   const handleDeleteClick = (taskId, teamId) => {
     props.deleteTask(teamId, taskId);
@@ -302,7 +313,7 @@ const TaskItem = props => {
     try {
       const response = await fetch(
         `https://tsk-final-backend.vercel.app/api/task/${teamId}/fetchsubtasks/${taskId}`,
-        
+
         {
           method: 'GET',
         },
@@ -315,7 +326,7 @@ const TaskItem = props => {
       const data = await response.json();
       // console.log(data)0
       setFetchSubtask(data);
-      
+
       calculateProgress(data); // Pass the fetched data to the calculateProgress function
 
       const subtaskStatus = {};
@@ -340,17 +351,16 @@ const TaskItem = props => {
           method: 'PATCH',
         },
       );
-  
+
       if (!response.ok) {
         throw new Error('Failed to update task status');
       }
     } catch (error) {
       console.log(error);
-   
+
     }
   };
-  
-  const updateProgress = async (teamId, taskId ,subtaskProgress ) => {
+  const updateProgress = async (teamId, taskId, subtaskProgress) => {
     try {
       const response = await fetch(
 
@@ -363,11 +373,11 @@ const TaskItem = props => {
           body: JSON.stringify({ Progress: subtaskProgress }),
         },
       );
-        
+
       if (!response.ok) {
         throw new Error('Failed to update task Progress');
       }
-  
+
     } catch (error) {
       console.log(error);
     }
@@ -378,11 +388,24 @@ const TaskItem = props => {
       const totalSubtasks = fetchsubtask.length;
       const progress = totalSubtasks > 0 ? completedSubtasks / totalSubtasks : 0;
       setSubtaskProgress(progress);
-      updateProgress(props.teamIdByItem, props.id ,subtaskProgress);
+      updateProgress(props.teamIdByItem, props.id, subtaskProgress);
       // console.log(props.teamIdByItem,props.id,subtaskProgress);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleDropdownChange = value => {
+    setSelectedOption(value);
+    setTextInputCount(Number(value));
+  };
+
+  // ...
+
+  const renderPickerItems = () => {
+    return data.map(item => (
+      <Picker.Item key={item.value} label={item.label} value={item.value} />
+    ));
   };
   useEffect(() => {
     switch (status) {
@@ -401,16 +424,16 @@ const TaskItem = props => {
       default:
         break;
     }
-    
+
     const subtaskCount = fetchsubtask.length;
     const newHeight = isExtended ? 180 + subtaskCount * 70 : 200;
     setTaskFlexHeight(newHeight);
 
     fetchSubtask(props.teamIdByItem, props.id);
 
-    
 
-  }, [status, isExtended, fetchsubtask, props.teamIdByItem, props.id ]);
+
+  }, [status, isExtended, fetchsubtask, props.teamIdByItem, props.id]);
   const [isExpanded, setIsExpanded] = useState(false);
   const panelWidth = useState(new Animated.Value(0))[0];
 
@@ -428,6 +451,13 @@ const TaskItem = props => {
     inputRange: [0, 120],
     outputRange: [0, 1],
   });
+  const calculateModalHeight = (subtaskCount) => {
+    // Calculate the desired height based on the number of subtasks
+    const baseHeight = 320; // The initial base height
+    const additionalHeightPerSubtask = 70; // Height for each additional subtask
+    return baseHeight + subtaskCount * additionalHeightPerSubtask;
+  };
+  
   return (
     <View style={[styles.taskFlex, { height: taskFlexHeight }]}>
       <View
@@ -552,38 +582,26 @@ const TaskItem = props => {
       </View>
 
       <Portal>
-        <Modal
-          visible={isModal1Visible}
-          onDismiss={() => setIsModal1Visible(false)}
-          contentContainerStyle={containerStyle}>
+      <Modal
+        visible={isModal1Visible}
+        onDismiss={() => setIsModal1Visible(false)}
+        contentContainerStyle={[containerStyle, { height: modalHeight }]}>
           <View style={styles.container}>
             <ScrollView>
-              {/* <Text style={[styles.label, isExtended && { color: 'blue' }]}>No. of Subtasks</Text> */}
-              <Dropdown
-                style={[styles.dropdown, isExtended && { borderColor: 'blue' }]}
-                selectedValue={selectedOption}
-                onValueChange={handleDropdownChange}
-                placeholderStyle={[styles.placeholderStyle, { color: 'black' }]}
-                selectedTextStyle={[styles.selectedTextStyle, { color: 'black' }]}
-                inputSearchStyle={[styles.inputSearchStyle, { color: 'black' }]}
-                optionTextStyle={{ color: 'black' }}
-                iconStyle={styles.iconStyle}
-                data={data}
-                search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                placeholder={!isExtended ? 'Select No of subtasks' : '...'}
-                searchPlaceholder="Search..."
-                value={textInputCount.toString()}
-                onFocus={() => setIsExtended(true)}
-                onBlur={() => setIsExtended(false)}
-                onChange={item => {
-                  setTextInputCount(Number(item.value));
-                  setIsExtended(false);
-                }}
-              />
-
+              <View
+                style={[
+                  styles.dropdown, // Add your custom styles here
+                  isExtended && { borderColor: 'blue' }, // Add border color when extended
+                ]}
+              >
+                    <Text style={{ color: 'black', textAlign: 'center' }}>Please select the number of Subtask</Text>
+                <Picker
+                  selectedValue={selectedOption}
+                  onValueChange={handleDropdownChange}
+                >
+                  {renderPickerItems()}
+                </Picker>
+              </View>
               {/* Render TextInput components based on the selected option */}
               {renderTextInputs()}
             </ScrollView>
@@ -606,7 +624,23 @@ const TaskItem = props => {
             <Button
               icon="check"
               mode="contained"
-              onPress={handleSubmitModal}
+              onPress={() => {
+                Alert.alert(
+                  'Once addition',
+                  'You can add the subtask only once',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Add',
+                      onPress: handleSubmitModal,
+                    },
+                  ],
+                  { cancelable: false }
+                );
+              }}
               style={{ marginLeft: 5 }}>
               Done
             </Button>
@@ -673,8 +707,8 @@ const TaskItem = props => {
                             },
                             {
                               text: 'Confirm',
-                              onPress: () => toggleCheckbox(subtask._id, props.id),
-                              // onPress: () => { selectFile(subtask._id, props.id) },
+                              // onPress: () => toggleCheckbox(subtask._id, props.id),
+                              onPress: () => { selectFile(subtask._id, props.id) },
                             },
                           ],
                           { cancelable: false }
@@ -704,8 +738,8 @@ const TaskItem = props => {
                         },
                       ]}
                       disabled={isChecked(subtask._id)}
-                      onPress={() =>handleUpload(props.teamIdByItem, props.id,subtask._id)
-                    }>
+                      onPress={() => handleUpload(props.teamIdByItem, props.id, subtask._id)
+                      }>
                       <Text
                         style={[
                           styles.uploadbtnTxt,
@@ -715,9 +749,9 @@ const TaskItem = props => {
                         ]}>
                         Upload
                       </Text>
-                      
+
                     </TouchableOpacity>
-</View>
+                  </View>
                 ))
               )}
             </View>
