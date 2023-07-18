@@ -287,10 +287,11 @@ const TaskList = ({ navigation, route }) => {
       sum += item.Progress;
     });
 
-    const totalProgress = Math.round((sum * 10 / (taskLength * totalSubtasks)) * 100);
-    setTotalProgress(totalProgress);
+    const totalProgress = Math.round((sum/ (taskLength * totalSubtasks)) * 100);
+    setTotalProgress(100 -totalProgress); 
+
   }, [fetchTask]);
-  console.log(totalProgress);
+ 
   let datesWhitelist = [
     {
       start: moment(),
@@ -304,7 +305,7 @@ const TaskList = ({ navigation, route }) => {
   };
 
   return (
-    <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
+    <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' }}}>
       <View style={styles.bottomContainer}>
         <BottomSheet
           ref={bottomSheetRef}

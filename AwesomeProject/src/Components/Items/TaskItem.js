@@ -9,7 +9,7 @@ import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
 import { ProgressBar, MD3Colors } from 'react-native-paper';
 import styles1, { error } from '../../Styles/AddTaskStyle';
-//import DocumentPicker from 'react-native-document-picker'
+import DocumentPicker from 'react-native-document-picker'
 import ExpandingPanel from '../ExpandingPanel/ExpandingPanel';
 import { Animated, Easing } from 'react-native';
 import { Alert } from 'react-native';
@@ -62,8 +62,10 @@ const TaskItem = props => {
 
   const addSubtask = async (teamIdByItem, taskIdByItem, payload) => {
     try {
+
       const response = await fetch(
         `https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks/${taskIdByItem}`,
+        
         {
           method: 'PATCH',
           headers: {
@@ -138,6 +140,7 @@ const TaskItem = props => {
   
   const handleChangeVariable = async (teamId, taskId, subtaskId) => {
     try {
+
       const response = await fetch(`https://tsk-final-backend.vercel.app/api/team/${teamId}/tasks/${taskId}/subtasks/${subtaskId}`, {
         method: 'PATCH',
         headers: {
@@ -155,7 +158,7 @@ const TaskItem = props => {
       updateTaskStatus(teamId, taskId);
       try {
         const data = JSON.parse(text);
-        console.log(data);
+        // console.log(data);
 
         // Call any other functions or update the UI based on the response data
       } catch (err) {
@@ -169,34 +172,125 @@ const TaskItem = props => {
   };
 
   const toggleCheckbox = (subtaskId, taskIdByItem) => {
+    
     console.log(subtaskId);
     console.log(props.teamIdByItem);
     console.log(taskIdByItem);
     handleChangeVariable(props.teamIdByItem, taskIdByItem, subtaskId);
     setSubtaskStatus((prevState) => ({
-      ...prevState,
-      [subtaskId]: {
-        ...prevState[subtaskId],
-        isChecked: !prevState[subtaskId]?.isChecked,
-      },
+      // ...prevState,
+      // [subtaskId]: {
+      //   ...prevState[subtaskId],
+      //   isChecked: !prevState[subtaskId]?.isChecked,
+      // },
     }));
   };
 
   const isChecked = subtaskId => {
+
     const subtask = subtaskStatus[subtaskId];
     return subtask && subtask.isChecked;
     
   };
+  //upload a file to cloudinary 
+  // const handleUpload = async (teamIdByItem, taskIdbyItem, subtask) => {
+  //   try {
+  //     console.log(teamIdByItem + ' ' + taskIdbyItem + ' ' + subtask);
+  //     const file = await DocumentPicker.pick({
+  //       type: [DocumentPicker.types.allFiles],
+  //     });
+      
+  //     if (file) {
 
-  const handleUpload = subtaskId => {
-    setSubtaskStatus(prevState => ({
-      ...prevState,
-      [subtaskId]: {
-        ...prevState[subtaskId],
-        uploaded: true,
-      },
-    }));
+        
+  //       try {
+  //         console.log('Sending API request...');
+  //         const response = await fetch(
+  //           `https://tsk-final-backend.vercel.app/api/fileupload/${teamIdByItem}/tasks/${taskIdbyItem}/subtasks/${subtask}/upload`,
+  //           {
+  //             method: 'PATCH',
+  //             body: JSON.stringify({
+  //               file: file,
+  //               teamId: teamIdByItem,
+  //               taskId: taskIdbyItem,
+  //               subtaskId: subtask,
+  //             }),
+  //             headers: {
+  //               'Content-Type': 'multipart/form-data',
+  //             },
+  //           }
+  //         );
+  //         console.log('API request completed.');
+  
+  //         // Handle the response here
+  //         // if (!response.ok) {
+  //         //   throw new Error(`Request failed with status code ${response.status}`);
+  //         // }
+  //         if (response.ok) {
+  //           ToastComponent({ message: 'File uploaded successfully' });
+  //         }
+  //       } catch (err) {
+  //         console.log('Error:', err.message);
+  //       }
+  //     } else {
+  //       console.log('No file selected.');
+  //     }
+  //   } catch (err) {
+  //     if (DocumentPicker.isCancel(err)) {
+  //       console.log('User cancelled the picker, exit any dialogs or menus and move on');
+  //     } else {
+  //       throw err;
+  //     }
+  //   }
+  // };
+  const [singleFile, setSingleFile] = useState(null);
+
+  const handleUpload = async (teamId, taskId, subtaskId) => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
+      setSingleFile(res);
+  
+      if (res) {
+        const formData = new FormData();
+        formData.append('file', res);
+        formData.append('teamId', teamId);
+        formData.append('taskId', taskId);
+        formData.append('subtaskId', subtaskId);
+    
+        const uploadRes = await fetch(
+          `http://192.168.29.161:8888/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`,
+          {
+            method: 'PATCH',
+            body: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+        console.log('File upload response:', uploadRes);
+        const responseJson = await uploadRes.json();
+        console.log('Upload response:', responseJson);
+  
+        if (uploadRes.ok) {
+          Alert('Upload Successful');
+        }
+      }
+    } catch (error) {
+      console.log('Error:', error.message);
+      setSingleFile(null);
+      if (DocumentPicker.isCancel(error)) {
+        Alert('Canceled');
+      } else {
+        Alert('Unknown Error: ' + JSON.stringify(error));
+        throw error;
+      }
+    }
   };
+  
+  
+  
 
   const handleDeleteClick = (taskId, teamId) => {
     props.deleteTask(teamId, taskId);
@@ -209,6 +303,7 @@ const TaskItem = props => {
     try {
       const response = await fetch(
         `https://tsk-final-backend.vercel.app/api/task/${teamId}/fetchsubtasks/${taskId}`,
+        
         {
           method: 'GET',
         },
@@ -558,6 +653,8 @@ const TaskItem = props => {
               ) : (
                 // <Text style={styles.subtaskTitle}>Subtasks</Text>
                 fetchsubtask.map(subtask => (
+                  // console.log(subtask._id),
+                  // console.log(props.teamIdByItem, props.id,subtask._id),
                   <View
                     key={subtask._id}
                     style={[
@@ -577,7 +674,8 @@ const TaskItem = props => {
                             },
                             {
                               text: 'Confirm',
-                              onPress: () => toggleCheckbox(subtask._id, props.id),
+                              // onPress: () => toggleCheckbox(subtask._id, props.id),
+                              onPress: () => { selectFile(subtask._id, props.id) },
                             },
                           ],
                           { cancelable: false }
@@ -597,6 +695,7 @@ const TaskItem = props => {
                     <Text style={styles.subTTitle}>{subtask.title}</Text>
 
                     <TouchableOpacity
+
                       style={[
                         styles.uploadButton,
                         {
@@ -606,7 +705,8 @@ const TaskItem = props => {
                         },
                       ]}
                       disabled={isChecked(subtask._id)}
-                      onPress={() => handleUpload(subtask._id)}>
+                      onPress={() =>handleUpload(props.teamIdByItem, props.id,subtask._id)
+                    }>
                       <Text
                         style={[
                           styles.uploadbtnTxt,
@@ -616,8 +716,9 @@ const TaskItem = props => {
                         ]}>
                         Upload
                       </Text>
+                      
                     </TouchableOpacity>
-                  </View>
+</View>
                 ))
               )}
             </View>

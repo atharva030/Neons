@@ -8,6 +8,8 @@ const YourComponent = () => {
     // Simulating data fetching
     setTimeout(() => {
       setIsLoading(false); // Set isLoading to false to hide the loader
+      console.log('Next');
+      
     }, 5000);
   }, []);
 

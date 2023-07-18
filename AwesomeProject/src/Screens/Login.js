@@ -48,43 +48,38 @@ const LoginScreen = ({ navigation }) => {
     });
 
   // This function will be triggered when the button is pressed
-
-  const handlePress = (email, password) => {
-    navigation.navigate('NavigationScreen'); 
-    validate({
-      email: { email: true, required: true },
-      password: { required: true, minlength: 6, pattern: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/ },
+ const handlePress = async (email, password) => {
+  try {
+    setIsLoading(true);
+    const response = await fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
     });
-  
-    const emailErrors = getErrorsInField('email');
-    const passwordErrors = getErrorsInField('password');
-  
-    if (emailErrors.length === 0 && passwordErrors.length === 0) {
-      setIsLoading(true);
-      handleLogin(email, password)
-        .then(response => {                                             
-          if (response.success) {                                                                       //
-            // Login successful, navigate to the next screen or perform any other actions            // |
-            // navigation.navigate('NavigationScreen');       //<<<<<<<----------------------------------------------------------------
-            setIsLoading(false);
-            handleSuccess();
-          } else {
-            setIsLoading(false);
-            // Login failed, display an error message or perform any other actions
-            ToastComponent({ message: response.error || 'Invalid email or password' });
-          }
-        })
-        .catch(error => {
-          // An error occurred during the login process, handle the error
-          setIsLoading(false);
-          console.log(error);
-          handleBackendError();
-        });
+    
+    const data = await response.json();
+    setIsLoading(false);
+    
+    if (response.ok) {
+      // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
+      handleSuccess();
+      navigation.navigate('NavigationScreen');
     } else {
-      const errorMessages = [...emailErrors, ...passwordErrors];
-      ToastComponent({ message: errorMessages[0] });
+      // Login failed, display an error message or perform any other actions
+      ToastComponent({ message: data.error || 'Invalid email or password' });
     }
-  };
+  } catch (error) {
+    setIsLoading(false);
+    console.log(error);
+    handleBackendError();
+  }
+};
+
   
 
   // const [Password, setPassword] = useState('');

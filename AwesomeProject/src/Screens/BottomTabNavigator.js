@@ -22,7 +22,6 @@ function BottomTabNavigator() {
 
         tabBarIcon: ({ color, size, focused }) => {
           let iconName;
-
           if (route.name == 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name == 'AddTask') {
