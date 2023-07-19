@@ -6,6 +6,7 @@ import {
   ScrollView,
   ToastAndroid,
   StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 import React, { useContext, useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,7 +37,7 @@ const RegisterScreen = ({ navigation }) => {
   const [selectedRole, setSelectedRole] = useState('');
   const context = useContext(TaskContext)
   const { handleSubmitRegister } = context
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSuccess = () => {
     ToastComponent({ message: 'Registration Successful' });
   };
@@ -89,6 +90,7 @@ const RegisterScreen = ({ navigation }) => {
     }
   
     console.log('added');
+    setIsLoading(true);
     handleSubmitRegister(name, email, password, phone, selectedRole, cnfpassword)
       .then((success) => {
         if (success) {
@@ -100,6 +102,7 @@ const RegisterScreen = ({ navigation }) => {
         }
       })
       .catch((error) => {
+        setIsLoading(false); 
         console.error(error);
         // An error occurred during registration, handle the error or display an error message
         handleBackendError(error);
@@ -132,21 +135,21 @@ const RegisterScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={[
                   styles.roleSelectionIconContainer,
-                  selectedRole === 'admin' && styles.selectedRoleContainer,
+                  selectedRole === 'ROLE_ADMIN' && styles.selectedRoleContainer,
                 ]}
-                onPress={() => handleRoleSelection('admin')}
+                onPress={() => handleRoleSelection('ROLE_ADMIN')}
               >
                 <Image
                   source={require('../../assets/admin.png')}
                   style={[
                     styles.roleImageadmin,
-                    selectedRole === 'admin' && styles.selectedRoleImage,
+                    selectedRole === 'ROLE_ADMIN' && styles.selectedRoleImage,
                   ]}
                 />
                 <Text
                   style={[
                     styles.roleSelectionText,
-                    selectedRole === 'admin' && styles.selectedRoleText,
+                    selectedRole === 'ROLE_ADMIN' && styles.selectedRoleText,
                   ]}
                 >
                   Admin
@@ -155,21 +158,21 @@ const RegisterScreen = ({ navigation }) => {
               <TouchableOpacity
                 style={[
                   styles.roleSelectionIconContainer,
-                  selectedRole === 'member' && styles.selectedRoleContainer,
+                  selectedRole === 'ROLE_MEMBER' && styles.selectedRoleContainer,
                 ]}
-                onPress={() => handleRoleSelection('member')}
+                onPress={() => handleRoleSelection('ROLE_MEMBER')}
               >
                 <Image
                   source={require('../../assets/member.png')}
                   style={[
                     styles.roleImagemember,
-                    selectedRole === 'member' && styles.selectedRoleImage,
+                    selectedRole === 'ROLE_MEMBER' && styles.selectedRoleImage,
                   ]}
                 />
                 <Text
                   style={[
                     styles.roleSelectionText,
-                    selectedRole === 'member' && styles.selectedRoleText,
+                    selectedRole === 'ROLE_MEMBER' && styles.selectedRoleText,
                   ]}
                 >
                   Member
@@ -244,21 +247,35 @@ const RegisterScreen = ({ navigation }) => {
                 />
               </View>
             </View>
-            <Button
+            {/* <Button
               onPress={()=>handlePressRegister(name, email, password, phone, selectedRole, cnfpassword)}
               style={styles.submitBtn}
               mode="contained"
             >
               Register
-            </Button>
+            </Button> */}
+
+
+            <TouchableOpacity
+                  style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
+                  onPress={() => handlePressRegister(name, email, password, phone, selectedRole, cnfpassword)}
+                  disabled={isLoading}>
+                  {isLoading ? (
+                    <ActivityIndicator size="small" color="#ffffff" />
+
+                  ) : (
+                    <Text style={styles.loginText}>Register</Text>
+                  )}
+                </TouchableOpacity>
+
             <View style={styles.signInContainer}>
               <Text style={styles.signInText}>Already have an Account?</Text>
               <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                 <Text style={styles.signInLink}>Log In</Text>
               </TouchableOpacity>
             </View>
-            <Text style={styles.signInText}>Sign In/ Register with:</Text>
-            <View style={styles.socialIconsContainer}>
+            {/* <Text style={styles.signInText}>Sign In/ Register with:</Text> */}
+            {/* <View style={styles.socialIconsContainer}>
               <TouchableOpacity onPress={() => console.warn('google Pressed')}>
                 <Icon
                   name="ios-logo-google"
@@ -270,7 +287,7 @@ const RegisterScreen = ({ navigation }) => {
               <TouchableOpacity onPress={() => console.warn('facebook Pressed')}>
                 <Icon name="ios-logo-facebook" size={35} color="#5a55ca" />
               </TouchableOpacity>
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       )}

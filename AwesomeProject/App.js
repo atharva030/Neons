@@ -20,10 +20,12 @@ import TaskContext from './src/Context/taskContext';
 import Context from './src/Screens/Context';
 import Onbording from './src/Components/Onboarding/onbording';
 import TaskState from './src/Context/taskState';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [spinner, setSpinner] = useState(true);
+  const [initialScreen, setInitialScreen] = useState('Welcome');
   const taskContextValue = {
     // Add any values or functions you want to provide
   };
@@ -49,16 +51,39 @@ const App = () => {
     );
     return () => backHandler.remove();
   }, []);
-
   useEffect(() => {
     const loaderEffect = () => {
       setTimeout(() => {
         setSpinner(false);
       }, 500);
-      // setSpinner(false)
     };
 
     loaderEffect();
+  }, []);
+  const checkAuthToken = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+    const data=JSON.parse(userData)
+    return data.authToken;
+      }
+      // return authToken;
+    } catch (error) {
+      console.log('Error checking auth token:', error);
+      return null;
+    }
+  };
+  useEffect(() => {
+    const checkAuthAndNavigate = async () => {
+      const authToken = await checkAuthToken();
+      if (authToken) {
+        setInitialScreen('NavigationScreen'); // Set the initial screen to NavigationScreen
+      } else {
+        setInitialScreen('Welcome'); // Set the initial screen to Welcome
+      }
+    };
+
+    checkAuthAndNavigate();
   }, []);
 
   return (
@@ -67,7 +92,7 @@ const App = () => {
       {spinner ? (
         <Loader />
       ) : (
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName={initialScreen}>
           {/* <Stack.Screen
               name="Onbording"
               component={Onbording}

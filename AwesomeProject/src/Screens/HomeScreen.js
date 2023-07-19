@@ -12,7 +12,7 @@ import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
 import RBSheet from 'react-native-raw-bottom-sheet';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   FAB,
   Provider,
@@ -31,7 +31,21 @@ import AppLoader from '../Components/AppLoader';
 const handleSuccess = () => {
   ToastComponent({ message: 'Team Added successfully' });
 };
+const toggleMenulogout = async () => {
+  console.log('logout pressed');
+  setIsOpen(false);
 
+  // Remove the auth-token from AsyncStorage
+  try {
+    await AsyncStorage.removeItem('auth-token');
+    console.log('auth-token removed from AsyncStorage');
+  } catch (error) {
+    console.log('Error while removing auth-token from AsyncStorage:', error);
+  }
+
+  // After removing the auth-token, navigate to the LoginScreen
+  navigation.navigate('LoginScreen');
+};
 const handleBackendError = () => {
   ToastComponent({ message: '⚠️ Please Try again later!' });
 };
@@ -76,7 +90,24 @@ const HomeScreen = ({ navigation }) => {
     fetchTeam();
     setRefreshing(false);
   };
-
+  const [userRole, setUserRole] = useState('');
+  
+  useEffect(() => {
+      // Retrieve the userRole from AsyncStorage and update the state
+      const getUserRole = async () => {
+        try {
+          const userData = await AsyncStorage.getItem('user');
+          if (userData) {
+            const { userRole } = JSON.parse(userData);
+            setUserRole(userRole);
+            console.log(userRole)
+          }
+        } catch (error) {
+          console.log('Error while retrieving userRole from AsyncStorage:', error);
+        }
+      };
+      getUserRole();
+    }, []);
   const FadeScreen = () => {
     const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -437,6 +468,7 @@ const HomeScreen = ({ navigation }) => {
                   title={items.teamName}
                   deleteTeam={deleteTeam}
                   setFormData={setFormData}
+                  userRole={userRole}
                   refreshControl={
                     <RefreshControl
                       refreshing={refreshing}
@@ -447,7 +479,7 @@ const HomeScreen = ({ navigation }) => {
               ))
             )}
 
-            <Portal>
+            {userRole=="ROLE_ADMIN"?<Portal>
               <FAB.Group
                 open={open}
                 visible
@@ -467,7 +499,7 @@ const HomeScreen = ({ navigation }) => {
                 }}
                 overlayColor="transparent"
               />
-            </Portal>
+            </Portal>:""}
           </ScrollView>
         </>
       )}

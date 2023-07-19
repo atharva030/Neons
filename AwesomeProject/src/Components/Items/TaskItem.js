@@ -9,7 +9,7 @@ import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
 import { ProgressBar, MD3Colors } from 'react-native-paper';
 import styles1, { error } from '../../Styles/AddTaskStyle';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker'
 import ExpandingPanel from '../ExpandingPanel/ExpandingPanel';
 import { Animated, Easing } from 'react-native';
@@ -394,7 +394,7 @@ const TaskItem = props => {
       console.log(error);
     }
   };
-
+ 
   const handleDropdownChange = value => {
     setSelectedOption(value);
     setTextInputCount(Number(value));
@@ -470,7 +470,7 @@ const TaskItem = props => {
 
         <View style={{ flexDirection: 'row' }}>
           {/* expanding panel for the  three dot icon  whn pressed it iwill grow and show the three icons which  will perform the crud operation for subtask  */}
-          <View>
+          {props.userRole=="ROLE_ADMIN"?<View>
             <TouchableOpacity onPress={handleIconPress}>
               <View
                 style={{
@@ -562,7 +562,7 @@ const TaskItem = props => {
                 />
               </View>
             </TouchableOpacity>
-          </View>
+          </View>:""}
         </View>
       </View>
       <View style={styles.hairline} />

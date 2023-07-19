@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, Modal, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, Text, Modal, StyleSheet, Image,ToastAndroid  } from 'react-native';
 import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Avatardropmodal = ({ navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,13 +12,24 @@ const Avatardropmodal = ({ navigation }) => {
     console.log('presed')
 
   };
-  const toggleMenulogout = () => {
-    console.log('logut presed')
-    setIsOpen(!isOpen);
-    // logout logic .. @atharva dada 
-    navigation.navigate('    LoginScreen    ')
-
-  }
+  const toggleMenulogout = async () => {
+    console.log('logout pressed');
+    setIsOpen(false);
+  
+    // Remove the auth-token from AsyncStorage
+    try {
+      await AsyncStorage.removeItem('auth-token');
+      console.log('auth-token removed from AsyncStorage');
+  
+      // Display a toast message after successful logout
+      ToastAndroid.show('Logged out successfully', ToastAndroid.SHORT);
+      
+      // After successful logout, navigate to the LoginScreen
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log('Error while removing auth-token from AsyncStorage:', error);
+    }
+  };
 
   const toggleMenuprofile = () => {
     console.log('profile presed')

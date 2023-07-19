@@ -8,6 +8,7 @@ module.exports = {
     height:deviceHeight,
     widht:deviceWidth,
     flex: 1,
+    backgroundColor:"#5a55ca"
   },
   btmeditsheet:{
     width: '100%',

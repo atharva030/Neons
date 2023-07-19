@@ -26,7 +26,7 @@ const handleSuccess = () => {
 };
 
 const handleBackendError = () => {
-  ToastComponent({ message: '⚠️ Please Try again later!' });
+  ToastComponent({ message: 'Check your Network' });
 };
 // import Seprator from '../Components/seprator/seprator';
 const HideKeyboard = ({ children }) => (
@@ -42,46 +42,66 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { handleLogin } = context
+
   const { validate, isFieldInError, getErrorsInField, getErrorMessages } =
     useValidation({
       state: { email, password },
     });
-
+    //This is for getting info of asyncstorage
+    const getUserData = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('user');
+        if (userData) {
+          const data = JSON.parse(userData);
+          console.log("Getiing adatar",data)
+        } else {
+          console.log('User data not found in AsyncStorage.');
+        }
+      } catch (error) {
+        console.log('Error while retrieving user data:', error);
+      }
+    };
+    
   // This function will be triggered when the button is pressed
- const handlePress = async (email, password) => {
-  navigation.navigate('NavigationScreen');
-  try {
-    setIsLoading(true);
-    const response = await fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    
-    const data = await response.json();
-    setIsLoading(false);
-    
-    if (response.ok) {
-      // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
-      handleSuccess();
-      // navigation.navigate('NavigationScreen');
-    } else {
-      // Login failed, display an error message or perform any other actions
-      ToastComponent({ message: data.error || 'Invalid email or password' });
-    }
-  } catch (error) {
-    setIsLoading(false);
-    console.log(error);
-    handleBackendError();
-  }
-};
+  const handlePress = async (email, password) => {
+    try {
+      if (!email || !password) {
+        ToastComponent({ message: 'Please fill in all fields' });
+        return;
+      }
+      console.log(email, password)
+      setIsLoading(true);
+      const response = await fetch('http://192.168.43.113:8888/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
 
-  
+      const data = await response.json();
+      setIsLoading(false);
+      
+      if (!response.ok) {
+        ToastComponent({ message: data.error || 'Invalid email or password' });
+      }
+      // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
+      console.log(data);
+      await AsyncStorage.setItem('user', JSON.stringify({
+        authToken: data.authToken,
+        userRole: data.userRole, // Assuming data.userRole contains the user's role
+      }));
+      handleSuccess();
+      navigation.navigate('NavigationScreen');
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+      handleBackendError();
+    }
+  };
 
   // const [Password, setPassword] = useState('');
   return (
@@ -92,16 +112,16 @@ const LoginScreen = ({ navigation }) => {
         <HideKeyboard>
           <ScrollView>
             <View style={styles.Addfullscreen}>
-              
+
               <View style={styles.Loginsubscreen}>
-              {/* <ImageBackground source={require('../assets/Image/bgapp.jpg')} resizeMode="cover"> */}
-              <TouchableOpacity
+                {/* <ImageBackground source={require('../assets/Image/bgapp.jpg')} resizeMode="cover"> */}
+                <TouchableOpacity
                   style={{ flexDirection: 'row', marginTop: 20 }}
                   onPress={() => navigation.goBack()}>
                   <Icon name="chevron-back" size={30} color="white" />
                   <Text style={styles.AddtitleText}>Login</Text>
                 </TouchableOpacity>
-              {/* </ImageBackground> */}
+                {/* </ImageBackground> */}
               </View>
 
               <View style={styles.loginSecondScreen}>
@@ -221,12 +241,12 @@ const LoginScreen = ({ navigation }) => {
                   </TouchableOpacity>
                 </View>
                 {/* <Seprator/> */}
-                <View style={styles.lineContainer}>
+                {/* <View style={styles.lineContainer}>
                   <View style={styles.grayLine} />
                   <Text style={styles.orText}>or log in with</Text>
                   <View style={styles.grayLine} />
-                </View>
-                <View
+                </View> */}
+                {/* <View
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -245,7 +265,7 @@ const LoginScreen = ({ navigation }) => {
                     onPress={() => console.warn('facebook Pressed')}>
                     <Icon name="ios-logo-facebook" size={35} color="#5a55ca" />
                   </TouchableOpacity>
-                </View>
+                </View> */}
                 <Text style={{ color: "black", textAlign: "center", fontSize: 13 }}>By using TaskStack you agree to our <Text style={{ fontFamily: 'Poppins-Medium' }}>Terms of Services</Text> and <Text style={{ fontFamily: 'Poppins-Medium' }}>Privacy Policy</Text></Text>
               </View>
               {isFieldInError('date') &&

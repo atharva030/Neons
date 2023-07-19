@@ -23,7 +23,7 @@ import ToastComponent from '../Components/Toast/toast';
 import CircularProgressBar from '../Components/CircularProgressBar';
 // import Spinner from './Spinner';
 import AppLoader from '../Components/AppLoader';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -276,7 +276,23 @@ const TaskList = ({ navigation, route }) => {
     fetchTasks();
     
   }, []);
-
+  const [userRole, setUserRole] = useState('');
+  const count=1;
+  useEffect(() => {
+      // Retrieve the userRole from AsyncStorage and update the state
+      const getUserRole = async () => {
+        try {
+          const userData = await AsyncStorage.getItem('user');
+          if (userData) {
+            const { userRole } = JSON.parse(userData);
+            setUserRole(userRole);
+          }
+        } catch (error) {
+          console.log('Error while retrieving userRole from AsyncStorage:', error);
+        }
+      };
+      getUserRole();
+    }, [count]);
   useEffect(() => {
     let sum = 0;
     let totalSubtasks = 0;
@@ -696,7 +712,7 @@ const TaskList = ({ navigation, route }) => {
                         time={items.endDate}
                         teamIdByItem={teamIdByItem}
                         deleteTask={deleteTask}
-                      
+                        userRole={userRole}
                       />
                     );
                   })
@@ -707,7 +723,7 @@ const TaskList = ({ navigation, route }) => {
           </View>
         </ScrollView>
 
-        <Portal>
+       {userRole=="ROLE_ADMIN"? <Portal>
           <FAB.Group
             open={open}
             fabStyle={styles.fab}
@@ -733,7 +749,7 @@ const TaskList = ({ navigation, route }) => {
             }}
             overlayColor="transparent"
           />
-        </Portal>
+        </Portal>:""}
       </ScrollView>
     </Provider>
   );

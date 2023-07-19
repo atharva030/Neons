@@ -13,6 +13,22 @@ const RegisterStyle = StyleSheet.create({
     paddingBottom: 20,
     paddingTop: 10,
   },
+  loginText:{
+    fontSize: 16,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Poppins-Regular'
+  },
+  submitBtn1: {
+    width: '90%',
+    marginTop: 20,
+    backgroundColor: '#5a55ca',
+    color: 'white',
+    borderRadius: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 45
+  },
   AddtitleText: {
     fontFamily: 'Poppins-Medium',
     fontSize: 25,

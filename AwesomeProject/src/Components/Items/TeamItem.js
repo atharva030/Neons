@@ -4,7 +4,17 @@ import styles from '../../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 import { Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const TeamItem = props => {
+    const storeUserData = async (authToken, userRole) => {
+        try {
+            await AsyncStorage.setItem('auth-token', authToken);
+            await AsyncStorage.setItem('userRole', userRole);
+        } catch (error) {
+            console.log('Error while storing user data in AsyncStorage:', error);
+        }
+    };
     const appFun = (id, teamTitle) => {
         console.log(id)
         props.setteamId(id)
@@ -23,8 +33,7 @@ const TeamItem = props => {
         props.openBottomSheet()
         props.setFormData({ editTitle: title, editDesc: desc });
     }
-    // props.setFormData({ fieldName: "existingValue" });
-    // const [statusColor, setStatusColor] = useState("");
+  
     status = props.status;
     return (
         <View style={styles.teamFlex}>
@@ -52,7 +61,7 @@ const TeamItem = props => {
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => handleModal(props.title, props.desc, props.items._id)}>
 
-                            <Icon name="md-pencil-outline" size={20} style={{ color: 'black', marginRight: 15 }} />
+                          {props.userRole=="ROLE_ADMIN"?  <Icon name="md-pencil-outline" size={20} style={{ color: 'black', marginRight: 15 }} />:""}
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() =>
