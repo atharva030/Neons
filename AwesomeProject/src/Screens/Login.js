@@ -71,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
       }
       console.log(email, password)
       setIsLoading(true);
-      const response = await fetch('http://192.168.43.113:8888/api/auth/login', {
+      const response = await fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
