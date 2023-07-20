@@ -37,12 +37,12 @@ const Team_scr1 = ({ navigation }) => {
                                     {
                                         icon: 'account-plus',
                                         label: 'New Member',
-                                        onPress: () => console.log('Pressed star'),
+                                        // onPress: () => console.log('Pressed star'),
                                     },
                                     {
                                         icon: 'account-check',
                                         label: 'Existing Member',
-                                        onPress: () => console.log('Pressed email'),
+                                        // onPress: () => console.log('Pressed email'),
                                     }
 
                                 ]}

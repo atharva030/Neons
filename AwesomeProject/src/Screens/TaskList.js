@@ -11,6 +11,7 @@ import {
 import styles from '../Styles/Home';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import moment from 'moment';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import CalendarStrip from 'react-native-calendar-strip';
 import TaskItem from '../Components/Items/TaskItem';
@@ -24,8 +25,12 @@ import CircularProgressBar from '../Components/CircularProgressBar';
 // import Spinner from './Spinner';
 import AppLoader from '../Components/AppLoader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RBSheet from 'react-native-raw-bottom-sheet';
+const { Dimensions } = require("react-native");
+const { LinearGradient } = require("react-native-svg");
 
-
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 
 import MemberFilter from '../Components/Teams/MemberFilter';
 const handleSuccess = () => {
@@ -57,13 +62,19 @@ const TaskList = ({ navigation, route }) => {
   const teamIdByItem = route.params.post; //id by teamItem
   const teamTitle = route.params.teamTitle; //id by teamItem
   const [isLoading, setIsLoading] = useState(false);
-  var sum =0;
-  var subtaskLength=0;
+  var sum = 0;
+  var subtaskLength = 0;
   var totalSubtasks = 0;
   var taskLength = null;
   var totalProgress1 = 0;
   const [totalProgress, setTotalProgress] = useState(0);
+  const openeditBottomSheet = () => {
+    bottomSheetTeamRef.current.open();
+  };
 
+  const closeeditBottomSheet = () => {
+    bottomSheetTeamRef.current.close();
+  };
   const showModal = () => {
     // console.log('preesed');
     setVisible(true);
@@ -78,8 +89,33 @@ const TaskList = ({ navigation, route }) => {
     alignItems: 'center',
     justifyContent: 'center',
   };
-  const containerStyle = { backgroundColor: 'white', padding: 30, borderRadius: 20, width: 340, marginLeft: 10 };
-  const addtaskcontainerStyle = { backgroundColor: 'white', borderRadius: 20, width: 340, marginLeft: 10, height: 450 };
+  const containerStyle = {
+    width: deviceWidth * 0.85,
+    height: deviceHeight * 0.46,
+    // borderWidth: 1,
+    // borderColor: 'black',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: (deviceHeight - (deviceHeight * 0.65)) / 2,
+    left: (deviceWidth - (deviceWidth * 0.85)) / 2,
+  };
+
+  const addtaskcontainerStyle = {
+    width: deviceWidth * 0.95,
+    height: deviceHeight * 0.566,
+    // borderWidth: 1,
+    // borderColor: 'black',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 20,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: (deviceHeight - (deviceHeight * 0.65)) / 2,
+    left: (deviceWidth - (deviceWidth * 0.85)) / 5,
+  };
 
   const handleSubmit = () => {
     setmemberTeam(false)
@@ -89,36 +125,52 @@ const TaskList = ({ navigation, route }) => {
   const handleEditClick = () => {
     setIsModalVisible(true);
   };
-  const bottomSheetRef = useRef(null);
+  const bottomSheetTeamRef = useRef(null);
+  const bottomSheetEditRef = useRef(null);
 
-  const openBottomSheet = () => {
-    bottomSheetRef.current.open();
+  const openBottomTeamSheet = () => {
+    bottomSheetTeamRef.current.open();
+  };
+  const openBottomEditSheet = () => {
+    bottomSheetEditRef.current.open();
+  };
+  const closeBottomEditSheet = () => {
+    bottomSheetEditRef.current.close();
   };
 
- 
+
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
-    fetch(
-      `https://tsk-final-backend.vercel.app/api/task/${teamId}/updatetask/${taskId}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      const response = await fetch(
+        `https://tsk-final-backend.vercel.app/api/task/${teamId}/updatetask/${taskId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            taskName: formData.editTitle,
+            taskDesc: formData.editDesc,
+            endDate: formData.endDate,
+          }),
         },
-        body: JSON.stringify({
-          taskName: formData.editTitle,
-          taskDesc: formData.editDesc,
-          endDate: formData.endDate,
-        }),
-      },
-    )
-      .then(ToastComponent({ message: 'Task Edited sucessfully !' }))
-      .catch(err => {
-        console.log(err);
+      );
+
+      if (response.ok) {
+        closeBottomEditSheet();
+        fetchTasks();
+        ToastComponent({ message: 'Task Edited successfully!' });
+      } else {
         handleBackendError();
-      });
+      }
+    } catch (error) {
+      console.log(error);
+      handleBackendError();
+    }
   };
+
   const fetchTasks = async () => {
     setIsLoading(true);
     // console.log(isLoading);
@@ -167,7 +219,7 @@ const TaskList = ({ navigation, route }) => {
         },
       );
       const data = await response.json();
-      console.log(data)
+      // console.log(data)
       setresultTeamMemberData(data)
     } catch (error) {
       console.log(error);
@@ -178,7 +230,7 @@ const TaskList = ({ navigation, route }) => {
   const [filterMember, setFilterMember] = useState([])
   const fetchTeamMembers = async () => {
     // console.log("Hey")
-    openBottomSheet();
+    openBottomTeamSheet();
     fetch(`https://tsk-final-backend.vercel.app/api/members/getmembers/${teamIdByItem}`, {
       method: 'GET',
       headers: {
@@ -255,16 +307,16 @@ const TaskList = ({ navigation, route }) => {
   };
   // const calculateCirP = (progress, subtaskLength, taskLength) =>{
   //   // console.log(progress);
-    
+
   //   sum += progress;
   //   // const completedSubtask = sum * 10;
   //   totalSubtasks += subtaskLength;
   //   totalProgress1 = (sum * 10 / (taskLength * totalSubtasks)) * 100;
-    
+
   //   // setTotalProgress((sum * 10 / (taskLength * totalSubtasks)) * 100 );
   //   return totalProgress1;
   // }
-  
+
   // const handleProgress = (progress) => {
   //   setTotalProgress(progress);
   //   console.log(totalProgress);
@@ -274,40 +326,40 @@ const TaskList = ({ navigation, route }) => {
     // fetchData()
     fetchMembers();
     fetchTasks();
-    
+
   }, []);
   const [userRole, setUserRole] = useState('');
-  const count=1;
+  const count = 1;
   useEffect(() => {
-      // Retrieve the userRole from AsyncStorage and update the state
-      const getUserRole = async () => {
-        try {
-          const userData = await AsyncStorage.getItem('user');
-          if (userData) {
-            const { userRole } = JSON.parse(userData);
-            setUserRole(userRole);
-          }
-        } catch (error) {
-          console.log('Error while retrieving userRole from AsyncStorage:', error);
+    // Retrieve the userRole from AsyncStorage and update the state
+    const getUserRole = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('user');
+        if (userData) {
+          const { userRole } = JSON.parse(userData);
+          setUserRole(userRole);
         }
-      };
-      getUserRole();
-    }, [count]);
+      } catch (error) {
+        console.log('Error while retrieving userRole from AsyncStorage:', error);
+      }
+    };
+    getUserRole();
+  }, [count]);
   useEffect(() => {
     let sum = 0;
     let totalSubtasks = 0;
     let taskLength = fetchTask.length;
-    
+
     fetchTask.forEach(item => {
       totalSubtasks += item.subTask.length;
       sum += item.Progress;
     });
 
-    const totalProgress = Math.round((sum/ (taskLength * totalSubtasks)) * 100);
-    setTotalProgress(100 -totalProgress); 
+    const totalProgress = Math.round((sum / (taskLength * totalSubtasks)) * 100);
+    setTotalProgress(100 - totalProgress);
 
   }, [fetchTask]);
- 
+
   let datesWhitelist = [
     {
       start: moment(),
@@ -316,15 +368,13 @@ const TaskList = ({ navigation, route }) => {
   ];
   // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const handleModalClose = () => {
-    setIsModalVisible(false);
-  };
+
 
   return (
-    <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' }}}>
+    <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
       <View style={styles.bottomContainer}>
         <BottomSheet
-          ref={bottomSheetRef}
+          ref={bottomSheetTeamRef}
           closeOnDragDown={true}
           closeOnPressMask={true}
           customStyles={{
@@ -380,11 +430,25 @@ const TaskList = ({ navigation, route }) => {
       }>
 
         {/* Edit Task Modal Starts */}
-        <Portal>
-          <Modal
-            visible={isModalVisible}
-            onDismiss={handleModalClose}
-            contentContainerStyle={containerStyle}>
+        <RBSheet
+          ref={bottomSheetEditRef}
+          height={300} // Set the desired height of the bottom sheet
+          closeOnDragDown={true}
+          customStyles={{
+            wrapper: {
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            },
+            container: {
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+
+            },
+            draggableIcon: {
+              backgroundColor: '#000',
+            },
+          }}
+        >
+          <View style={{ marginLeft: 10 }}>
             <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
             <TextInput
               style={[
@@ -434,98 +498,116 @@ const TaskList = ({ navigation, route }) => {
                 width: 290,
                 marginLeft: 15,
               }}>
-              <Button icon="close" mode="contained" onPress={handleModalClose}>
+              <Button icon="close" mode="contained" onPress={closeeditBottomSheet}>
                 Close
               </Button>
               <Button
                 icon="check"
                 mode="contained"
-                onPress={() => editTask(teamIdByItem, taskId)}
-                style={{ marginLeft: 5 }}>
+                onPress={() => {
+                  Alert.alert(
+                    'Confirmation',
+                    'Are you sure you want to Edit the Task?',
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Yes',
+                        onPress: () => editTask(teamIdByItem, taskId), // Wrap the function call inside an arrow function
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+                style={{ marginLeft: 5 }}
+              >
                 Done
+              </Button>
+
+            </View>
+          </View>
+        </RBSheet>
+        {/* Edit Task Modal Ends */}
+        {/* Listing to add team members starts */}
+        <Portal>
+          <Modal
+            visible={memberTeam}
+            onDismiss={() => setmemberTeam(false)}
+            contentContainerStyle={containerMemberStyle}
+          >
+            <Text style={{ color: "#9E9E9E", fontSize: 15 }}>Tap to select/deselect the members</Text>
+            <ScrollView style={{ maxHeight: 400 }}>
+              {resultTeamMemberData.length === 0 ? (
+                <View>
+                  <Text
+                    style={{
+                      color: 'grey',
+                      fontSize: 20,
+                      padding: 20,
+                      textAlign: 'center',
+                      letterSpacing: 1.5,
+                    }}
+                  >
+                    Team members are already added.
+                  </Text>
+                </View>
+              ) : (
+                resultTeamMemberData.map((items) => (
+                  <TeamMember
+                    key={items._id}
+                    designation={items.designation}
+                    id={items._id}
+                    name={items.name}
+                    selectedIds={selectedIds}
+                    setSelectedIds={setSelectedIds}
+                  />
+                ))
+              )}
+            </ScrollView>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                padding: 10,
+              }}
+            >
+              <Button
+                icon="close"
+                mode="contained"
+                onPress={() => setmemberTeam(false)}
+                style={{ marginRight: 10 }}
+              >
+                Close
+              </Button>
+              <Button
+                icon="check"
+                mode="contained"
+                onPress={() => {
+                  Alert.alert(
+                    'Confirmation',
+                    'Are you sure you want to add the selected members?',
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Add',
+                        onPress: handleSubmit,
+                      },
+                    ],
+                    { cancelable: false }
+                  );
+                }}
+                disabled={resultTeamMemberData.length === 0}
+              >
+                Add Member
               </Button>
             </View>
           </Modal>
         </Portal>
-        {/* Edit Task Modal Ends */}
-        {/* Listing to add team members starts */}
-        <Portal>
-  <Modal
-    visible={memberTeam}
-    onDismiss={() => setmemberTeam(false)}
-    contentContainerStyle={containerMemberStyle}
-  >
-    <Text style={{color:"#9E9E9E", fontSize:15}}>Tap to select/deselect the members</Text>
-    <ScrollView style={{ maxHeight: 400 }}>
-      {resultTeamMemberData.length === 0 ? (
-        <View>
-          <Text
-            style={{
-              color: 'grey',
-              fontSize: 20,
-              padding: 20,
-              textAlign: 'center',
-              letterSpacing: 1.5,
-            }}
-          >
-            Team members are already added.
-          </Text>
-        </View>
-      ) : (
-        resultTeamMemberData.map((items) => (
-          <TeamMember
-            key={items._id}
-            designation={items.designation}
-            id={items._id}
-            name={items.name}
-            selectedIds={selectedIds}
-            setSelectedIds={setSelectedIds}
-          />
-        ))
-      )}
-    </ScrollView>
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        padding: 10,
-      }}
-    >
-      <Button
-        icon="close"
-        mode="contained"
-        onPress={() => setmemberTeam(false)}
-        style={{ marginRight: 10 }}
-      >
-        Close
-      </Button>
-      <Button
-        icon="check"
-        mode="contained"
-        onPress={() => {
-          Alert.alert(
-            'Confirmation',
-            'Are you sure you want to add the selected members?',
-            [
-              {
-                text: 'Cancel',
-                style: 'cancel',
-              },
-              {
-                text: 'Add',
-                onPress: handleSubmit,
-              },
-            ],
-            { cancelable: false }
-          );
-        }}
-        disabled={resultTeamMemberData.length === 0}
-      >
-        Add Member
-      </Button>
-    </View>
-  </Modal>
-</Portal>
 
 
         {/* Listing to add team members end */}
@@ -621,7 +703,7 @@ const TaskList = ({ navigation, route }) => {
                     { width: '50%', justifyContent: 'center' },
                   ]}>
                   <View style={styles1.pbStyle}>
-                
+
                     <CircularProgressBar
                       selectedValue={totalProgress}
                       maxValue={100}
@@ -665,7 +747,7 @@ const TaskList = ({ navigation, route }) => {
                 {fetchTask.length === 0 ? (
                   <View
                     style={{
-                      width: 360,
+                      width: "100%",
                       height: 500,
                       display: 'flex',
                       alignItems: 'center',
@@ -695,9 +777,9 @@ const TaskList = ({ navigation, route }) => {
                     
                     subtaskLength = items.subTask.length;
                     {/* console.log(subtaskLength); */}
-                    {/* totalProgress1 = calculateCirP(items.Progress , subtaskLength, fetchTask.length); */}
-                    
-                    
+                    {/* totalProgress1 = calculateCirP(items.Progress , subtaskLength, fetchTask.length); */ }
+
+
                     return (
                       <TaskItem
                         key={items._id}
@@ -713,17 +795,18 @@ const TaskList = ({ navigation, route }) => {
                         teamIdByItem={teamIdByItem}
                         deleteTask={deleteTask}
                         userRole={userRole}
+                        openBottomEditSheet={openBottomEditSheet}
                       />
                     );
                   })
-                  
+
                 )}
               </>
             )}
           </View>
         </ScrollView>
 
-       {userRole=="ROLE_ADMIN"? <Portal>
+        {userRole == "ROLE_ADMIN" ? <Portal>
           <FAB.Group
             open={open}
             fabStyle={styles.fab}
@@ -749,7 +832,7 @@ const TaskList = ({ navigation, route }) => {
             }}
             overlayColor="transparent"
           />
-        </Portal>:""}
+        </Portal> : ""}
       </ScrollView>
     </Provider>
   );

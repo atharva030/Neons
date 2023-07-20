@@ -9,17 +9,16 @@ const Avatardropmodal = ({ navigation }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    console.log('presed')
 
   };
   const toggleMenulogout = async () => {
-    console.log('logout pressed');
+    // console.log('logout pressed');
     setIsOpen(false);
   
     // Remove the auth-token from AsyncStorage
     try {
       await AsyncStorage.removeItem('auth-token');
-      console.log('auth-token removed from AsyncStorage');
+      // console.log('auth-token removed from AsyncStorage');
   
       // Display a toast message after successful logout
       ToastAndroid.show('Logged out successfully', ToastAndroid.SHORT);
@@ -32,7 +31,6 @@ const Avatardropmodal = ({ navigation }) => {
   };
 
   const toggleMenuprofile = () => {
-    console.log('profile presed')
     setIsOpen(!isOpen);
     navigation.navigate('Profile')
   }

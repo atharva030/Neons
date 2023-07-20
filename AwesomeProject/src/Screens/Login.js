@@ -53,7 +53,6 @@ const LoginScreen = ({ navigation }) => {
         const userData = await AsyncStorage.getItem('user');
         if (userData) {
           const data = JSON.parse(userData);
-          console.log("Getiing adatar",data)
         } else {
           console.log('User data not found in AsyncStorage.');
         }
@@ -69,7 +68,6 @@ const LoginScreen = ({ navigation }) => {
         ToastComponent({ message: 'Please fill in all fields' });
         return;
       }
-      console.log(email, password)
       setIsLoading(true);
       const response = await fetch('https://tsk-final-backend.vercel.app/api/auth/login', {
         method: 'POST',
@@ -89,7 +87,6 @@ const LoginScreen = ({ navigation }) => {
         ToastComponent({ message: data.error || 'Invalid email or password' });
       }
       // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
-      console.log(data);
       await AsyncStorage.setItem('user', JSON.stringify({
         authToken: data.authToken,
         userRole: data.userRole, // Assuming data.userRole contains the user's role

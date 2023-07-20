@@ -41,11 +41,14 @@ module.exports = {
   },
 
   modalSecondScreen: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     // padding: 30,
-    marginLeft: 21,
-    marginRight: 21,
-    marginTop:25,
+    // marginLeft: 21,
+    // marginRight: 21,
+    // marginTop:25,
+    width:"100%",
+    height:"100%",
+    backgroundColor:"black",
     flexDirection: 'column',
   },
   addSecondScreen: {
@@ -115,10 +118,11 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   timeContainer: {
-    width: '100%',
+    // width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginLeft: 43,
+    // marginLeft: 43,
+    marginTop: 10
   },
   timeInput: {
     borderColor: '#8d98b0',
@@ -209,8 +213,8 @@ module.exports = {
   containerStyle: {
     backgroundColor: 'white',
     padding: 20,
-    height: '45%',
-    width: '80%',
+    height: '100%',
+    width: '70%',
     borderRadius: 20,
     justifyContent: 'center',
     alignSelf: 'center',

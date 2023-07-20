@@ -37,13 +37,13 @@ const Newpassword = ({navigation}) => {
             Alert.alert('Success','Password updated successfully');
           }
           if (!response.ok) {
-            console.log(response);
+            // console.log(response);
             throw new Error('Network Error');
           }
           return response.json();
         })
         .then(data => {
-          console.log(data); 
+          // console.log(data); 
           navigation.navigate('Login');
         })
         .catch(error => {

@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import styles from '../Styles/AddTaskStyle';
 import { ToastAndroid } from 'react-native';
-
+import moment from 'moment';
 const showSuccessToast = () => {
   ToastAndroid.showWithGravity(
     'Task Added Successfully',
@@ -114,8 +114,6 @@ const AddTask = (props) => {
     if (validateForm()) {
       const startDate = new Date(stDate);
       const endDate = new Date(endDate);
-      console.log(startDate);
-      console.log(endDate);
       if (endDate <= startDate) {
         Alert.alert(
           'Invalid Dates',
@@ -139,6 +137,9 @@ const AddTask = (props) => {
     if (taskName.trim() !== '') {
       if (new Date(stDate) > yesterday && new Date(endDate) > new Date(stDate)) {
         // Sample API call
+        const formattedDate = moment(stDate).format('DD/MM/YYYY');
+        const formattedendDate = moment(endDate).format('DD/MM/YYYY');
+        
         fetch(`https://tsk-final-backend.vercel.app/api/task/${teamIdByItem}/tasks`, {
           method: 'PATCH',
           headers: {
@@ -150,8 +151,8 @@ const AddTask = (props) => {
                 taskName: taskName,
                 taskDesc: description,
                 status: status,
-                startDate: stDate,
-                endDate: endDate,
+                startDate: formattedDate,
+                endDate: formattedendDate,
               },
             ],
           }),
@@ -215,7 +216,7 @@ const AddTask = (props) => {
           <Modal
             visible={visible}
             onDismiss={hideModal}
-            contentContainerStyle={styles.containerStyle}
+          // contentContainerStyle={styles.containerStyle}
           >
             <Icon name="checkmark-circle-outline" size={90} color="#008000" />
             <Text style={styles.modalTital}>Congrats!</Text>
@@ -225,202 +226,200 @@ const AddTask = (props) => {
           </Modal>
         </Portal>
 
-        <View style={styles.modalSecondScreen}>
-          <Text style={styles.labelStyle}>TASK NAME</Text>
-          <TextInput
-            style={styles.input}
-            placeholder=""
-            placeholderTextColor="#8d98b0"
-            value={taskName}
-            onChangeText={setTaskName}
-            required
-          />
+        <Text style={styles.labelStyle}>TASK NAME</Text>
+        <TextInput
+          style={styles.input}
+          placeholder=""
+          placeholderTextColor="#8d98b0"
+          value={taskName}
+          onChangeText={setTaskName}
+          required
+        />
+
+        <View style={{ marginTop: 10 }}>
+          <View style={styles.timeContainer}>
+            <View style={{ width: "50%" }}>
+              <Text style={styles.labelStyle}>START DATE</Text>
+              <View style={{ flexDirection: 'row', width: "100%" }}>
+                <Pressable onPress={showStDatePicker} style={{ width: '50%' }}>
+                  <TextInput
+                    style={styles.timeInput}
+                    editable={false}
+                    placeholder=""
+                    placeholderTextColor="#8d98b0"
+                    value={stDate}
+                  />
+                </Pressable>
+                <Button icon="calendar"  onPress={showStDatePicker}></Button>
+                <DateTimePickerModal
+                  isVisible={isStDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleStDateConfirm}
+                  onCancel={hideStDatePicker}
+                />
+              </View>
+            </View>
+            <View style={{ width: "50%" }}>
+              <Text style={styles.labelStyle}>END DATE</Text>
+              <View style={{ flexDirection: 'row', width: "100%" }}>
+                <Pressable onPress={showEndDatePicker} style={{ width: '50%' }}>
+                  <TextInput
+                    style={styles.timeInput}
+                    editable={false}
+                    placeholder=""
+                    placeholderTextColor="#8d98b0"
+                    value={endDate}
+                  />
+                </Pressable>
+                <Button icon="calendar" onPress={showEndDatePicker}></Button>
+                <DateTimePickerModal
+                  isVisible={isEndDatePickerVisible}
+                  mode="date"
+                  onConfirm={handleEndDateConfirm}
+                  onCancel={hideEndDatePicker}
+                />
+              </View>
+            </View>
+          </View>
 
           <View style={{ marginTop: 10 }}>
-            <View style={styles.timeContainer}>
-              <View style={{ marginTop: 10 }}>
-                <Text style={styles.labelStyle}>START DATE</Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <Pressable onPress={showStDatePicker} style={{ width: '50%' }}>
-                    <TextInput
-                      style={styles.timeInput}
-                      editable={false}
-                      placeholder=""
-                      placeholderTextColor="#8d98b0"
-                      value={stDate}
-                    />
-                  </Pressable>
-                  <Button icon="calendar" onPress={showStDatePicker}></Button>
-                  <DateTimePickerModal
-                    isVisible={isStDatePickerVisible}
-                    mode="date"
-                    onConfirm={handleStDateConfirm}
-                    onCancel={hideStDatePicker}
-                  />
-                </View>
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <Text style={styles.labelStyle}>END DATE</Text>
-                <View style={{ flexDirection: 'row' }}>
-                  <Pressable onPress={showEndDatePicker} style={{ width: '50%' }}>
-                    <TextInput
-                      style={styles.timeInput}
-                      editable={false}
-                      placeholder=""
-                      placeholderTextColor="#8d98b0"
-                      value={endDate}
-                    />
-                  </Pressable>
-                  <Button icon="calendar" onPress={showEndDatePicker}></Button>
-                  <DateTimePickerModal
-                    isVisible={isEndDatePickerVisible}
-                    mode="date"
-                    onConfirm={handleEndDateConfirm}
-                    onCancel={hideEndDatePicker}
-                  />
-                </View>
-              </View>
-            </View>
+            <Text style={styles.labelStyle}>DESCRIPTION</Text>
+            <TextInput
+              style={styles.input}
+              placeholder=""
+              placeholderTextColor="#8d98b0"
+              value={description}
+              onChangeText={setDescription}
+              required
+            />
+          </View>
 
-            <View style={{ marginTop: 10 }}>
-              <Text style={styles.labelStyle}>DESCRIPTION</Text>
-              <TextInput
-                style={styles.input}
-                placeholder=""
-                placeholderTextColor="#8d98b0"
-                value={description}
-                onChangeText={setDescription}
-                required
+          <View style={{ marginTop: 10 }}>
+            <Text style={styles.labelStyle}>STATUS</Text>
+          </View>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginLeft: 45,
+              marginTop: 5,
+              marginBottom: 10,
+            }}
+          >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: 187,
+              }}
+            >
+              <RadioButton
+                status={checked === 'first' ? 'checked' : 'unchecked'}
+                onPress={first}
+                color="red"
               />
-            </View>
-
-            <View style={{ marginTop: 10 }}>
-              <Text style={styles.labelStyle}>STATUS</Text>
+              <Pressable onPress={first} style={{ width: '50%' }}>
+                <Text
+                  style={{
+                    color: 'red',
+                    fontSize: 15,
+                    fontFamily: 'Poppins-Medium',
+                  }}
+                >
+                  URGENT
+                </Text>
+              </Pressable>
             </View>
 
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginLeft: 45,
-                marginTop: 5,
-                marginBottom: 10,
+                alignItems: 'center',
+                width: 195,
               }}
             >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  width: 187,
-                }}
-              >
-                <RadioButton
-                  status={checked === 'first' ? 'checked' : 'unchecked'}
-                  onPress={first}
-                  color="red"
-                />
-                <Pressable onPress={first} style={{ width: '50%' }}>
-                  <Text
-                    style={{
-                      color: 'red',
-                      fontSize: 15,
-                      fontFamily: 'Poppins-Medium',
-                    }}
-                  >
-                    URGENT
-                  </Text>
-                </Pressable>
-              </View>
+              <RadioButton
+                status={checked === 'second' ? 'checked' : 'unchecked'}
+                onPress={second}
+                color="green"
+              />
+              <Pressable onPress={second} style={{ width: '50%' }}>
+                <Text
+                  style={{
+                    color: 'green',
+                    fontSize: 15,
+                    fontFamily: 'Poppins-Medium',
+                  }}
+                >
+                  RUNNING
+                </Text>
+              </Pressable>
+            </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  width: 195,
-                }}
-              >
-                <RadioButton
-                  status={checked === 'second' ? 'checked' : 'unchecked'}
-                  onPress={second}
-                  color="green"
-                />
-                <Pressable onPress={second} style={{ width: '50%' }}>
-                  <Text
-                    style={{
-                      color: 'green',
-                      fontSize: 15,
-                      fontFamily: 'Poppins-Medium',
-                    }}
-                  >
-                    RUNNING
-                  </Text>
-                </Pressable>
-              </View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <RadioButton
-                  status={checked === 'third' ? 'checked' : 'unchecked'}
-                  onPress={third}
-                  color="#8e8cdb"
-                />
-                <Pressable onPress={third} style={{ width: '50%' }}>
-                  <Text
-                    style={{
-                      color: 'black',
-                      fontSize: 15,
-                      color: '#8e8cdb',
-                      fontFamily: 'Poppins-Medium',
-                    }}
-                  >
-                    UPCOMING
-                  </Text>
-                </Pressable>
-              </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <RadioButton
+                status={checked === 'third' ? 'checked' : 'unchecked'}
+                onPress={third}
+                color="#8e8cdb"
+              />
+              <Pressable onPress={third} style={{ width: '50%' }}>
+                <Text
+                  style={{
+                    color: 'black',
+                    fontSize: 15,
+                    color: '#8e8cdb',
+                    fontFamily: 'Poppins-Medium',
+                  }}
+                >
+                  UPCOMING
+                </Text>
+              </Pressable>
             </View>
           </View>
+        </View>
 
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: 290,
-              marginBottom: 15,
-            }}
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: 290,
+            marginBottom: 15,
+          }}
+        >
+          <Button
+            icon="close"
+            mode="contained"
+            onPress={hideAddModal}
+            style={{ marginLeft: 25 }}
           >
-            <Button
-              icon="close"
-              mode="contained"
-              onPress={hideAddModal}
-              style={{ marginLeft: 25 }}
-            >
-              Close
-            </Button>
+            Close
+          </Button>
 
-            <Button
-              icon="check"
-              mode="contained"
-              onPress={() => {
-                Alert.alert(
-                  'Confirmation',
-                  'Are you sure you want to add the Task?',
-                  [
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Add',
-                      onPress: submitForm,
-                    },
-                  ],
-                  { cancelable: false }
-                );
-              }}
-              style={{ marginLeft: 5 }}
-            >
-              Create Task
-            </Button>
-          </View>
+          <Button
+            icon="check"
+            mode="contained"
+            onPress={() => {
+              Alert.alert(
+                'Confirmation',
+                'Are you sure you want to add the Task?',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Add',
+                    onPress: submitForm,
+                  },
+                ],
+                { cancelable: false }
+              );
+            }}
+            style={{ marginLeft: 5 }}
+          >
+            Create Task
+          </Button>
         </View>
       </Provider>
     </HideKeyboard>

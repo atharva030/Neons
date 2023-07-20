@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Portal, Button, Modal, TextInput } from 'react-native-paper';
-import { Dropdown } from 'react-native-element-dropdown';
 import { ScrollView } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import ToastComponent from '../Toast/toast';
 import styles from '../../Styles/Home';
 import { ProgressBar, MD3Colors } from 'react-native-paper';
-import styles1, { error } from '../../Styles/AddTaskStyle';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker'
-import ExpandingPanel from '../ExpandingPanel/ExpandingPanel';
 import { Animated, Easing } from 'react-native';
 import { Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
@@ -31,9 +27,6 @@ const containerStyle = {
 const totalSubtasks = 10;
 const completedSubtasks = 1;
 const subtaskProgress = completedSubtasks / totalSubtasks;
-
-// //length of the subtask fetched so that to increase the height of container
-// const subtaskCount = fetchsubtask.length;
 
 const data = [
   { label: 'Select Subtask', value: '0' },
@@ -55,14 +48,12 @@ const TaskItem = props => {
 
   const [statusColor, setStatusColor] = useState('');
   const [isModal1Visible, setIsModal1Visible] = useState(false);
-  // const [isModal2Visible, setIsModal2Visible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('0');
   const [textInputCount, setTextInputCount] = useState(0);
   const [isExtended, setIsExtended] = useState(false);
   const [fetchsubtask, setFetchSubtask] = useState([]);
   const [subtaskValues, setSubtaskValues] = useState([]);
   const [taskIdbyItem, settaskIdbyItem] = useState('');
-  const [checkboxState, setCheckboxState] = useState({});
   const [taskFlexHeight, setTaskFlexHeight] = useState(200);
   const [subtaskStatus, setSubtaskStatus] = useState({});
   const [modalHeight, setModalHeight] = useState(320); // Initial base height
@@ -86,7 +77,7 @@ const TaskItem = props => {
         throw new Error('Failed to update subtasks');
       }
       ToastComponent({ message: 'SubTask Added Sucessfully' });
-      console.log('This is response', response);
+      // console.log('This is response', response);
     } catch (error) {
       console.log(error);
       handleBackendError();
@@ -142,6 +133,7 @@ const TaskItem = props => {
   };
 
   const handleEditClick = (id, title, desc, endDate) => {
+    props.openBottomEditSheet();
     props.setIsModalVisible(true);
     props.settaskId(id);
     // props.handleEditClick()
@@ -163,7 +155,7 @@ const TaskItem = props => {
       }
 
       const text = await response.text();
-      console.log('Response body text:', text); // Log the response body for debugging
+      // console.log('Response body text:', text); // Log the response body for debugging
 
       updateTaskStatus(teamId, taskId);
       try {
@@ -183,9 +175,9 @@ const TaskItem = props => {
 
   const toggleCheckbox = (subtaskId, taskIdByItem) => {
 
-    console.log(subtaskId);
-    console.log(props.teamIdByItem);
-    console.log(taskIdByItem);
+    // console.log(subtaskId);
+    // console.log(props.teamIdByItem);
+    // console.log(taskIdByItem);
     handleChangeVariable(props.teamIdByItem, taskIdByItem, subtaskId);
     setSubtaskStatus((prevState) => ({
       // ...prevState,
@@ -231,7 +223,7 @@ const TaskItem = props => {
         try {
           console.log(data)
           // console.log(`https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`)
-          console.log('Sending API request...');
+          // console.log('Sending API request...');
           const response = await fetch(
             `https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`,
             {
@@ -244,10 +236,10 @@ const TaskItem = props => {
           )
           .then((response) => response.json())
           .then((result) => {
-            console.log("Success:", result);
+            // console.log("Success:", result);
           })
-          console.log('Response:', response);
-          console.log('API request completed.');
+          // console.log('Response:', response);
+          // console.log('API request completed.');
         
         } catch (err) {
           console.log('Error:', err.message);
@@ -638,8 +630,8 @@ const TaskItem = props => {
               mode="contained"
               onPress={() => {
                 Alert.alert(
-                  'Once addition',
-                  'You can add the subtask only once',
+                  'Once addition!!!!',
+                  'Are you sure you want to add Subtasks? You can only add the subtask for once',
                   [
                     {
                       text: 'Cancel',

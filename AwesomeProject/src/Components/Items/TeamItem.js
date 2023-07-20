@@ -2,9 +2,6 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
 import styles from '../../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useState, useEffect } from 'react';
-import { Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const TeamItem = props => {
     const storeUserData = async (authToken, userRole) => {
@@ -16,7 +13,7 @@ const TeamItem = props => {
         }
     };
     const appFun = (id, teamTitle) => {
-        console.log(id)
+        // console.log(id)
         props.setteamId(id)
         props.navigation.navigate("TaskList", {
             post: id,
@@ -24,7 +21,7 @@ const TeamItem = props => {
         });
     }
     const deleteId = (id) => {
-        console.log(id)
+        // console.log(id)
         props.setteamId(id)
         props.deleteTeam(id)
     }
@@ -33,7 +30,7 @@ const TeamItem = props => {
         props.openBottomSheet()
         props.setFormData({ editTitle: title, editDesc: desc });
     }
-  
+
     status = props.status;
     return (
         <View style={styles.teamFlex}>
@@ -59,10 +56,10 @@ const TeamItem = props => {
                         <Text style={styles.personText}>{props.person} Persons</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => handleModal(props.title, props.desc, props.items._id)}>
 
-                          {props.userRole=="ROLE_ADMIN"?  <Icon name="md-pencil-outline" size={20} style={{ color: 'black', marginRight: 15 }} />:""}
-                        </TouchableOpacity>
+
+                        {props.userRole == "ROLE_ADMIN" ? <TouchableOpacity onPress={() => handleModal(props.title, props.desc, props.items._id)}><Icon name="md-pencil-outline" size={20} style={{ color: 'black', marginRight: 15 }} /></TouchableOpacity> : ""}
+
                         <TouchableOpacity
                             onPress={() =>
                                 Alert.alert(

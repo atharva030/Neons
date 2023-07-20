@@ -174,7 +174,7 @@ const EditTask = () => {
             <Button
               style={styles.submitBtn}
               mode="contained"
-              onPress={() => console.log('Pressed')}>
+              >
               Done
             </Button>
           </View>

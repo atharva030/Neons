@@ -89,7 +89,6 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
   
-    console.log('added');
     setIsLoading(true);
     handleSubmitRegister(name, email, password, phone, selectedRole, cnfpassword)
       .then((success) => {
@@ -112,7 +111,6 @@ const RegisterScreen = ({ navigation }) => {
   
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
-    console.log(role)
   };
   return (
     <>

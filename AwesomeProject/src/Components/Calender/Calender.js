@@ -10,7 +10,7 @@ const Calender = () => {
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
-    console.log(isDatePickerVisible);
+    // console.log(isDatePickerVisible);
   };
 
   const hideDatePicker = () => {
@@ -22,7 +22,7 @@ const Calender = () => {
     dt.toLocaleString()
     console.warn("A date has been picked: ", dt.toLocaleString());
     setsettleDate(dt.toDateString())
-    console.log(settleDate)
+    // console.log(settleDate)
     hideDatePicker();
   };
   return (

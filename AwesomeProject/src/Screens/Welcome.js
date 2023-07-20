@@ -23,9 +23,9 @@ const Welcome = ({ navigation }) => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log(userInfo);
+      // console.log(userInfo);
       setUser(userInfo);
-      console.log(userInfo.email)
+      // console.log(userInfo.email)
     } catch (error) {
       console.log(error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {

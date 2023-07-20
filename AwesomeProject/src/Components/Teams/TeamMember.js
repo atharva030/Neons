@@ -29,7 +29,7 @@ const TeamMember = (props) => {
       onPress={handlePress}
       activeOpacity={0.7}
     >
-      <View style={styles.container}>
+      {/* <View style={styles.container}> */}
         <View style={styles.tickIconContainer}>
           <Icon
             name="checkmark"
@@ -49,7 +49,7 @@ const TeamMember = (props) => {
             <Text style={styles.designationText}>{props.designation}</Text>
           </View>
         </View>
-      </View>
+      {/* </View> */}
     </TouchableOpacity>
   );
 };
@@ -61,26 +61,24 @@ const styles = StyleSheet.create({
     borderColor: 'thistle',
     borderRadius: 20,
     marginTop: 20,
-    width: 280,
+    width: 270,
     height: 70,
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
+    alignItems:"center"
   },
   chipPressed: {
     backgroundColor: '#ebdefa',
   },
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    
   },
   tickIconContainer: {
     width: 20,
     height: 20,
     borderRadius: 10,
     backgroundColor: 'grey',
-    marginRight: 5, // Adjust margin here
+    // marginRight: 5, // Adjust margin here
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -95,6 +93,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 20,
+
   },
   avatar: {
     marginRight: 10,

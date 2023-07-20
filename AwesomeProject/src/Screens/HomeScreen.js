@@ -32,13 +32,12 @@ const handleSuccess = () => {
   ToastComponent({ message: 'Team Added successfully' });
 };
 const toggleMenulogout = async () => {
-  console.log('logout pressed');
   setIsOpen(false);
 
   // Remove the auth-token from AsyncStorage
   try {
     await AsyncStorage.removeItem('auth-token');
-    console.log('auth-token removed from AsyncStorage');
+    // console.log('auth-token removed from AsyncStorage');
   } catch (error) {
     console.log('Error while removing auth-token from AsyncStorage:', error);
   }
@@ -66,10 +65,8 @@ const HomeScreen = ({ navigation }) => {
   const hideModal = () => setVisible(false);
   const [isLoading, setIsLoading] = useState(' ');
   const bottomSheetRef = useRef(null);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const openBottomSheet = () => {
     bottomSheetRef.current.open();
-    setIsBottomSheetOpen(true);
   };
 
   const closeBottomSheet = () => {
@@ -100,7 +97,7 @@ const HomeScreen = ({ navigation }) => {
           if (userData) {
             const { userRole } = JSON.parse(userData);
             setUserRole(userRole);
-            console.log(userRole)
+            // console.log(userRole)
           }
         } catch (error) {
           console.log('Error while retrieving userRole from AsyncStorage:', error);
@@ -108,6 +105,23 @@ const HomeScreen = ({ navigation }) => {
       };
       getUserRole();
     }, []);
+    const [authToken, setauthToken] = useState('');
+    const count=1;
+    useEffect(() => {
+        // Retrieve the userRole from AsyncStorage and update the state
+        const getUserRole = async () => {
+          try {
+            const userData = await AsyncStorage.getItem('user');
+            if (userData) {
+              const { authToken } = JSON.parse(userData);
+              setauthToken(authToken);
+            }
+          } catch (error) {
+            console.log('Error while retrieving userRole from AsyncStorage:', error);
+          }
+        };
+        getUserRole();
+      }, [count]);
   const FadeScreen = () => {
     const fadeAnim = useRef(new Animated.Value(1)).current;
 
@@ -140,7 +154,7 @@ const HomeScreen = ({ navigation }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': 'YOUR_AUTH_TOKEN',
+        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiOGY2ZjYzMjljYTUxODU5ZjliNWRmIn0sImlhdCI6MTY4OTg0NzEyNH0.S5Zagp6JhG0noWyo7Pmv0zTSZwqdDmLLEsqWpcYBUJg",
       },
       body: JSON.stringify({
         teamName: teamName,
@@ -152,7 +166,7 @@ const HomeScreen = ({ navigation }) => {
         if (data.error) {
           ToastComponent({ message: data.error });
         } else {
-          console.log(data);
+          // console.log(data);
           hideModal();
           setteamName('');
           setteamDesc('');
@@ -174,8 +188,8 @@ const HomeScreen = ({ navigation }) => {
       return;
     }
 
-    console.log(formData.editTitle);
-    console.log(teamId);
+    // console.log(formData.editTitle);
+    // console.log(teamId);
 
     fetch(
       `https://tsk-final-backend.vercel.app/api/team/updateteam/${teamId}`,
@@ -201,8 +215,8 @@ const HomeScreen = ({ navigation }) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og',
+        'auth-token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiOGY2ZjYzMjljYTUxODU5ZjliNWRmIn0sImlhdCI6MTY4OTg0NzEyNH0.S5Zagp6JhG0noWyo7Pmv0zTSZwqdDmLLEsqWpcYBUJg"
+          
       },
     })
       .then(response => response.json())
@@ -231,7 +245,7 @@ const HomeScreen = ({ navigation }) => {
         );
         
         if (response.ok) {
-        console.log(`Team with ID ${teamId} deleted successfully`);
+        // console.log(`Team with ID ${teamId} deleted successfully`);
       } else {
         console.log(`Error deleting team with ID ${teamId}`);
       }
@@ -430,7 +444,7 @@ const HomeScreen = ({ navigation }) => {
             {resultTeamData.length === 0 ? (
               <View
                 style={{
-                  width: 360,
+                  width: "100%",
                   height: 500,
                   display: 'flex',
                   alignItems: 'center',
@@ -449,7 +463,7 @@ const HomeScreen = ({ navigation }) => {
                 <Button
                   icon="plus"
                   mode="contained"
-                  onPress={() => console.log('Pressed')}
+                  onPress={() => showModal()}
                   style={{ width: 100 }}>
                   ADD
                 </Button>

@@ -26,7 +26,7 @@ const OtpValid = ({ navigation }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         navigation.navigate('Newpassword', { email: email } );
       } else {
         console.log('Request failed with status code', response.status);

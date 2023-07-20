@@ -4,7 +4,7 @@ import { Chip, Avatar } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 const MemberFilter = (props) => {
     const deletExistTeamMember = async (memberId) => {
-        console.log(props.teamIdByItem,memberId)
+        // console.log(props.teamIdByItem,memberId)
         try {
             const response = await fetch(
                 `https://tsk-final-backend.vercel.app/api/team/${props.teamIdByItem}/deletemembers/${memberId}`,
@@ -17,7 +17,6 @@ const MemberFilter = (props) => {
             );
 
             if (response.ok) {
-                console.log("helo")
                 props.fetchTeamMembers();
                 props.fetchMembers();
             } else {
