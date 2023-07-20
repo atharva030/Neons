@@ -202,102 +202,114 @@ const TaskItem = props => {
     return subtask && subtask.isChecked;
 
   };
-  //upload a file to cloudinary 
-  // const handleUpload = async (teamIdByItem, taskIdbyItem, subtask) => {
-  //   try {
-  //     console.log(teamIdByItem + ' ' + taskIdbyItem + ' ' + subtask);
-  //     const file = await DocumentPicker.pick({
-  //       type: [DocumentPicker.types.allFiles],
-  //     });
+  // upload a file to cloudinary 
+  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const handleUpload = async (teamIdByItem, taskIdbyItem, subtask) => {
 
-  //     if (file) {
-
-
-  //       try {
-  //         console.log('Sending API request...');
-  //         const response = await fetch(
-  //           `https://tsk-final-backend.vercel.app/api/fileupload/${teamIdByItem}/tasks/${taskIdbyItem}/subtasks/${subtask}/upload`,
-  //           {
-  //             method: 'PATCH',
-  //             body: JSON.stringify({
-  //               file: file,
-  //               teamId: teamIdByItem,
-  //               taskId: taskIdbyItem,
-  //               subtaskId: subtask,
-  //             }),
-  //             headers: {
-  //               'Content-Type': 'multipart/form-data',
-  //             },
-  //           }
-  //         );
-  //         console.log('API request completed.');
-
-  //         // Handle the response here
-  //         // if (!response.ok) {
-  //         //   throw new Error(`Request failed with status code ${response.status}`);
-  //         // }
-  //         if (response.ok) {
-  //           ToastComponent({ message: 'File uploaded successfully' });
-  //         }
-  //       } catch (err) {
-  //         console.log('Error:', err.message);
-  //       }
-  //     } else {
-  //       console.log('No file selected.');
-  //     }
-  //   } catch (err) {
-  //     if (DocumentPicker.isCancel(err)) {
-  //       console.log('User cancelled the picker, exit any dialogs or menus and move on');
-  //     } else {
-  //       throw err;
-  //     }
-  //   }
-  // };
-  const [singleFile, setSingleFile] = useState(null);
-
-  const handleUpload = async (teamId, taskId, subtaskId) => {
+    teamId=teamIdByItem;
+    taskId=taskIdbyItem;
+    subtaskId=subtask;
+    console.log(teamId,taskId,subtaskId)
     try {
-      const res = await DocumentPicker.pick({
+
+      const file = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
-      setSingleFile(res);
+      
+      if (file ) {
+        const data = new FormData();
+        data.append('file', {
+          uri: file[0].uri,
+          name: file[0].name,
+          type: file[0].type,
+        });
+        // data.append('teamId', teamIdByItem);
+        // data.append('taskId', taskIdbyItem);
+        // data.append('subtaskId', subtask);
 
-      if (res) {
-        const formData = new FormData();
-        formData.append('file', res);
-        formData.append('teamId', teamId);
-        formData.append('taskId', taskId);
-        formData.append('subtaskId', subtaskId);
-
-        const uploadRes = await fetch(
-          `http://192.168.29.161:8888/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`,
-          {
-            method: 'PATCH',
-            body: formData,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
-        console.log('File upload response:', uploadRes);
-        const responseJson = await uploadRes.json();
-        console.log('Upload response:', responseJson);
-
-        if (uploadRes.ok) {
-          Alert('Upload Successful');
+        try {
+          console.log(data)
+          // console.log(`https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`)
+          console.log('Sending API request...');
+          const response = await fetch(
+            `https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`,
+            {
+              method: 'PATCH',
+              body: data,
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          )
+          .then((response) => response.json())
+          .then((result) => {
+            console.log("Success:", result);
+          })
+          console.log('Response:', response);
+          console.log('API request completed.');
+        
+        } catch (err) {
+          console.log('Error:', err.message);
         }
-      }
-    } catch (error) {
-      console.log('Error:', error.message);
-      setSingleFile(null);
-      if (DocumentPicker.isCancel(error)) {
-        Alert('Canceled');
       } else {
-        Alert('Unknown Error: ' + JSON.stringify(error));
-        throw error;
+        console.log('No file selected.');
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('User cancelled the picker, exit any dialogs or menus and move on');
+      } else {
+        throw err;
       }
     }
   };
+  // const [singleFile, setSingleFile] = useState(null);
+
+  // const handleUpload = async (teamId, taskId, subtaskId) => {
+  //   try {
+  //     const res = await DocumentPicker.pick({
+  //       type: [DocumentPicker.types.allFiles],
+  //     });
+  //     setSingleFile(res);
+
+  //     if (res) {
+  //       console.log('File selected:', res.name);
+  //       const formData = new FormData();
+  //       formData.append('file', res);
+  //       formData.append('teamId', teamId);
+  //       formData.append('taskId', taskId);
+  //       formData.append('subtaskId', subtaskId);
+
+  //       const uploadRes = await fetch(
+  //         console.log(formData),
+  //         `https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`,
+  //         {
+  //           method: 'PATCH',
+  //           body: formData,
+  //           headers: {
+  //             'Content-Type': 'multipart/form-data',
+  //           },
+  //         }
+  //       );
+  //       console.log('File upload response:', uploadRes);
+  //       const responseJson = await uploadRes.json();
+  //       console.log('Upload response:', responseJson);
+
+  //       if (uploadRes.ok) {
+  //         Alert('Upload Successful');
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log('Error:', error.message);
+  //     setSingleFile(null);
+  //     if (DocumentPicker.isCancel(error)) {
+  //       Alert('Canceled');
+  //     } else {
+  //       Alert('Unknown Error: ' + JSON.stringify(error));
+  //       throw error;
+  //     }
+  //   }
+  // };
 
 
 
@@ -707,8 +719,8 @@ const TaskItem = props => {
                             },
                             {
                               text: 'Confirm',
-                              // onPress: () => toggleCheckbox(subtask._id, props.id),
-                              onPress: () => { selectFile(subtask._id, props.id) },
+                              onPress: () => toggleCheckbox(subtask._id, props.id),
+                              // onPress: () => { selectFile(subtask._id, props.id) },
                             },
                           ],
                           { cancelable: false }
