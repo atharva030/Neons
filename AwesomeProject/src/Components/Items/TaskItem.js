@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Portal, Button, Modal, TextInput } from 'react-native-paper';
 import { ScrollView } from 'react-native';
@@ -235,12 +235,9 @@ const TaskItem = props => {
             }
           )
           .then((response) => response.json())
-          .then((result) => {
-            // console.log("Success:", result);
-          })
           // console.log('Response:', response);
           // console.log('API request completed.');
-        
+
         } catch (err) {
           console.log('Error:', err.message);
         }
@@ -255,56 +252,31 @@ const TaskItem = props => {
       }
     }
   };
-  // const [singleFile, setSingleFile] = useState(null);
 
-  // const handleUpload = async (teamId, taskId, subtaskId) => {
-  //   try {
-  //     const res = await DocumentPicker.pick({
-  //       type: [DocumentPicker.types.allFiles],
-  //     });
-  //     setSingleFile(res);
+  // get image 
+  const [getupimage, setGetupimage] = useState(null);
 
-  //     if (res) {
-  //       console.log('File selected:', res.name);
-  //       const formData = new FormData();
-  //       formData.append('file', res);
-  //       formData.append('teamId', teamId);
-  //       formData.append('taskId', taskId);
-  //       formData.append('subtaskId', subtaskId);
-
-  //       const uploadRes = await fetch(
-  //         console.log(formData),
-  //         `https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/upload`,
-  //         {
-  //           method: 'PATCH',
-  //           body: formData,
-  //           headers: {
-  //             'Content-Type': 'multipart/form-data',
-  //           },
-  //         }
-  //       );
-  //       console.log('File upload response:', uploadRes);
-  //       const responseJson = await uploadRes.json();
-  //       console.log('Upload response:', responseJson);
-
-  //       if (uploadRes.ok) {
-  //         Alert('Upload Successful');
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log('Error:', error.message);
-  //     setSingleFile(null);
-  //     if (DocumentPicker.isCancel(error)) {
-  //       Alert('Canceled');
-  //     } else {
-  //       Alert('Unknown Error: ' + JSON.stringify(error));
-  //       throw error;
-  //     }
-  //   }
-  // };
-
-
-
+  const getImage = async (teamIdByItem, taskIdbyItem, subtask) => {
+    teamId=teamIdByItem;
+    taskId=taskIdbyItem;
+    subtaskId=subtask;
+    try {
+      const response = await fetch(
+        `https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/image`,
+        {
+          method: 'GET',
+        }
+      );
+      if (!response.ok) {
+        throw new Error('Failed to fetch image');
+      }
+      const data = await response.json();
+      getupimage=  setGetupimage(data); // Update the getupimage state with the fetched image data
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   const handleDeleteClick = (taskId, teamId) => {
     props.deleteTask(teamId, taskId);
@@ -719,6 +691,7 @@ const TaskItem = props => {
                         );
                       }}
                     >
+                      <Image source={getupimage} style={{ width: 20, height: 20 }} />
                       <Icon
                         name={
                           isChecked(subtask._id)
@@ -754,6 +727,9 @@ const TaskItem = props => {
                         Upload
                       </Text>
 
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.eye}>
+                     < Icon name='eye' color={'black'} size ={24}onPress={() => getImage(props.teamIdByItem, props.id, subtask._id)} />
                     </TouchableOpacity>
                   </View>
                 ))

@@ -360,4 +360,10 @@ module.exports = {
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
   }
+  ,
+  eye:{
+    position: 'absolute',
+alignSelf: 'flex-start',
+  },
+
 };

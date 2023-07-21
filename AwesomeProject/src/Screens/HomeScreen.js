@@ -33,7 +33,6 @@ const handleSuccess = () => {
 };
 const toggleMenulogout = async () => {
   setIsOpen(false);
-
   // Remove the auth-token from AsyncStorage
   try {
     await AsyncStorage.removeItem('auth-token');
@@ -41,7 +40,6 @@ const toggleMenulogout = async () => {
   } catch (error) {
     console.log('Error while removing auth-token from AsyncStorage:', error);
   }
-
   // After removing the auth-token, navigate to the LoginScreen
   navigation.navigate('LoginScreen');
 };
@@ -94,10 +92,10 @@ const HomeScreen = ({ navigation }) => {
       const getUserRole = async () => {
         try {
           const userData = await AsyncStorage.getItem('user');
+
           if (userData) {
             const { userRole } = JSON.parse(userData);
             setUserRole(userRole);
-            // console.log(userRole)
           }
         } catch (error) {
           console.log('Error while retrieving userRole from AsyncStorage:', error);
@@ -115,6 +113,7 @@ const HomeScreen = ({ navigation }) => {
             if (userData) {
               const { authToken } = JSON.parse(userData);
               setauthToken(authToken);
+
             }
           } catch (error) {
             console.log('Error while retrieving userRole from AsyncStorage:', error);
@@ -385,7 +384,6 @@ const HomeScreen = ({ navigation }) => {
                     marginLeft: 4,
                     color: '#8d98b0',
                     fontFamily: 'Poppins-Medium',
-                    
                   }}>
                     Edit Team Description
                   </Text>
@@ -431,7 +429,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.titleContainer}>
                 <Text style={[styles.teamtitleText]}>TaskStack</Text>
                 <TouchableOpacity>
-                  <Avatardropmodal navigation={navigation} />
+                  <Avatardropmodal navigation={navigation} userName={"add me"}userRole={userRole} />
                 </TouchableOpacity>
               </View>
               <View style={styles.dayContainer}>
