@@ -87,7 +87,7 @@ const HomeScreen = ({ navigation }) => {
   };
   const [userRole, setUserRole] = useState('');
   const [idName, setidName] = useState('');
-  const [authToken, setauthToken] = useState('');
+  const [authenToken, setauthenToken] = useState('');
   const [userDes, setuserDes] = useState('');
   const getUserRole = async () => {
     try {
@@ -98,9 +98,9 @@ const HomeScreen = ({ navigation }) => {
         console.log("User Auth Token",authToken)
         setUserRole(userRole);
         setidName(userName);
-        setauthToken(authToken);
+        // setauthenToken(authToken);
         setuserDes(userDes);
-        // fetchTeam(authToken);
+        fetchTeam(authToken);
       }
     } catch (error) {
       console.log('Error while retrieving userRole from AsyncStorage:', error);
@@ -109,7 +109,7 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     // Retrieve the userRole from AsyncStorage and update the state
     getUserRole();
-    fetchTeam()
+    // fetchTeam(authenToken)
   }, []);
   useEffect(() => {
     const backAction = () => {
@@ -220,13 +220,14 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
-  const fetchTeam = async () => {
+  const fetchTeam = async (authenToken) => {
     setIsLoading(true);
+    console.log("This is auth token",authenToken)
     fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token":authToken
+        "auth-token":authenToken
       },
     })
       .then(response => response.json())
@@ -235,7 +236,7 @@ const HomeScreen = ({ navigation }) => {
         console.log(data)
         setresultTeamData(data);
         setIsLoading(false);
-console.log(data)
+        console.log(data)
       })
 
       // .then(showSuccessToast())
@@ -267,7 +268,7 @@ console.log(data)
   };
 
   const refreshFetchTeam = async () => {
-    fetchTeam();
+    getUserRole();
   };
  
   const handleModalClose = () => {
