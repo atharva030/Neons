@@ -94,23 +94,29 @@ const HomeScreen = ({ navigation }) => {
       const userData = await AsyncStorage.getItem('user');
 
       if (userData) {
-        const { userRole, userName, authToken,userDes } = JSON.parse(userData);
-        console.log("User Auth Token",authToken)
+        const { userRole, userName, authToken, userDes } = JSON.parse(userData);
         setUserRole(userRole);
         setidName(userName);
-        // setauthenToken(authToken);
+        setauthenToken(authToken);
         setuserDes(userDes);
-        fetchTeam(authToken);
+        // Call fetchTeam() here after setting the authToken
+        // fetchTeam();
       }
     } catch (error) {
       console.log('Error while retrieving userRole from AsyncStorage:', error);
     }
   };
   useEffect(() => {
-    // Retrieve the userRole from AsyncStorage and update the state
     getUserRole();
-    // fetchTeam(authenToken)
   }, []);
+
+  useEffect(() => {
+    // Call fetchTeam() whenever authenToken changes
+    if (authenToken) {
+      fetchTeam();
+    }
+  }, [authenToken]);
+  
   useEffect(() => {
     const backAction = () => {
       if (backButtonPressed) {
@@ -165,7 +171,7 @@ const HomeScreen = ({ navigation }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': authToken
+        'auth-token': authenToken
       },
       body: JSON.stringify({
         teamName: teamName,
@@ -220,30 +226,29 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
-  const fetchTeam = async (authenToken) => {
+  const fetchTeam = async () => {
     setIsLoading(true);
-    console.log("This is auth token",authenToken)
+    console.log("This is auth token", authenToken);
     fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token":authenToken
+        "auth-token": authenToken
       },
     })
       .then(response => response.json())
-
       .then(data => {
         console.log(data)
         setresultTeamData(data);
         setIsLoading(false);
         console.log(data)
       })
-
-      // .then(showSuccessToast())
       .catch(err => {
-        console.log("Atharva",err);
+        console.log("Atharva", err);
       });
   };
+  
+
 
   const deleteTeam = async teamId => {
     try {
@@ -268,7 +273,7 @@ const HomeScreen = ({ navigation }) => {
   };
 
   const refreshFetchTeam = async () => {
-    getUserRole();
+    fetchTeam();
   };
  
   const handleModalClose = () => {
