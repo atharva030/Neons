@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ToastAndroid,
 } from 'react-native';
 import styles from '../../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -26,6 +27,7 @@ const generateOTP = async (email) => {
       return true;
     } else {
       // Handle unsuccessful response (e.g., display an error message)
+      ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT)
       console.error('Error generating OTP:', response.status);
       return false;
     }
@@ -43,6 +45,12 @@ const EmailValid = ({ navigation }) => {
   };
 
   const handleSendOTP = async () => {
+    if (!email.trim()) {
+      // Show a toaster if the email field is empty or contains only whitespace characters
+      ToastAndroid.show('Email is required', ToastAndroid.SHORT);
+      return;
+    }
+
     const otpSent = await generateOTP(email);
     if (otpSent) {
       navigation.navigate('OtpValid', { email: email }); // Navigate to the desired screen
@@ -52,7 +60,7 @@ const EmailValid = ({ navigation }) => {
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
-        <TouchableOpacity style={{ flexDirection: 'row', marginTop: 20 }}>
+        <TouchableOpacity style={{ flexDirection: 'row', marginTop: 20 }} onPress={() => navigation.goBack()}>
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Forgot Password</Text>
         </TouchableOpacity>
@@ -74,9 +82,10 @@ const EmailValid = ({ navigation }) => {
           <Text style={styles.emaillabelStyle}>Email</Text>
           <TextInput
             style={styles.Emailinput}
-            placeholder=" "
+            placeholder="Enter your Email "
             placeholderTextColor="#8d98b0"
             onChangeText={handleEmailChange} // Update the email state
+            value={email} // Bind the value to the email state
           />
         </View>
 

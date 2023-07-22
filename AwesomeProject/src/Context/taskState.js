@@ -32,7 +32,7 @@ const TaskState = ({ children, navigation }) => {
     }
   };
 
-  const handleSubmitRegister = async (name, email, password, phone, role, cnfpassword) => {
+  const handleSubmitRegister = async (name, email, password, phone, role, cnfpassword,selectedDesignation) => {
     
     try {
       console.log("This is from taskstack",name, email, password, phone, role,cnfpassword);
@@ -49,14 +49,15 @@ const TaskState = ({ children, navigation }) => {
             phone: phone,
             userRole: role,
             password: password,
+            designation:selectedDesignation
           }),
         });
   
         const res = await response.json();
         console.log(res);
-        await AsyncStorage.setItem('auth-token', res.authToken);
-        const auth = await AsyncStorage.getItem('auth-token');
-        console.log(auth);
+        // await AsyncStorage.setItem('auth-token', res.authToken);
+        // const auth = await AsyncStorage.getItem('auth-token');
+        // console.log(auth);
 
         return true;
       } else {

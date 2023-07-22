@@ -1,56 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, BackHandler, ToastAndroid } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from './src/Screens/Login';
 import RegisterScreen from './src/Screens/Register';
 import Welcome from './src/Screens/Welcome';
-// import NavigationScreen from './src/Screens/NavigationScreen';
-import AddTeamMember from './src/Screens/AddTeamMember';
-import EditTask from './src/Screens/EditTask';
 import EmailValid from './src/Components/ForgotPassword/EmailValid';
 import OtpValid from './src/Components/ForgotPassword/OtpValid';
 import Newpassword from './src/Components/ForgotPassword/Newpassword';
-import ProfileScreen from './src/Screens/ProfileScreen';
-import AddTask from './src/Screens/AddTask';
-import HomeScreen from './src/Screens/HomeScreen';
 import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import Loader from './src/Screens/Loader';
-import TaskContext from './src/Context/taskContext';
-import Context from './src/Screens/Context';
-import Onbording from './src/Components/Onboarding/onbording';
 import TaskState from './src/Context/taskState';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [spinner, setSpinner] = useState(true);
   const [initialScreen, setInitialScreen] = useState('Welcome');
-  const taskContextValue = {
-    // Add any values or functions you want to provide
-  };
-  let backPressTimer = null;
 
-  const handleBackPress = () => {
-    if (Platform.OS === 'android') {
-      if (backPressTimer && backPressTimer + 2000 >= Date.now()) {
-        BackHandler.exitApp();
-        return true;
-      } else {
-        ToastAndroid.show('Press back again to exit!', ToastAndroid.SHORT);
-        backPressTimer = Date.now();
-        return true;
-      }
-    }
-  };
-  
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      handleBackPress
-    );
-    return () => backHandler.remove();
-  }, []);
   useEffect(() => {
     const loaderEffect = () => {
       setTimeout(() => {
@@ -60,19 +28,21 @@ const App = () => {
 
     loaderEffect();
   }, []);
+
   const checkAuthToken = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
-    const data=JSON.parse(userData)
-    return data.authToken;
+        const data = JSON.parse(userData);
+        return data.authToken;
       }
-      // return authToken;
+      return null;
     } catch (error) {
       console.log('Error checking auth token:', error);
       return null;
     }
   };
+
   useEffect(() => {
     const checkAuthAndNavigate = async () => {
       const authToken = await checkAuthToken();
@@ -87,13 +57,13 @@ const App = () => {
   }, []);
 
   return (
-      <TaskState>
-    <NavigationContainer>
-      {spinner ? (
-        <Loader />
-      ) : (
+    <TaskState>
+      <NavigationContainer>
+        {spinner ? (
+          <Loader />
+        ) : (
           <Stack.Navigator initialRouteName={initialScreen}>
-          {/* <Stack.Screen
+            {/* <Stack.Screen
               name="Onbording"
               component={Onbording}
               options={{ headerShown: false }}
@@ -134,23 +104,10 @@ const App = () => {
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
-          // {/* <Context /> */}
-      )}
-    </NavigationContainer>
-      </TaskState>
+        )}
+      </NavigationContainer>
+    </TaskState>
   );
 };
-
-const styles = StyleSheet.create({
-  barStyle: {
-    backgroundColor: '#8d98b0',
-    height: 70,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  iconStyle: {
-    marginBottom: -5, // adjust this value to align the icon with the text label
-  },
-});
 
 export default App;

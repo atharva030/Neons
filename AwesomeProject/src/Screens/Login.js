@@ -87,10 +87,12 @@ const LoginScreen = ({ navigation }) => {
         ToastComponent({ message: data.error || 'Invalid email or password' });
       }
       // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
+      console.log(data.userName)
       await AsyncStorage.setItem('user', JSON.stringify({
         authToken: data.authToken,
         userRole: data.userRole,
-        userName: data.name,
+        userName: data.userName,
+        userDes:data.designation
       }));
       handleSuccess();
       navigation.navigate('NavigationScreen');

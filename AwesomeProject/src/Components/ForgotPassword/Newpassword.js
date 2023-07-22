@@ -21,39 +21,53 @@ const Newpassword = ({navigation}) => {
   // console.log(email);
   // console.log(newPassword===confirmPassword);
   const handlePasswordReset = () => {
-    if (newPassword === confirmPassword) {
-      fetch('https://tsk-final-backend.vercel.app/api/auth/login/reset_password', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: confirmPassword,
-        }),
-      })
-        .then(response => {
-          if (response.ok) {
-            Alert.alert('Success','Password updated successfully');
-          }
-          if (!response.ok) {
-            // console.log(response);
-            throw new Error('Network Error');
-          }
-          return response.json();
-        })
-        .then(data => {
-          // console.log(data); 
-          navigation.navigate('Login');
-        })
-        .catch(error => {
-          console.error(error);
-          Alert.alert('Error', 'An error occurred. Please try again later.');
-        });
-    } else {
-      Alert.alert('Error', 'Passwords do not match. Please try again.');
+    if (!newPassword || !confirmPassword) {
+      Alert.alert('Error', 'Passwords cannot be empty. Please enter a new password.');
+      return;
     }
+  
+    if (newPassword !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match. Please try again.');
+      return;
+    }
+  
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      Alert.alert(
+        'Error',
+        'Password must be at least 6 characters long and contain letters, numbers, and symbols.'
+      );
+      return;
+    }
+  
+    fetch('https://tsk-final-backend.vercel.app/api/auth/login/reset_password', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: confirmPassword,
+      }),
+    })
+      .then(response => {
+        if (response.ok) {
+          Alert.alert('Success', 'Password updated successfully');
+        } else {
+          throw new Error('Network Error');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // console.log(data);
+        navigation.navigate('Login');
+      })
+      .catch(error => {
+        console.error(error);
+        Alert.alert('Error', 'An error occurred. Please try again later.');
+      });
   };
+  
 
   return (
     <ScrollView style={styles.Addfullscreen}>

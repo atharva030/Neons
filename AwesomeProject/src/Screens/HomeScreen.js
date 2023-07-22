@@ -2,12 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
-  Image,
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  BackHandler
+  ,ToastAndroid
 } from 'react-native';
-import avatar from '../../assets/Image/profile.jpg';
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
@@ -25,7 +25,6 @@ import {
 import styles1 from '../Styles/AddTaskStyle';
 import ToastComponent from '../Components/Toast/toast';
 import Avatardropmodal from '../Components/Avatardropmodal';
-import Spinner from './Spinner';
 import AppLoader from '../Components/AppLoader';
 
 const handleSuccess = () => {
@@ -63,6 +62,7 @@ const HomeScreen = ({ navigation }) => {
   const hideModal = () => setVisible(false);
   const [isLoading, setIsLoading] = useState(' ');
   const bottomSheetRef = useRef(null);
+  const [backButtonPressed, setBackButtonPressed] = useState(false);
   const openBottomSheet = () => {
     bottomSheetRef.current.open();
   };
@@ -86,61 +86,72 @@ const HomeScreen = ({ navigation }) => {
     setRefreshing(false);
   };
   const [userRole, setUserRole] = useState('');
-  
+  const [idName, setidName] = useState('');
+  const [authToken, setauthToken] = useState('');
+  const [userDes, setuserDes] = useState('');
   useEffect(() => {
-      // Retrieve the userRole from AsyncStorage and update the state
-      const getUserRole = async () => {
-        try {
-          const userData = await AsyncStorage.getItem('user');
+    // Retrieve the userRole from AsyncStorage and update the state
+    const getUserRole = async () => {
+      try {
+        const userData = await AsyncStorage.getItem('user');
 
-          if (userData) {
-            const { userRole } = JSON.parse(userData);
-            setUserRole(userRole);
-          }
-        } catch (error) {
-          console.log('Error while retrieving userRole from AsyncStorage:', error);
+        if (userData) {
+          const { userRole, userName, authToken,userDes } = JSON.parse(userData);
+          console.log("User Auth Token",authToken)
+          setUserRole(userRole);
+          setidName(userName);
+          setauthToken(authToken);
+          setuserDes(userDes);
+          fetchTeam(authToken);
         }
-      };
-      getUserRole();
-    }, []);
-    const [authToken, setauthToken] = useState('');
-    const count=1;
-    useEffect(() => {
-        // Retrieve the userRole from AsyncStorage and update the state
-        const getUserRole = async () => {
-          try {
-            const userData = await AsyncStorage.getItem('user');
-            if (userData) {
-              const { authToken } = JSON.parse(userData);
-              setauthToken(authToken);
+      } catch (error) {
+        console.log('Error while retrieving userRole from AsyncStorage:', error);
+      }
+    };
+    getUserRole();
+  }, []);
+  useEffect(() => {
+    const backAction = () => {
+      if (backButtonPressed) {
+        // If the back button is pressed twice within 2 seconds, exit the app
+        BackHandler.exitApp();
+        return true;
+      } else {
+        // Show a toast message on the first back button press
+        ToastAndroid.show('Press back again to exit!', ToastAndroid.SHORT);
+        setBackButtonPressed(true);
+        // Reset the backButtonPressed state after 2 seconds
+        setTimeout(() => {
+          setBackButtonPressed(false);
+        }, 2000);
+        return true;
+      }
+    };
 
-            }
-          } catch (error) {
-            console.log('Error while retrieving userRole from AsyncStorage:', error);
-          }
-        };
-        getUserRole();
-      }, [count]);
-  const FadeScreen = () => {
-    const fadeAnim = useRef(new Animated.Value(1)).current;
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
-    useEffect(() => {
-      const fadeOut = () => {
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 2000, // Duration in milliseconds
-          useNativeDriver: true, // Enable native driver for performance
-        }).start();
-      };
-    });
-    const fadeOutTimeout = setTimeout(fadeOut, 5000);
-    return (
-      () => {
-        clearTimeout(fadeOutTimeout);
-      },
-      [fadeAnim]
-    );
-  };
+    return () => backHandler.remove();
+  }, [backButtonPressed]);
+  // const FadeScreen = () => {
+  //   const fadeAnim = useRef(new Animated.Value(1)).current;
+
+  //   useEffect(() => {
+  //     const fadeOut = () => {
+  //       Animated.timing(fadeAnim, {
+  //         toValue: 0,
+  //         duration: 2000, // Duration in milliseconds
+  //         useNativeDriver: true, // Enable native driver for performance
+  //       }).start();
+  //     };
+  //   });
+  //   const fadeOutTimeout = setTimeout(fadeOut, 5000);
+  //   return (
+  //     () => {
+  //       clearTimeout(fadeOutTimeout);
+  //     },
+  //     [fadeAnim]
+  //   );
+  // };
   const addTeam = async () => {
     if (teamName.length < 4 || teamDesc.length < 6) {
       ToastComponent({
@@ -153,7 +164,7 @@ const HomeScreen = ({ navigation }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiOGY2ZjYzMjljYTUxODU5ZjliNWRmIn0sImlhdCI6MTY4OTg0NzEyNH0.S5Zagp6JhG0noWyo7Pmv0zTSZwqdDmLLEsqWpcYBUJg",
+        'auth-token': authToken
       },
       body: JSON.stringify({
         teamName: teamName,
@@ -178,7 +189,7 @@ const HomeScreen = ({ navigation }) => {
         handleBackendError();
       });
   };
-  
+
   const editTeam = async (teamId) => {
     setIsModalVisible(false);
 
@@ -208,19 +219,20 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
-  const fetchTeam = async () => {
+  const fetchTeam = async (authToken) => {
     setIsLoading(true);
     fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token':"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiOGY2ZjYzMjljYTUxODU5ZjliNWRmIn0sImlhdCI6MTY4OTg0NzEyNH0.S5Zagp6JhG0noWyo7Pmv0zTSZwqdDmLLEsqWpcYBUJg"
-          
+        'auth-token': authToken
+
       },
     })
       .then(response => response.json())
 
       .then(data => {
+        console.log(data)
         setresultTeamData(data);
         setIsLoading(false);
       })
@@ -230,7 +242,7 @@ const HomeScreen = ({ navigation }) => {
         console.log(err);
       });
   };
-  
+
   const deleteTeam = async teamId => {
     try {
       const response = await fetch(
@@ -241,9 +253,9 @@ const HomeScreen = ({ navigation }) => {
             'Content-Type': 'application/json',
           },
         },
-        );
-        
-        if (response.ok) {
+      );
+
+      if (response.ok) {
         // console.log(`Team with ID ${teamId} deleted successfully`);
       } else {
         console.log(`Error deleting team with ID ${teamId}`);
@@ -252,13 +264,11 @@ const HomeScreen = ({ navigation }) => {
       console.log(error);
     }
   };
-  
+
   const refreshFetchTeam = async () => {
     fetchTeam();
   };
-  useEffect(() => {
-    fetchTeam();
-  }, []);
+ 
   const handleModalClose = () => {
     setIsModalVisible(false);
   };
@@ -429,7 +439,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.titleContainer}>
                 <Text style={[styles.teamtitleText]}>TaskStack</Text>
                 <TouchableOpacity>
-                  <Avatardropmodal navigation={navigation} userName={"add me"}userRole={userRole} />
+                  <Avatardropmodal navigation={navigation} userName={idName} userDes={userDes} />
                 </TouchableOpacity>
               </View>
               <View style={styles.dayContainer}>
@@ -491,7 +501,7 @@ const HomeScreen = ({ navigation }) => {
               ))
             )}
 
-            {userRole=="ROLE_ADMIN"?<Portal>
+            {userRole == "ROLE_ADMIN" ? <Portal>
               <FAB.Group
                 open={open}
                 visible
@@ -511,7 +521,7 @@ const HomeScreen = ({ navigation }) => {
                 }}
                 overlayColor="transparent"
               />
-            </Portal>:""}
+            </Portal> : ""}
           </ScrollView>
         </>
       )}

@@ -5,8 +5,32 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Avatar } from 'react-native-paper';
 import TeamMember from '../Components/Teams/TeamMember';
 import TeamNames from '../Components/Teams/TeamNames';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect,useState } from 'react';
 const Profile = ({ navigation }) => {
+  const [userName, setuserName] = useState("")
+  const [userDes, setuserDes] = useState("")
+  const getUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        const data = JSON.parse(userData);
+        console.log("after logout",data)
+        setuserName(data.userName)
+        setuserDes(data.userDes)
+      } else {
+        console.log('User data not found in AsyncStorage.');
+      }
+    } catch (error) {
+      console.log('Error while retrieving user data:', error);
+    }
+  };
+  const count=1;
+  useEffect(() => {
+    getUserData();
+  
+  }, [count])
+  
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>
@@ -28,7 +52,7 @@ const Profile = ({ navigation }) => {
           <View style={styles.profileImage}>
             <Avatar.Image
               size={90}
-              source={require('../../assets/Image/profile.jpg')}
+              source={require('../../assets/Image/profile1.png')}
               avatarStyle={{
                 borderWidth: 2,
                 borderColor: 'white',
@@ -39,8 +63,8 @@ const Profile = ({ navigation }) => {
           </View>
 
           <View>
-            <Text style={styles.ProfileTitle}>Charles L. Wenner</Text>
-            <Text style={styles.ProfileSubtitle}>UXUI Designer</Text>
+            <Text style={styles.ProfileTitle}>{userName}</Text>
+            <Text style={styles.ProfileSubtitle}>{userDes}</Text>
           </View>
 
           <View style={styles.teams}>

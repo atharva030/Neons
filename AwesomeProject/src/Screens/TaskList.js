@@ -62,6 +62,7 @@ const TaskList = ({ navigation, route }) => {
   const teamIdByItem = route.params.post; //id by teamItem
   const teamTitle = route.params.teamTitle; //id by teamItem
   const [isLoading, setIsLoading] = useState(false);
+  const [filterMember, setFilterMember] = useState([])
   var sum = 0;
   var subtaskLength = 0;
   var totalSubtasks = 0;
@@ -137,8 +138,6 @@ const TaskList = ({ navigation, route }) => {
   const closeBottomEditSheet = () => {
     bottomSheetEditRef.current.close();
   };
-
-
 
   const editTask = async (teamId, taskId) => {
     setIsModalVisible(false);
@@ -227,7 +226,7 @@ const TaskList = ({ navigation, route }) => {
     }
 
   };
-  const [filterMember, setFilterMember] = useState([])
+
   const fetchTeamMembers = async () => {
     // console.log("Hey")
     openBottomTeamSheet();
@@ -279,8 +278,6 @@ const TaskList = ({ navigation, route }) => {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0NDExNWE4OWM2YzBkNWVkM2NkZjk1In0sImlhdCI6MTY4NDUxMzMxNn0.jSfavFDUHDr0Kc4AB-nj6ySuuaB04b7tuQEgHKBo1og',
       },
       body: JSON.stringify({
         selectedIds: selectedIds,

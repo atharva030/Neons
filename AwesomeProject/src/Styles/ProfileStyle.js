@@ -44,15 +44,16 @@ module.exports = {
     },
     ProfileTitle:{
         fontFamily: 'Poppins-Bold',
-        fontSize: 17,
+        fontSize: 19,
         color: '#0b204c',
         textAlign: 'center',
         paddingTop: 12,
     },
     ProfileSubtitle:{
         fontFamily: 'Poppins-ExtraLight',
-        fontSize: 14,
+        fontSize: 16,
         textAlign: 'center',
+        color:"black"
     },
     teams: {
         flex: 1, 
