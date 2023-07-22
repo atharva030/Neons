@@ -89,26 +89,27 @@ const HomeScreen = ({ navigation }) => {
   const [idName, setidName] = useState('');
   const [authToken, setauthToken] = useState('');
   const [userDes, setuserDes] = useState('');
+  const getUserRole = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+
+      if (userData) {
+        const { userRole, userName, authToken,userDes } = JSON.parse(userData);
+        console.log("User Auth Token",authToken)
+        setUserRole(userRole);
+        setidName(userName);
+        setauthToken(authToken);
+        setuserDes(userDes);
+        // fetchTeam(authToken);
+      }
+    } catch (error) {
+      console.log('Error while retrieving userRole from AsyncStorage:', error);
+    }
+  };
   useEffect(() => {
     // Retrieve the userRole from AsyncStorage and update the state
-    const getUserRole = async () => {
-      try {
-        const userData = await AsyncStorage.getItem('user');
-
-        if (userData) {
-          const { userRole, userName, authToken,userDes } = JSON.parse(userData);
-          console.log("User Auth Token",authToken)
-          setUserRole(userRole);
-          setidName(userName);
-          setauthToken(authToken);
-          setuserDes(userDes);
-          fetchTeam(authToken);
-        }
-      } catch (error) {
-        console.log('Error while retrieving userRole from AsyncStorage:', error);
-      }
-    };
     getUserRole();
+    fetchTeam()
   }, []);
   useEffect(() => {
     const backAction = () => {
@@ -219,14 +220,13 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
-  const fetchTeam = async (authToken) => {
+  const fetchTeam = async () => {
     setIsLoading(true);
     fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': authToken
-
+        "auth-token":authToken
       },
     })
       .then(response => response.json())
@@ -235,11 +235,12 @@ const HomeScreen = ({ navigation }) => {
         console.log(data)
         setresultTeamData(data);
         setIsLoading(false);
+console.log(data)
       })
 
       // .then(showSuccessToast())
       .catch(err => {
-        console.log(err);
+        console.log("Atharva",err);
       });
   };
 
