@@ -403,7 +403,7 @@ const TaskList = ({ navigation, route }) => {
                 filterMember.map(items => (
                   <MemberFilter
                     key={items._id}
-                    designation={items.designation}
+                    role={items.role}
                     id={items._id}
                     name={items.name}
                     selectedIds={selectedIds}

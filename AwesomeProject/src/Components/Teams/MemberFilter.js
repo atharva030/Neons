@@ -36,7 +36,7 @@ const MemberFilter = (props) => {
                     />
                     <View style={styles.textContainer}>
                         <Text style={styles.nameText}>{props.name}</Text>
-                        <Text style={styles.designationText}>{props.designation}</Text>
+                        <Text style={styles.designationText}>{props.role}</Text>
                     </View>
                     <TouchableOpacity
                         style={{ backgroundColor: "#7070FF", padding: 10, borderRadius: 20 }}
