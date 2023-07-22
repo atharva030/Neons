@@ -271,7 +271,7 @@ const TaskItem = props => {
         throw new Error('Failed to fetch image');
       }
       const data = await response.json();
-      getupimage=  setGetupimage(data); // Update the getupimage state with the fetched image data
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
