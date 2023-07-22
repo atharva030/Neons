@@ -218,7 +218,7 @@ const TaskList = ({ navigation, route }) => {
         },
       );
       const data = await response.json();
-      // console.log(data)
+      console.log(data)
       setresultTeamMemberData(data)
     } catch (error) {
       console.log(error);
@@ -238,7 +238,7 @@ const TaskList = ({ navigation, route }) => {
     })
       .then(response => response.json())
       .then(data => {
-        // console.log(data)
+        console.log("This is fetched data",data)
         setFilterMember(data);
       })
 
@@ -274,6 +274,7 @@ const TaskList = ({ navigation, route }) => {
     }
   };
   const handleAddMember = async () => {
+    console.log("This is selected IDS",selectedIds)
     fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}`, {
       method: 'PATCH',
       headers: {
@@ -284,14 +285,14 @@ const TaskList = ({ navigation, route }) => {
       }),
     })
       .then(response => {
-        // console.log('Response status code:', response.status);
+        console.log('Response status code:', response);
         return response.text();
       })
       .then(text => {
         // console.log('Response body text:', text);
         try {
           const data = JSON.parse(text);
-          // console.log(data);
+          console.log("This is parse data",data);
         } catch (err) {
           console.log('Error parsing JSON:', err.message);
         }

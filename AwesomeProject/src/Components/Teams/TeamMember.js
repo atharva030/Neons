@@ -45,7 +45,7 @@ const TeamMember = (props) => {
             style={styles.avatar}
           />
           <View style={styles.textContainer}>
-            <Text style={styles.nameText}>Atharva</Text>
+            <Text style={styles.nameText}>{props.name}</Text>
             <Text style={styles.designationText}>{props.designation}</Text>
           </View>
         </View>
