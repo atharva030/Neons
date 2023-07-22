@@ -279,7 +279,7 @@ const TaskItem = props => {
     subtaskId = subtask;
     try {
       const response = await fetch(
-        `http://192.168.29.161:8888/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/image`,
+        `https://tsk-final-backend.vercel.app/api/fileupload/${teamId}/tasks/${taskId}/subtasks/${subtaskId}/image`,
         {
           method: 'GET',
         },
@@ -287,7 +287,12 @@ const TaskItem = props => {
       const uri = await response.json();
       setImageUrl(uri.url);
       // console.log(imageUrl);
-    } catch (error) {
+      if(!response.ok){
+        ToastComponent({message: 'No Image Found'});
+      }
+    } 
+    
+    catch (error) {
       console.log(error);
     }
   };
@@ -304,7 +309,9 @@ const TaskItem = props => {
   const ImageModal = () => {
     // If the imageUrl is empty, don't show the modal content
     if (!imageUrl) {
+      // ToastComponent({message: 'No Image Found'});
       return null;
+
     }
 
     return (
@@ -316,32 +323,32 @@ const TaskItem = props => {
           <View style={styles.modalContent}>
             {/* Show the image if imageUrl is not empty */}
             {imageUrl ? (
-              <Image 
+              <Image
                 source={{uri: imageUrl}} // Use the fetched image URL
                 style={{width: '100%', height: '100%', resizeMode: 'contain'}}
               />
             ) : null}
             <TouchableOpacity
               onPress={handleImageModalClose}
-              style={styles.closeIcon}
-              
-              >
-              <Icon name="close" size={25} color="white"  
-                            style={[
-            
-                              {
-                                backgroundColor: 'black',
-                                width: 30,
-                                height: 30,
-                                alignContent: 'center',
-                                justifyContent: 'center',
-                                position: 'absolute',
-                                right: 0,
-                                top: 0,
-                                alignItems: 'center',
-                              },
-                            ]}
-/>
+              style={styles.closeIcon}>
+              <Icon
+                name="close"
+                size={25}
+                color="white"
+                style={[
+                  {
+                    backgroundColor: 'black',
+                    width: 30,
+                    height: 30,
+                    alignContent: 'center',
+                    justifyContent: 'center',
+                    position: 'absolute',
+                    right: 0,
+                    top: 0,
+                    alignItems: 'center',
+                  },
+                ]}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -798,7 +805,6 @@ const TaskItem = props => {
                               subtask._id,
                             )
                           }
-                          
                         />
                       </TouchableOpacity>
                     ) : (
