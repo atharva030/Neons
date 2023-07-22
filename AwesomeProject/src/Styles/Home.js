@@ -361,9 +361,28 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   }
   ,
-  eye:{
-    position: 'absolute',
-alignSelf: 'flex-start',
+  modalContainer: {
+
+    justifyContent: 'center', // Center the modal vertically
+    alignItems: 'center', // Center the modal horizontally
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    width: '100%',
+    height: '100%'
+
+  },
+  // Style for the modal content (the image and the close icon)
+  modalContent: {
+    width: '100%', // Make the modal full-screen horizontally
+    height: '100%', // Make the modal full-screen vertically
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
+  // Style for the close icon
+  closeIcon: {
+    position: 'absolute', 
+    top: 10, 
+    right: 10,
+
   },
 
 };
