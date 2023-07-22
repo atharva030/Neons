@@ -287,11 +287,10 @@ const TaskItem = props => {
       const uri = await response.json();
       setImageUrl(uri.url);
       // console.log(imageUrl);
-      if(!response.ok){
+      if(uri.url==null){
         ToastComponent({message: 'No Image Found'});
       }
     } 
-    
     catch (error) {
       console.log(error);
     }
@@ -311,7 +310,6 @@ const TaskItem = props => {
     if (!imageUrl) {
       // ToastComponent({message: 'No Image Found'});
       return null;
-
     }
 
     return (
@@ -325,7 +323,7 @@ const TaskItem = props => {
             {imageUrl ? (
               <Image
                 source={{uri: imageUrl}} // Use the fetched image URL
-                style={{width: '100%', height: '100%', resizeMode: 'contain'}}
+                style={{width: '100%', height: '100%', resizeMode: 'cover'}}
               />
             ) : null}
             <TouchableOpacity
@@ -338,16 +336,10 @@ const TaskItem = props => {
                 style={[
                   {
                     backgroundColor: 'black',
-                    width: 30,
-                    height: 30,
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    position: 'absolute',
-                    right: 0,
-                    top: 0,
-                    alignItems: 'center',
                   },
+                  
                 ]}
+               
               />
             </TouchableOpacity>
           </View>

@@ -379,10 +379,9 @@ module.exports = {
   },
   // Style for the close icon
   closeIcon: {
-    position: 'absolute', 
-    top: 10, 
-    right: 10,
-
+    position: 'absolute',
+    top: 40,
+    right: 20,
   },
 
 };
