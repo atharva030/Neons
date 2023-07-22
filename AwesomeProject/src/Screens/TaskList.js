@@ -230,12 +230,13 @@ const TaskList = ({ navigation, route }) => {
   const fetchTeamMembers = async () => {
     // console.log("Hey")
     openBottomTeamSheet();
-    fetch(`https://tsk-final-backend.vercel.app/api/members/getmembers/${teamIdByItem}`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}/getmembers`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
     })
+
       .then(response => response.json())
       .then(data => {
         console.log("This is fetched data",data)
