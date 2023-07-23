@@ -99,6 +99,7 @@ const HomeScreen = ({ navigation }) => {
         setidName(userName);
         setauthenToken(authToken);
         setuserDes(userDes);
+        // console.log("This is the one from homescreen",userRole,idName,authenToken,userDes)
         // Call fetchTeam() here after setting the authToken
         // fetchTeam();
       }
@@ -106,6 +107,12 @@ const HomeScreen = ({ navigation }) => {
       console.log('Error while retrieving userRole from AsyncStorage:', error);
     }
   };
+  const removeUser=()=>{
+    setUserRole("");
+    setidName("")
+    setauthenToken("")
+    setuserDes("")
+  }
   useEffect(() => {
     getUserRole();
   }, []);
@@ -446,7 +453,7 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.titleContainer}>
                 <Text style={[styles.teamtitleText]}>TaskStack</Text>
                 <TouchableOpacity>
-                  <Avatardropmodal navigation={navigation} userName={idName} userDes={userDes} />
+                  <Avatardropmodal navigation={navigation} userName={idName} userDes={userDes} removeUser={removeUser}/>
                 </TouchableOpacity>
               </View>
               <View style={styles.dayContainer}>
@@ -475,13 +482,13 @@ const HomeScreen = ({ navigation }) => {
                   }}>
                   You don't have Team to Display
                 </Text>
-                <Button
+               { userRole == "ROLE_ADMIN" ? <Button
                   icon="plus"
                   mode="contained"
                   onPress={() => showModal()}
                   style={{ width: 100 }}>
                   ADD
-                </Button>
+                </Button>:""}
               </View>
             ) : (
               resultTeamData.map(items => (

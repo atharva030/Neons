@@ -762,13 +762,13 @@ const TaskList = ({ navigation, route }) => {
                       }}>
                       You don't have Tasks to Display
                     </Text>
-                    <Button
+                    { userRole == "ROLE_ADMIN" ?   <Button
                       icon="plus"
                       mode="contained"
                       onPress={() => showModal()}
                       style={{ width: 150 }}>
                       Add Task
-                    </Button>
+                    </Button>:""}
                   </View>
                 ) : (
                   fetchTask.map(items => {

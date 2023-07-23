@@ -7,7 +7,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styles from '../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button } from 'react-native-paper';
@@ -53,6 +53,8 @@ const LoginScreen = ({ navigation }) => {
         const userData = await AsyncStorage.getItem('user');
         if (userData) {
           const data = JSON.parse(userData);
+
+          console.log(data)
         } else {
           console.log('User data not found in AsyncStorage.');
         }
@@ -102,6 +104,12 @@ const LoginScreen = ({ navigation }) => {
       handleBackendError();
     }
   };
+  
+  useEffect(() => {
+    getUserData()
+    
+  }, [])
+  
   // const [Password, setPassword] = useState('');
   return (
     <>

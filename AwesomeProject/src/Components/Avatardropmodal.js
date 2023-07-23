@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from 'react-native-paper';
 import { Avatar } from 'react-native-paper';
 import { Alert } from 'react-native';
-const Avatardropmodal = ({ navigation, userName, userDes }) => {
+const Avatardropmodal = ({ navigation, userName, userDes,removeUser }) => {
   console.log("Avatar ",userDes)
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => {
@@ -30,6 +30,8 @@ const Avatardropmodal = ({ navigation, userName, userDes }) => {
     setIsOpen(false);
    await AsyncStorage.removeItem('user')
     .then(() => {
+      getUserData()
+      removeUser();
       ToastAndroid.show('Logged out successfully', ToastAndroid.SHORT);
       navigation.navigate('Login');
     })
