@@ -236,23 +236,26 @@ const HomeScreen = ({ navigation }) => {
   const fetchTeam = async () => {
     setIsLoading(true);
     console.log("This is auth token", authenToken);
-    fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        "auth-token": authenToken
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setresultTeamData(data);
-        setIsLoading(false);
-        console.log(data)
-      })
-      .catch(err => {
-        console.log("Atharva", err);
+    try {
+      const response = await fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          "auth-token": authenToken,
+          'userRole': userRole
+        },
       });
+  
+     console.log(response)
+  
+      const data = await response.json();
+      console.log(data);
+      setresultTeamData(data); // Assuming setresultTeamData is a state update function
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Atharva", error);
+      setIsLoading(false); // Set loading state to false even if an error occurs.
+    }
   };
   
 
@@ -271,9 +274,7 @@ const HomeScreen = ({ navigation }) => {
 
       if (response.ok) {
         // console.log(`Team with ID ${teamId} deleted successfully`);
-      } else {
-        console.log(`Error deleting team with ID ${teamId}`);
-      }
+      } 
     } catch (error) {
       console.log(error);
     }
@@ -544,3 +545,4 @@ const HomeScreen = ({ navigation }) => {
 };
 
 export default HomeScreen;
+  
