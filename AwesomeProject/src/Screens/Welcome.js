@@ -1,44 +1,45 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { statusCodes } from 'react-native-google-signin';
-import { GoogleSignin } from 'react-native-google-signin';
-
-import styles from '../Styles/Welcome'
+import {statusCodes} from 'react-native-google-signin';
+import {GoogleSignin} from 'react-native-google-signin';
+import auth from '@react-native-firebase/auth';
+import styles from '../Styles/Welcome';
 GoogleSignin.configure({
-  webClientId: '140988325102-3ajr3f20d91ucph9ohpq08ab2r6p3po6 WelcomeScreens.googleusercontent.com',
-  offlineAccess: true,
-  hostedDomain: '',
-  forceCodeForRefreshToken: true,
-  accountName: '',
+  webClientId:
+    '461468934097-cfeol86ft1lq1gmsr5iqjsija3fipfp6.apps.googleusercontent.com',
 });
-const Welcome = ({ navigation }) => {
+const Welcome = ({navigation}) => {
   const [user, setUser] = useState(null);
-
   const handleSignIn = async () => {
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      // console.log(userInfo);
-      setUser(userInfo);
-      // console.log(userInfo.email)
+      console.log(
+        await GoogleSignin.hasPlayServices({
+          showPlayServicesUpdateDialog: true,
+        }),
+      );
+      const {idToken} = await GoogleSignin.signIn();
+      console.log(idToken);
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      console.log(googleCredential);
+      await auth().signInWithCredential(googleCredential);
+      setUser(auth().currentUser);
+      console.log('This is user ', user);
     } catch (error) {
-      console.log(error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
+        console.log('User cancelled the sign-in flow');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // login already in progress
+        console.log('Sign-in operation is in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
+        console.log('Google Play Services not available or outdated');
       } else {
-        // some other error occurred
+        console.log(
+          'Something went wrong with Google Sign-In: ',
+          error.message,
+        );
       }
     }
-  }
+  };
   return (
     <View style={styles.fullscreen}>
       <View style={[styles.titleView]}>
@@ -49,10 +50,8 @@ const Welcome = ({ navigation }) => {
         </Text>
       </View>
 
-      <View style={[styles.mainContainer, { flexDirection: 'column' }]}>
-        <TouchableOpacity
-          style={styles.container}
-        >
+      <View style={[styles.mainContainer, {flexDirection: 'column'}]}>
+        <TouchableOpacity style={styles.container}>
           <View style={styles.card}>
             <Text style={styles.headingText}>Sign in with Google </Text>
             <IonIcon
@@ -67,7 +66,6 @@ const Welcome = ({ navigation }) => {
                 color="#6b8cff"
                 onPress={handleSignIn}
                 style={styles.arrow}></IonIcon>
-
             </View>
           </View>
         </TouchableOpacity>

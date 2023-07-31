@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet} from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
 import LoginScreen from './src/Screens/Login';
 import RegisterScreen from './src/Screens/Register';
 import Welcome from './src/Screens/Welcome';
@@ -12,7 +12,7 @@ import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import Loader from './src/Screens/Loader';
 import TaskState from './src/Context/taskState';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {initializeApp} from 'firebase/app';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -71,37 +71,37 @@ const App = () => {
             <Stack.Screen
               name="Welcome"
               component={Welcome}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="Login"
               component={LoginScreen}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="Register"
               component={RegisterScreen}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="NavigationScreen"
               component={BottomTabNavigator}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="EmailValid"
               component={EmailValid}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="OtpValid"
               component={OtpValid}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
             <Stack.Screen
               name="Newpassword"
               component={Newpassword}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
           </Stack.Navigator>
         )}

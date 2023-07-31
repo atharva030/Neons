@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   ScrollView,
   RefreshControl,
-  BackHandler
-  ,ToastAndroid
+  BackHandler,
+  ToastAndroid,
 } from 'react-native';
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
@@ -28,7 +28,7 @@ import Avatardropmodal from '../Components/Avatardropmodal';
 import AppLoader from '../Components/AppLoader';
 
 const handleSuccess = () => {
-  ToastComponent({ message: 'Team Added successfully' });
+  ToastComponent({message: 'Team Added successfully'});
 };
 const toggleMenulogout = async () => {
   setIsOpen(false);
@@ -43,11 +43,11 @@ const toggleMenulogout = async () => {
   navigation.navigate('LoginScreen');
 };
 const handleBackendError = () => {
-  ToastComponent({ message: '⚠️ Please Try again later!' });
+  ToastComponent({message: '⚠️ Please Try again later!'});
 };
 const currentDate = moment().format('MMMM DD, YYYY');
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({navigation}) => {
   const [teamName, setteamName] = useState('');
   const [teamDesc, setteamDesc] = useState('');
   const [refreshing, setRefreshing] = useState(false);
@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }) => {
   // const [spinner, setSpinner] = useState(false);
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [formData, setFormData] = useState({ editTitle: '', editDesc: '' });
+  const [formData, setFormData] = useState({editTitle: '', editDesc: ''});
   const [teamId, setteamId] = useState('');
   const [isModalVisibleavatar, setIsModalVisibleavatar] = useState(false);
   const showModal = () => setVisible(true);
@@ -94,7 +94,7 @@ const HomeScreen = ({ navigation }) => {
       const userData = await AsyncStorage.getItem('user');
 
       if (userData) {
-        const { userRole, userName, authToken, userDes } = JSON.parse(userData);
+        const {userRole, userName, authToken, userDes} = JSON.parse(userData);
         setUserRole(userRole);
         setidName(userName);
         setauthenToken(authToken);
@@ -107,12 +107,12 @@ const HomeScreen = ({ navigation }) => {
       console.log('Error while retrieving userRole from AsyncStorage:', error);
     }
   };
-  const removeUser=()=>{
-    setUserRole("");
-    setidName("")
-    setauthenToken("")
-    setuserDes("")
-  }
+  const removeUser = () => {
+    setUserRole('');
+    setidName('');
+    setauthenToken('');
+    setuserDes('');
+  };
   useEffect(() => {
     getUserRole();
   }, []);
@@ -123,7 +123,7 @@ const HomeScreen = ({ navigation }) => {
       fetchTeam();
     }
   }, [authenToken]);
-  
+
   useEffect(() => {
     const backAction = () => {
       if (backButtonPressed) {
@@ -142,7 +142,10 @@ const HomeScreen = ({ navigation }) => {
       }
     };
 
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
 
     return () => backHandler.remove();
   }, [backButtonPressed]);
@@ -169,7 +172,8 @@ const HomeScreen = ({ navigation }) => {
   const addTeam = async () => {
     if (teamName.length < 4 || teamDesc.length < 6) {
       ToastComponent({
-        message: 'Team Name must be at least 4 characters and Team Description must be at least 6 characters long.',
+        message:
+          'Team Name must be at least 4 characters and Team Description must be at least 6 characters long.',
       });
       return;
     }
@@ -178,7 +182,7 @@ const HomeScreen = ({ navigation }) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'auth-token': authenToken
+        'auth-token': authenToken,
       },
       body: JSON.stringify({
         teamName: teamName,
@@ -188,7 +192,7 @@ const HomeScreen = ({ navigation }) => {
       .then(response => response.json())
       .then(data => {
         if (data.error) {
-          ToastComponent({ message: data.error });
+          ToastComponent({message: data.error});
         } else {
           // console.log(data);
           hideModal();
@@ -204,11 +208,11 @@ const HomeScreen = ({ navigation }) => {
       });
   };
 
-  const editTeam = async (teamId) => {
+  const editTeam = async teamId => {
     setIsModalVisible(false);
 
     if (!formData.editTitle || !formData.editDesc) {
-      ToastComponent({ message: 'Please fill in all fields' });
+      ToastComponent({message: 'Please fill in all fields'});
       return;
     }
 
@@ -226,39 +230,39 @@ const HomeScreen = ({ navigation }) => {
           teamName: formData.editTitle,
           teamDesc: formData.editDesc,
         }),
-      }
-    )
-      .catch((err) => {
-        console.log(err);
-      });
+      },
+    ).catch(err => {
+      console.log(err);
+    });
   };
 
   const fetchTeam = async () => {
     setIsLoading(true);
-    console.log("This is auth token", authenToken);
+    console.log('This is auth token', authenToken);
     try {
-      const response = await fetch('https://tsk-final-backend.vercel.app/api/team/fetchallteams', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          "auth-token": authenToken,
-          'userRole': userRole
+      const response = await fetch(
+        'http://192.168.29.161:8888/api/team/fetchallteams',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': authenToken,
+            userRole: userRole,
+          },
         },
-      });
-  
-     console.log(response)
-  
+      );
+
+      console.log(response);
+
       const data = await response.json();
       console.log(data);
       setresultTeamData(data); // Assuming setresultTeamData is a state update function
       setIsLoading(false);
     } catch (error) {
-      console.log("Atharva", error);
+      console.log('Atharva', error);
       setIsLoading(false); // Set loading state to false even if an error occurs.
     }
   };
-  
-
 
   const deleteTeam = async teamId => {
     try {
@@ -274,7 +278,7 @@ const HomeScreen = ({ navigation }) => {
 
       if (response.ok) {
         // console.log(`Team with ID ${teamId} deleted successfully`);
-      } 
+      }
     } catch (error) {
       console.log(error);
     }
@@ -283,11 +287,11 @@ const HomeScreen = ({ navigation }) => {
   const refreshFetchTeam = async () => {
     fetchTeam();
   };
- 
+
   const handleModalClose = () => {
     setIsModalVisible(false);
   };
-  const onStateChange = ({ open }) => setOpen(open);
+  const onStateChange = ({open}) => setOpen(open);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleEditClick = () => {
     setIsModalVisible(true);
@@ -302,7 +306,7 @@ const HomeScreen = ({ navigation }) => {
     <Provider
       theme={{
         ...DefaultTheme,
-        colors: { ...DefaultTheme.colors, accent: 'transparent' },
+        colors: {...DefaultTheme.colors, accent: 'transparent'},
       }}>
       {isLoading ? (
         <AppLoader />
@@ -320,12 +324,12 @@ const HomeScreen = ({ navigation }) => {
                 visible={visible}
                 onDismiss={hideModal}
                 contentContainerStyle={styles1.addteamcontainerStyle}>
-                <View style={{ marginTop: 10 }}>
+                <View style={{marginTop: 10}}>
                   <Text style={styles1.emaillabelStyle}>Enter Team Name</Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      { backgroundColor: 'transparent', height: 40 },
+                      {backgroundColor: 'transparent', height: 40},
                     ]}
                     placeholder="Team Name"
                     placeholderTextColor="#8d98b0"
@@ -333,14 +337,14 @@ const HomeScreen = ({ navigation }) => {
                     onChangeText={setteamName}
                   />
                 </View>
-                <View style={{ marginTop: 10 }}>
+                <View style={{marginTop: 10}}>
                   <Text style={styles1.emaillabelStyle}>
                     Enter Team Description
                   </Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      { backgroundColor: 'transparent', height: 40 },
+                      {backgroundColor: 'transparent', height: 40},
                     ]}
                     placeholder="Team Description"
                     placeholderTextColor="#8d98b0"
@@ -363,7 +367,7 @@ const HomeScreen = ({ navigation }) => {
                     icon="check"
                     mode="contained"
                     onPress={addTeam}
-                    style={{ marginLeft: 5 }}>
+                    style={{marginLeft: 5}}>
                     Create Team
                   </Button>
                 </View>
@@ -385,43 +389,43 @@ const HomeScreen = ({ navigation }) => {
                 draggableIcon: {
                   backgroundColor: '#000',
                 },
-              }}
-            >
+              }}>
               <View style={styles1.btmeditsheet}>
-                <View style={{ marginTop: 2 }}>
+                <View style={{marginTop: 2}}>
                   <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      { backgroundColor: 'transparent', height: 25 },
+                      {backgroundColor: 'transparent', height: 25},
                     ]}
                     placeholder="Team Name"
                     placeholderTextColor="#8d98b0"
                     value={formData.editTitle}
                     onChangeText={value =>
-                      setFormData({ ...formData, editTitle: value })
+                      setFormData({...formData, editTitle: value})
                     }
                   />
                 </View>
-                <View style={{ marginTop: 10 }}>
-                  <Text style={{
-                    color: 'black',
-                    marginLeft: 4,
-                    color: '#8d98b0',
-                    fontFamily: 'Poppins-Medium',
-                  }}>
+                <View style={{marginTop: 10}}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      marginLeft: 4,
+                      color: '#8d98b0',
+                      fontFamily: 'Poppins-Medium',
+                    }}>
                     Edit Team Description
                   </Text>
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      { backgroundColor: 'transparent', height: 25 },
+                      {backgroundColor: 'transparent', height: 25},
                     ]}
                     placeholder="Team Description"
                     placeholderTextColor="#8d98b0"
                     value={formData.editDesc}
                     onChangeText={value =>
-                      setFormData({ ...formData, editDesc: value })
+                      setFormData({...formData, editDesc: value})
                     }
                   />
                 </View>
@@ -429,9 +433,9 @@ const HomeScreen = ({ navigation }) => {
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    width: "100%",
+                    width: '100%',
                     alignItems: 'center',
-                    justifyContent: 'flex-start'
+                    justifyContent: 'flex-start',
                   }}>
                   <Button
                     icon="close"
@@ -443,7 +447,7 @@ const HomeScreen = ({ navigation }) => {
                     icon="check"
                     mode="contained"
                     onPress={() => editTeam(teamId)}
-                    style={{ marginLeft: 5 }}>
+                    style={{marginLeft: 5}}>
                     Done
                   </Button>
                 </View>
@@ -454,7 +458,12 @@ const HomeScreen = ({ navigation }) => {
               <View style={styles.titleContainer}>
                 <Text style={[styles.teamtitleText]}>TaskStack</Text>
                 <TouchableOpacity>
-                  <Avatardropmodal navigation={navigation} userName={idName} userDes={userDes} removeUser={removeUser}/>
+                  <Avatardropmodal
+                    navigation={navigation}
+                    userName={idName}
+                    userDes={userDes}
+                    removeUser={removeUser}
+                  />
                 </TouchableOpacity>
               </View>
               <View style={styles.dayContainer}>
@@ -467,7 +476,7 @@ const HomeScreen = ({ navigation }) => {
             {resultTeamData.length === 0 ? (
               <View
                 style={{
-                  width: "100%",
+                  width: '100%',
                   height: 500,
                   display: 'flex',
                   alignItems: 'center',
@@ -483,13 +492,17 @@ const HomeScreen = ({ navigation }) => {
                   }}>
                   You don't have Team to Display
                 </Text>
-               { userRole == "ROLE_ADMIN" ? <Button
-                  icon="plus"
-                  mode="contained"
-                  onPress={() => showModal()}
-                  style={{ width: 100 }}>
-                  ADD
-                </Button>:""}
+                {userRole == 'ROLE_ADMIN' ? (
+                  <Button
+                    icon="plus"
+                    mode="contained"
+                    onPress={() => showModal()}
+                    style={{width: 100}}>
+                    ADD
+                  </Button>
+                ) : (
+                  ''
+                )}
               </View>
             ) : (
               resultTeamData.map(items => (
@@ -516,27 +529,31 @@ const HomeScreen = ({ navigation }) => {
               ))
             )}
 
-            {userRole == "ROLE_ADMIN" ? <Portal>
-              <FAB.Group
-                open={open}
-                visible
-                icon={open ? 'chevron-down' : 'plus'}
-                actions={[
-                  {
-                    icon: 'account-plus',
-                    label: 'New Team',
-                    onPress: () => showModal(),
-                  },
-                ]}
-                onStateChange={onStateChange}
-                onPress={() => {
-                  // if (open) {
-                  //     // do something if the speed dial is open
-                  // }
-                }}
-                overlayColor="transparent"
-              />
-            </Portal> : ""}
+            {userRole == 'ROLE_ADMIN' ? (
+              <Portal>
+                <FAB.Group
+                  open={open}
+                  visible
+                  icon={open ? 'chevron-down' : 'plus'}
+                  actions={[
+                    {
+                      icon: 'account-plus',
+                      label: 'New Team',
+                      onPress: () => showModal(),
+                    },
+                  ]}
+                  onStateChange={onStateChange}
+                  onPress={() => {
+                    // if (open) {
+                    //     // do something if the speed dial is open
+                    // }
+                  }}
+                  overlayColor="transparent"
+                />
+              </Portal>
+            ) : (
+              ''
+            )}
           </ScrollView>
         </>
       )}
@@ -545,4 +562,3 @@ const HomeScreen = ({ navigation }) => {
 };
 
 export default HomeScreen;
-  
