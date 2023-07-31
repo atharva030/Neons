@@ -241,7 +241,7 @@ const HomeScreen = ({navigation}) => {
     console.log('This is auth token', authenToken);
     try {
       const response = await fetch(
-        'http://192.168.29.161:8888/api/team/fetchallteams',
+        'https://tsk-final-backend.vercel.app/api/team/fetchallteams',
         {
           method: 'GET',
           headers: {
@@ -253,7 +253,6 @@ const HomeScreen = ({navigation}) => {
       );
 
       console.log(response);
-
       const data = await response.json();
       console.log(data);
       setresultTeamData(data); // Assuming setresultTeamData is a state update function

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
   RefreshControl,
-  Alert
+  Alert,
 } from 'react-native';
 import styles from '../Styles/Home';
 import BottomSheet from 'react-native-raw-bottom-sheet';
@@ -15,8 +15,8 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CalendarStrip from 'react-native-calendar-strip';
 import TaskItem from '../Components/Items/TaskItem';
-import { Modal, Button } from 'react-native-paper';
-import { FAB, Provider, DefaultTheme, Portal } from 'react-native-paper';
+import {Modal, Button} from 'react-native-paper';
+import {FAB, Provider, DefaultTheme, Portal} from 'react-native-paper';
 import AddTask from './AddTask';
 import TeamMember from '../Components/Teams/TeamMember';
 import styles1 from '../Styles/TasklistStyle';
@@ -26,23 +26,23 @@ import CircularProgressBar from '../Components/CircularProgressBar';
 import AppLoader from '../Components/AppLoader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RBSheet from 'react-native-raw-bottom-sheet';
-const { Dimensions } = require("react-native");
-const { LinearGradient } = require("react-native-svg");
+const {Dimensions} = require('react-native');
+const {LinearGradient} = require('react-native-svg');
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
 import MemberFilter from '../Components/Teams/MemberFilter';
 const handleSuccess = () => {
-  ToastComponent({ message: 'Task Updated Sucessfull' });
+  ToastComponent({message: 'Task Updated Sucessfull'});
 };
 
 const handleBackendError = () => {
-  ToastComponent({ message: '⚠️ Please Try again later!' });
+  ToastComponent({message: '⚠️ Please Try again later!'});
 };
 const currentDate = moment().format('MMMM DD, YYYY');
 
-const TaskList = ({ navigation, route }) => {
+const TaskList = ({navigation, route}) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [memberTeam, setmemberTeam] = useState(false);
   const [formData, setFormData] = useState({
@@ -55,14 +55,14 @@ const TaskList = ({ navigation, route }) => {
   const [teamMembers, setteamMembers] = useState('');
   const [taskId, settaskId] = useState('');
   const [visible, setVisible] = useState(false);
-  const [state, setState] = useState({ open: false });
+  const [state, setState] = useState({open: false});
   const [refreshing, setRefreshing] = useState(false);
-  const onStateChange = ({ open }) => setState({ open });
-  const { open } = state;
+  const onStateChange = ({open}) => setState({open});
+  const {open} = state;
   const teamIdByItem = route.params.post; //id by teamItem
   const teamTitle = route.params.teamTitle; //id by teamItem
   const [isLoading, setIsLoading] = useState(false);
-  const [filterMember, setFilterMember] = useState([])
+  const [filterMember, setFilterMember] = useState([]);
   var sum = 0;
   var subtaskLength = 0;
   var totalSubtasks = 0;
@@ -85,7 +85,7 @@ const TaskList = ({ navigation, route }) => {
     backgroundColor: 'white',
     marginHorizontal: 20,
     padding: 20,
-    width: "90%",
+    width: '90%',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -100,8 +100,8 @@ const TaskList = ({ navigation, route }) => {
     borderRadius: 20,
     justifyContent: 'center',
     position: 'absolute',
-    top: (deviceHeight - (deviceHeight * 0.65)) / 2,
-    left: (deviceWidth - (deviceWidth * 0.85)) / 2,
+    top: (deviceHeight - deviceHeight * 0.65) / 2,
+    left: (deviceWidth - deviceWidth * 0.85) / 2,
   };
 
   const addtaskcontainerStyle = {
@@ -114,12 +114,12 @@ const TaskList = ({ navigation, route }) => {
     borderRadius: 20,
     justifyContent: 'center',
     position: 'absolute',
-    top: (deviceHeight - (deviceHeight * 0.65)) / 2,
-    left: (deviceWidth - (deviceWidth * 0.85)) / 5,
+    top: (deviceHeight - deviceHeight * 0.65) / 2,
+    left: (deviceWidth - deviceWidth * 0.85) / 5,
   };
 
   const handleSubmit = () => {
-    setmemberTeam(false)
+    setmemberTeam(false);
     hideModal();
     handleAddMember();
   };
@@ -160,7 +160,7 @@ const TaskList = ({ navigation, route }) => {
       if (response.ok) {
         closeBottomEditSheet();
         fetchTasks();
-        ToastComponent({ message: 'Task Edited successfully!' });
+        ToastComponent({message: 'Task Edited successfully!'});
       } else {
         handleBackendError();
       }
@@ -191,7 +191,7 @@ const TaskList = ({ navigation, route }) => {
       const data = await response.json();
       setfetchTask(data.tasks);
       setIsLoading(false);
-      ToastComponent({ message: 'Task Fetched !' });
+      ToastComponent({message: 'Task Fetched !'});
       setTimeout(() => {
         setRefreshing(false);
         // console.log('after', refreshing);
@@ -218,32 +218,33 @@ const TaskList = ({ navigation, route }) => {
         },
       );
       const data = await response.json();
-      console.log(data)
-      setresultTeamMemberData(data)
+      console.log(data);
+      setresultTeamMemberData(data);
     } catch (error) {
       console.log(error);
       handleBackendError();
     }
-
   };
 
   const fetchTeamMembers = async () => {
     // console.log("Hey")
     openBottomTeamSheet();
-    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}/getmembers`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
+    fetch(
+      `https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}/getmembers`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    })
-
+    )
       .then(response => response.json())
       .then(data => {
-        console.log("This is fetched data",data)
+        console.log('This is fetched data', data);
         setFilterMember(data);
       })
 
-      .then(ToastComponent({ message: ' Team Members Fetched' }))
+      .then(ToastComponent({message: ' Team Members Fetched'}))
       .catch(err => {
         console.log(err);
         handleBackendError();
@@ -265,7 +266,7 @@ const TaskList = ({ navigation, route }) => {
       if (response.ok) {
         // console.log(`Team with ID ${teamId} deleted successfully`);
         // fetchTasks();
-        ToastComponent({ message: 'Team Deleted successfully' });
+        ToastComponent({message: 'Team Deleted successfully'});
       } else {
         // console.log(`Error deleting team with ID ${teamId}`);
       }
@@ -275,8 +276,8 @@ const TaskList = ({ navigation, route }) => {
     }
   };
   const handleAddMember = async () => {
-    console.log("This is selected IDS",selectedIds)
-    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}`, {
+    console.log('This is selected IDS', selectedIds);
+    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -286,6 +287,7 @@ const TaskList = ({ navigation, route }) => {
       }),
     })
       .then(response => {
+        console.log(selectedIds);
         console.log('Response status code:', response);
         return response.text();
       })
@@ -293,12 +295,12 @@ const TaskList = ({ navigation, route }) => {
         // console.log('Response body text:', text);
         try {
           const data = JSON.parse(text);
-          console.log("This is parse data",data);
+          console.log('This is parse data', data);
         } catch (err) {
           console.log('Error parsing JSON:', err.message);
         }
       })
-      .then(ToastComponent({ message: 'Members added sucessfully ' }))
+      .then(ToastComponent({message: 'Members added sucessfully '}))
       .catch(err => {
         console.log('Error: ' + err.message);
         handleBackendError();
@@ -325,7 +327,6 @@ const TaskList = ({ navigation, route }) => {
     // fetchData()
     fetchMembers();
     fetchTasks();
-
   }, []);
   const [userRole, setUserRole] = useState('');
   const count = 1;
@@ -335,11 +336,14 @@ const TaskList = ({ navigation, route }) => {
       try {
         const userData = await AsyncStorage.getItem('user');
         if (userData) {
-          const { userRole } = JSON.parse(userData);
+          const {userRole} = JSON.parse(userData);
           setUserRole(userRole);
         }
       } catch (error) {
-        console.log('Error while retrieving userRole from AsyncStorage:', error);
+        console.log(
+          'Error while retrieving userRole from AsyncStorage:',
+          error,
+        );
       }
     };
     getUserRole();
@@ -354,9 +358,10 @@ const TaskList = ({ navigation, route }) => {
       sum += item.Progress;
     });
 
-    const totalProgress = Math.round((sum / (taskLength * totalSubtasks)) * 100);
+    const totalProgress = Math.round(
+      (sum / (taskLength * totalSubtasks)) * 100,
+    );
     setTotalProgress(100 - totalProgress);
-
   }, [fetchTask]);
 
   let datesWhitelist = [
@@ -368,9 +373,12 @@ const TaskList = ({ navigation, route }) => {
   // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-
   return (
-    <Provider theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, accent: 'transparent' } }}>
+    <Provider
+      theme={{
+        ...DefaultTheme,
+        colors: {...DefaultTheme.colors, accent: 'transparent'},
+      }}>
       <View style={styles.bottomContainer}>
         <BottomSheet
           ref={bottomSheetTeamRef}
@@ -380,11 +388,9 @@ const TaskList = ({ navigation, route }) => {
             wrapper: styles.bottomSheetWrapper,
             draggableIcon: styles.bottomSheetDraggableIcon,
             container: styles.bottomSheetContainer,
-          }}
-        >
+          }}>
           <View style={styles.bottomSheetContent}>
             <ScrollView>
-
               {filterMember.length === 0 ? (
                 <View>
                   <Text
@@ -421,13 +427,13 @@ const TaskList = ({ navigation, route }) => {
           </View>
         </BottomSheet>
       </View>
-      <ScrollView refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={refreshfetchTasks}
-        />
-      }>
-
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={refreshfetchTasks}
+          />
+        }>
         {/* Edit Task Modal Starts */}
         <RBSheet
           ref={bottomSheetEditRef}
@@ -440,25 +446,23 @@ const TaskList = ({ navigation, route }) => {
             container: {
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
-
             },
             draggableIcon: {
               backgroundColor: '#000',
             },
-          }}
-        >
-          <View style={{ marginLeft: 10 }}>
+          }}>
+          <View style={{marginLeft: 10}}>
             <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
             <TextInput
               style={[
                 styles1.Emailinput,
-                { backgroundColor: 'transparent', height: 40 },
+                {backgroundColor: 'transparent', height: 40},
               ]}
               placeholder="Team Name"
               placeholderTextColor="#8d98b0"
               value={formData.editTitle}
               onChangeText={value =>
-                setFormData({ ...formData, editTitle: value })
+                setFormData({...formData, editTitle: value})
               }
             />
 
@@ -466,13 +470,13 @@ const TaskList = ({ navigation, route }) => {
             <TextInput
               style={[
                 styles1.Emailinput,
-                { backgroundColor: 'transparent', height: 40 },
+                {backgroundColor: 'transparent', height: 40},
               ]}
               placeholder="Team Description"
               placeholderTextColor="#8d98b0"
               value={formData.editDesc}
               onChangeText={value =>
-                setFormData({ ...formData, editDesc: value })
+                setFormData({...formData, editDesc: value})
               }
             />
             <View>
@@ -480,13 +484,13 @@ const TaskList = ({ navigation, route }) => {
               <TextInput
                 style={[
                   styles1.Emailinput,
-                  { backgroundColor: 'transparent', height: 40 },
+                  {backgroundColor: 'transparent', height: 40},
                 ]}
                 placeholder="Team Enddate"
                 placeholderTextColor="#8d98b0"
                 value={formData.endDate}
                 onChangeText={value =>
-                  setFormData({ ...formData, endDate: value })
+                  setFormData({...formData, endDate: value})
                 }
               />
             </View>
@@ -497,7 +501,10 @@ const TaskList = ({ navigation, route }) => {
                 width: 290,
                 marginLeft: 15,
               }}>
-              <Button icon="close" mode="contained" onPress={closeeditBottomSheet}>
+              <Button
+                icon="close"
+                mode="contained"
+                onPress={closeeditBottomSheet}>
                 Close
               </Button>
               <Button
@@ -517,14 +524,12 @@ const TaskList = ({ navigation, route }) => {
                         onPress: () => editTask(teamIdByItem, taskId), // Wrap the function call inside an arrow function
                       },
                     ],
-                    { cancelable: false }
+                    {cancelable: false},
                   );
                 }}
-                style={{ marginLeft: 5 }}
-              >
+                style={{marginLeft: 5}}>
                 Done
               </Button>
-
             </View>
           </View>
         </RBSheet>
@@ -534,10 +539,11 @@ const TaskList = ({ navigation, route }) => {
           <Modal
             visible={memberTeam}
             onDismiss={() => setmemberTeam(false)}
-            contentContainerStyle={containerMemberStyle}
-          >
-            <Text style={{ color: "#9E9E9E", fontSize: 15 }}>Tap to select/deselect the members</Text>
-            <ScrollView style={{ maxHeight: 400 }}>
+            contentContainerStyle={containerMemberStyle}>
+            <Text style={{color: '#9E9E9E', fontSize: 15}}>
+              Tap to select/deselect the members
+            </Text>
+            <ScrollView style={{maxHeight: 400}}>
               {resultTeamMemberData.length === 0 ? (
                 <View>
                   <Text
@@ -547,13 +553,12 @@ const TaskList = ({ navigation, route }) => {
                       padding: 20,
                       textAlign: 'center',
                       letterSpacing: 1.5,
-                    }}
-                  >
+                    }}>
                     Team members are already added.
                   </Text>
                 </View>
               ) : (
-                resultTeamMemberData.map((items) => (
+                resultTeamMemberData.map(items => (
                   <TeamMember
                     key={items._id}
                     designation={items.designation}
@@ -570,14 +575,12 @@ const TaskList = ({ navigation, route }) => {
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
                 padding: 10,
-              }}
-            >
+              }}>
               <Button
                 icon="close"
                 mode="contained"
                 onPress={() => setmemberTeam(false)}
-                style={{ marginRight: 10 }}
-              >
+                style={{marginRight: 10}}>
                 Close
               </Button>
               <Button
@@ -597,17 +600,15 @@ const TaskList = ({ navigation, route }) => {
                         onPress: handleSubmit,
                       },
                     ],
-                    { cancelable: false }
+                    {cancelable: false},
                   );
                 }}
-                disabled={resultTeamMemberData.length === 0}
-              >
+                disabled={resultTeamMemberData.length === 0}>
                 Add Member
               </Button>
             </View>
           </Modal>
         </Portal>
-
 
         {/* Listing to add team members end */}
         {/* Add task Modal start */}
@@ -624,14 +625,14 @@ const TaskList = ({ navigation, route }) => {
         <ScrollView>
           <View style={[styles.fullscreen]}>
             <View style={styles.outer}>
-              <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <View style={{display: 'flex', flexDirection: 'row'}}>
                 <View style={styles.titleContainer}>
                   <Text style={[styles.titleText]}>{teamTitle}</Text>
                 </View>
                 <TouchableOpacity
                   style={styles.addButton}
                   onPress={fetchTeamMembers}
-                // onPress={openBottomSheet}
+                  // onPress={openBottomSheet}
                 >
                   <Text style={styles.addText}>View Team</Text>
                 </TouchableOpacity>
@@ -641,7 +642,7 @@ const TaskList = ({ navigation, route }) => {
                   <Text style={[styles.dateText]}>{currentDate}</Text>
                 </View>
               </View>
-              <View style={{ display: 'flex', flexDirection: 'row' }}>
+              <View style={{display: 'flex', flexDirection: 'row'}}>
                 <View
                   style={{
                     backgroundColor: '#ffff',
@@ -699,10 +700,9 @@ const TaskList = ({ navigation, route }) => {
                 <View
                   style={[
                     styles1.pbView,
-                    { width: '50%', justifyContent: 'center' },
+                    {width: '50%', justifyContent: 'center'},
                   ]}>
                   <View style={styles1.pbStyle}>
-
                     <CircularProgressBar
                       selectedValue={totalProgress}
                       maxValue={100}
@@ -716,7 +716,7 @@ const TaskList = ({ navigation, route }) => {
 
               <CalendarStrip
                 onDateSelected={date => console.log(date)}
-                calendarAnimation={{ type: 'sequence', duration: 30 }}
+                calendarAnimation={{type: 'sequence', duration: 30}}
                 daySelectionAnimation={{
                   type: 'border',
                   duration: 200,
@@ -724,19 +724,19 @@ const TaskList = ({ navigation, route }) => {
                   borderHighlightColor: 'black',
                 }}
                 style={styles.calenderStyle}
-                calendarHeaderStyle={{ color: 'black' }}
+                calendarHeaderStyle={{color: 'black'}}
                 // calendarColor={'#7743CE'}
-                dateNumberStyle={{ color: 'black' }}
-                dateNameStyle={{ color: '#8d98b0' }}
-                highlightDateNumberStyle={{ color: '#5a55ca' }}
-                highlightDateNameStyle={{ color: '#5a55ca' }}
-                disabledDateNameStyle={{ color: 'black' }}
-                disabledDateNumberStyle={{ color: 'black' }}
+                dateNumberStyle={{color: 'black'}}
+                dateNameStyle={{color: '#8d98b0'}}
+                highlightDateNumberStyle={{color: '#5a55ca'}}
+                highlightDateNameStyle={{color: '#5a55ca'}}
+                disabledDateNameStyle={{color: 'black'}}
+                disabledDateNumberStyle={{color: 'black'}}
                 datesWhitelist={datesWhitelist}
                 // datesBlacklist={datesBlacklist}
                 // iconLeft={require('./img/left-arrow.png')}
                 // iconRight={require('./img/right-arrow.png')}
-                iconContainer={{ flex: 0.1 }}
+                iconContainer={{flex: 0.1}}
               />
             </View>
             {isLoading ? (
@@ -746,7 +746,7 @@ const TaskList = ({ navigation, route }) => {
                 {fetchTask.length === 0 ? (
                   <View
                     style={{
-                      width: "100%",
+                      width: '100%',
                       height: 500,
                       display: 'flex',
                       alignItems: 'center',
@@ -762,22 +762,29 @@ const TaskList = ({ navigation, route }) => {
                       }}>
                       You don't have Tasks to Display
                     </Text>
-                    { userRole == "ROLE_ADMIN" ?   <Button
-                      icon="plus"
-                      mode="contained"
-                      onPress={() => showModal()}
-                      style={{ width: 150 }}>
-                      Add Task
-                    </Button>:""}
+                    {userRole == 'ROLE_ADMIN' ? (
+                      <Button
+                        icon="plus"
+                        mode="contained"
+                        onPress={() => showModal()}
+                        style={{width: 150}}>
+                        Add Task
+                      </Button>
+                    ) : (
+                      ''
+                    )}
                   </View>
                 ) : (
                   fetchTask.map(items => {
-                    {/* console.log('Progress for Task:', items.taskName, items.Progress);
+                    {
+                      /* console.log('Progress for Task:', items.taskName, items.Progress);
                     
                     subtaskLength = items.subTask.length;
-                    {/* console.log(subtaskLength); */}
-                    {/* totalProgress1 = calculateCirP(items.Progress , subtaskLength, fetchTask.length); */ }
-
+                    {/* console.log(subtaskLength); */
+                    }
+                    {
+                      /* totalProgress1 = calculateCirP(items.Progress , subtaskLength, fetchTask.length); */
+                    }
 
                     return (
                       <TaskItem
@@ -798,40 +805,43 @@ const TaskList = ({ navigation, route }) => {
                       />
                     );
                   })
-
                 )}
               </>
             )}
           </View>
         </ScrollView>
 
-        {userRole == "ROLE_ADMIN" ? <Portal>
-          <FAB.Group
-            open={open}
-            fabStyle={styles.fab}
-            visible
-            icon={open ? 'chevron-down' : 'plus'}
-            actions={[
-              {
-                icon: 'plus',
-                label: 'Add Task',
-                onPress: () => showModal(),
-              },
-              {
-                icon: 'plus',
-                label: 'Add Team Members',
-                onPress: () => setmemberTeam(true),
-              },
-            ]}
-            onStateChange={onStateChange}
-            onPress={() => {
-              if (open) {
-                // do something if the speed dial is open
-              }
-            }}
-            overlayColor="transparent"
-          />
-        </Portal> : ""}
+        {userRole == 'ROLE_ADMIN' ? (
+          <Portal>
+            <FAB.Group
+              open={open}
+              fabStyle={styles.fab}
+              visible
+              icon={open ? 'chevron-down' : 'plus'}
+              actions={[
+                {
+                  icon: 'plus',
+                  label: 'Add Task',
+                  onPress: () => showModal(),
+                },
+                {
+                  icon: 'plus',
+                  label: 'Add Team Members',
+                  onPress: () => setmemberTeam(true),
+                },
+              ]}
+              onStateChange={onStateChange}
+              onPress={() => {
+                if (open) {
+                  // do something if the speed dial is open
+                }
+              }}
+              overlayColor="transparent"
+            />
+          </Portal>
+        ) : (
+          ''
+        )}
       </ScrollView>
     </Provider>
   );

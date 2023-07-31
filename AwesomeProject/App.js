@@ -12,7 +12,7 @@ import BottomTabNavigator from './src/Screens/BottomTabNavigator';
 import Loader from './src/Screens/Loader';
 import TaskState from './src/Context/taskState';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {initializeApp} from 'firebase/app';
+import GuInfo from './src/Screens/GuInfo';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -71,6 +71,11 @@ const App = () => {
             <Stack.Screen
               name="Welcome"
               component={Welcome}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="GuInfo"
+              component={GuInfo}
               options={{headerShown: false}}
             />
             <Stack.Screen
