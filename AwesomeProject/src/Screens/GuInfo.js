@@ -6,14 +6,14 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import React from 'react';
-import {useState} from 'react';
-import {useRoute} from '@react-navigation/native';
+
+import React, { useEffect, useState } from 'react';
+import { useRef } from 'react';
+import { useRoute } from '@react-navigation/native';
 import styles from '../Styles/registerstyles';
-import TaskContext from '../Context/taskContext';
-import {Image} from 'react-native';
-import {useRef} from 'react';
-import {Picker} from '@react-native-picker/picker';
+import { Image } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Picker } from '@react-native-picker/picker';
 
 const designations = [
   'Software Developer',
@@ -22,73 +22,122 @@ const designations = [
   'CAD Developer',
   'Other',
 ];
-const GuInfo = () => {
-  const {handleSubmitRegister} = context;
+
+const GuInfo = ({ navigation }) => {
+
+  
+  
   const route = useRoute();
-  const {displayName, email, photoURL} = route.params;
-  const [name, setName] = useState('');
+  const { name, email, photoURL, pass } = route.params;
   const [phone, setPhone] = useState('');
-  const [emaile, setEmail] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
-  const [selectedDesignation, setSelectedDesignation] = useState(
-    designations[0],
-  );
-  const context = useContext(TaskContext);
+  const [selectedDesignation, setSelectedDesignation] = useState(designations[0]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const pickerRef = useRef(); // Add this line to create the pickerRef
+
+
+  useEffect(() => {
+    console.log('This is user ', name, email, photoURL, pass);
+  }, []);
+
+  const handleSubmitRegister = async (name, email, pass, phone, role, selectedDesignation, photoURL) => {
+    try {
+      console.log("This is from taskstack", name, email, pass, phone, role);
+     
+        // setSpinner(true);
+        const response = await fetch('https://tsk-final-backend.vercel.app/api/auth/createuser', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            userRole: role,
+            designation: selectedDesignation,
+            password: pass,
+            photoUrl: photoURL
+
+          }),
+        });
+
+        const res = await response.json();
+        console.log(res);
+        // await AsyncStorage.setItem('auth-token', res.authToken);
+        // const auth = await AsyncStorage.getItem('auth-token');
+        // console.log(auth);
+
+        return true;
+     
+    } catch (error) {
+      console.error(error);
+      // handleBackendError()
+      return false;
+    }
+  };
+  const handleOpenPicker = () => {
+    // This function is triggered when the TouchableOpacity is pressed
+    // It will open the Picker using refs
+    pickerRef.current && pickerRef.current.focus();
+  };
+
+  const handleSuccess = () => {
+    // Define your success handling logic here or use a toast component to display success messages.
+  };
+
   const handlePressRegister = (
     name,
     email,
+    pass,
     phone,
     selectedRole,
     selectedDesignation,
   ) => {
     // Validate the form fields
-    console.log(name, email, phone, selectedRole, selectedDesignation);
+    console.log(name, email, pass, phone, selectedRole, selectedDesignation);
     if (
       !name ||
       !email ||
-      !password ||
       !phone ||
       !selectedRole ||
-      !cnfpassword ||
       !selectedDesignation
     ) {
-      ToastComponent({message: 'Please fill in all fields'});
+      // ToastComponent({ message: 'Please fill in all fields' });
       return;
     }
 
-    // Validate the email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      ToastComponent({message: 'Please enter a valid email address'});
-      return;
-    }
     setIsLoading(true);
-    handleSubmitRegister(name, email, selectedRole, selectedDesignation)
+    handleSubmitRegister(name, email, pass, phone, selectedRole, selectedDesignation, photoURL)
       .then(success => {
         if (success) {
           handleSuccess();
           navigation.navigate('NavigationScreen');
         } else {
           // Registration failed, handle the error or display an error message
-          handleBackendError(new Error('Registration failed'));
+          // handleBackendError(new Error('Registration failed'));
         }
       })
       .catch(error => {
         setIsLoading(false);
         console.error(error);
         // An error occurred during registration, handle the error or display an error message
-        handleBackendError(error);
+        // handleBackendError(error);
       });
   };
+
   const handleRoleSelection = role => {
     setSelectedRole(role);
   };
+
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
         <TouchableOpacity
-          style={{flexDirection: 'row', marginTop: 20}}
-          onPress={() => navigation.goBack()}>
+          style={{ flexDirection: 'row', marginTop: 20 }}
+          onPress={() => navigation.goBack()}
+        >
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Register</Text>
         </TouchableOpacity>
@@ -101,7 +150,8 @@ const GuInfo = () => {
               styles.roleSelectionIconContainer,
               selectedRole === 'ROLE_ADMIN' && styles.selectedRoleContainer,
             ]}
-            onPress={() => handleRoleSelection('ROLE_ADMIN')}>
+            onPress={() => handleRoleSelection('ROLE_ADMIN')}
+          >
             <Image
               source={require('../../assets/admin.png')}
               style={[
@@ -113,7 +163,8 @@ const GuInfo = () => {
               style={[
                 styles.roleSelectionText,
                 selectedRole === 'ROLE_ADMIN' && styles.selectedRoleText,
-              ]}>
+              ]}
+            >
               Admin
             </Text>
           </TouchableOpacity>
@@ -122,7 +173,8 @@ const GuInfo = () => {
               styles.roleSelectionIconContainer,
               selectedRole === 'ROLE_MEMBER' && styles.selectedRoleContainer,
             ]}
-            onPress={() => handleRoleSelection('ROLE_MEMBER')}>
+            onPress={() => handleRoleSelection('ROLE_MEMBER')}
+          >
             <Image
               source={require('../../assets/member.png')}
               style={[
@@ -134,18 +186,20 @@ const GuInfo = () => {
               style={[
                 styles.roleSelectionText,
                 selectedRole === 'ROLE_MEMBER' && styles.selectedRoleText,
-              ]}>
+              ]}
+            >
               Member
             </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>{displayName}</Text>
+          <Text style={styles.labelStyle}>Full Name</Text>
           <TextInput
             style={styles.inputStyle}
             placeholder=""
             placeholderTextColor="#8d98b0"
-            value={displayName}
+            value={name}
+            onChangeText={text => setName(text)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -160,34 +214,28 @@ const GuInfo = () => {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>Designation</Text>
-          <TouchableOpacity onPress={handleOpenPicker}>
-            {/* The TouchableOpacity wraps the TextInput */}
-            <TextInput
-              style={styles.inputStyle}
-              placeholder={
-                selectedDesignation
-                  ? selectedDesignation
-                  : 'Choose the designation'
-              } // Set the default placeholder text
-              placeholderTextColor="black"
-              editable={false} // Disable direct editing of the TextInput
-            />
-          </TouchableOpacity>
-          <Picker
-            ref={pickerRef} // Assign the ref to the Picker
-            style={{height: 0}} // Set height to 0 to make it invisible
-            selectedValue={selectedDesignation}
-            onValueChange={itemValue => setSelectedDesignation(itemValue)}>
-            {designations.map(designation => (
-              <Picker.Item
-                key={designation}
-                label={designation}
-                value={designation}
-              />
-            ))}
-          </Picker>
-        </View>
+        <Text style={styles.labelStyle}>Designation</Text>
+        <TouchableOpacity onPress={handleOpenPicker}>
+          {/* The TouchableOpacity wraps the TextInput */}
+          <TextInput
+            style={styles.inputStyle}
+            placeholder={selectedDesignation ? selectedDesignation : 'Choose the designation'} // Set the default placeholder text
+            placeholderTextColor="black"
+            editable={false} // Disable direct editing of the TextInput
+          />
+         
+        </TouchableOpacity>
+        <Picker
+          ref={pickerRef} // Assign the ref to the Picker
+          style={{ height: 0 }} // Set height to 0 to make it invisible
+          selectedValue={selectedDesignation}
+          onValueChange={(itemValue) => setSelectedDesignation(itemValue)}
+        >
+          {designations.map((designation) => (
+            <Picker.Item key={designation} label={designation} value={designation} />
+          ))}
+        </Picker>
+      </View>
         <View style={styles.inputContainer}>
           <Text style={styles.labelStyle}>Email</Text>
           <TextInput
@@ -198,85 +246,31 @@ const GuInfo = () => {
             onChangeText={text => setEmail(text)}
           />
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>Password</Text>
-          <View style={styles.passwordInputContainer}>
-            <TextInput
-              style={styles.passwordInputStyle}
-              value={password}
-              onChangeText={setPassword}
-              placeholder=""
-              placeholderTextColor="#8d98b0"
-              secureTextEntry={hidePassword}
-            />
-            <IconButton
-              icon={hidePassword ? 'eye-off' : 'eye'}
-              color="black"
-              size={20}
-              onPress={() => setHidePassword(!hidePassword)}
-            />
-          </View>
+        
+        
         </View>
-        <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>Confirm Password</Text>
-          <View style={styles.passwordInputContainer}>
-            <TextInput
-              style={styles.passwordInputStyle}
-              value={cnfpassword}
-              onChangeText={text => setCnfPassword(text)}
-              placeholderTextColor="#8d98b0"
-              secureTextEntry={hideCnfPassword}
-            />
-            <IconButton
-              icon={hideCnfPassword ? 'eye-off' : 'eye'}
-              color="black"
-              size={20}
-              onPress={() => setHideCnfPassword(!hideCnfPassword)}
-            />
-          </View>
-        </View>
-        <TouchableOpacity
-          style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
-          onPress={() =>
-            handlePressRegister(
-              name,
-              email,
-              password,
-              phone,
-              selectedRole,
-              cnfpassword,
-              selectedDesignation,
-            )
-          }
-          disabled={isLoading}>
-          {isLoading ? (
-            <ActivityIndicator size="small" color="#ffffff" />
-          ) : (
-            <Text style={styles.loginText}>Register</Text>
-          )}
-        </TouchableOpacity>
-
-        <View style={styles.signInContainer}>
-          <Text style={styles.signInText}>Already have an Account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.signInLink}>Log In</Text>
-          </TouchableOpacity>
-        </View>
-        {/* <Text style={styles.signInText}>Sign In/ Register with:</Text> */}
-        {/* <View style={styles.socialIconsContainer}>
-              <TouchableOpacity onPress={() => console.warn('google Pressed')}>
-                <Icon
-                  name="ios-logo-google"
-                  size={35}
-                  color="#5a55ca"
-                  style={{ marginRight: 10 }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.warn('facebook Pressed')}>
-                <Icon name="ios-logo-facebook" size={35} color="#5a55ca" />
-              </TouchableOpacity>
-            </View> */}
-      </View>
+      <TouchableOpacity
+        style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
+        onPress={() =>
+          handlePressRegister(
+            name,
+            email,
+            pass,
+            phone,
+            selectedRole,
+            selectedDesignation,
+            photoURL
+          )
+        }
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <ActivityIndicator size="small" color="#ffffff" />
+        ) : (
+          <Text style={styles.loginText}>Enter Details</Text>
+        )}
+      </TouchableOpacity>
+     
     </ScrollView>
   );
 };

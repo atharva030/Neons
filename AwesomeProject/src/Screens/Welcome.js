@@ -23,11 +23,19 @@ const Welcome = ({navigation}) => {
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
       setUser(auth().currentUser);
-      console.log('This is user ', user.email, user.displayName, user.photoURL);
-      if (user.email && user.displayName) {
+      //console.log('This is user ', user.email, user.displayName, user.photoURL);
+      
+      // if (user.email && user.displayName) {
+      //   handleNavigation(user);
+      // } else {
+        
+      //   Alert.alert('Please provide your name and Email to continue');
+      // }
+
+      if(user == null){
+        console.log('try again');
+      }else{
         handleNavigation(user);
-      } else {
-        Alert.alert('Please provide your name and Email to continue');
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -46,9 +54,10 @@ const Welcome = ({navigation}) => {
   };
   const handleNavigation = user => {
     navigation.navigate('GuInfo', {
-      displayName: user.displayName,
+      name: user.displayName,
       email: user.email,
       photoURL: user.photoURL,
+      pass : user.uid,
     });
   };
   return (
