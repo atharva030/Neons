@@ -101,7 +101,7 @@ const GuInfo = ({navigation}) => {
           await AsyncStorage.setItem(
             'user',
             JSON.stringify({
-              authToken: gdata.authToken,
+              authToken: data.authToken,
               userRole: data.userRole,
               userName: data.userName,
               userDes: data.designation,

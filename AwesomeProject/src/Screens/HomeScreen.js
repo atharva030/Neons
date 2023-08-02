@@ -108,7 +108,7 @@ const HomeScreen = ({navigation}) => {
           userDes,
         );
         // Call fetchTeam() here after setting the authToken
-        // fetchTeam();
+        fetchTeam();
       }
     } catch (error) {
       console.log('Error while retrieving userRole from AsyncStorage:', error);
