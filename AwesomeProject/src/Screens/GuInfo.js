@@ -1,3 +1,4 @@
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -5,15 +6,14 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from 'react-native';
-
-import React, { useEffect, useState } from 'react';
-import { useRef } from 'react';
-import { useRoute } from '@react-navigation/native';
-import styles from '../Styles/registerstyles';
-import { Image } from 'react-native';
+import {useRoute} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Picker } from '@react-native-picker/picker';
+import {Picker} from '@react-native-picker/picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import styles from '../Styles/registerstyles';
+import ToastComponent from '../Components/Toast/toast';
 
 const designations = [
   'Software Developer',
@@ -23,108 +23,151 @@ const designations = [
   'Other',
 ];
 
-const GuInfo = ({ navigation }) => {
-
-  
-  
+const GuInfo = ({navigation}) => {
   const route = useRoute();
-  const { name, email, photoURL, pass } = route.params;
+  const {name, email, photoURL, pass} = route.params;
   const [phone, setPhone] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
-  const [selectedDesignation, setSelectedDesignation] = useState(designations[0]);
+  const [selectedDesignation, setSelectedDesignation] = useState(
+    designations[null],
+  );
   const [isLoading, setIsLoading] = useState(false);
-
-  const pickerRef = useRef(); // Add this line to create the pickerRef
-
-
-  useEffect(() => {
-    console.log('This is user ', name, email, photoURL, pass);
-  }, []);
-
-  const handleSubmitRegister = async (name, email, pass, phone, role, selectedDesignation, photoURL) => {
+  const pickerRef = useRef();
+  const handleBackendError = () => {
+    ToastComponent({message: 'Check your Network'});
+  };
+  const handleSubmitRegister = async (
+    name,
+    email,
+    pass,
+    phone,
+    role,
+    selectedDesignation,
+    photoURL,
+  ) => {
     try {
-      console.log("This is from taskstack", name, email, pass, phone, role);
-     
-        // setSpinner(true);
-        const response = await fetch('https://tsk-final-backend.vercel.app/api/auth/createuser', {
+      setIsLoading(true);
+
+      const response = await fetch(
+        'https://tsk-final-backend.vercel.app/api/auth/createuser',
+        {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            name: name,
-            email: email,
-            phone: phone,
+            name,
+            email,
+            phone,
             userRole: role,
             designation: selectedDesignation,
             password: pass,
-            photoUrl: photoURL
-
+            photoUrl: photoURL,
           }),
-        });
+        },
+      );
 
-        const res = await response.json();
-        console.log(res);
-        // await AsyncStorage.setItem('auth-token', res.authToken);
-        // const auth = await AsyncStorage.getItem('auth-token');
-        // console.log(auth);
-
+      if (response.ok) {
+        const gdata = await response.json();
+        try {
+          if (!email || !pass) {
+            ToastComponent({message: 'Please fill in all fields'});
+            return;
+          }
+          setIsLoading(true);
+          const response = await fetch(
+            'https://tsk-final-backend.vercel.app/api/auth/login',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: email,
+                password: pass,
+              }),
+            },
+          );
+          const data = await response.json();
+          console.log(data);
+          setIsLoading(false);
+          if (!response.ok) {
+            ToastComponent({
+              message: data.error || 'Invalid email or password',
+            });
+          }
+          // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
+          console.log(data.authToken);
+          await AsyncStorage.setItem(
+            'user',
+            JSON.stringify({
+              authToken: gdata.authToken,
+              userRole: data.userRole,
+              userName: data.userName,
+              userDes: data.designation,
+            }),
+          );
+          handleSuccess();
+          navigation.navigate('NavigationScreen');
+        } catch (error) {
+          setIsLoading(false);
+          console.log(error);
+          handleBackendError();
+        }
+        setIsLoading(false);
         return true;
-     
+      }
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
       // handleBackendError()
       return false;
     }
   };
+  const getUserRole = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      console.log(userData);
+      if (userData) {
+        const {userRole, userName, authToken, userDes} = JSON.parse(userData);
+        setUserRole(userRole);
+        setidName(userName);
+        setauthenToken(authToken);
+        setuserDes(userDes);
+        setphotoUrl(photoURL);
+        console.log(
+          'This is the one from homescreen',
+          userRole,
+          idName,
+          authenToken,
+          userDes,
+        );
+        // Call fetchTeam() here after setting the authToken
+        // fetchTeam();
+      }
+    } catch (error) {
+      console.log('Error while retrieving userRole from AsyncStorage:', error);
+    }
+  };
+  const getUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        const data = JSON.parse(userData);
+
+        console.log(data);
+      } else {
+        console.log('User data not found in AsyncStorage.');
+      }
+    } catch (error) {
+      console.log('Error while retrieving user data:', error);
+    }
+  };
   const handleOpenPicker = () => {
-    // This function is triggered when the TouchableOpacity is pressed
-    // It will open the Picker using refs
     pickerRef.current && pickerRef.current.focus();
   };
-
   const handleSuccess = () => {
-    // Define your success handling logic here or use a toast component to display success messages.
-  };
-
-  const handlePressRegister = (
-    name,
-    email,
-    pass,
-    phone,
-    selectedRole,
-    selectedDesignation,
-  ) => {
-    // Validate the form fields
-    console.log(name, email, pass, phone, selectedRole, selectedDesignation);
-    if (
-      !name ||
-      !email ||
-      !phone ||
-      !selectedRole ||
-      !selectedDesignation
-    ) {
-      // ToastComponent({ message: 'Please fill in all fields' });
-      return;
-    }
-
-    setIsLoading(true);
-    handleSubmitRegister(name, email, pass, phone, selectedRole, selectedDesignation, photoURL)
-      .then(success => {
-        if (success) {
-          handleSuccess();
-          navigation.navigate('NavigationScreen');
-        } else {
-          // Registration failed, handle the error or display an error message
-          // handleBackendError(new Error('Registration failed'));
-        }
-      })
-      .catch(error => {
-        setIsLoading(false);
-        console.error(error);
-        // An error occurred during registration, handle the error or display an error message
-        // handleBackendError(error);
-      });
+    ToastComponent({message: 'Login Sucessfull'});
   };
 
   const handleRoleSelection = role => {
@@ -135,23 +178,23 @@ const GuInfo = ({ navigation }) => {
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginTop: 20 }}
-          onPress={() => navigation.goBack()}
-        >
+          style={{flexDirection: 'row', marginTop: 20}}
+          onPress={() => navigation.goBack()}>
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Register</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.registerSecondScreen}>
-        <Text style={styles.titleText}>Create a new Account</Text>
+        <Text style={styles.titleText}>Create a New Account</Text>
+
         <View style={styles.roleSelectionContainer}>
           <TouchableOpacity
             style={[
               styles.roleSelectionIconContainer,
               selectedRole === 'ROLE_ADMIN' && styles.selectedRoleContainer,
             ]}
-            onPress={() => handleRoleSelection('ROLE_ADMIN')}
-          >
+            onPress={() => handleRoleSelection('ROLE_ADMIN')}>
             <Image
               source={require('../../assets/admin.png')}
               style={[
@@ -163,18 +206,17 @@ const GuInfo = ({ navigation }) => {
               style={[
                 styles.roleSelectionText,
                 selectedRole === 'ROLE_ADMIN' && styles.selectedRoleText,
-              ]}
-            >
+              ]}>
               Admin
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={[
               styles.roleSelectionIconContainer,
               selectedRole === 'ROLE_MEMBER' && styles.selectedRoleContainer,
             ]}
-            onPress={() => handleRoleSelection('ROLE_MEMBER')}
-          >
+            onPress={() => handleRoleSelection('ROLE_MEMBER')}>
             <Image
               source={require('../../assets/member.png')}
               style={[
@@ -186,12 +228,12 @@ const GuInfo = ({ navigation }) => {
               style={[
                 styles.roleSelectionText,
                 selectedRole === 'ROLE_MEMBER' && styles.selectedRoleText,
-              ]}
-            >
+              ]}>
               Member
             </Text>
           </TouchableOpacity>
         </View>
+
         <View style={styles.inputContainer}>
           <Text style={styles.labelStyle}>Full Name</Text>
           <TextInput
@@ -199,9 +241,9 @@ const GuInfo = ({ navigation }) => {
             placeholder=""
             placeholderTextColor="#8d98b0"
             value={name}
-            onChangeText={text => setName(text)}
           />
         </View>
+
         <View style={styles.inputContainer}>
           <Text style={styles.labelStyle}>Phone</Text>
           <TextInput
@@ -213,29 +255,31 @@ const GuInfo = ({ navigation }) => {
             keyboardType="numeric"
           />
         </View>
+
         <View style={styles.inputContainer}>
-        <Text style={styles.labelStyle}>Designation</Text>
-        <TouchableOpacity onPress={handleOpenPicker}>
-          {/* The TouchableOpacity wraps the TextInput */}
-          <TextInput
-            style={styles.inputStyle}
-            placeholder={selectedDesignation ? selectedDesignation : 'Choose the designation'} // Set the default placeholder text
-            placeholderTextColor="black"
-            editable={false} // Disable direct editing of the TextInput
-          />
-         
-        </TouchableOpacity>
-        <Picker
-          ref={pickerRef} // Assign the ref to the Picker
-          style={{ height: 0 }} // Set height to 0 to make it invisible
-          selectedValue={selectedDesignation}
-          onValueChange={(itemValue) => setSelectedDesignation(itemValue)}
-        >
-          {designations.map((designation) => (
-            <Picker.Item key={designation} label={designation} value={designation} />
-          ))}
-        </Picker>
-      </View>
+          <Text style={styles.labelStyle}>Designation</Text>
+          <TouchableOpacity onPress={handleOpenPicker}>
+            <View style={styles.inputStyle}>
+              {/* <Text style={{color: selectedDesignation ? 'black' : '#8d98b0'}}>
+                {selectedDesignation || 'Choose the designation'}
+              </Text> */}
+              <Picker
+                ref={pickerRef}
+                style={{height: 0, overflow: 'hidden'}} // Set overflow to 'hidden' to clip the items within the container
+                selectedValue={selectedDesignation}
+                onValueChange={itemValue => setSelectedDesignation(itemValue)}>
+                {designations.map(designation => (
+                  <Picker.Item
+                    key={designation}
+                    label={designation}
+                    value={designation}
+                  />
+                ))}
+              </Picker>
+            </View>
+          </TouchableOpacity>
+        </View>
+
         <View style={styles.inputContainer}>
           <Text style={styles.labelStyle}>Email</Text>
           <TextInput
@@ -243,34 +287,32 @@ const GuInfo = ({ navigation }) => {
             placeholder=""
             placeholderTextColor="#8d98b0"
             value={email}
-            onChangeText={text => setEmail(text)}
           />
         </View>
-        
-        
-        </View>
+      </View>
+
       <TouchableOpacity
         style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
         onPress={() =>
-          handlePressRegister(
+          handleSubmitRegister(
             name,
             email,
             pass,
             phone,
             selectedRole,
             selectedDesignation,
-            photoURL
+            photoURL,
           )
         }
-        disabled={isLoading}
-      >
+        disabled={isLoading}>
         {isLoading ? (
           <ActivityIndicator size="small" color="#ffffff" />
         ) : (
-          <Text style={styles.loginText}>Enter Details</Text>
+          <View style={styles.signInContainer}>
+            <Text style={styles.loginText}>Enter Details</Text>
+          </View>
         )}
       </TouchableOpacity>
-     
     </ScrollView>
   );
 };

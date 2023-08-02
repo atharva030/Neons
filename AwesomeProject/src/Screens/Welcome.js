@@ -22,19 +22,19 @@ const Welcome = ({navigation}) => {
       const {idToken} = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
-      setUser(auth().currentUser);
-      //console.log('This is user ', user.email, user.displayName, user.photoURL);
-      
-      // if (user.email && user.displayName) {
-      //   handleNavigation(user);
-      // } else {
-        
-      //   Alert.alert('Please provide your name and Email to continue');
-      // }
+      const currentUser = auth().currentUser;
+      setUser(currentUser);
 
-      if(user == null){
-        console.log('try again');
-      }else{
+      console.log(
+        'This is user ',
+        user.email,
+        user.displayName,
+        user.photoURL,
+        user.uid,
+      );
+      if (user.email == null) {
+        Alert.alert('Please provide your name and Email to continue');
+      } else {
         handleNavigation(user);
       }
     } catch (error) {
@@ -57,7 +57,7 @@ const Welcome = ({navigation}) => {
       name: user.displayName,
       email: user.email,
       photoURL: user.photoURL,
-      pass : user.uid,
+      pass: user.uid,
     });
   };
   return (

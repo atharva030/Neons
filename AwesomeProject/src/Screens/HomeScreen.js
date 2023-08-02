@@ -26,7 +26,6 @@ import styles1 from '../Styles/AddTaskStyle';
 import ToastComponent from '../Components/Toast/toast';
 import Avatardropmodal from '../Components/Avatardropmodal';
 import AppLoader from '../Components/AppLoader';
-
 const handleSuccess = () => {
   ToastComponent({message: 'Team Added successfully'});
 };
@@ -89,17 +88,25 @@ const HomeScreen = ({navigation}) => {
   const [idName, setidName] = useState('');
   const [authenToken, setauthenToken] = useState('');
   const [userDes, setuserDes] = useState('');
+  const [photoURL, setphotoUrl] = useState('');
   const getUserRole = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
-
+      console.log('this is from home screen ', userData);
       if (userData) {
         const {userRole, userName, authToken, userDes} = JSON.parse(userData);
         setUserRole(userRole);
         setidName(userName);
         setauthenToken(authToken);
         setuserDes(userDes);
-        // console.log("This is the one from homescreen",userRole,idName,authenToken,userDes)
+        setphotoUrl(photoURL);
+        console.log(
+          'This is the one from homescreen',
+          userRole,
+          idName,
+          authenToken,
+          userDes,
+        );
         // Call fetchTeam() here after setting the authToken
         // fetchTeam();
       }
@@ -119,10 +126,11 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     // Call fetchTeam() whenever authenToken changes
+    console.log(authenToken);
     if (authenToken) {
       fetchTeam();
     }
-  }, [authenToken]);
+  }, []);
 
   useEffect(() => {
     const backAction = () => {
