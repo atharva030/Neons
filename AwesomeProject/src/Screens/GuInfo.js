@@ -22,7 +22,6 @@ const designations = [
   'CAD Developer',
   'Other',
 ];
-
 const GuInfo = ({navigation}) => {
   const route = useRoute();
   const {name, email, photoURL, pass} = route.params;
@@ -66,7 +65,6 @@ const GuInfo = ({navigation}) => {
           }),
         },
       );
-
       if (response.ok) {
         const gdata = await response.json();
         try {
@@ -105,9 +103,11 @@ const GuInfo = ({navigation}) => {
               userRole: data.userRole,
               userName: data.userName,
               userDes: data.designation,
+              photoUrl: data.photoUrl,
             }),
           );
           handleSuccess();
+          console.log(data.photoUrl);
           navigation.navigate('NavigationScreen');
         } catch (error) {
           setIsLoading(false);
@@ -260,9 +260,9 @@ const GuInfo = ({navigation}) => {
           <Text style={styles.labelStyle}>Designation</Text>
           <TouchableOpacity onPress={handleOpenPicker}>
             <View style={styles.inputStyle}>
-              {/* <Text style={{color: selectedDesignation ? 'black' : '#8d98b0'}}>
+              <Text style={{color: selectedDesignation ? 'black' : '#8d98b0'}}>
                 {selectedDesignation || 'Choose the designation'}
-              </Text> */}
+              </Text>
               <Picker
                 ref={pickerRef}
                 style={{height: 0, overflow: 'hidden'}} // Set overflow to 'hidden' to clip the items within the container

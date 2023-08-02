@@ -6,16 +6,21 @@ import {
   ScrollView,
   ToastAndroid,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
-import { useRef } from 'react';
-import { Picker } from '@react-native-picker/picker'; 
-import React, { useContext, useState } from 'react';
+import {GoogleSignin} from 'react-native-google-signin';
+import {useRef} from 'react';
+import auth from '@react-native-firebase/auth';
+import {Picker} from '@react-native-picker/picker';
+import React, {useContext, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Button, IconButton, shadow } from 'react-native-paper';
+import {IconButton} from 'react-native-paper';
 import styles from '../Styles/registerstyles';
-import { Image } from 'react-native';
+import {Image} from 'react-native';
 import ToastComponent from '../Components/Toast/toast';
 import TaskContext from '../Context/taskContext';
+import {statusCodes} from 'react-native-google-signin';
+
 const designations = [
   'Software Developer',
   'IoT Developer',
@@ -23,14 +28,16 @@ const designations = [
   'CAD Developer',
   'Other',
 ];
+
 const handleSuccess = () => {
-  ToastComponent({ message: 'Registration Sucessfull' });
+  ToastComponent({message: 'Registration Successful'});
 };
 
 const handleBackendError = () => {
-  ToastComponent({ message: '⚠️ Please Try again later!' });
-};;
-const RegisterScreen = ({ navigation }) => {
+  ToastComponent({message: '⚠️ Please Try again later!'});
+};
+
+const RegisterScreen = ({navigation}) => {
   const pickerRef = useRef(null);
   const [hidePassword, setHidePassword] = useState(true);
   const [hideCnfPassword, setHideCnfPassword] = useState(true);
@@ -40,24 +47,20 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [cnfpassword, setCnfPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
-  const [selectedDesignation, setSelectedDesignation] = useState(designations[0]);
-  const context = useContext(TaskContext)
-  const { handleSubmitRegister } = context
+  const [selectedDesignation, setSelectedDesignation] = useState(
+    designations[0],
+  );
+  const context = useContext(TaskContext);
+  const {handleSubmitRegister} = context;
   const [isLoading, setIsLoading] = useState(false);
-  const handleSuccess = () => {
-    ToastComponent({ message: 'Registration Successful' });
-  };
 
   const handleOpenPicker = () => {
-    // This function is triggered when the TouchableOpacity is pressed
-    // It will open the Picker using refs
     pickerRef.current && pickerRef.current.focus();
   };
 
-  const handleBackendError = (error) => {
+  const handleBackendError = error => {
     let errorMessage = '⚠️ Please try again later!';
 
-    // Check the error message received from the backend and customize the toast message accordingly
     if (error.message === 'Email already exists') {
       errorMessage = '⚠️ Email already exists';
     } else if (error.message === 'Phone number already exists') {
@@ -66,73 +69,154 @@ const RegisterScreen = ({ navigation }) => {
 
     ToastAndroid.show(errorMessage, ToastAndroid.LONG);
   };
-  const handlePressRegister = (name, email, password, phone, selectedRole, cnfpassword,selectedDesignation) => {
-    // Validate the form fields
-    console.log(name, email, password, phone, selectedRole, cnfpassword,selectedDesignation)
-    if (!name || !email || !password || !phone || !selectedRole || !cnfpassword || !selectedDesignation) {
-      ToastComponent({ message: 'Please fill in all fields' });
+
+  const handlePressRegister = (
+    name,
+    email,
+    password,
+    phone,
+    selectedRole,
+    cnfpassword,
+    selectedDesignation,
+  ) => {
+    console.log(
+      name,
+      email,
+      password,
+      phone,
+      selectedRole,
+      cnfpassword,
+      selectedDesignation,
+    );
+    if (
+      !name ||
+      !email ||
+      !password ||
+      !phone ||
+      !selectedRole ||
+      !cnfpassword ||
+      !selectedDesignation
+    ) {
+      ToastComponent({message: 'Please fill in all fields'});
       return;
     }
 
-    // Validate the email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      ToastComponent({ message: 'Please enter a valid email address' });
+      ToastComponent({message: 'Please enter a valid email address'});
       return;
     }
 
-    // Validate the password length and format
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
     if (password.length < 6 || !passwordRegex.test(password)) {
       ToastComponent({
-        message: 'Password must be at least 6 characters long and contain letters, numbers, and symbols',
+        message:
+          'Password must be at least 6 characters long and contain letters, numbers, and symbols',
       });
       return;
     }
 
-    // Validate the password and confirm password match
     if (password !== cnfpassword) {
-      ToastComponent({ message: 'Passwords do not match' });
+      ToastComponent({message: 'Passwords do not match'});
       return;
     }
 
-    // Validate the phone number length
     if (phone.length !== 10) {
-      ToastComponent({ message: 'Phone number must be 10 digits long' });
+      ToastComponent({message: 'Phone number must be 10 digits long'});
       return;
     }
 
     setIsLoading(true);
-    handleSubmitRegister(name, email, password, phone, selectedRole, cnfpassword,selectedDesignation)
-      .then((success) => {
+    handleSubmitRegister(
+      name,
+      email,
+      password,
+      phone,
+      selectedRole,
+      cnfpassword,
+      selectedDesignation,
+    )
+      .then(success => {
         if (success) {
           handleSuccess();
           navigation.navigate('Login');
         } else {
-          // Registration failed, handle the error or display an error message
           handleBackendError(new Error('Registration failed'));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         setIsLoading(false);
         console.error(error);
-        // An error occurred during registration, handle the error or display an error message
         handleBackendError(error);
       });
   };
 
-
-  const handleRoleSelection = (role) => {
+  const handleRoleSelection = role => {
     setSelectedRole(role);
   };
-  return (
 
+  GoogleSignin.configure({
+    scopes: ['email'],
+    webClientId:
+      '461468934097-cfeol86ft1lq1gmsr5iqjsija3fipfp6.apps.googleusercontent.com',
+    offlineAccess: true,
+  });
+  const [user, setUser] = useState(false);
+  const handleSignIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+      const {idToken} = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      await auth().signInWithCredential(googleCredential);
+      const currentUser = auth().currentUser;
+      setUser(currentUser);
+      console.log(
+        'This is user ',
+        currentUser.email,
+        currentUser.displayName,
+        currentUser.photoURL,
+        currentUser.uid,
+      );
+
+      if (currentUser.email == null) {
+        Alert.alert('Please provide your name and Email to continue');
+      } else {
+        handleNavigation(currentUser);
+      }
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('User cancelled the sign-in flow');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('Sign-in operation is in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('Google Play Services not available or outdated');
+      } else {
+        console.log(
+          'Something went wrong with Google Sign-In: ',
+          error.message,
+        );
+      }
+    }
+  };
+
+  const handleNavigation = user => {
+    navigation.navigate('GuInfo', {
+      name: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      pass: user.uid,
+    });
+  };
+
+  return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
         <TouchableOpacity
-          style={{ flexDirection: 'row', marginTop: 20 }}
-          onPress={() => navigation.goBack()}
-        >
+          style={{flexDirection: 'row', marginTop: 20}}
+          onPress={() => navigation.goBack()}>
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Register</Text>
         </TouchableOpacity>
@@ -145,8 +229,7 @@ const RegisterScreen = ({ navigation }) => {
               styles.roleSelectionIconContainer,
               selectedRole === 'ROLE_ADMIN' && styles.selectedRoleContainer,
             ]}
-            onPress={() => handleRoleSelection('ROLE_ADMIN')}
-          >
+            onPress={() => handleRoleSelection('ROLE_ADMIN')}>
             <Image
               source={require('../../assets/admin.png')}
               style={[
@@ -158,8 +241,7 @@ const RegisterScreen = ({ navigation }) => {
               style={[
                 styles.roleSelectionText,
                 selectedRole === 'ROLE_ADMIN' && styles.selectedRoleText,
-              ]}
-            >
+              ]}>
               Admin
             </Text>
           </TouchableOpacity>
@@ -168,8 +250,7 @@ const RegisterScreen = ({ navigation }) => {
               styles.roleSelectionIconContainer,
               selectedRole === 'ROLE_MEMBER' && styles.selectedRoleContainer,
             ]}
-            onPress={() => handleRoleSelection('ROLE_MEMBER')}
-          >
+            onPress={() => handleRoleSelection('ROLE_MEMBER')}>
             <Image
               source={require('../../assets/member.png')}
               style={[
@@ -181,8 +262,7 @@ const RegisterScreen = ({ navigation }) => {
               style={[
                 styles.roleSelectionText,
                 selectedRole === 'ROLE_MEMBER' && styles.selectedRoleText,
-              ]}
-            >
+              ]}>
               Member
             </Text>
           </TouchableOpacity>
@@ -209,28 +289,33 @@ const RegisterScreen = ({ navigation }) => {
           />
         </View>
         <View style={styles.inputContainer}>
-        <Text style={styles.labelStyle}>Designation</Text>
-        <TouchableOpacity onPress={handleOpenPicker}>
-          {/* The TouchableOpacity wraps the TextInput */}
-          <TextInput
-            style={styles.inputStyle}
-            placeholder={selectedDesignation ? selectedDesignation : 'Choose the designation'} // Set the default placeholder text
-            placeholderTextColor="black"
-            editable={false} // Disable direct editing of the TextInput
-          />
-         
-        </TouchableOpacity>
-        <Picker
-          ref={pickerRef} // Assign the ref to the Picker
-          style={{ height: 0 }} // Set height to 0 to make it invisible
-          selectedValue={selectedDesignation}
-          onValueChange={(itemValue) => setSelectedDesignation(itemValue)}
-        >
-          {designations.map((designation) => (
-            <Picker.Item key={designation} label={designation} value={designation} />
-          ))}
-        </Picker>
-      </View>
+          <Text style={styles.labelStyle}>Designation</Text>
+          <TouchableOpacity onPress={handleOpenPicker}>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder={
+                selectedDesignation
+                  ? selectedDesignation
+                  : 'Choose the designation'
+              }
+              placeholderTextColor="black"
+              editable={false}
+            />
+          </TouchableOpacity>
+          <Picker
+            ref={pickerRef}
+            style={{height: 0}}
+            selectedValue={selectedDesignation}
+            onValueChange={itemValue => setSelectedDesignation(itemValue)}>
+            {designations.map(designation => (
+              <Picker.Item
+                key={designation}
+                label={designation}
+                value={designation}
+              />
+            ))}
+          </Picker>
+        </View>
         <View style={styles.inputContainer}>
           <Text style={styles.labelStyle}>Email</Text>
           <TextInput
@@ -280,11 +365,20 @@ const RegisterScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity
           style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
-          onPress={() => handlePressRegister(name, email, password, phone, selectedRole, cnfpassword,selectedDesignation)}
+          onPress={() =>
+            handlePressRegister(
+              name,
+              email,
+              password,
+              phone,
+              selectedRole,
+              cnfpassword,
+              selectedDesignation,
+            )
+          }
           disabled={isLoading}>
           {isLoading ? (
             <ActivityIndicator size="small" color="#ffffff" />
-
           ) : (
             <Text style={styles.loginText}>Register</Text>
           )}
@@ -296,27 +390,20 @@ const RegisterScreen = ({ navigation }) => {
             <Text style={styles.signInLink}>Log In</Text>
           </TouchableOpacity>
         </View>
-        {/* <Text style={styles.signInText}>Sign In/ Register with:</Text> */}
-        {/* <View style={styles.socialIconsContainer}>
-              <TouchableOpacity onPress={() => console.warn('google Pressed')}>
-                <Icon
-                  name="ios-logo-google"
-                  size={35}
-                  color="#5a55ca"
-                  style={{ marginRight: 10 }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.warn('facebook Pressed')}>
-                <Icon name="ios-logo-facebook" size={35} color="#5a55ca" />
-              </TouchableOpacity>
-            </View> */}
+        <Text style={styles.signInText}>Sign In/ Register with:</Text>
+        <View style={styles.socialIconsContainer}>
+          <TouchableOpacity onPress={handleSignIn}>
+            <Icon
+              name="ios-logo-google"
+              size={35}
+              color="#5a55ca"
+              style={{marginRight: 10}}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </ScrollView>
-
-
   );
 };
-
-
 
 export default RegisterScreen;

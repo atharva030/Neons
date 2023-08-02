@@ -88,27 +88,27 @@ const HomeScreen = ({navigation}) => {
   const [idName, setidName] = useState('');
   const [authenToken, setauthenToken] = useState('');
   const [userDes, setuserDes] = useState('');
-  const [photoURL, setphotoUrl] = useState('');
+  const [photoUrl, setphotoUrl] = useState('');
   const getUserRole = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
       console.log('this is from home screen ', userData);
       if (userData) {
-        const {userRole, userName, authToken, userDes} = JSON.parse(userData);
+        const {userRole, userName, authToken, userDes, photoUrl} =
+          JSON.parse(userData);
         setUserRole(userRole);
         setidName(userName);
         setauthenToken(authToken);
         setuserDes(userDes);
-        setphotoUrl(photoURL);
+        setphotoUrl(photoUrl);
         console.log(
           'This is the one from homescreen',
           userRole,
           idName,
           authenToken,
           userDes,
+          photoUrl,
         );
-        // Call fetchTeam() here after setting the authToken
-        fetchTeam();
       }
     } catch (error) {
       console.log('Error while retrieving userRole from AsyncStorage:', error);
@@ -130,7 +130,7 @@ const HomeScreen = ({navigation}) => {
     if (authenToken) {
       fetchTeam();
     }
-  }, []);
+  }, [authenToken]);
 
   useEffect(() => {
     const backAction = () => {
@@ -470,6 +470,7 @@ const HomeScreen = ({navigation}) => {
                     userName={idName}
                     userDes={userDes}
                     removeUser={removeUser}
+                    photoUrl={photoUrl}
                   />
                 </TouchableOpacity>
               </View>

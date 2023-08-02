@@ -6,13 +6,42 @@ import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import auth from '@react-native-firebase/auth';
 import styles from '../Styles/Welcome';
 import {Alert} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ToastComponent from '../Components/Toast/toast';
+
 GoogleSignin.configure({
   scopes: ['email'],
   webClientId:
     '461468934097-cfeol86ft1lq1gmsr5iqjsija3fipfp6.apps.googleusercontent.com',
   offlineAccess: true,
 });
+const handleSuccess = () => {
+  ToastComponent({message: 'Login Sucessfull'});
+};
+
+const handleBackendError = () => {
+  ToastComponent({message: 'Check your Network'});
+};
+
 const Welcome = ({navigation}) => {
+  useEffect(() => {
+    getUserData();
+  }, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const getUserData = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        const data = JSON.parse(userData);
+
+        console.log(data);
+      } else {
+        console.log('User data not found in AsyncStorage.');
+      }
+    } catch (error) {
+      console.log('Error while retrieving user data:', error);
+    }
+  };
   const [user, setUser] = useState(false);
   const handleSignIn = async () => {
     try {
@@ -25,17 +54,57 @@ const Welcome = ({navigation}) => {
       const currentUser = auth().currentUser;
       setUser(currentUser);
 
-      console.log(
-        'This is user ',
-        user.email,
-        user.displayName,
-        user.photoURL,
-        user.uid,
-      );
+      console.log('This is user ', user.email, user.uid);
       if (user.email == null) {
-        Alert.alert('Please provide your name and Email to continue');
+        Alert.alert('Please Click One More Time');
       } else {
-        handleNavigation(user);
+        try {
+          if (!user.email || !user.uid) {
+            ToastComponent({message: 'Please fill in all fields'});
+            return;
+          }
+          setIsLoading(true);
+          const response = await fetch(
+            'https://tsk-final-backend.vercel.app/api/auth/login',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: user.email,
+                password: user.uid,
+              }),
+            },
+          );
+
+          const data = await response.json();
+          console.log(data);
+          setIsLoading(false);
+          if (!response.ok) {
+            ToastComponent({
+              message: data.error || 'Invalid email or password',
+            });
+          }
+          // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
+          console.log(data.userName);
+          await AsyncStorage.setItem(
+            'user',
+            JSON.stringify({
+              authToken: data.authToken,
+              userRole: data.userRole,
+              userName: data.userName,
+              userDes: data.designation,
+              photoUrl: data.photoUrl,
+            }),
+          );
+          handleSuccess();
+          navigation.navigate('NavigationScreen');
+        } catch (error) {
+          setIsLoading(false);
+          console.log(error);
+          handleBackendError();
+        }
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -52,14 +121,7 @@ const Welcome = ({navigation}) => {
       }
     }
   };
-  const handleNavigation = user => {
-    navigation.navigate('GuInfo', {
-      name: user.displayName,
-      email: user.email,
-      photoURL: user.photoURL,
-      pass: user.uid,
-    });
-  };
+
   return (
     <View style={styles.fullscreen}>
       <View style={[styles.titleView]}>
