@@ -34,7 +34,7 @@ const deviceWidth = Dimensions.get('window').width;
 
 import MemberFilter from '../Components/Teams/MemberFilter';
 const handleSuccess = () => {
-  ToastComponent({message: 'Task Updated Sucessfull'});
+  //ToastComponent({message: 'Task Updated Sucessfull'});
 };
 
 const handleBackendError = () => {
@@ -160,7 +160,7 @@ const TaskList = ({navigation, route}) => {
       if (response.ok) {
         closeBottomEditSheet();
         fetchTasks();
-        ToastComponent({message: 'Task Edited successfully!'});
+        // ToastComponent({message: 'Task Edited successfully!'});
       } else {
         handleBackendError();
       }
@@ -191,7 +191,7 @@ const TaskList = ({navigation, route}) => {
       const data = await response.json();
       setfetchTask(data.tasks);
       setIsLoading(false);
-      ToastComponent({message: 'Task Fetched !'});
+      //ToastComponent({message: 'Task Fetched !'});
       setTimeout(() => {
         setRefreshing(false);
         // console.log('after', refreshing);
@@ -227,7 +227,6 @@ const TaskList = ({navigation, route}) => {
   };
 
   const fetchTeamMembers = async () => {
-    // console.log("Hey")
     openBottomTeamSheet();
     fetch(
       `https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}/getmembers`,
@@ -244,7 +243,6 @@ const TaskList = ({navigation, route}) => {
         setFilterMember(data);
       })
 
-      .then(ToastComponent({message: ' Team Members Fetched'}))
       .catch(err => {
         console.log(err);
         handleBackendError();
@@ -277,7 +275,7 @@ const TaskList = ({navigation, route}) => {
   };
   const handleAddMember = async () => {
     console.log('This is selected IDS', selectedIds);
-    fetch(`http://192.168.29.161:8888/api/team/${teamIdByItem}`, {
+    fetch(`https://tsk-final-backend.vercel.app/api/team/${teamIdByItem}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -300,7 +298,7 @@ const TaskList = ({navigation, route}) => {
           console.log('Error parsing JSON:', err.message);
         }
       })
-      .then(ToastComponent({message: 'Members added sucessfully '}))
+      //.then(ToastComponent({message: 'Members added sucessfully '}))
       .catch(err => {
         console.log('Error: ' + err.message);
         handleBackendError();

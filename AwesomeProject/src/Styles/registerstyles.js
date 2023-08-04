@@ -45,7 +45,7 @@ const RegisterStyle = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     fontFamily: 'Poppins-Medium',
-    fontSize: 25,
+    fontSize: 20,
     marginTop: 10,
     marginBottom: 15,
   },

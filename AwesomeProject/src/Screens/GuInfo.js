@@ -181,7 +181,7 @@ const GuInfo = ({navigation}) => {
           style={{flexDirection: 'row', marginTop: 20}}
           onPress={() => navigation.goBack()}>
           <Icon name="chevron-back" size={30} color="white" />
-          <Text style={styles.AddtitleText}>Register</Text>
+          <Text style={styles.AddtitleText}>Sign Up with Google</Text>
         </TouchableOpacity>
       </View>
 

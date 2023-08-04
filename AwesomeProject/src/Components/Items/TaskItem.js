@@ -99,8 +99,8 @@ const TaskItem = props => {
       if (!response.ok) {
         throw new Error('Failed to update subtasks');
       }
-      ToastComponent({message: 'SubTask Added Sucessfully'});
-      // console.log('This is response', response);
+      // ToastComponent({message: 'SubTask Added Sucessfully'});
+     
     } catch (error) {
       console.log(error);
       handleBackendError();
@@ -293,6 +293,7 @@ const TaskItem = props => {
     } 
     catch (error) {
       console.log(error);
+      console.log('No Image Found');
     }
   };
   const [isImageModalVisible, setIsImageModalVisible] = useState(false);

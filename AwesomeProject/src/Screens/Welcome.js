@@ -122,6 +122,57 @@ const Welcome = ({navigation}) => {
     }
   };
 
+
+  const handleSignUp = async () => {
+    try {
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+      const {idToken} = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      await auth().signInWithCredential(googleCredential);
+      const currentUser = auth().currentUser;
+      setUser(currentUser);
+      console.log(
+        'This is user ',
+        currentUser.email,
+        currentUser.displayName,
+        currentUser.photoURL,
+        currentUser.uid,
+      );
+
+      if (currentUser.email == null) {
+        Alert.alert('Please provide your name and Email to continue');
+      } else {
+        handleNavigation(currentUser);
+      }
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        console.log('User cancelled the sign-in flow');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        console.log('Sign-in operation is in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        console.log('Google Play Services not available or outdated');
+      } else {
+        console.log(
+          'Something went wrong with Google Sign-In: ',
+          error.message,
+        );
+      }
+    }
+  };
+
+
+  const handleNavigation = user => {
+    navigation.navigate('GuInfo', {
+      name: user.displayName,
+      email: user.email,
+      photoURL: user.photoURL,
+      pass: user.uid,
+    });
+  };
+
+
   return (
     <View style={styles.fullscreen}>
       <View style={[styles.titleView]}>
@@ -147,6 +198,25 @@ const Welcome = ({navigation}) => {
                 size={25}
                 color="#6b8cff"
                 onPress={handleSignIn}
+                style={styles.arrow}></IonIcon>
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.container}>
+          <View style={styles.card}>
+            <Text style={styles.headingText}>Sign Up with Google </Text>
+            <IonIcon
+              name="logo-google"
+              size={25}
+              color="#6b8cff"
+              style={styles.google_logo}></IonIcon>
+            <View style={styles.rightIcon}>
+              <IonIcon
+                name="arrow-forward-outline"
+                size={25}
+                color="#6b8cff"
+                onPress={handleSignUp}
                 style={styles.arrow}></IonIcon>
             </View>
           </View>

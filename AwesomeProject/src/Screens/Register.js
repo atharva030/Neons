@@ -156,61 +156,10 @@ const RegisterScreen = ({navigation}) => {
     setSelectedRole(role);
   };
 
-  GoogleSignin.configure({
-    scopes: ['email'],
-    webClientId:
-      '461468934097-cfeol86ft1lq1gmsr5iqjsija3fipfp6.apps.googleusercontent.com',
-    offlineAccess: true,
-  });
-  const [user, setUser] = useState(false);
-  const handleSignIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices({
-        showPlayServicesUpdateDialog: true,
-      });
-      const {idToken} = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      await auth().signInWithCredential(googleCredential);
-      const currentUser = auth().currentUser;
-      setUser(currentUser);
-      console.log(
-        'This is user ',
-        currentUser.email,
-        currentUser.displayName,
-        currentUser.photoURL,
-        currentUser.uid,
-      );
+  
+  
 
-      if (currentUser.email == null) {
-        Alert.alert('Please provide your name and Email to continue');
-      } else {
-        handleNavigation(currentUser);
-      }
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('User cancelled the sign-in flow');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Sign-in operation is in progress');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Google Play Services not available or outdated');
-      } else {
-        console.log(
-          'Something went wrong with Google Sign-In: ',
-          error.message,
-        );
-      }
-    }
-  };
-
-  const handleNavigation = user => {
-    navigation.navigate('GuInfo', {
-      name: user.displayName,
-      email: user.email,
-      photoURL: user.photoURL,
-      pass: user.uid,
-    });
-  };
-
+ 
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
@@ -390,17 +339,7 @@ const RegisterScreen = ({navigation}) => {
             <Text style={styles.signInLink}>Log In</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.signInText}>Sign In/ Register with:</Text>
-        <View style={styles.socialIconsContainer}>
-          <TouchableOpacity onPress={handleSignIn}>
-            <Icon
-              name="ios-logo-google"
-              size={35}
-              color="#5a55ca"
-              style={{marginRight: 10}}
-            />
-          </TouchableOpacity>
-        </View>
+      
       </View>
     </ScrollView>
   );
