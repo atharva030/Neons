@@ -1,23 +1,25 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import React from 'react';
 import styles from '../Styles/ProfileStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Avatar } from 'react-native-paper';
+import {Avatar} from 'react-native-paper';
 import TeamMember from '../Components/Teams/TeamMember';
 import TeamNames from '../Components/Teams/TeamNames';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect,useState } from 'react';
-const Profile = ({ navigation }) => {
-  const [userName, setuserName] = useState("")
-  const [userDes, setuserDes] = useState("")
+import {useEffect, useState} from 'react';
+const Profile = ({navigation}) => {
+  const [userName, setuserName] = useState('');
+  const [userDes, setuserDes] = useState('');
+  const [photourl, setPhotoUrl] = useState('');
   const getUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
         const data = JSON.parse(userData);
-        console.log("after logout",data)
-        setuserName(data.userName)
-        setuserDes(data.userDes)
+        console.log('after logout', data);
+        setuserName(data.userName);
+        setuserDes(data.userDes);
+        setPhotoUrl(data.photoUrl);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -25,18 +27,19 @@ const Profile = ({ navigation }) => {
       console.log('Error while retrieving user data:', error);
     }
   };
-  const count=1;
+  const count = 1;
   useEffect(() => {
     getUserData();
-  
-  }, [count])
-  
+  }, [count]);
+
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>
         <View style={styles.ProfileSubscreen}>
           <View style={styles.leftIcon}>
-            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => navigation.goBack()}>
+            <TouchableOpacity
+              style={{flexDirection: 'row'}}
+              onPress={() => navigation.goBack()}>
               <Icon name="chevron-back" size={30} color="white" />
               <Text style={styles.AddtitleText}>Profile</Text>
             </TouchableOpacity>
@@ -52,7 +55,7 @@ const Profile = ({ navigation }) => {
           <View style={styles.profileImage}>
             <Avatar.Image
               size={90}
-              source={require('../../assets/Image/profile1.png')}
+              source={{uri: photourl}}
               avatarStyle={{
                 borderWidth: 2,
                 borderColor: 'white',

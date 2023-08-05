@@ -41,6 +41,7 @@ module.exports = {
         alignItems: 'center',
         
         
+        
     },
     ProfileTitle:{
         fontFamily: 'Poppins-Bold',

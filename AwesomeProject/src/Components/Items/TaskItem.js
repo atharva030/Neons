@@ -293,6 +293,7 @@ const TaskItem = props => {
     } 
     catch (error) {
       console.log(error);
+      Alert.alert("No Image found");
       console.log('No Image Found');
     }
   };
@@ -332,7 +333,7 @@ const TaskItem = props => {
               style={styles.closeIcon}>
               <Icon
                 name="close"
-                size={25}
+                size={50}
                 color="white"
                 style={[
                   {
