@@ -100,7 +100,6 @@ const TaskItem = props => {
         throw new Error('Failed to update subtasks');
       }
       // ToastComponent({message: 'SubTask Added Sucessfully'});
-     
     } catch (error) {
       console.log(error);
       handleBackendError();
@@ -287,11 +286,10 @@ const TaskItem = props => {
       const uri = await response.json();
       setImageUrl(uri.url);
       // console.log(imageUrl);
-      if(uri.url==null){
+      if (uri.url == null) {
         ToastComponent({message: 'No Image Found'});
       }
-    } 
-    catch (error) {
+    } catch (error) {
       console.log(error);
       Alert.alert("No Image found");
       console.log('No Image Found');
@@ -339,9 +337,7 @@ const TaskItem = props => {
                   {
                     backgroundColor: 'black',
                   },
-                  
                 ]}
-               
               />
             </TouchableOpacity>
           </View>
@@ -530,7 +526,7 @@ const TaskItem = props => {
                     <Animated.View
                       style={{
                         flexDirection: 'row',
-                        backgroundColor: 'pink',
+                        backgroundColor: '#1b1b1b',
                         padding: 5,
                         borderRadius: 5,
                         overflow: 'hidden',
@@ -544,7 +540,7 @@ const TaskItem = props => {
                         ) : (
                           <Icon
                             name="add"
-                            color="black"
+                            color="white"
                             size={20}
                             style={{marginRight: 10}}
                           />
@@ -561,7 +557,7 @@ const TaskItem = props => {
                         }>
                         <Icon
                           name="pencil-sharp"
-                          color="black"
+                          color="#fefffe"
                           size={20}
                           style={{marginRight: 10}}
                         />
@@ -591,7 +587,7 @@ const TaskItem = props => {
                         }>
                         <Icon
                           name="trash"
-                          color="black"
+                          color="#fefffe"
                           size={20}
                           style={{marginRight: 10}}
                         />
@@ -600,11 +596,11 @@ const TaskItem = props => {
                   )}
                   <Icon
                     name="ellipsis-vertical"
-                    color="grey"
+                    color="#b4cef8"
                     size={20}
                     style={{
                       marginRight: 10,
-                      backgroundColor: 'pink',
+                      backgroundColor: '#1b1b1b',
                       padding: 5,
                       borderRadius: 6,
                       alignItems: 'center',

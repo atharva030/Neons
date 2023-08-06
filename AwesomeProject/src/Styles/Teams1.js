@@ -1,11 +1,11 @@
-const { Dimensions } = require("react-native");
+const {Dimensions} = require('react-native');
 
-const deviceHeight=Dimensions.get('window').height;
-const deviceWidth=Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 module.exports = {
   Addfullscreen: {
-    height:deviceHeight,
-    widht:deviceWidth,
+    height: deviceHeight,
+    widht: deviceWidth,
     flex: 1,
     backgroundColor: '#5a55ca',
   },
@@ -14,7 +14,7 @@ module.exports = {
   },
   Addsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 8,
     marginBottom: 20,
   },
 
@@ -26,7 +26,7 @@ module.exports = {
     padding: 30,
     // paddingTop: 7,
     flexDirection: 'column',
-    backgroundColor:'#f0f4fd'
+    backgroundColor: '#f0f4fd',
   },
   AddtitleText: {
     height: 50,
@@ -112,7 +112,7 @@ module.exports = {
   },
   Loginsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 8,
     marginBottom: 20,
   },
   loginSecondScreen: {
@@ -127,8 +127,8 @@ module.exports = {
     flexDirection: 'column',
   },
   registerSecondScreen: {
-    flex:1,
-    height: deviceHeight/1.15,
+    flex: 1,
+    height: deviceHeight / 1.15,
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 40,

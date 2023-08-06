@@ -138,7 +138,7 @@ const LoginScreen = ({navigation}) => {
               <View style={styles.loginSecondScreen}>
                 <Text
                   style={{
-                    color: 'black',
+                    color: '#b3caf3',
                     textAlign: 'center',
                     fontFamily: 'Poppins-Medium',
                     fontSize: 25,
@@ -180,7 +180,7 @@ const LoginScreen = ({navigation}) => {
                   />
                   <IconButton
                     icon={hidePassword ? 'eye-off' : 'eye'}
-                    iconColor="black"
+                    iconColor="#b3caf3"
                     size={20}
                     color="black"
                     onPress={() => {
@@ -191,7 +191,7 @@ const LoginScreen = ({navigation}) => {
                 <Pressable onPress={() => navigation.navigate('EmailValid')}>
                   <Text
                     style={{
-                      color: 'red',
+                      color: '#b3caf3',
                       textAlign: 'right',
                       fontFamily: 'Poppins-Regular',
                       fontSize: 13,
@@ -232,7 +232,7 @@ const LoginScreen = ({navigation}) => {
                   }}>
                   <Text
                     style={{
-                      color: 'black',
+                      color: 'white',
                       textAlign: 'center',
                       fontFamily: 'Poppins-Regular',
                       fontSize: 13,
@@ -244,7 +244,7 @@ const LoginScreen = ({navigation}) => {
                     onPress={() => navigation.navigate('Register')}>
                     <Text
                       style={{
-                        color: '#5a55ca',
+                        color: '#b3caf3',
                         textDecorationLine: 'underline',
                         marginTop: 10,
                         fontFamily: 'Poppins-Medium',
@@ -281,7 +281,7 @@ const LoginScreen = ({navigation}) => {
                   </TouchableOpacity>
                 </View> */}
                 <Text
-                  style={{color: 'black', textAlign: 'center', fontSize: 13}}>
+                  style={{color: 'white', textAlign: 'center', fontSize: 13}}>
                   By using TaskStack you agree to our{' '}
                   <Text style={{fontFamily: 'Poppins-Medium'}}>
                     Terms of Services

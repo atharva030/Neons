@@ -1,11 +1,10 @@
-
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 //This is for Team Scr1 and TaskList
 module.exports = {
-  bottomContainer:{
+  bottomContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -20,7 +19,7 @@ module.exports = {
     backgroundColor: 'white',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    height: 400, 
+    height: 400,
   },
   bottomSheetContent: {
     padding: 16,
@@ -38,7 +37,7 @@ module.exports = {
     textAlign: 'center',
   },
   fullscreen: {
-    backgroundColor: '#f0f4fd',
+    backgroundColor: '#1b1b1b',
     minHeight: Dimensions.get('window').height,
   },
 
@@ -66,8 +65,8 @@ module.exports = {
   },
 
   titleText: {
-    flexDirection: "row",
-    alignSelf: "flex-start",
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
     fontSize: 23,
     borderRadius: 30,
     fontFamily: 'Poppins-ExtraBold',
@@ -137,7 +136,7 @@ module.exports = {
     height: 170,
     flexDirection: 'column',
     borderColor: 'black',
-    backgroundColor: 'white',
+    backgroundColor: '#b4cef8',
     padding: 10,
     borderRadius: 10,
     marginLeft: 30,
@@ -156,8 +155,8 @@ module.exports = {
   },
   taskText: {
     color: '#8d98b0',
-     flexDirection:"row",
-    alignSelf:"flex-start",
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
   },
   taskBigText: {
     color: 'black',
@@ -165,8 +164,8 @@ module.exports = {
     fontFamily: 'Poppins-ExtraBold',
   },
   secondSubFlex: {
-    flexDirection:"row",
-    alignSelf:"flex-start",
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -184,10 +183,10 @@ module.exports = {
   },
   flexIcon: {
     marginTop: 25,
-    display: "flex",
+    display: 'flex',
     flexDirection: 'row',
     // justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   iconStyle: {
     flexDirection: 'row',
@@ -196,7 +195,6 @@ module.exports = {
     width: 80,
   },
 
-
   dropdown: {
     height: 50,
     borderColor: 'gray',
@@ -204,7 +202,7 @@ module.exports = {
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 5,
-    color:"black"
+    color: 'black',
   },
   icon: {
     marginRight: 5,
@@ -218,7 +216,6 @@ module.exports = {
     paddingHorizontal: 8,
     fontSize: 14,
     fontFamily: 'Poppins-Regular',
-
   },
 
   textInputStyle: {
@@ -234,7 +231,7 @@ module.exports = {
 
   placeholderStyle: {
     fontSize: 16,
-    color: 'grey'
+    color: 'grey',
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -248,15 +245,13 @@ module.exports = {
     fontSize: 16,
   },
 
-
   dropdown: {
     height: 50,
     borderColor: 'gray',
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
-    marginBottom: 5
-
+    marginBottom: 5,
   },
   icon: {
     marginRight: 5,
@@ -270,7 +265,6 @@ module.exports = {
     paddingHorizontal: 8,
     fontSize: 14,
     fontFamily: 'Poppins-Regular',
-
   },
 
   textInputStyle: {
@@ -286,7 +280,7 @@ module.exports = {
 
   placeholderStyle: {
     fontSize: 16,
-    color: 'grey'
+    color: 'grey',
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -309,27 +303,24 @@ module.exports = {
   },
   additionalContent: {
     marginLeft: 20,
-    marginTop: 8
-
+    marginTop: 8,
   },
   showbtn: {
-    display: "flex",
+    display: 'flex',
     flexDirection: 'row',
-    backgroundColor: 'red'
-
+    backgroundColor: 'red',
   },
   subtaskTitle: {
     fontFamily: 'Poppins-Bold',
     fontSize: 20,
-    color: 'black'
-
+    color: 'black',
   },
 
   individualSubT: {
     backgroundColor: '#f0f4fd',
     marginBottom: 5,
     borderRadius: 10,
-    padding: 5
+    padding: 5,
   },
   subTTitle: {
     fontFamily: 'Poppins-Regular',
@@ -337,8 +328,7 @@ module.exports = {
     fontSize: 12,
     color: 'black',
     width: 150,
-    textAlign: 'justify'
-
+    textAlign: 'justify',
   },
   uploadButton: {
     backgroundColor: '#097969',
@@ -349,32 +339,29 @@ module.exports = {
     position: 'absolute',
     right: 0,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   uploadbtnTxt: {
-
-    fontSize: 16
+    fontSize: 16,
   },
 
   downArrowText: {
     fontSize: 12,
     fontFamily: 'Poppins-Regular',
-  }
-  ,
+  },
   modalContainer: {
-
     justifyContent: 'center', // Center the modal vertically
     alignItems: 'center', // Center the modal horizontally
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     width: '100%',
-    height: '100%'
-
+    height: '100%',
+    backgroundColor: '#1b1b1b',
   },
   // Style for the modal content (the image and the close icon)
   modalContent: {
     width: '100%', // Make the modal full-screen horizontally
     height: '100%', // Make the modal full-screen vertically
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems: 'center',
   },
   // Style for the close icon
@@ -383,5 +370,4 @@ module.exports = {
     top: 40,
     right: 20,
   },
-
 };

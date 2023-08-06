@@ -1,12 +1,15 @@
-const { Dimensions } = require("react-native");
-const { white, blueGrey100 } = require("react-native-paper/lib/typescript/src/styles/themes/v2/colors");
+const {Dimensions} = require('react-native');
+const {
+  white,
+  blueGrey100,
+} = require('react-native-paper/lib/typescript/src/styles/themes/v2/colors');
 
-const deviceHeight=Dimensions.get('window').height;
-const deviceWidth=Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 module.exports = {
   Addfullscreen: {
-    height:deviceHeight,
-    widht:deviceWidth,
+    height: deviceHeight,
+    widht: deviceWidth,
     flex: 1,
     backgroundColor: '#5a55ca',
   },
@@ -15,7 +18,7 @@ module.exports = {
   },
   Addsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 8,
     marginBottom: 20,
   },
 
@@ -24,7 +27,7 @@ module.exports = {
     // padding: 30,
     marginLeft: 21,
     marginRight: 21,
-    marginTop:25,
+    marginTop: 25,
     flexDirection: 'column',
   },
   addSecondScreen: {
@@ -35,8 +38,8 @@ module.exports = {
     // paddingTop: 7,
     flexDirection: 'column',
   },
-  error:{
-    color:"red"
+  error: {
+    color: 'red',
   },
   AddtitleText: {
     height: 50,
@@ -75,7 +78,7 @@ module.exports = {
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
-    height:32,
+    height: 32,
     fontFamily: 'Poppins-Regular',
   },
   labelStyle: {
@@ -83,7 +86,7 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    marginTop:10
+    marginTop: 10,
   },
 
   commonPadding: {},
@@ -118,13 +121,13 @@ module.exports = {
     borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 45
+    height: 45,
   },
-  loginText:{
+  loginText: {
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   sendOtp: {
     width: '100%',
@@ -140,7 +143,7 @@ module.exports = {
   },
   Loginsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 8,
     marginBottom: 20,
   },
   loginSecondScreen: {
@@ -155,8 +158,8 @@ module.exports = {
     flexDirection: 'column',
   },
   registerSecondScreen: {
-    flex:1,
-    height: deviceHeight/1.15,
+    flex: 1,
+    height: deviceHeight / 1.15,
     width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
@@ -180,7 +183,7 @@ module.exports = {
     marginLeft: 4,
     color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    marginTop:15
+    marginTop: 15,
   },
 
   containerStyle: {
@@ -205,20 +208,19 @@ module.exports = {
     color: 'grey',
   },
 
-  orText:{
+  orText: {
     fontFamily: 'Poppins-Regular',
     color: 'black',
     fontSize: 14,
     textAlign: 'center',
-    marginTop: 5
-
+    marginTop: 5,
   },
   lineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom:10,
-    marginTop:15
+    marginBottom: 10,
+    marginTop: 15,
   },
   grayLine: {
     flex: 1,
@@ -247,9 +249,9 @@ module.exports = {
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 8,
-    height:'40%',
-    width:'100%',
-    zindex : 70
+    height: '40%',
+    width: '100%',
+    zindex: 70,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -262,8 +264,8 @@ module.exports = {
   cancelButton: {
     width: 100,
   },
-  confomationtex:{
-    color:'black',
-    fontFamily: 'Poppins-Regular', 
-  }
+  confomationtex: {
+    color: 'black',
+    fontFamily: 'Poppins-Regular',
+  },
 };

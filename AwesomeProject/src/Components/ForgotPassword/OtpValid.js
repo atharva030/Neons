@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert, BackHandler } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  BackHandler,
+} from 'react-native';
 import styles from '../../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Button } from 'react-native-paper';
-import { useRoute } from '@react-navigation/native';
+import {Button} from 'react-native-paper';
+import {useRoute} from '@react-navigation/native';
 import Newpassword from './Newpassword';
 
-const OtpValid = ({ navigation }) => {
+const OtpValid = ({navigation}) => {
   const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(120); // Timer in seconds
   const route = useRoute();
   const email = route.params?.email || '';
 
   useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handleBackPress,
+    );
 
     const interval = setInterval(() => {
       setTimer(prevTimer => prevTimer - 1);
@@ -42,20 +53,16 @@ const OtpValid = ({ navigation }) => {
   }, [timer, navigation]);
 
   const handleBackPress = () => {
-    Alert.alert(
-      'Confirm',
-      'Are you sure you want to leave this page?',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Leave',
-          onPress: () => navigation.navigate('Login'), // Navigate back to the EmailValid page
-        },
-      ],
-    );
+    Alert.alert('Confirm', 'Are you sure you want to leave this page?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'Leave',
+        onPress: () => navigation.navigate('Login'), // Navigate back to the EmailValid page
+      },
+    ]);
 
     // Return true to indicate that we have handled the back press
     return true;
@@ -63,20 +70,23 @@ const OtpValid = ({ navigation }) => {
 
   const validateOtp = async () => {
     try {
-      const response = await fetch('https://tsk-final-backend.vercel.app/api/otpgenrator/verify-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        'https://tsk-final-backend.vercel.app/api/otpgenrator/verify-otp',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            enteredOTP: otp,
+          }),
         },
-        body: JSON.stringify({
-          email: email,
-          enteredOTP: otp,
-        }),
-      });
+      );
 
       if (response.ok) {
         const data = await response.json();
-        navigation.navigate('Newpassword', { email: email });
+        navigation.navigate('Newpassword', {email: email});
       } else {
         console.log('Request failed with status code', response.status);
       }
@@ -88,18 +98,17 @@ const OtpValid = ({ navigation }) => {
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
-        <View style={{ flexDirection: 'row', marginTop: 20 }} >
+        <View style={{flexDirection: 'row', marginTop: 20}}>
           {/* <Icon name="chevron-back" size={30} color="white" /> */}
-          <Text style={[styles.AddtitleText, { marginLeft:20 }]}>
-  Validate the OTP
-</Text>
-
+          <Text style={[styles.AddtitleText, {marginLeft: 20}]}>
+            Validate the OTP
+          </Text>
         </View>
       </View>
       <View style={styles.registerSecondScreen}>
         <Text
           style={{
-            color: 'black',
+            color: '#fefffe',
             textAlign: 'center',
             fontFamily: 'Poppins-Medium',
             fontSize: 25,
@@ -110,7 +119,9 @@ const OtpValid = ({ navigation }) => {
         </Text>
 
         <View>
-          <Text style={styles.emaillabelStyle}>Enter the OTP (Valid up to {timer} sec)</Text>
+          <Text style={styles.emaillabelStyle}>
+            Enter the OTP (Valid up to {timer} sec)
+          </Text>
           <TextInput
             style={styles.Emailinput}
             placeholder="Fill the OTP"

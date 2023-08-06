@@ -22,34 +22,41 @@ const Newpassword = ({navigation}) => {
   // console.log(newPassword===confirmPassword);
   const handlePasswordReset = () => {
     if (!newPassword || !confirmPassword) {
-      Alert.alert('Error', 'Passwords cannot be empty. Please enter a new password.');
+      Alert.alert(
+        'Error',
+        'Passwords cannot be empty. Please enter a new password.',
+      );
       return;
     }
-  
+
     if (newPassword !== confirmPassword) {
       Alert.alert('Error', 'Passwords do not match. Please try again.');
       return;
     }
-  
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
     if (!passwordRegex.test(newPassword)) {
       Alert.alert(
         'Error',
-        'Password must be at least 6 characters long and contain letters, numbers, and symbols.'
+        'Password must be at least 6 characters long and contain letters, numbers, and symbols.',
       );
       return;
     }
-  
-    fetch('https://tsk-final-backend.vercel.app/api/auth/login/reset_password', {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
+
+    fetch(
+      'https://tsk-final-backend.vercel.app/api/auth/login/reset_password',
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: confirmPassword,
+        }),
       },
-      body: JSON.stringify({
-        email: email,
-        password: confirmPassword,
-      }),
-    })
+    )
       .then(response => {
         if (response.ok) {
           Alert.alert('Success', 'Password updated successfully');
@@ -67,7 +74,6 @@ const Newpassword = ({navigation}) => {
         Alert.alert('Error', 'An error occurred. Please try again later.');
       });
   };
-  
 
   return (
     <ScrollView style={styles.Addfullscreen}>
@@ -80,7 +86,7 @@ const Newpassword = ({navigation}) => {
       <View style={styles.registerSecondScreen}>
         <Text
           style={{
-            color: 'black',
+            color: '#b3caf3',
             textAlign: 'center',
             fontFamily: 'Poppins-Medium',
             fontSize: 25,

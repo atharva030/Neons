@@ -1,8 +1,8 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Colors from '../../constant/Colors';
 import AddTask from './AddTask';
 import HomeScreen from './HomeScreen';
@@ -16,11 +16,17 @@ const Stack = createNativeStackNavigator();
 function BottomTabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
-        tabBarActiveTintColor: Colors.primary,
 
-        tabBarIcon: ({ color, size, focused }) => {
+        tabBarActiveTintColor: '#b3caf3',
+        tabBarStyle: {
+          backgroundColor: '#1b1b1b',
+          borderColor: '#b3caf3',
+          borderTopWidth: 1,
+          height: 65,
+        },
+        tabBarIcon: ({color, size, focused}) => {
           let iconName;
           if (route.name == 'Home') {
             iconName = focused ? 'home' : 'home-outline';
@@ -55,12 +61,12 @@ function HomeStack() {
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="TaskList"
         component={TaskList}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* <Stack.Screen
         name="Teamlist"
@@ -76,17 +82,17 @@ function TaskStack() {
       <Stack.Screen
         name="AddTask"
         component={AddTask}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Teamlist"
         component={Teamlist}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

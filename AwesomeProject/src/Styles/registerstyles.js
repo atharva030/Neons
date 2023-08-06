@@ -1,33 +1,32 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 const RegisterStyle = StyleSheet.create({
   Addfullscreen: {
     flex: 1,
-    backgroundColor: 'white',
-    borderRadius: 20,
+    backgroundColor: '#1b1b1b',
   },
   Loginsubscreen: {
-    backgroundColor: '#5a55ca',
+    backgroundColor: '#b3caf3',
     borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25,
     paddingBottom: 20,
     paddingTop: 10,
   },
-  loginText:{
+  loginText: {
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   submitBtn1: {
     width: '90%',
     marginTop: 20,
-    backgroundColor: '#5a55ca',
+    backgroundColor: '#b3caf3',
     color: 'white',
     borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 45
+    height: 45,
   },
   AddtitleText: {
     fontFamily: 'Poppins-Medium',
@@ -42,7 +41,7 @@ const RegisterStyle = StyleSheet.create({
     paddingHorizontal: 20,
   },
   titleText: {
-    color: 'black',
+    color: '#b3caf3',
     textAlign: 'center',
     fontFamily: 'Poppins-Medium',
     fontSize: 20,
@@ -75,32 +74,32 @@ const RegisterStyle = StyleSheet.create({
     width: 280,
   },
   labelStyle: {
-    color: 'black',
+    color: '#fefffe',
     fontFamily: 'Poppins-Medium',
     marginBottom: 5,
   },
   inputStyle: {
     height: 40,
     borderWidth: 1,
-    borderColor: '#8d98b0',
+    borderColor: '#fefffe',
     borderRadius: 5,
     paddingHorizontal: 10,
-    color: 'black'
+    color: '#b1c9f1',
   },
   passwordInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#8d98b0',
+    borderColor: '#fefffe',
     borderRadius: 5,
     paddingHorizontal: 10,
   },
   passwordInputStyle: {
     flex: 1,
     height: 40,
-    color: "black"
+    color: '#b1c9f1',
   },
-  
+
   submitBtn: {
     marginTop: 20,
     width: 280,
@@ -112,14 +111,14 @@ const RegisterStyle = StyleSheet.create({
     marginTop: 10,
   },
   signInText: {
-    color: 'black',
+    color: '#ffefff',
     textAlign: 'center',
     fontFamily: 'Poppins-Regular',
     fontSize: 13,
     marginTop: 10,
   },
   signInLink: {
-    color: '#5a55ca',
+    color: '#b1c9f1',
     textDecorationLine: 'underline',
     marginTop: 10,
     fontFamily: 'Poppins-Medium',
@@ -146,15 +145,15 @@ const RegisterStyle = StyleSheet.create({
     shadowColor: 'red',
   },
   selectedRoleContainer: {
-    backgroundColor: '#f0f0f0',
-    borderColor: '#5a55ca',
+    backgroundColor: '#1b1b1b',
+    borderColor: '#b1c9f1',
     borderWidth: 2,
   },
   selectedRoleImage: {
     opacity: 10,
   },
   selectedRoleText: {
-    color: '#5a55ca',
+    color: '#b1c9f1',
   },
 });
 

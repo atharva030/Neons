@@ -10,7 +10,11 @@ import {useEffect, useState} from 'react';
 const Profile = ({navigation}) => {
   const [userName, setuserName] = useState('');
   const [userDes, setuserDes] = useState('');
+<<<<<<< HEAD
   const [photourl, setPhotoUrl] = useState('');
+=======
+  const [photuurl, setPhotuUrl] = useState('');
+>>>>>>> 77fd565 ( changes in theme)
   const getUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
@@ -19,7 +23,11 @@ const Profile = ({navigation}) => {
         console.log('after logout', data);
         setuserName(data.userName);
         setuserDes(data.userDes);
+<<<<<<< HEAD
         setPhotoUrl(data.photoUrl);
+=======
+        setPhotuUrl(data.photoUrl);
+>>>>>>> 77fd565 ( changes in theme)
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -55,7 +63,11 @@ const Profile = ({navigation}) => {
           <View style={styles.profileImage}>
             <Avatar.Image
               size={90}
+<<<<<<< HEAD
               source={{uri: photourl}}
+=======
+              source={{uri: photuurl}}
+>>>>>>> 77fd565 ( changes in theme)
               avatarStyle={{
                 borderWidth: 2,
                 borderColor: 'white',

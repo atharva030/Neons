@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,25 +9,28 @@ import {
 } from 'react-native';
 import styles from '../../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Button } from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import OtpValid from './OtpValid';
 
-const generateOTP = async (email) => {
+const generateOTP = async email => {
   try {
-    const response = await fetch(`https://tsk-final-backend.vercel.app/api/otpgenrator/generate-otp`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `https://tsk-final-backend.vercel.app/api/otpgenrator/generate-otp`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({email}),
       },
-      body: JSON.stringify({ email }),
-    });
+    );
 
     if (response.status === 200) {
       // OTP sent successfully
       return true;
     } else {
       // Handle unsuccessful response (e.g., display an error message)
-      ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT)
+      ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT);
       console.error('Error generating OTP:', response.status);
       return false;
     }
@@ -37,10 +40,10 @@ const generateOTP = async (email) => {
   }
 };
 
-const EmailValid = ({ navigation }) => {
+const EmailValid = ({navigation}) => {
   const [email, setEmail] = useState('');
 
-  const handleEmailChange = (value) => {
+  const handleEmailChange = value => {
     setEmail(value);
   };
 
@@ -53,14 +56,16 @@ const EmailValid = ({ navigation }) => {
 
     const otpSent = await generateOTP(email);
     if (otpSent) {
-      navigation.navigate('OtpValid', { email: email }); // Navigate to the desired screen
+      navigation.navigate('OtpValid', {email: email}); // Navigate to the desired screen
     }
   };
 
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
-        <TouchableOpacity style={{ flexDirection: 'row', marginTop: 20 }} onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          style={{flexDirection: 'row', marginTop: 20}}
+          onPress={() => navigation.goBack()}>
           <Icon name="chevron-back" size={30} color="white" />
           <Text style={styles.AddtitleText}>Forgot Password</Text>
         </TouchableOpacity>
@@ -68,7 +73,7 @@ const EmailValid = ({ navigation }) => {
       <View style={styles.registerSecondScreen}>
         <Text
           style={{
-            color: 'black',
+            color: '#fefffe',
             textAlign: 'center',
             fontFamily: 'Poppins-Medium',
             fontSize: 25,
@@ -83,7 +88,7 @@ const EmailValid = ({ navigation }) => {
           <TextInput
             style={styles.Emailinput}
             placeholder="Enter your Email "
-            placeholderTextColor="#8d98b0"
+            placeholderTextColor="#b3caf3"
             onChangeText={handleEmailChange} // Update the email state
             value={email} // Bind the value to the email state
           />
