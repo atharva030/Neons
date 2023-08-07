@@ -1,11 +1,12 @@
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 module.exports = {
   fullscreen: {
-    backgroundColor: '#f0f4fd',
-    height:windowHeight,
-    widht:windowWidth,
+    backgroundColor: '#1b1b1b',
+
+    height: windowHeight,
+    widht: windowWidth,
     flex: 1,
   },
   flexBox: {
@@ -13,7 +14,7 @@ module.exports = {
     flexDirection: 'columns',
   },
   outer: {
-    margin: 20
+    margin: 20,
   },
   titleContainer: {
     height: 50,
@@ -32,8 +33,7 @@ module.exports = {
     position: 'absolute',
     bottom: 20,
     right: 20,
-  }
-  ,
+  },
   titleText: {
     width: '40%',
     height: 50,
@@ -50,7 +50,7 @@ module.exports = {
     fontSize: 27,
     borderRadius: 30,
     fontFamily: 'Poppins-SemiBold',
-    color: '#5a55ca',
+    color: '#b3caf3',
   },
   dayContainer: {
     height: 50,
@@ -105,21 +105,21 @@ module.exports = {
     width: windowWidth * 0.8,
     height: windowHeight * 0.186,
     flexDirection: 'column',
-    // border:1,
-    // borderWidth:1,
-    // borderColor: 'black',
-    backgroundColor: 'white',
-    justifyContent:'center',
+    border: 1,
+    borderWidth: 1,
+    borderColor: 'black',
+    justifyContent: 'center',
     padding: 10,
     borderRadius: 10,
     marginBottom: 10,
-    marginLeft:'10%',
-    marginRight:'10%',
-    marginBottom:'5.58%',
-    elivation:1,
-    offset:999,
-    shadow:10,
-    shadowColor:'gray'
+    marginLeft: '10%',
+    marginRight: '10%',
+    marginBottom: '5.58%',
+    elivation: 1,
+    offset: 999,
+    shadow: 10,
+    shadowColor: 'gray',
+    backgroundColor: '#b5cff8',
   },
   taskFlex: {
     width: 300,
@@ -143,14 +143,14 @@ module.exports = {
     padding: 10,
   },
   taskText: {
-    color: '#8d98b0',
+    color: '#303031',
   },
   personText: {
-    color: '#8d98b0',
-    marginLeft: 10
+    color: '#fefffe',
+    marginLeft: 10,
   },
   teamBigText: {
-    color: 'black',
+    color: '#1b1b1b',
     fontSize: 20,
     fontFamily: 'Poppins-Regular',
   },

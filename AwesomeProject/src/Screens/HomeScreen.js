@@ -11,6 +11,7 @@ import {
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
+
 import RBSheet from 'react-native-raw-bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -310,16 +311,13 @@ const HomeScreen = ({navigation}) => {
     toggleModal();
   };
   return (
-    <Provider
-      theme={{
-        ...DefaultTheme,
-        colors: {...DefaultTheme.colors, accent: 'transparent'},
-      }}>
+    <Provider>
       {isLoading ? (
         <AppLoader />
       ) : (
         <>
           <ScrollView
+            style={styles.fullscreen}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
@@ -339,7 +337,7 @@ const HomeScreen = ({navigation}) => {
                       {backgroundColor: 'transparent', height: 40},
                     ]}
                     placeholder="Team Name"
-                    placeholderTextColor="#8d98b0"
+                    placeholderTextColor="#b3caf3"
                     value={teamName}
                     onChangeText={setteamName}
                   />
@@ -351,10 +349,13 @@ const HomeScreen = ({navigation}) => {
                   <TextInput
                     style={[
                       styles1.Emailinput,
-                      {backgroundColor: 'transparent', height: 40},
+                      {
+                        backgroundColor: 'transparent',
+                        height: 40,
+                      },
                     ]}
                     placeholder="Team Description"
-                    placeholderTextColor="#8d98b0"
+                    placeholderTextColor="#b3caf3"
                     value={teamDesc}
                     onChangeText={setteamDesc}
                   />
@@ -367,14 +368,30 @@ const HomeScreen = ({navigation}) => {
                     marginLeft: 15,
                     marginTop: 25,
                   }}>
-                  <Button icon="close" mode="contained" onPress={hideModal}>
+                  <Button
+                    icon="close"
+                    mode="contained"
+                    onPress={hideModal}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#1b1b1b',
+                      borderColor: '#b3caf3',
+                      borderStyle: 'solid',
+                      borderWidth: 1,
+                    }}>
                     Close
                   </Button>
                   <Button
                     icon="check"
                     mode="contained"
                     onPress={addTeam}
-                    style={{marginLeft: 5}}>
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#1b1b1b',
+                      borderColor: '#b3caf3',
+                      borderStyle: 'solid',
+                      borderWidth: 1,
+                    }}>
                     Create Team
                   </Button>
                 </View>
@@ -406,7 +423,7 @@ const HomeScreen = ({navigation}) => {
                       {backgroundColor: 'transparent', height: 25},
                     ]}
                     placeholder="Team Name"
-                    placeholderTextColor="#8d98b0"
+                    placeholderTextColor="#b3caf3"
                     value={formData.editTitle}
                     onChangeText={value =>
                       setFormData({...formData, editTitle: value})
@@ -513,9 +530,10 @@ const HomeScreen = ({navigation}) => {
                 )}
               </View>
             ) : (
-              resultTeamData.map(items => (
+              resultTeamData.map((items, index) => (
                 <TeamItem
                   key={items._id}
+                  index={index}
                   navigation={navigation}
                   desc={items.teamDesc}
                   setteamId={setteamId}

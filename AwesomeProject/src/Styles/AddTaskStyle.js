@@ -1,19 +1,19 @@
-const { Dimensions } = require("react-native");
-const { LinearGradient } = require("react-native-svg");
+const {Dimensions} = require('react-native');
+const {LinearGradient} = require('react-native-svg');
 
-const deviceHeight=Dimensions.get('window').height;
-const deviceWidth=Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
 module.exports = {
   Addfullscreen: {
-    height:deviceHeight,
-    widht:deviceWidth,
+    height: deviceHeight,
+    widht: deviceWidth,
     flex: 1,
-    backgroundColor:"#5a55ca"
+    backgroundColor: '#b4cef8',
   },
-  btmeditsheet:{
+  btmeditsheet: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -23,20 +23,20 @@ module.exports = {
     height: deviceHeight * 0.45,
     // borderWidth: 1,
     // borderColor: 'black',
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
     position: 'absolute',
-    top: (deviceHeight - (deviceHeight * 0.45)) / 2,
-    left: (deviceWidth - (deviceWidth * 0.85)) / 2,
+    top: (deviceHeight - deviceHeight * 0.45) / 2,
+    left: (deviceWidth - deviceWidth * 0.85) / 2,
   },
   flexBox: {
     flexDirection: 'columns',
   },
   Addsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 8,
     marginBottom: 20,
   },
 
@@ -46,9 +46,9 @@ module.exports = {
     // marginLeft: 21,
     // marginRight: 21,
     // marginTop:25,
-    width:"100%",
-    height:"100%",
-    backgroundColor:"black",
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'black',
     flexDirection: 'column',
   },
   addSecondScreen: {
@@ -59,8 +59,8 @@ module.exports = {
     // paddingTop: 7,
     flexDirection: 'column',
   },
-  error:{
-    color:"red"
+  error: {
+    color: 'red',
   },
   AddtitleText: {
     height: 50,
@@ -68,7 +68,7 @@ module.exports = {
     fontSize: 22,
     borderRadius: 30,
     fontFamily: 'Poppins-Bold',
-    color: 'white',
+    color: '#1b1b1b',
   },
   dateInput: {
     borderColor: '#8d98b0',
@@ -78,18 +78,18 @@ module.exports = {
     paddingVertical: 0,
   },
   input: {
-    borderColor: '#8d98b0',
+    borderColor: '#b3caf3',
     borderBottomWidth: 1,
-    color: 'black',
+    color: '#b3caf3',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
   },
   Emailinput: {
-    borderColor: '#8d98b0',
+    borderColor: '#b3caf3',
     width: '100%',
     marginBottom: 10,
     borderBottomWidth: 1,
-    color: 'black',
+    color: '#b3caf3',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
     alignSelf: 'flex-start',
@@ -98,15 +98,15 @@ module.exports = {
     borderColor: '#8d98b0',
     width: '94%',
     borderBottomWidth: 1,
-    color: 'black',
+    color: '#b3caf3',
     paddingVertical: 0,
-    height:32,
+    height: 32,
     fontFamily: 'Poppins-Regular',
   },
   labelStyle: {
     color: 'black',
     marginLeft: 4,
-    color: '#8d98b0',
+    color: '#b3caf3',
     fontFamily: 'Poppins-Medium',
     marginTop: 15,
     alignSelf: 'flex-start',
@@ -122,7 +122,7 @@ module.exports = {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     // marginLeft: 43,
-    marginTop: 10
+    marginTop: 10,
   },
   timeInput: {
     borderColor: '#8d98b0',
@@ -140,24 +140,24 @@ module.exports = {
   submitBtn1: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#5a55ca',
+    backgroundColor: '#b3caf3',
     color: 'white',
     borderRadius: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 45
+    height: 45,
   },
-  loginText:{
+  loginText: {
     fontSize: 16,
-    color: 'white',
+    color: '#1b1b1b',
     textAlign: 'center',
-    fontFamily: 'Poppins-Regular'
+    fontFamily: 'Poppins-Regular',
   },
   sendOtp: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#5a55ca',
-    color: 'white',
+    backgroundColor: '#b3caf3',
+    color: 'black',
     marginBottom: 315,
   },
 
@@ -167,14 +167,14 @@ module.exports = {
   },
   Loginsubscreen: {
     // flex: 1,
-    height:deviceHeight/8,
+    height: deviceHeight / 8,
     marginBottom: 20,
   },
   loginSecondScreen: {
     // height: '100%',
     flex: 1,
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
@@ -182,10 +182,10 @@ module.exports = {
     flexDirection: 'column',
   },
   registerSecondScreen: {
-    flex:1,
-    height: deviceHeight/1.15,
+    flex: 1,
+    height: deviceHeight / 1.15,
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
@@ -203,11 +203,10 @@ module.exports = {
     flexDirection: 'column',
   },
   emaillabelStyle: {
-    color: 'black',
     marginLeft: 4,
-    color: '#8d98b0',
+    color: '#fefffe',
     fontFamily: 'Poppins-Medium',
-    marginTop:15
+    marginTop: 15,
   },
 
   containerStyle: {
@@ -232,20 +231,19 @@ module.exports = {
     color: 'grey',
   },
 
-  orText:{
+  orText: {
     fontFamily: 'Poppins-Regular',
     color: 'black',
     fontSize: 14,
     textAlign: 'center',
-    marginTop: 5
-
+    marginTop: 5,
   },
   lineContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom:10,
-    marginTop:15
+    marginBottom: 10,
+    marginTop: 15,
   },
   grayLine: {
     flex: 1,
@@ -274,9 +272,9 @@ module.exports = {
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 8,
-    height:'40%',
-    width:'100%',
-    zindex : 70
+    height: '40%',
+    width: '100%',
+    zindex: 70,
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -293,9 +291,8 @@ module.exports = {
     width: 100,
     alignSelf: 'center',
   },
-  confomationtex:{
-    color:'black',
-    fontFamily: 'Poppins-Regular', 
+  confomationtex: {
+    color: 'black',
+    fontFamily: 'Poppins-Regular',
   },
-  
 };

@@ -156,10 +156,6 @@ const RegisterScreen = ({navigation}) => {
     setSelectedRole(role);
   };
 
-  
-  
-
- 
   return (
     <ScrollView style={styles.Addfullscreen}>
       <View style={styles.Loginsubscreen}>
@@ -247,7 +243,7 @@ const RegisterScreen = ({navigation}) => {
                   ? selectedDesignation
                   : 'Choose the designation'
               }
-              placeholderTextColor="black"
+              placeholderTextColor="#b1c9f1"
               editable={false}
             />
           </TouchableOpacity>
@@ -339,7 +335,6 @@ const RegisterScreen = ({navigation}) => {
             <Text style={styles.signInLink}>Log In</Text>
           </TouchableOpacity>
         </View>
-      
       </View>
     </ScrollView>
   );
