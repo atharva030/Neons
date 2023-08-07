@@ -1,119 +1,92 @@
 module.exports = {
-    Addfullscreen: {
-      flex: 1,
-      backgroundColor: '#5a55ca',
-    },
-    ProfileSubscreen: {
-        flex: 1,
-        marginBottom: 20,
-        flexDirection: 'row',
-        marginTop: 20,
-    },
+  Addfullscreen: {
+    flex: 1,
+    backgroundColor: '#181921',
+    padding: 2,
+    height: '100%'
+  },
+
+  leftIcon: {
+    margin: 15,
+    flexDirection: 'row',
     
-    addSecondScreen: {
-        flex: 2,
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        padding: 22,
-        paddingTop: 40,
-        flexDirection: 'column',
-        backgroundColor: '#f0f4fd',
-        //backgroundColor: 'white',
-    },
-    leftIcon:{
-        flex: 5
-    },
-    bellIcon:{
-        flex: 1, 
-         
-    },
+  },
+  accountBack: {
+    backgroundColor: '#20212a',
+    height: 40,
+    width: 40,
+    borderRadius: 10,
+    justifyContent:'center',
+    alignItems: 'center'
+  },
+  titleText: {
+    justifyContent: 'center',
+  },
 
-    AddtitleText: {
-        height: 50,
-        maxWidth: 300,
-        fontSize: 22,
-        borderRadius: 30,
-        fontFamily: 'Poppins-Bold',
-        color: 'white',
-    },
-    profileImage:{
-        justifyContent: 'center',
-        alignItems: 'center',
-        
-        
-        
-    },
-    ProfileTitle:{
-        fontFamily: 'Poppins-Bold',
-        fontSize: 19,
-        color: '#0b204c',
-        textAlign: 'center',
-        paddingTop: 12,
-    },
-    ProfileSubtitle:{
-        fontFamily: 'Poppins-ExtraLight',
-        fontSize: 16,
-        textAlign: 'center',
-        color:"black"
-    },
-    teams: {
-        flex: 1, 
-        flexDirection: 'row',   
-        justifyContent: 'space-between', 
-        alignItems:'center',
-        paddingTop: 25
-    },
-    teamLabel: {
-        flex:2,
-        fontFamily: 'Poppins-SemiBold',
-        color: '#0b204c',  
-        fontSize: 16, 
-    },
-    addIcon:{
-        flex: 1,
-        backgroundColor: '#e1e4f8',
-        borderRadius: 5,
-        textAlign: 'center',
-        padding: 2,
-        color: '#6763ce',  
-    },
-    teamFlex:{
-        flex:1,
-        flexDirection: 'column',
-        marginTop: 10
-        
-        
-    },
-    team1:{
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        width: '100%',
-        height: 72,
-        borderRadius: 12,
-        //justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 15,
+  AddtitleText: {
+    marginLeft: 20,
+    fontSize: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontFamily: 'Poppins-Bold',
+    color: 'white',
+  },
+  profileDetails: {
+    marginTop: 20,
+    marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center', // Center the profile details horizontally
+  },
+  profileImage: {
+    margin: 15,
+  },
 
-    },
-    teamName: {
-        flex: 2,
-        fontFamily: 'Poppins-SemiBold',
-        color: '#0b204c',  
-        fontSize: 19,
-        marginLeft: 10  
-        
-
-    },
-    status:{
-        fontFamily: 'Poppins-Light',
-        color: 'green',
-        fontSize: 12,
-    },
-    setting:{
-        color: '#6763ce',
-        paddingRight: 10
-    }
+  ProfileTitle: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: 22,
+    color: 'white',
+  },
+  ProfileSubtitle: {
+    fontFamily: 'Poppins-Light',
+    fontSize: 16,
+    color: 'white',
+  },
+  editFlex:{
+    flex: 1,
+    margin: 15,
+    marginTop:20,
+    backgroundColor: '#20212a',
+    borderRadius:20,
+    padding: 10,
+  },
+  container:{
+    marginLeft:10,
+    marginTop:25,
+  },
+  editValBtn:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+  },
+  editTitle:{
+    color: '#6e6e74',
+    fontSize: 17
+  },
+  editValue:{
+    color: 'white',
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 20
+  },
+  editBtn:{ 
+    width: 100,
+    borderRadius:10,
+    backgroundColor: '#414052',
     
-
-}
+  },
+  signOutBtn:{
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center'
+  }
+};

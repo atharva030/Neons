@@ -3,14 +3,14 @@ import React from 'react';
 import styles from '../Styles/ProfileStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-paper';
-import TeamMember from '../Components/Teams/TeamMember';
-import TeamNames from '../Components/Teams/TeamNames';
+import {Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
 const Profile = ({navigation}) => {
   const [userName, setuserName] = useState('');
   const [userDes, setuserDes] = useState('');
   const [photourl, setPhotoUrl] = useState('');
+  const [email, setEmail] = useState('');
   const getUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
@@ -20,6 +20,9 @@ const Profile = ({navigation}) => {
         setuserName(data.userName);
         setuserDes(data.userDes);
         setPhotoUrl(data.photoUrl);
+        console.log(data.photoUrl);
+        console.log(data.email);
+        setEmail(data.email);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -35,29 +38,24 @@ const Profile = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.Addfullscreen}>
-        <View style={styles.ProfileSubscreen}>
-          <View style={styles.leftIcon}>
-            <TouchableOpacity
-              style={{flexDirection: 'row'}}
-              onPress={() => navigation.goBack()}>
+        <View style={styles.leftIcon}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={styles.accountBack}>
               <Icon name="chevron-back" size={30} color="white" />
-              <Text style={styles.AddtitleText}>Profile</Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity>
-            <View style={styles.bellIcon}>
-              <Icon name="log-out-outline" size={30} color="white" />
             </View>
           </TouchableOpacity>
+          <View style={styles.titleText}>
+            <Text style={styles.AddtitleText}>My Account</Text>
+          </View>
         </View>
-        <View style={styles.addSecondScreen}>
+
+        <View style={styles.profileDetails}>
           <View style={styles.profileImage}>
             <Avatar.Image
-              size={90}
+              size={70}
               source={{uri: photourl}}
               avatarStyle={{
-                borderWidth: 2,
+                borderWidth: 22,
                 borderColor: 'white',
                 borderTopLeftRadius: 1,
                 borderStyle: 'solid',
@@ -69,44 +67,51 @@ const Profile = ({navigation}) => {
             <Text style={styles.ProfileTitle}>{userName}</Text>
             <Text style={styles.ProfileSubtitle}>{userDes}</Text>
           </View>
+        </View>
+        <View style={styles.editFlex}>
+          <View style={styles.container}>
+            <View style={{marginBottom: 40}}>
+              <Text style={styles.editTitle}>Display Name</Text>
+              <View style={styles.editValBtn}>
+                <Text style={styles.editValue}>{userName}</Text>
 
-          <View style={styles.teams}>
-            <Text style={styles.teamLabel}>Team you work now</Text>
-            <TouchableOpacity>
-              <Icon name="add-outline" size={19} style={styles.addIcon} />
-            </TouchableOpacity>
-          </View>
-
-          <TeamNames teamName="Devignedge" teamStatus="Active" />
-          <TeamNames teamName="Next UXUI" />
-
-          <View style={styles.teams}>
-            <Text style={styles.teamLabel}>Work with</Text>
-          </View>
-
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            style={styles.container}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              }}>
-              <TeamMember name="Luther K." designation="Project Manager" />
-              <TeamMember name="Rosemary J." designation="Software Developer" />
-              <TeamMember name="Jonathan D" designation="Development Manager" />
+                <Button
+                  icon="account-edit"
+                  mode="contained"
+                  style={styles.editBtn}>
+                  Edit
+                </Button>
+              </View>
             </View>
-          </ScrollView>
 
-          <View style={styles.teams}>
-            <TouchableOpacity>
-              <Icon name="settings-outline" size={30} style={styles.setting} />
-            </TouchableOpacity>
-            <Text style={styles.teamLabel}>Settings</Text>
+            <View style={{marginBottom: 40}}>
+              <Text style={styles.editTitle}>Email</Text>
+              <View style={styles.editValBtn}>
+                <Text style={styles.editValue}>{email}</Text>
+                <Button
+                  icon="account-edit"
+                  mode="contained"
+                  style={styles.editBtn}>
+                  Edit
+                </Button>
+              </View>
+            </View>
+
+            <View style={{marginBottom: 40}}>
+              <Text style={styles.editTitle}>Password</Text>
+              <View style={styles.editValBtn}>
+                <Text style={styles.editValue}>{email}</Text>
+                <Button style={styles.editBtn}>Change</Button>
+              </View>
+            </View>
           </View>
         </View>
+
+        <TouchableOpacity>
+          <View style={styles.editFlex}>
+            <Text style={styles.signOutBtn}>Sign Out</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

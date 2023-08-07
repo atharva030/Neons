@@ -3,6 +3,7 @@ import React from 'react';
 import styles from '../../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LinearGradient from 'react-native-linear-gradient';
 const TeamItem = props => {
     const storeUserData = async (authToken, userRole) => {
         try {
@@ -37,6 +38,9 @@ const TeamItem = props => {
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             </View>
             <View style={styles.mainSecondFlex}>
+
+           
+      
                 <View style={styles.secondflex}>
                     <View style={styles.secondSubFlex}>
                         <Text style={styles.teamBigText}>{props.title}</Text>
