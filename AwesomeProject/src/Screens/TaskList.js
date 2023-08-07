@@ -13,7 +13,7 @@ import BottomSheet from 'react-native-raw-bottom-sheet';
 import moment from 'moment';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import CalendarStrip from 'react-native-calendar-strip';
+import Calendarstrip from '../Components/Calender/Calender';
 import TaskItem from '../Components/Items/TaskItem';
 import {Modal, Button} from 'react-native-paper';
 import {FAB, Provider, DefaultTheme, Portal} from 'react-native-paper';
@@ -82,20 +82,21 @@ const TaskList = ({navigation, route}) => {
   };
   const hideModal = () => setVisible(false);
   const containerMemberStyle = {
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     marginHorizontal: 20,
     padding: 20,
     width: '90%',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    height: '80%',
   };
   const containerStyle = {
     width: deviceWidth * 0.85,
     height: deviceHeight * 0.46,
     // borderWidth: 1,
     // borderColor: 'black',
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
@@ -109,7 +110,7 @@ const TaskList = ({navigation, route}) => {
     height: deviceHeight * 0.566,
     // borderWidth: 1,
     // borderColor: 'black',
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
@@ -365,7 +366,7 @@ const TaskList = ({navigation, route}) => {
   let datesWhitelist = [
     {
       start: moment(),
-      end: moment().add(3, 'days'), // total 1 days enabled
+      end: moment().add(3, 'days'),
     },
   ];
   // let datesBlacklist = [ moment().add(1, 'days') ]; // 1 day disabled
@@ -712,30 +713,7 @@ const TaskList = ({navigation, route}) => {
                 </View>
               </View>
 
-              <CalendarStrip
-                onDateSelected={date => console.log(date)}
-                calendarAnimation={{type: 'sequence', duration: 30}}
-                daySelectionAnimation={{
-                  type: 'border',
-                  duration: 200,
-                  borderWidth: 1,
-                  borderHighlightColor: 'black',
-                }}
-                style={styles.calenderStyle}
-                calendarHeaderStyle={{color: 'black'}}
-                // calendarColor={'#7743CE'}
-                dateNumberStyle={{color: 'black'}}
-                dateNameStyle={{color: '#8d98b0'}}
-                highlightDateNumberStyle={{color: '#5a55ca'}}
-                highlightDateNameStyle={{color: '#5a55ca'}}
-                disabledDateNameStyle={{color: 'black'}}
-                disabledDateNumberStyle={{color: 'black'}}
-                datesWhitelist={datesWhitelist}
-                // datesBlacklist={datesBlacklist}
-                // iconLeft={require('./img/left-arrow.png')}
-                // iconRight={require('./img/right-arrow.png')}
-                iconContainer={{flex: 0.1}}
-              />
+              <Calendarstrip />
             </View>
             {isLoading ? (
               <AppLoader />

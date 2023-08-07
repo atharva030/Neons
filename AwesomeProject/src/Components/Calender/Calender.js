@@ -1,58 +1,87 @@
-import { View, Text, TextInput,Pressable } from 'react-native'
-import React from 'react'
-import { useState } from 'react';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Button } from 'react-native-paper';
-import styles from '../../Styles/AddTaskStyle'
-const Calender = () => {
-  const [settleDate, setsettleDate] = useState('')
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+import React, {useState} from 'react';
+import {StyleSheet, View, Text} from 'react-native';
+import CalendarStrip from 'react-native-calendar-strip';
+import {transparent} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
 
-  const showDatePicker = () => {
-    setDatePickerVisibility(true);
-    // console.log(isDatePickerVisible);
+const Calendarstrip = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateSelected = date => {
+    setSelectedDate(date);
   };
 
-  const hideDatePicker = () => {
-    setDatePickerVisibility(false);
-  };
-
-  const handleConfirm = (date) => {
-    const dt=new Date(date)
-    dt.toLocaleString()
-    console.warn("A date has been picked: ", dt.toLocaleString());
-    setsettleDate(dt.toDateString())
-    // console.log(settleDate)
-    hideDatePicker();
-  };
   return (
-  <View style={{marginTop: 10}}>
-  <Text style={styles.labelStyle}>DATE</Text>
-  <View style={{flexDirection:'row'}}>
-  <Pressable onPress={showDatePicker}  style={{width:"93%"}}>
-  <TextInput
-   style={styles.dateInput} 
-   value={settleDate} 
-   onPress={handleConfirm} 
-   editable={false} // Adding hint in TextInput using Placeholder option.
-    placeholder=""
-    // Making the Under line Transparent.
-    placeholderTextColor="#8d98b0"
-    //   underlineColorAndroid="transparent"
-  />
-  </Pressable>
-       <Button icon="calendar" onPress={showDatePicker}>
-        </Button>
-      <DateTimePickerModal
-       isVisible={isDatePickerVisible}
-       mode="date"
-       onConfirm={handleConfirm}
-       onCancel={hideDatePicker}
-     />
-  
-</View>
-</View>
-  )
-}
+    <View style={styles.container}>
+      <CalendarStrip
+        selectedDate={selectedDate}
+        onDateSelected={handleDateSelected}
+        style={styles.calendar}
+        dateNumberStyle={styles.dateNumber}
+        dateNameStyle={styles.dateName}
+        highlightDateNumberStyle={styles.highlightDateNumber}
+        highlightDateNameStyle={styles.highlightDateName}
+        highlightDateContainerStyle={styles.highlightDateContainer}
+        disabledDateNameStyle={styles.disabledDateName}
+        disabledDateNumberStyle={styles.disabledDateNumber}
+        disabledDateOpacity={0.3}
+        minDate={new Date()} // Set the minimum selectable date
+        maxDate={new Date(2024, 12, 31)} // Set the maximum selectable date
+        daySelectionAnimation={{type: 'background', duration: 200}}
+      />
+    </View>
+  );
+};
 
-export default Calender
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 10,
+  },
+  calendar: {
+    height: 100,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: '#1b1b1b',
+  },
+  calendarHeaderContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dateNumber: {
+    color: '#ffff',
+    fontSize: 12,
+  },
+  dateName: {
+    color: '#313131',
+    fontSize: 12,
+    marginTop: -5,
+    paddingBottom: 10,
+  },
+  highlightDateContainer: {
+    backgroundColor: '#ffff',
+    borderRadius: 10,
+    height: 60,
+    width: 35,
+  },
+  highlightDateNumber: {
+    color: '#1b1b1b',
+    fontSize: 12,
+  },
+  highlightDateName: {
+    color: '#1b1b1b',
+    fontSize: 12,
+    marginTop: -5,
+  },
+  disabledDateNumber: {
+    color: '#ffff',
+    fontSize: 12,
+  },
+  disabledDateName: {
+    color: '#A0A0A0',
+    fontSize: 12,
+    marginTop: -5,
+  },
+});
+
+export default Calendarstrip;

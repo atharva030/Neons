@@ -8,6 +8,7 @@ module.exports = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#b4cef8',
   },
   bottomSheetWrapper: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -16,7 +17,7 @@ module.exports = {
     backgroundColor: 'gray',
   },
   bottomSheetContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#1b1b1b',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     height: 400,
@@ -70,7 +71,7 @@ module.exports = {
     fontSize: 23,
     borderRadius: 30,
     fontFamily: 'Poppins-ExtraBold',
-    color: 'black',
+    color: '#fefffe',
   },
   teamtitleText: {
     width: '50%',
@@ -79,7 +80,6 @@ module.exports = {
     fontSize: 23,
     borderRadius: 30,
     fontFamily: 'Poppins-ExtraBold',
-    color: 'black',
   },
   dayContainer: {
     height: 50,

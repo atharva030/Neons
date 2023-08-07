@@ -10,7 +10,6 @@ const Profile = ({navigation}) => {
   const [userName, setuserName] = useState('');
   const [userDes, setuserDes] = useState('');
   const [photourl, setPhotoUrl] = useState('');
-  const [email, setEmail] = useState('');
   const getUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
@@ -19,10 +18,7 @@ const Profile = ({navigation}) => {
         console.log('after logout', data);
         setuserName(data.userName);
         setuserDes(data.userDes);
-        setEmail(data.email);
         setPhotoUrl(data.photoUrl);
-        console.log("email",email);
-        console.log("photourl ",photourl);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -52,9 +48,8 @@ const Profile = ({navigation}) => {
         <View style={styles.profileDetails}>
           <View style={styles.profileImage}>
             <Avatar.Image
-              size={70}
+              size={90}
               source={{uri: photourl}}
-
               avatarStyle={{
                 borderWidth: 22,
                 borderColor: 'white',
@@ -119,4 +114,3 @@ const Profile = ({navigation}) => {
 };
 
 export default Profile;
-
