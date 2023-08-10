@@ -267,7 +267,8 @@ module.exports = {
   },
 
   pbView:{
-    backgroundColor: '#ffff',
+    
+    backgroundColor: '#F0F3F4',
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
     height: 120

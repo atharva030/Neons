@@ -136,17 +136,16 @@ module.exports = {
     height: 170,
     flexDirection: 'column',
     borderColor: 'black',
-    backgroundColor: '#b4cef8',
-    padding: 10,
+    borderRadius:10,
+    padding: 1,
     borderRadius: 10,
     marginLeft: 30,
-    marginRight: 30,
     marginBottom: 10,
   },
   hairline: {
     backgroundColor: '#A2A2A2',
     height: 1,
-    width: screenWidth - 100,
+    width: screenWidth - 90,
     marginLeft: 10,
   },
   firstflex: {
@@ -154,7 +153,7 @@ module.exports = {
     padding: 10,
   },
   taskText: {
-    color: '#8d98b0',
+    color: '#20471E',
     flexDirection: 'row',
     alignSelf: 'flex-start',
   },
@@ -220,13 +219,10 @@ module.exports = {
 
   textInputStyle: {
     height: 40,
-    borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 10,
     fontFamily: 'Poppins-Regular',
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    borderRadius: 5,
+  
   },
 
   placeholderStyle: {
@@ -370,4 +366,5 @@ module.exports = {
     top: 40,
     right: 20,
   },
+ 
 };

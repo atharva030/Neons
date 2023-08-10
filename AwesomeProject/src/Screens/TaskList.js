@@ -644,7 +644,8 @@ const TaskList = ({navigation, route}) => {
               <View style={{display: 'flex', flexDirection: 'row'}}>
                 <View
                   style={{
-                    backgroundColor: '#ffff',
+                  
+                    backgroundColor: '#F0F3F4',
                     width: '50%',
                     borderTopLeftRadius: 20,
                     borderBottomLeftRadius: 20,
@@ -672,7 +673,7 @@ const TaskList = ({navigation, route}) => {
                         fontFamily: 'Poppins-Regular',
                         marginLeft: 5,
                         fontSize: 14,
-                        color: 'black',
+                        color: 'gray',
                       }}>
                       Completed
                     </Text>
@@ -689,7 +690,7 @@ const TaskList = ({navigation, route}) => {
                         fontFamily: 'Poppins-Regular',
                         marginLeft: 5,
                         fontSize: 14,
-                        color: 'black',
+                        color: 'gray',
                       }}>
                       Pending
                     </Text>

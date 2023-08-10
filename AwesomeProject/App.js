@@ -13,6 +13,7 @@ import Loader from './src/Screens/Loader';
 import TaskState from './src/Context/taskState';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GuInfo from './src/Screens/GuInfo';
+import MyComponent from './src/Screens/MyComponent';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -67,6 +68,11 @@ const App = () => {
               name="Onbording"
               component={Onbording}
               options={{ headerShown: false }}
+            /> */}
+            {/* <Stack.Screen
+            name="Welcome"
+            component={MyComponent}
+            options={{headerShown: false}}
             /> */}
             <Stack.Screen
               name="Welcome"

@@ -85,11 +85,9 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   Emailinput: {
-    borderColor: '#b3caf3',
     width: '100%',
     marginBottom: 10,
     borderBottomWidth: 1,
-    color: '#b3caf3',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
     alignSelf: 'flex-start',

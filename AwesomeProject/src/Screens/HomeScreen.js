@@ -11,7 +11,7 @@ import {
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
-
+import LinearGradient from 'react-native-linear-gradient';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
@@ -337,7 +337,7 @@ const HomeScreen = ({navigation}) => {
                       {backgroundColor: 'transparent', height: 40},
                     ]}
                     placeholder="Team Name"
-                    placeholderTextColor="#b3caf3"
+                    placeholderTextColor="white"
                     value={teamName}
                     onChangeText={setteamName}
                   />
@@ -355,7 +355,7 @@ const HomeScreen = ({navigation}) => {
                       },
                     ]}
                     placeholder="Team Description"
-                    placeholderTextColor="#b3caf3"
+                    placeholderTextColor="white"
                     value={teamDesc}
                     onChangeText={setteamDesc}
                   />
@@ -364,7 +364,10 @@ const HomeScreen = ({navigation}) => {
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    width: 290,
+                    width: 290, 
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
                     marginLeft: 15,
                     marginTop: 25,
                   }}>
@@ -375,11 +378,14 @@ const HomeScreen = ({navigation}) => {
                     style={{
                       marginLeft: 5,
                       backgroundColor: '#1b1b1b',
-                      borderColor: '#b3caf3',
+                      borderColor: '#6DED65',
                       borderStyle: 'solid',
-                      borderWidth: 1,
+                      borderWidth: 2,
                     }}>
+                    <Text style={{color:'white'}}>
                     Close
+                    </Text>
+                   
                   </Button>
                   <Button
                     icon="check"
@@ -388,11 +394,14 @@ const HomeScreen = ({navigation}) => {
                     style={{
                       marginLeft: 5,
                       backgroundColor: '#1b1b1b',
-                      borderColor: '#b3caf3',
+                      borderColor: '#6DED65',
                       borderStyle: 'solid',
-                      borderWidth: 1,
+                      borderWidth: 2,
                     }}>
-                    Create Team
+                     <Text style={{color:'white'}}>
+                     Create
+                     </Text>
+                    
                   </Button>
                 </View>
               </Modal>
@@ -480,7 +489,9 @@ const HomeScreen = ({navigation}) => {
 
             <View style={styles.outer}>
               <View style={styles.titleContainer}>
-                <Text style={[styles.teamtitleText]}>TaskStack</Text>
+ <Text style={[styles.teamtitleText]}>TaskStack</Text>
+        
+               
                 <TouchableOpacity>
                   <Avatardropmodal
                     navigation={navigation}
@@ -568,13 +579,14 @@ const HomeScreen = ({navigation}) => {
                       onPress: () => showModal(),
                     },
                   ]}
+              
                   onStateChange={onStateChange}
                   onPress={() => {
                     // if (open) {
                     //     // do something if the speed dial is open
                     // }
                   }}
-                  overlayColor="transparent"
+                  overlayColor="#transparent"
                 />
               </Portal>
             ) : (

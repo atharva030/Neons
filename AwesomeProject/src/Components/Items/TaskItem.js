@@ -19,11 +19,12 @@ import {Alert} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import LinearGradient from 'react-native-linear-gradient';
 const handleBackendError = () => {
   ToastComponent({message: '⚠️ Please Try again later!'});
 };
 const containerStyle = {
-  backgroundColor: 'white',
+  backgroundColor: '#1b1b1b',
   padding: 20,
   borderRadius: 20,
   width: 340,
@@ -138,7 +139,14 @@ const TaskItem = props => {
     for (let i = 0; i < textInputCount; i++) {
       textInputs.push(
         <TextInput
-          style={styles.textInputStyle}
+          style={[
+            styles.textInputStyle,
+            { color:'white',
+              backgroundColor: '#1b1b1b',
+              borderBottomWidth: 2,
+              borderBottomColor: '#b5cff8',
+            },
+          ]}
           key={i}
           placeholder={`SubTask ${i + 1}`}
           onChangeText={value => handleSubtaskChange(i, value)}
@@ -291,7 +299,7 @@ const TaskItem = props => {
       }
     } catch (error) {
       console.log(error);
-      Alert.alert("No Image found");
+      Alert.alert('No Image found');
       console.log('No Image Found');
     }
   };
@@ -448,7 +456,12 @@ const TaskItem = props => {
 
   const renderPickerItems = () => {
     return data.map(item => (
-      <Picker.Item key={item.value} label={item.label} value={item.value} />
+      <Picker.Item
+        key={item.value}
+        label={item.label}
+        value={item.value}
+        style={{color: 'white', backgroundColor: '#1b1b1b', fontSize: 16}}
+      />
     ));
   };
   useEffect(() => {
@@ -499,7 +512,16 @@ const TaskItem = props => {
   };
 
   return (
+  
     <View style={[styles.taskFlex, {height: taskFlexHeight}]}>
+
+<LinearGradient
+        colors={['#00e099', '#dffa2e']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+        style={{borderTopLeftRadius: 10, borderTopRightRadius: 10}}>
+        <View>
+      
       <View
         style={{
           flexDirection: 'row',
@@ -520,13 +542,12 @@ const TaskItem = props => {
                     flexDirection: 'row',
                     alignContent: 'center',
                     justifyContent: 'center',
-                    alignSelf: 'center',
+                    alignSelf: 'center'
                   }}>
                   {isExpanded && (
                     <Animated.View
                       style={{
                         flexDirection: 'row',
-                        backgroundColor: '#1b1b1b',
                         padding: 5,
                         borderRadius: 5,
                         overflow: 'hidden',
@@ -540,7 +561,7 @@ const TaskItem = props => {
                         ) : (
                           <Icon
                             name="add"
-                            color="white"
+                            color="black"
                             size={20}
                             style={{marginRight: 10}}
                           />
@@ -557,7 +578,7 @@ const TaskItem = props => {
                         }>
                         <Icon
                           name="pencil-sharp"
-                          color="#fefffe"
+                          color="black"
                           size={20}
                           style={{marginRight: 10}}
                         />
@@ -587,7 +608,7 @@ const TaskItem = props => {
                         }>
                         <Icon
                           name="trash"
-                          color="#fefffe"
+                          color="black"
                           size={20}
                           style={{marginRight: 10}}
                         />
@@ -596,11 +617,10 @@ const TaskItem = props => {
                   )}
                   <Icon
                     name="ellipsis-vertical"
-                    color="#b4cef8"
+                    color="black"
                     size={20}
                     style={{
-                      marginRight: 10,
-                      backgroundColor: '#1b1b1b',
+                      marginRight: 6,
                       padding: 5,
                       borderRadius: 6,
                       alignItems: 'center',
@@ -609,6 +629,9 @@ const TaskItem = props => {
                 </View>
               </TouchableOpacity>
             </View>
+         
+            
+            
           ) : (
             ''
           )}
@@ -624,11 +647,17 @@ const TaskItem = props => {
         </View>
         <View style={styles.flexIcon}>
           <TouchableOpacity>
-            <Icon name="md-time-outline" size={15} color="grey" />
+            <Icon name="md-time-outline" size={15} color="#20471E" />
           </TouchableOpacity>
           <Text style={styles.taskText}>{props.time}</Text>
         </View>
       </View>
+   
+
+
+     
+      
+      
 
       <Portal>
         <Modal
@@ -640,14 +669,18 @@ const TaskItem = props => {
               <View
                 style={[
                   styles.dropdown, // Add your custom styles here
-                  isExtended && {borderColor: 'blue'}, // Add border color when extended
+                  isExtended && {borderColor: '#b5cff8'}, // Add border color when extended
                 ]}>
-                <Text style={{color: 'black', textAlign: 'center'}}>
+                <Text style={{color: 'white', textAlign: 'center'}}>
                   Please select the number of Subtask
                 </Text>
                 <Picker
                   selectedValue={selectedOption}
-                  onValueChange={handleDropdownChange}>
+                  onValueChange={handleDropdownChange}
+                  style={[
+                    styles.pickerStyle,
+                    isExtended && {borderColor: '#b5cff8'},
+                  ]}>
                   {renderPickerItems()}
                 </Picker>
               </View>
@@ -667,6 +700,11 @@ const TaskItem = props => {
             <Button
               icon="close"
               mode="contained"
+              style={{
+                backgroundColor: '#1b1b1b',
+                borderWidth: 2,
+                borderColor: '#b5cff8',
+              }}
               onPress={() => setIsModal1Visible(false)}>
               Close
             </Button>
@@ -690,7 +728,12 @@ const TaskItem = props => {
                   {cancelable: false},
                 );
               }}
-              style={{marginLeft: 5}}>
+              style={{
+                marginLeft: 5,
+                backgroundColor: '#1b1b1b',
+                borderWidth: 2,
+                borderColor: '#b5cff8',
+              }}>
               Done
             </Button>
           </View>
@@ -708,14 +751,14 @@ const TaskItem = props => {
           <TouchableOpacity onPress={() => handleToggleFlex(props.id)}>
             {isExtended ? (
               <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', alignItems: 'center', marginRight:12}}>
                   <Icon name="chevron-up-outline" color="black" size={20} />
                   <Text style={styles.taskText}> See less</Text>
                 </View>
               </React.Fragment>
             ) : (
               <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{flexDirection: 'row', alignItems: 'center',marginRight:14}}>
                   <Icon name="chevron-down-outline" color="black" size={20} />
                   <Text style={styles.taskText}>See Subtasks</Text>
                 </View>
@@ -729,9 +772,10 @@ const TaskItem = props => {
           <View style={styles.additionalContent}>
             <View style={styles.subtaskBlockView}>
               {fetchsubtask.length === 0 ? (
-                <Text style={{color: 'black'}}>
+                <Text style={{color: 'white'}}>
                   You don't have subtask to show
                 </Text>
+            
               ) : (
                 // <Text style={styles.subtaskTitle}>Subtasks</Text>
                 fetchsubtask.map(subtask => (
@@ -771,7 +815,7 @@ const TaskItem = props => {
                             : 'md-checkbox-outline'
                         }
                         size={30}
-                        color={isChecked(subtask._id) ? '#097969' : '#8d98b0'}
+                        color={isChecked(subtask._id) ? '#418E3C' : '#8d98b0'}
                       />
                     </TouchableOpacity>
                     <Text style={styles.subTTitle}>{subtask.title}</Text>
@@ -797,6 +841,7 @@ const TaskItem = props => {
                           }
                         />
                       </TouchableOpacity>
+                      
                     ) : (
                       // If the user is not an admin, show the upload button
                       <TouchableOpacity
@@ -835,7 +880,12 @@ const TaskItem = props => {
         </Collapsible>
       </View>
       <ImageModal />
+      
     </View>
+    
+      </LinearGradient>
+      </View>
+    
   );
 };
 

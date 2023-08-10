@@ -3,8 +3,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 module.exports = {
   fullscreen: {
-    backgroundColor: '#1b1b1b',
-
+    backgroundColor: '#000',
     height: windowHeight,
     widht: windowWidth,
     flex: 1,
@@ -41,7 +40,7 @@ module.exports = {
     fontSize: 23,
     borderRadius: 30,
     fontFamily: 'Poppins-ExtraBold',
-    color: 'black',
+    color: '#fff',
   },
   teamtitleText: {
     width: '50%',
@@ -50,7 +49,7 @@ module.exports = {
     fontSize: 27,
     borderRadius: 30,
     fontFamily: 'Poppins-SemiBold',
-    color: '#b3caf3',
+    color: '#fff'
   },
   dayContainer: {
     height: 50,
@@ -107,7 +106,7 @@ module.exports = {
     flexDirection: 'column',
     border: 1,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: '#1b1b1b',
     justifyContent: 'center',
     padding: 10,
     borderRadius: 10,
@@ -119,7 +118,7 @@ module.exports = {
     offset: 999,
     shadow: 10,
     shadowColor: 'gray',
-    backgroundColor: '#b5cff8',
+    // backgroundColor: '#b5cff8',
   },
   taskFlex: {
     width: 300,
@@ -146,7 +145,7 @@ module.exports = {
     color: '#303031',
   },
   personText: {
-    color: '#fefffe',
+    //color: '#fefffe',
     marginLeft: 10,
   },
   teamBigText: {

@@ -34,10 +34,18 @@ const TeamItem = props => {
 
     status = props.status;
     return (
-        <View style={styles.teamFlex}>
+      <LinearGradient
+        colors={['#00e099', '#dffa2e']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 1}}
+        style={styles.teamFlex}
+        >
+        <View>
+        
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             </View>
             <View style={styles.mainSecondFlex}>
+            
                 <View style={styles.secondflex}>
                     <View style={styles.secondSubFlex}>
                         <Text style={styles.teamBigText}>{props.title}</Text>
@@ -54,6 +62,7 @@ const TeamItem = props => {
                         <TouchableOpacity>
                             <Icon name="people" size={18} color="black" />
                         </TouchableOpacity>
+                      
                         <Text style={styles.personText}>{props.person} Persons</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
@@ -87,6 +96,7 @@ const TeamItem = props => {
         </View>
       </View>
     </View>
+    </LinearGradient>
   );
 };
 

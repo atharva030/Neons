@@ -19,10 +19,10 @@ function BottomTabNavigator() {
       screenOptions={({route}) => ({
         headerShown: false,
 
-        tabBarActiveTintColor: '#b3caf3',
+        tabBarActiveTintColor: '#fff',
         tabBarStyle: {
-          backgroundColor: '#1b1b1b',
-          borderColor: '#b3caf3',
+          backgroundColor: '#000',
+          borderColor: '#fff',
           borderTopWidth: 1,
           height: 65,
         },

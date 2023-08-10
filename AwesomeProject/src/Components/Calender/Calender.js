@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   dateName: {
-    color: '#313131',
+    color: '#626567',
     fontSize: 12,
     marginTop: -5,
     paddingBottom: 10,
@@ -65,11 +65,11 @@ const styles = StyleSheet.create({
     width: 35,
   },
   highlightDateNumber: {
-    color: '#1b1b1b',
+    color: 'black',
     fontSize: 12,
   },
   highlightDateName: {
-    color: '#1b1b1b',
+    color: 'black',
     fontSize: 12,
     marginTop: -5,
   },
