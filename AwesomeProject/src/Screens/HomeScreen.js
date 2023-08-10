@@ -374,28 +374,29 @@ const HomeScreen = ({navigation}) => {
                   <Button
                     icon="close"
                     mode="contained"
+                    textColor="black"
                     onPress={hideModal}
                     style={{
                       marginLeft: 5,
-                      backgroundColor: '#1b1b1b',
-                      borderColor: '#6DED65',
+                      backgroundColor: '#6DED65',
                       borderStyle: 'solid',
                       borderWidth: 2,
                     }}>
-                    <Text style={{color: 'white'}}>Close</Text>
+                    <Text style={{color: 'black'}}>Close</Text>
                   </Button>
                   <Button
                     icon="check"
+                    textColor="black"
                     mode="contained"
                     onPress={addTeam}
                     style={{
                       marginLeft: 5,
-                      backgroundColor: '#1b1b1b',
-                      borderColor: '#6DED65',
+                      backgroundColor: '#6DED65',
+
                       borderStyle: 'solid',
                       borderWidth: 2,
                     }}>
-                    <Text style={{color: 'white'}}>Create</Text>
+                    <Text style={{color: 'black'}}>Create</Text>
                   </Button>
                 </View>
               </Modal>
@@ -467,28 +468,30 @@ const HomeScreen = ({navigation}) => {
                   <Button
                     icon="close"
                     mode="contained"
+                    textColor="black"
                     onPress={closeBottomSheet}
                     style={{
                       marginLeft: 5,
-                      backgroundColor: '#1b1b1b',
+                      backgroundColor: '#6DED65',
                       borderColor: '#6DED65',
                       borderStyle: 'solid',
                       borderWidth: 2,
                     }}>
-                    Close
+                    <Text style={{color: 'black'}}>Close</Text>
                   </Button>
                   <Button
                     icon="check"
+                    textColor="black"
                     mode="contained"
                     onPress={() => editTeam(teamId)}
                     style={{
                       marginLeft: 5,
-                      backgroundColor: '#1b1b1b',
-                      borderColor: '#6DED65',
+                      backgroundColor: '#6DED65',
+                      borderColor: '',
                       borderStyle: 'solid',
                       borderWidth: 2,
                     }}>
-                    Done
+                    <Text style={{color: 'black'}}> Done </Text>
                   </Button>
                 </View>
               </View>
@@ -591,6 +594,8 @@ const HomeScreen = ({navigation}) => {
                     {
                       icon: 'account-plus',
                       label: 'New Team',
+                      color: '#6DED65',
+
                       onPress: () => showModal(),
                     },
                   ]}

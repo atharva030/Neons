@@ -8,7 +8,7 @@ module.exports = {
     height: deviceHeight,
     widht: deviceWidth,
     flex: 1,
-    backgroundColor: '#b4cef8',
+    backgroundColor: '#1b1b1b',
   },
   btmeditsheet: {
     width: '100%',
@@ -52,7 +52,7 @@ module.exports = {
     flexDirection: 'column',
   },
   addSecondScreen: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
