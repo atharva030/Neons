@@ -56,7 +56,7 @@ const TeamMember = (props) => {
 
 const styles = StyleSheet.create({
    chip: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     borderWidth: 1,
     borderColor: 'thistle',
     borderRadius: 20,
@@ -68,7 +68,9 @@ const styles = StyleSheet.create({
     alignItems:"center"
   },
   chipPressed: {
-    backgroundColor: '#ebdefa',
+    borderColor: '#6DED65',
+    borderWidth:2,
+   
   },
   container: {
     
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   checkmarkSelected: {
-    backgroundColor: 'green',
+    backgroundColor: '#6DED65',
     borderRadius: 50,
   },
   checkmarkNotSelected: {
@@ -105,12 +107,12 @@ const styles = StyleSheet.create({
   nameText: {
     fontFamily: 'Poppins-Regular',
     fontSize: 16,
-    color: 'black',
+    color: 'white',
   },
   designationText: {
     fontFamily: 'Poppins-ExtraLight',
     fontSize: 12,
-    color: 'black',
+    color: 'white',
   },
 });
 

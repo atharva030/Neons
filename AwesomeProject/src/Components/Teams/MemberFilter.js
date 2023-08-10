@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   chip: {
-    backgroundColor: 'white',
     borderWidth: 2,
     borderColor: '#6DED65',
     borderRadius: 20,

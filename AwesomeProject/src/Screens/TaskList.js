@@ -33,6 +33,7 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
 import MemberFilter from '../Components/Teams/MemberFilter';
+import { black } from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
 const handleSuccess = () => {
   //ToastComponent({message: 'Task Updated Sucessfull'});
 };
@@ -447,7 +448,7 @@ const TaskList = ({navigation, route}) => {
               borderTopRightRadius: 20,
             },
             draggableIcon: {
-              backgroundColor: 'white',
+              backgroundColor: '#6DED65',
             },
           }}>
           <View style={{marginLeft: 10}}>
@@ -645,7 +646,7 @@ const TaskList = ({navigation, route}) => {
                 <View
                   style={{
                   
-                    backgroundColor: 'gray',
+                    backgroundColor: '#1b1b1b',
                     width: '50%',
                     borderTopLeftRadius: 20,
                     borderBottomLeftRadius: 20,
