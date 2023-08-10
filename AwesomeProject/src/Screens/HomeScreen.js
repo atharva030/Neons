@@ -364,7 +364,7 @@ const HomeScreen = ({navigation}) => {
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    width: 290, 
+                    width: 290,
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     flexWrap: 'wrap',
@@ -382,10 +382,7 @@ const HomeScreen = ({navigation}) => {
                       borderStyle: 'solid',
                       borderWidth: 2,
                     }}>
-                    <Text style={{color:'white'}}>
-                    Close
-                    </Text>
-                   
+                    <Text style={{color: 'white'}}>Close</Text>
                   </Button>
                   <Button
                     icon="check"
@@ -398,10 +395,7 @@ const HomeScreen = ({navigation}) => {
                       borderStyle: 'solid',
                       borderWidth: 2,
                     }}>
-                     <Text style={{color:'white'}}>
-                     Create
-                     </Text>
-                    
+                    <Text style={{color: 'white'}}>Create</Text>
                   </Button>
                 </View>
               </Modal>
@@ -432,7 +426,7 @@ const HomeScreen = ({navigation}) => {
                       {backgroundColor: 'transparent', height: 25},
                     ]}
                     placeholder="Team Name"
-                    placeholderTextColor="#b3caf3"
+                    placeholderTextColor="#6DED65"
                     value={formData.editTitle}
                     onChangeText={value =>
                       setFormData({...formData, editTitle: value})
@@ -444,7 +438,7 @@ const HomeScreen = ({navigation}) => {
                     style={{
                       color: 'black',
                       marginLeft: 4,
-                      color: '#8d98b0',
+                      color: '#6DED65',
                       fontFamily: 'Poppins-Medium',
                     }}>
                     Edit Team Description
@@ -455,7 +449,7 @@ const HomeScreen = ({navigation}) => {
                       {backgroundColor: 'transparent', height: 25},
                     ]}
                     placeholder="Team Description"
-                    placeholderTextColor="#8d98b0"
+                    placeholderTextColor="#6DED65"
                     value={formData.editDesc}
                     onChangeText={value =>
                       setFormData({...formData, editDesc: value})
@@ -473,14 +467,27 @@ const HomeScreen = ({navigation}) => {
                   <Button
                     icon="close"
                     mode="contained"
-                    onPress={closeBottomSheet}>
+                    onPress={closeBottomSheet}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#1b1b1b',
+                      borderColor: '#6DED65',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                    }}>
                     Close
                   </Button>
                   <Button
                     icon="check"
                     mode="contained"
                     onPress={() => editTeam(teamId)}
-                    style={{marginLeft: 5}}>
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#1b1b1b',
+                      borderColor: '#6DED65',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                    }}>
                     Done
                   </Button>
                 </View>
@@ -489,9 +496,7 @@ const HomeScreen = ({navigation}) => {
 
             <View style={styles.outer}>
               <View style={styles.titleContainer}>
- <Text style={[styles.teamtitleText]}>TaskStack</Text>
-        
-               
+                <Text style={[styles.teamtitleText]}>TaskStack</Text>
                 <TouchableOpacity>
                   <Avatardropmodal
                     navigation={navigation}
@@ -519,7 +524,7 @@ const HomeScreen = ({navigation}) => {
                 }}>
                 <Text
                   style={{
-                    color: 'grey',
+                    color: '#fff',
                     fontSize: 20,
                     padding: 20,
                     marginTop: 140,
@@ -533,8 +538,16 @@ const HomeScreen = ({navigation}) => {
                     icon="plus"
                     mode="contained"
                     onPress={() => showModal()}
-                    style={{width: 100}}>
-                    ADD
+                    style={{
+                      width: 100,
+                      backgroundColor: '#6DED65',
+                    }}>
+                    <Text
+                      style={{
+                        backgroundColor: '#6DED65',
+                      }}>
+                      ADD
+                    </Text>
                   </Button>
                 ) : (
                   ''
@@ -572,6 +585,8 @@ const HomeScreen = ({navigation}) => {
                   open={open}
                   visible
                   icon={open ? 'chevron-down' : 'plus'}
+                  color="#6DED65"
+                  fabStyle={{backgroundColor: '#1b1b1b'}}
                   actions={[
                     {
                       icon: 'account-plus',
@@ -579,7 +594,6 @@ const HomeScreen = ({navigation}) => {
                       onPress: () => showModal(),
                     },
                   ]}
-              
                   onStateChange={onStateChange}
                   onPress={() => {
                     // if (open) {

@@ -194,7 +194,7 @@ module.exports = {
     // height: '90%',
     flex: 2,
     // width: '100%',
-    backgroundColor: '#f0f4fd',
+    backgroundColor: '#6DED65',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
@@ -202,7 +202,7 @@ module.exports = {
   },
   emaillabelStyle: {
     marginLeft: 4,
-    color: '#fefffe',
+    color: '#6DED65',
     fontFamily: 'Poppins-Medium',
     marginTop: 15,
   },

@@ -32,70 +32,86 @@ const TeamItem = props => {
     props.setFormData({editTitle: title, editDesc: desc});
   };
 
-    status = props.status;
-    return (
-      <LinearGradient
-        colors={['#00e099', '#dffa2e']}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}
-        style={styles.teamFlex}
-        >
-        <View>
-        
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+  status = props.status;
+  return (
+    <LinearGradient
+      colors={['#00e099', '#dffa2e']}
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 1}}
+      style={styles.teamFlex}>
+      <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}></View>
+        <View style={styles.mainSecondFlex}>
+          <View style={styles.secondflex}>
+            <View style={styles.secondSubFlex}>
+              <Text style={styles.teamBigText}>{props.title}</Text>
+              <TouchableOpacity>
+                <Icon
+                  name="md-arrow-forward-circle-sharp"
+                  onPress={() => appFun(props.items._id, props.title)}
+                  size={30}
+                  color="black"
+                />
+              </TouchableOpacity>
             </View>
-            <View style={styles.mainSecondFlex}>
-            
-                <View style={styles.secondflex}>
-                    <View style={styles.secondSubFlex}>
-                        <Text style={styles.teamBigText}>{props.title}</Text>
-                        <TouchableOpacity>
-                            <Icon name='md-arrow-forward-circle-sharp' onPress={() => appFun(props.items._id, props.title)} size={30} color="black" />
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={styles.taskText}>{props.desc}</Text>
-                </View>
-                <View style={styles.flexIcon}>
-
-                    {/* <View style={styles.iconStyle}> */}
-                    <View style={{ flexDirection: "row" }}>
-                        <TouchableOpacity>
-                            <Icon name="people" size={18} color="black" />
-                        </TouchableOpacity>
-                      
-                        <Text style={styles.personText}>{props.person} Persons</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row' }}>
-
-
-                        {props.userRole == "ROLE_ADMIN" ? <TouchableOpacity onPress={() => handleModal(props.title, props.desc, props.items._id)}><Icon name="md-pencil-outline" size={20} style={{ color: 'black', marginRight: 15 }} /></TouchableOpacity> : ""}
-
-            <TouchableOpacity
-              onPress={() =>
-                Alert.alert(
-                  'Confirmation',
-                  'Are you sure you want to delete team Permanantly?',
-                  [
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Delete',
-                      onPress: () => deleteId(props.items._id),
-                      style: 'destructive',
-                    },
-                  ],
-                  {cancelable: false},
-                )
-              }>
-              <Icon name="md-trash" size={20} style={{color: 'black'}} />
-            </TouchableOpacity>
+            <Text style={styles.taskText}>{props.desc}</Text>
           </View>
-          {/* </View> */}
+          <View style={styles.flexIcon}>
+            {/* <View style={styles.iconStyle}> */}
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity>
+                <Icon name="people" size={18} color="black" />
+              </TouchableOpacity>
+
+              <Text style={styles.personText}>{props.person} Persons</Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              {props.userRole == 'ROLE_ADMIN' ? (
+                <TouchableOpacity
+                  onPress={() =>
+                    handleModal(props.title, props.desc, props.items._id)
+                  }>
+                  <Icon
+                    name="md-pencil-outline"
+                    size={20}
+                    style={{color: 'black', marginRight: 15}}
+                  />
+                </TouchableOpacity>
+              ) : (
+                ''
+              )}
+
+              <TouchableOpacity
+                onPress={() =>
+                  Alert.alert(
+                    'Confirmation',
+                    'Are you sure you want to delete team Permanantly?',
+                    [
+                      {
+                        text: 'Cancel',
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'Delete',
+                        onPress: () => deleteId(props.items._id),
+                        style: 'destructive',
+                      },
+                    ],
+                    {cancelable: false},
+                  )
+                }>
+                <Icon name="md-trash" size={20} style={{color: 'black'}} />
+              </TouchableOpacity>
+            </View>
+            {/* </View> */}
+          </View>
         </View>
       </View>
-    </View>
     </LinearGradient>
   );
 };
