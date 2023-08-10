@@ -14,7 +14,7 @@ module.exports = {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   bottomSheetDraggableIcon: {
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
   },
   bottomSheetContainer: {
     backgroundColor: '#1b1b1b',
@@ -38,7 +38,7 @@ module.exports = {
     textAlign: 'center',
   },
   fullscreen: {
-    backgroundColor: '#1b1b1b',
+    backgroundColor: 'black',
     minHeight: Dimensions.get('window').height,
   },
 
@@ -143,7 +143,7 @@ module.exports = {
     marginBottom: 10,
   },
   hairline: {
-    backgroundColor: '#A2A2A2',
+    backgroundColor: '#6DED65',
     height: 1,
     width: screenWidth - 90,
     marginLeft: 10,
@@ -351,7 +351,7 @@ module.exports = {
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     width: '100%',
     height: '100%',
-    backgroundColor: '#1b1b1b',
+    backgroundColor: 'black',
   },
   // Style for the modal content (the image and the close icon)
   modalContent: {

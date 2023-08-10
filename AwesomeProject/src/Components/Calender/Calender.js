@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 20,
     paddingRight: 20,
-    backgroundColor: '#1b1b1b',
+    backgroundColor: 'black',
   },
   calendarHeaderContainer: {
     alignItems: 'center',
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   highlightDateContainer: {
-    backgroundColor: '#ffff',
+    backgroundColor: '#6DED65',
     borderRadius: 10,
     height: 60,
     width: 35,

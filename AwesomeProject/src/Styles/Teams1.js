@@ -7,7 +7,6 @@ module.exports = {
     height: deviceHeight,
     widht: deviceWidth,
     flex: 1,
-    backgroundColor: '#5a55ca',
   },
   flexBox: {
     flexDirection: 'columns',
@@ -44,14 +43,14 @@ module.exports = {
     paddingVertical: 0,
   },
   input: {
-    borderColor: '#8d98b0',
+    borderColor: '#6DED65',
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
   },
   Emailinput: {
-    borderColor: '#8d98b0',
+    borderColor: '#6DED65',
     width: '94%',
     marginBottom: 10,
     borderBottomWidth: 1,
@@ -60,7 +59,7 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   passwordinput: {
-    borderColor: '#8d98b0',
+    borderColor: '#6DED65',
     width: '94%',
     borderBottomWidth: 1,
     color: 'black',
@@ -70,7 +69,7 @@ module.exports = {
   labelStyle: {
     color: 'black',
     marginLeft: 4,
-    color: '#8d98b0',
+    color: '#6DED65',
     fontFamily: 'Poppins-Medium',
   },
 
@@ -86,7 +85,7 @@ module.exports = {
     marginLeft: 43,
   },
   timeInput: {
-    borderColor: '#8d98b0',
+    borderColor: '#6DED65',
     borderBottomWidth: 1,
     color: 'black',
     width: '100%',

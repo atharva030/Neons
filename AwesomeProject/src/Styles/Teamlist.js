@@ -118,7 +118,7 @@ module.exports = {
     offset: 999,
     shadow: 10,
     shadowColor: 'gray',
-    // backgroundColor: '#b5cff8',
+    
   },
   taskFlex: {
     width: 300,

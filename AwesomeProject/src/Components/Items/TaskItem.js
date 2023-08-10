@@ -144,7 +144,7 @@ const TaskItem = props => {
             { color:'white',
               backgroundColor: '#1b1b1b',
               borderBottomWidth: 2,
-              borderBottomColor: '#b5cff8',
+              borderBottomColor: '#6DED65',
             },
           ]}
           key={i}
@@ -629,9 +629,6 @@ const TaskItem = props => {
                 </View>
               </TouchableOpacity>
             </View>
-         
-            
-            
           ) : (
             ''
           )}
@@ -652,13 +649,6 @@ const TaskItem = props => {
           <Text style={styles.taskText}>{props.time}</Text>
         </View>
       </View>
-   
-
-
-     
-      
-      
-
       <Portal>
         <Modal
           visible={isModal1Visible}
@@ -669,7 +659,7 @@ const TaskItem = props => {
               <View
                 style={[
                   styles.dropdown, // Add your custom styles here
-                  isExtended && {borderColor: '#b5cff8'}, // Add border color when extended
+                  isExtended && {borderColor: '#6DED65'}, // Add border color when extended
                 ]}>
                 <Text style={{color: 'white', textAlign: 'center'}}>
                   Please select the number of Subtask
@@ -679,7 +669,7 @@ const TaskItem = props => {
                   onValueChange={handleDropdownChange}
                   style={[
                     styles.pickerStyle,
-                    isExtended && {borderColor: '#b5cff8'},
+                    isExtended && {borderColor: '#6DED65'},
                   ]}>
                   {renderPickerItems()}
                 </Picker>
@@ -703,7 +693,7 @@ const TaskItem = props => {
               style={{
                 backgroundColor: '#1b1b1b',
                 borderWidth: 2,
-                borderColor: '#b5cff8',
+                borderColor: '#6DED65',
               }}
               onPress={() => setIsModal1Visible(false)}>
               Close
@@ -732,7 +722,7 @@ const TaskItem = props => {
                 marginLeft: 5,
                 backgroundColor: '#1b1b1b',
                 borderWidth: 2,
-                borderColor: '#b5cff8',
+                borderColor: '#6DED65',
               }}>
               Done
             </Button>

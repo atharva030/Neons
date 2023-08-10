@@ -82,7 +82,7 @@ const TaskList = ({navigation, route}) => {
   };
   const hideModal = () => setVisible(false);
   const containerMemberStyle = {
-    backgroundColor: '#1b1b1b',
+    backgroundColor: 'black',
     marginHorizontal: 20,
     padding: 20,
     width: '90%',
@@ -388,7 +388,7 @@ const TaskList = ({navigation, route}) => {
             draggableIcon: styles.bottomSheetDraggableIcon,
             container: styles.bottomSheetContainer,
           }}>
-          <View style={styles.bottomSheetContent}>
+          <View style={[styles.bottomSheetContent]}>
             <ScrollView>
               {filterMember.length === 0 ? (
                 <View>
@@ -447,7 +447,7 @@ const TaskList = ({navigation, route}) => {
               borderTopRightRadius: 20,
             },
             draggableIcon: {
-              backgroundColor: '#000',
+              backgroundColor: 'white',
             },
           }}>
           <View style={{marginLeft: 10}}>
@@ -458,7 +458,7 @@ const TaskList = ({navigation, route}) => {
                 {backgroundColor: 'transparent', height: 40},
               ]}
               placeholder="Team Name"
-              placeholderTextColor="#8d98b0"
+              placeholderTextColor="black"
               value={formData.editTitle}
               onChangeText={value =>
                 setFormData({...formData, editTitle: value})
@@ -472,7 +472,7 @@ const TaskList = ({navigation, route}) => {
                 {backgroundColor: 'transparent', height: 40},
               ]}
               placeholder="Team Description"
-              placeholderTextColor="#8d98b0"
+              placeholderTextColor="black"
               value={formData.editDesc}
               onChangeText={value =>
                 setFormData({...formData, editDesc: value})
@@ -645,7 +645,7 @@ const TaskList = ({navigation, route}) => {
                 <View
                   style={{
                   
-                    backgroundColor: '#F0F3F4',
+                    backgroundColor: 'gray',
                     width: '50%',
                     borderTopLeftRadius: 20,
                     borderBottomLeftRadius: 20,
@@ -656,7 +656,7 @@ const TaskList = ({navigation, route}) => {
                     style={{
                       fontFamily: 'Poppins-Regular',
                       fontSize: 16,
-                      color: 'black',
+                      color: 'white',
                       textAlign: 'center',
                     }}>
                     Tasks Progress
@@ -667,13 +667,13 @@ const TaskList = ({navigation, route}) => {
                       marginLeft: 34,
                       marginTop: 10,
                     }}>
-                    <Icon name="square" color={'#336EFF'} size={14}></Icon>
+                    <Icon name="square" color={'#6DED65'} size={14}></Icon>
                     <Text
                       style={{
                         fontFamily: 'Poppins-Regular',
                         marginLeft: 5,
                         fontSize: 14,
-                        color: 'gray',
+                        color: 'white',
                       }}>
                       Completed
                     </Text>
@@ -690,7 +690,7 @@ const TaskList = ({navigation, route}) => {
                         fontFamily: 'Poppins-Regular',
                         marginLeft: 5,
                         fontSize: 14,
-                        color: 'gray',
+                        color: 'white',
                       }}>
                       Pending
                     </Text>
@@ -707,7 +707,8 @@ const TaskList = ({navigation, route}) => {
                       selectedValue={totalProgress}
                       maxValue={100}
                       radius={50}
-                      activeStrokeColor="#0f4fff"
+                      backgroundColor='transparent'
+                      activeStrokeColor="#5B7519"
                       withGradient
                     />
                   </View>

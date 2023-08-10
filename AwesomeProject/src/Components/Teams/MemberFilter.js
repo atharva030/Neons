@@ -44,7 +44,7 @@ const MemberFilter = props => {
               padding: 10,
               borderRadius: 40,
               borderWidth: 1,
-              borderColor: '#b4cef8',
+              borderColor: '#6DED65',
             }}
             onPress={() =>
               Alert.alert(
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   chip: {
     backgroundColor: 'white',
     borderWidth: 2,
-    borderColor: '#b4cef8',
+    borderColor: '#6DED65',
     borderRadius: 20,
     marginTop: 20,
     width: 280,
@@ -107,15 +107,15 @@ const styles = StyleSheet.create({
   nameText: {
     fontFamily: 'Poppins-Regular',
     fontSize: 16,
-    color: '#b4cef8',
+    color: 'white',
   },
   designationText: {
     fontFamily: 'Poppins-ExtraLight',
     fontSize: 12,
-    color: '#b4cef8',
+    color: 'white',
   },
   deleteIcon: {
-    color: '#b4cef8',
+    color: '#6DED65',
   },
 });
 

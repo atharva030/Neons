@@ -53,14 +53,14 @@ module.exports = {
     paddingVertical: 0,
   },
   input: {
-    borderColor: '#8d98b0',
+    borderColor: 'white',
     borderBottomWidth: 1,
     color: 'black',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
   },
   Emailinput: {
-    borderColor: '#8d98b0',
+    borderColor: 'white',
     width: '94%',
     marginBottom: 10,
     borderBottomWidth: 1,
@@ -69,7 +69,7 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   passwordinput: {
-    borderColor: '#8d98b0',
+    borderColor: 'white',
     width: '94%',
     borderBottomWidth: 1,
     color: 'black',
@@ -80,7 +80,6 @@ module.exports = {
   labelStyle: {
     color: 'black',
     marginLeft: 4,
-    color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
     marginTop:10
   },
@@ -103,16 +102,13 @@ module.exports = {
     width: '100%',
     paddingVertical: 0,
   },
-  // submitBtn: {
-  //   width: '100%',
-  //   marginTop: 20,
-  //   backgroundColor: '#5a55ca',
-  //   color: 'white',
-  // },
   submitBtn1: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#5a55ca',
+    backgroundColor: '#1b1b1b',
+    borderColor: '#6DED65',
+    borderStyle: 'solid',
+    borderWidth: 2,
     color: 'white',
     borderRadius: 40,
     alignItems: 'center',
@@ -268,7 +264,7 @@ module.exports = {
 
   pbView:{
     
-    backgroundColor: '#F0F3F4',
+    backgroundColor: 'gray',
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
     height: 120
