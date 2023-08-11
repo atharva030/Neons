@@ -5,6 +5,7 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 module.exports = {
   Addfullscreen: {
+    margin: 20,
     height: deviceHeight,
     widht: deviceWidth,
     flex: 1
@@ -53,8 +54,15 @@ module.exports = {
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 30,
-    // paddingTop: 7,
     flexDirection: 'column',
+  },
+  accountBack: {
+    backgroundColor: '#20212a',
+    height: 40,
+    width: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   error: {
     color: 'red',
@@ -101,7 +109,7 @@ module.exports = {
   labelStyle: {
     color: 'black',
     marginLeft: 4,
-    color: '#b3caf3',
+    color: 'white',
     fontFamily: 'Poppins-Medium',
     marginTop: 15,
     alignSelf: 'flex-start',
@@ -135,7 +143,7 @@ module.exports = {
   submitBtn1: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#b3caf3',
+    backgroundColor: '#351c4f',
     color: 'white',
     borderRadius: 40,
     alignItems: 'center',
@@ -144,7 +152,7 @@ module.exports = {
   },
   loginText: {
     fontSize: 16,
-    color: '#1b1b1b',
+    color: 'white',
     textAlign: 'center',
     fontFamily: 'Poppins-Regular',
   },

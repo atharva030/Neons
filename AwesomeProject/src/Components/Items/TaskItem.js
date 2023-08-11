@@ -530,7 +530,6 @@ const TaskItem = props => {
             <Text style={{color: statusColor || 'white', padding: 10}}>
               {props.status}
             </Text>
-
             <View style={{flexDirection: 'row'}}>
               {/* expanding panel for the  three dot icon  whn pressed it iwill grow and show the three icons which  will perform the crud operation for subtask  */}
               {props.userRole == 'ROLE_ADMIN' ? (

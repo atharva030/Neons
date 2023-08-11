@@ -140,7 +140,7 @@ const LoginScreen = ({navigation}) => {
                   </View>
                   <Text
                     style={{
-                      color: '#b3caf3',
+                      color: 'white',
                       textAlign: 'center',
                       fontFamily: 'Poppins-Medium',
                       fontSize: 25,
@@ -148,16 +148,16 @@ const LoginScreen = ({navigation}) => {
                     Login with Email
                   </Text>
                   <Text
-                    style={{color: 'grey', fontSize: 16, textAlign: 'center'}}>
+                    style={{color: '#70686a', fontSize: 16, textAlign: 'center'}}>
                     Please Sign In to Continue
                   </Text>
-                  <View style={{marginTop: 10}}>
+                  <View style={{marginTop: 50}}>
                     <Text style={styles.emaillabelStyle}>Email</Text>
                     <TextInput
                       style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
                       placeholder="Enter email"
                       // Making the Under line Transparent.
-                      placeholderTextColor="#8d98b0"
+                      placeholderTextColor="white"
                       //   underlineColorAndroid="transparent"
                       value={email}
                       onChangeText={setEmail}
@@ -175,13 +175,13 @@ const LoginScreen = ({navigation}) => {
                       style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
                       placeholder="Enter Password"
                       // Making the Under line Transparent.
-                      placeholderTextColor="#8d98b0"
+                      placeholderTextColor="white"
                       //   underlineColorAndroid="transparent"
                       secureTextEntry={hidePassword}
                     />
                     <IconButton
                       icon={hidePassword ? 'eye-off' : 'eye'}
-                      iconColor="#b3caf3"
+                      iconColor="#70686a"
                       size={20}
                       color="black"
                       onPress={() => {
@@ -192,7 +192,7 @@ const LoginScreen = ({navigation}) => {
                   <Pressable onPress={() => navigation.navigate('EmailValid')}>
                     <Text
                       style={{
-                        color: '#b3caf3',
+                        color: '#70686a',
                         textAlign: 'right',
                         fontFamily: 'Poppins-Regular',
                         fontSize: 13,
@@ -244,7 +244,7 @@ const LoginScreen = ({navigation}) => {
                       onPress={() => navigation.navigate('Register')}>
                       <Text
                         style={{
-                          color: '#b3caf3',
+                          color: '#f3c134',
                           textDecorationLine: 'underline',
                           marginTop: 10,
                           fontFamily: 'Poppins-Medium',
