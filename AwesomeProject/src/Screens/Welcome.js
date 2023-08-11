@@ -172,82 +172,93 @@ const Welcome = ({navigation}) => {
   };
 
   return (
-     
     <View style={styles.fullscreen}>
-    <LinearGradient
-      colors={['#1e010b', '#001314']}
-      start={{x: 0, y: 1}}
-      end={{x: 1, y: 0}}
-      style={{height: '100%'}}>
-      <View>   
-      <View style={[styles.titleView]}>
-        <Text style={[styles.title1]}>TaskStack</Text>
-        <Text style={[styles.title2]}>Manage{'\n'} your tasks easily</Text>
-        <Text style={[styles.title3]}>
-          Effortlessly manage your tasks with TaskStack.
-        </Text>
-      </View>
-      <View style={[styles.mainContainer, {flexDirection: 'column'}]}>
-        <TouchableOpacity style={styles.container} onPress={handleSignIn}>
-          <View style={styles.card}>
-            <Text style={styles.headingText}>Sign in with Google </Text>
-            <IonIcon
-              name="logo-google"
-              size={25}
-              color="#6b8cff"
-              style={styles.google_logo}></IonIcon>
-            <View style={styles.rightIcon}>
-              <IonIcon
-                name="arrow-forward-outline"
-                size={25}
-                color="#6b8cff"
-                onPress={handleSignIn}
-                style={styles.arrow}></IonIcon>
-            </View>
+      <LinearGradient
+        colors={['#1e010b', '#001314']}
+        start={{x: 0, y: 1}}
+        end={{x: 1, y: 0}}
+        style={{height: '100%'}}>
+        <View>
+          <View style={[styles.titleView]}>
+            <Text style={[styles.title1]}>TaskStack</Text>
+            <Text style={[styles.title2]}>Manage{'\n'} your tasks easily</Text>
+            <Text style={[styles.title3]}>
+              Effortlessly manage your tasks with TaskStack.
+            </Text>
           </View>
-        </TouchableOpacity>
+          <View style={[styles.mainContainer, {flexDirection: 'column'}]}>
+            <TouchableOpacity style={styles.container} onPress={handleSignIn}>
+              <LinearGradient
+                colors={['#140d13', '#0a1a1b']}
+                start={{x: 0, y: 1}}
+                end={{x: 1, y: 0}}
+                style={styles.card}>
+                <Text style={styles.headingText}>Sign in with Google </Text>
+                <IonIcon
+                  name="logo-google"
+                  size={25}
+                  color="#6b8cff"
+                  style={styles.google_logo}></IonIcon>
+                <View style={styles.rightIcon}>
+                  <IonIcon
+                    name="arrow-forward-outline"
+                    size={25}
+                    color="#70686a"
+                    onPress={handleSignIn}
+                    style={styles.arrow}></IonIcon>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
 
-        <TouchableOpacity style={styles.container} onPress={handleSignUp}>
-          <View style={styles.card}>
-            <Text style={styles.headingText}>Sign Up with Google </Text>
-            <IonIcon
-              name="logo-google"
-              size={25}
-              color="#6b8cff"
-              style={styles.google_logo}></IonIcon>
-            <View style={styles.rightIcon}>
-              <IonIcon
-                name="arrow-forward-outline"
-                size={25}
-                color="#6b8cff"
-                onPress={handleSignUp}
-                style={styles.arrow}></IonIcon>
-            </View>
-          </View>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.container} onPress={handleSignUp}>
+              <LinearGradient
+                colors={['#140d13', '#0a1a1b']}
+                start={{x: 0, y: 1}}
+                end={{x: 1, y: 0}}
+                style={styles.card}>
+                <Text style={styles.headingText}>Sign Up with Google </Text>
+                <IonIcon
+                  name="logo-google"
+                  size={25}
+                  color="#6b8cff"
+                  style={styles.google_logo}></IonIcon>
+                <View style={styles.rightIcon}>
+                  <IonIcon
+                    name="arrow-forward-outline"
+                    size={25}
+                    color="#70686a"
+                    onPress={handleSignUp}
+                    style={styles.arrow}></IonIcon>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.container}
-          onPress={() => navigation.navigate('Login')}>
-          <View style={styles.card}>
-            <Text style={styles.headingText}>Sign in with Email</Text>
-            <IonIcon
-              name="mail-outline"
-              size={25}
-              color="#6b8cff"
-              style={styles.email_logo}></IonIcon>
-            <View style={styles.rightIcon}>
-              <IonIcon
-                name="arrow-forward-outline"
-                size={25}
-                color="#6b8cff"
-                style={styles.arrow}></IonIcon>
-            </View>
+            <TouchableOpacity
+              style={styles.container}
+              onPress={() => navigation.navigate('Login')}>
+              <LinearGradient
+                colors={['#140d13', '#0a1a1b']}
+                start={{x: 0, y: 1}}
+                end={{x: 1, y: 0}}
+                style={styles.card}>
+                <Text style={styles.headingText}>Sign in with Email</Text>
+                <IonIcon
+                  name="mail-outline"
+                  size={25}
+                  color="#6b8cff"
+                  style={styles.email_logo}></IonIcon>
+                <View style={styles.rightIcon}>
+                  <IonIcon
+                    name="arrow-forward-outline"
+                    size={25}
+                    color="#70686a"
+                    style={styles.arrow}></IonIcon>
+                </View>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
-        </TouchableOpacity>
-      </View>
-    </View>
-    </LinearGradient>
+        </View>
+      </LinearGradient>
     </View>
   );
 };

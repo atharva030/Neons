@@ -514,7 +514,8 @@ const TaskItem = props => {
 
   return (
     <View style={[styles.taskFlex, {height: taskFlexHeight}]}>
-      <LinearGradient
+
+<LinearGradient
         colors={['#140d13', '#0a1a1b']}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}

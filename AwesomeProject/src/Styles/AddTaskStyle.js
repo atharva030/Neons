@@ -7,8 +7,7 @@ module.exports = {
   Addfullscreen: {
     height: deviceHeight,
     widht: deviceWidth,
-    flex: 1,
-    backgroundColor: '#1b1b1b',
+    flex: 1
   },
   btmeditsheet: {
     width: '100%',
@@ -21,9 +20,7 @@ module.exports = {
   addteamcontainerStyle: {
     width: deviceWidth * 0.85,
     height: deviceHeight * 0.45,
-    borderWidth: 1,
-    borderColor: '#290A16',
-    backgroundColor: 'transparent',
+    backgroundColor: '#1b1b1b',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',

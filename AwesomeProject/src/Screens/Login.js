@@ -20,6 +20,7 @@ import {positionStyle} from 'react-native-flash-message';
 import TaskContext from '../Context/taskContext';
 import ToastComponent from '../Components/Toast/toast';
 import {assets} from '../../react-native.config';
+import LinearGradient from 'react-native-linear-gradient';
 import {Image} from 'react-native-svg';
 const handleSuccess = () => {
   ToastComponent({message: 'Login Sucessfull'});
@@ -121,86 +122,86 @@ const LoginScreen = ({navigation}) => {
       {spinner ? (
         <Loader />
       ) : (
-        <HideKeyboard>
-          <ScrollView>
-            <View style={styles.Addfullscreen}>
-              <View style={styles.Loginsubscreen}>
-                {/* <ImageBackground source={require('../assets/Image/bgapp.jpg')} resizeMode="cover"> */}
-                <TouchableOpacity
-                  style={{flexDirection: 'row', marginTop: 20}}
-                  onPress={() => navigation.goBack()}>
-                  <Icon name="chevron-back" size={30} color="white" />
-                  <Text style={styles.AddtitleText}>Login</Text>
-                </TouchableOpacity>
-                {/* </ImageBackground> */}
-              </View>
-
-              <View style={styles.loginSecondScreen}>
-                <Text
-                  style={{
-                    color: '#b3caf3',
-                    textAlign: 'center',
-                    fontFamily: 'Poppins-Medium',
-                    fontSize: 25,
-                  }}>
-                  Login with Email
-                </Text>
-                <Text
-                  style={{color: 'grey', fontSize: 16, textAlign: 'center'}}>
-                  Please Sign In to Continue
-                </Text>
-
-                <View style={{marginTop: 10}}>
-                  <Text style={styles.emaillabelStyle}>Email</Text>
-                  <TextInput
-                    style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
-                    placeholder="Enter email"
-                    // Making the Under line Transparent.
-                    placeholderTextColor="#8d98b0"
-                    //   underlineColorAndroid="transparent"
-                    value={email}
-                    onChangeText={setEmail}
-                  />
-                  {isFieldInError('date') &&
-                    getErrorsInField('date').map(errorMessage => (
-                      <Text>{errorMessage}</Text>
-                    ))}
-                </View>
-                <Text style={styles.labelStyle}>Password</Text>
-                <View style={{flexDirection: 'row'}}>
-                  <TextInput
-                    value={password}
-                    onChangeText={setPassword}
-                    style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
-                    placeholder="Enter Password"
-                    // Making the Under line Transparent.
-                    placeholderTextColor="#8d98b0"
-                    //   underlineColorAndroid="transparent"
-                    secureTextEntry={hidePassword}
-                  />
-                  <IconButton
-                    icon={hidePassword ? 'eye-off' : 'eye'}
-                    iconColor="#b3caf3"
-                    size={20}
-                    color="black"
-                    onPress={() => {
-                      sethidePassword(!hidePassword);
-                    }}
-                  />
-                </View>
-                <Pressable onPress={() => navigation.navigate('EmailValid')}>
+        <LinearGradient
+          colors={['#1e010b', '#001314']}
+          start={{x: 0, y: 1}}
+          end={{x: 1, y: 0}}
+          style={{height: '100%'}}>
+          <View>
+            <HideKeyboard>
+              <ScrollView>
+                <View style={styles.Addfullscreen}>
+                  <View style={styles.Loginsubscreen}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                      <View style={styles.accountBack}>
+                        <Icon name="chevron-back" size={30} color="white" />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                   <Text
                     style={{
                       color: '#b3caf3',
-                      textAlign: 'right',
-                      fontFamily: 'Poppins-Regular',
-                      fontSize: 13,
-                      marginTop: 10,
+                      textAlign: 'center',
+                      fontFamily: 'Poppins-Medium',
+                      fontSize: 25,
                     }}>
-                    Forgot Password?
+                    Login with Email
                   </Text>
-                </Pressable>
-                {/* <Button
+                  <Text
+                    style={{color: 'grey', fontSize: 16, textAlign: 'center'}}>
+                    Please Sign In to Continue
+                  </Text>
+                  <View style={{marginTop: 10}}>
+                    <Text style={styles.emaillabelStyle}>Email</Text>
+                    <TextInput
+                      style={styles.Emailinput} // Adding hint in TextInput using Placeholder option.
+                      placeholder="Enter email"
+                      // Making the Under line Transparent.
+                      placeholderTextColor="#8d98b0"
+                      //   underlineColorAndroid="transparent"
+                      value={email}
+                      onChangeText={setEmail}
+                    />
+                    {isFieldInError('date') &&
+                      getErrorsInField('date').map(errorMessage => (
+                        <Text>{errorMessage}</Text>
+                      ))}
+                  </View>
+                  <Text style={styles.labelStyle}>Password</Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <TextInput
+                      value={password}
+                      onChangeText={setPassword}
+                      style={styles.passwordinput} // Adding hint in TextInput using Placeholder option.
+                      placeholder="Enter Password"
+                      // Making the Under line Transparent.
+                      placeholderTextColor="#8d98b0"
+                      //   underlineColorAndroid="transparent"
+                      secureTextEntry={hidePassword}
+                    />
+                    <IconButton
+                      icon={hidePassword ? 'eye-off' : 'eye'}
+                      iconColor="#b3caf3"
+                      size={20}
+                      color="black"
+                      onPress={() => {
+                        sethidePassword(!hidePassword);
+                      }}
+                    />
+                  </View>
+                  <Pressable onPress={() => navigation.navigate('EmailValid')}>
+                    <Text
+                      style={{
+                        color: '#b3caf3',
+                        textAlign: 'right',
+                        fontFamily: 'Poppins-Regular',
+                        fontSize: 13,
+                        marginTop: 10,
+                      }}>
+                      Forgot Password?
+                    </Text>
+                  </Pressable>
+                  {/* <Button
                   style={[
                     styles.submitBtn,
                     {backgroundColor: isLoading ? '#4caf50' : '#8bc34a'},
@@ -209,96 +210,70 @@ const LoginScreen = ({navigation}) => {
                   onPress={toggleLoading}>
                   Log In
                 </Button> */}
-                <TouchableOpacity
-                  style={[
-                    styles.submitBtn1,
-                    isLoading && styles.buttonDisabled,
-                  ]}
-                  onPress={() => handlePress(email, password)}
-                  disabled={isLoading}>
-                  {isLoading ? (
-                    <ActivityIndicator size="small" color="#ffffff" />
-                  ) : (
-                    <Text style={styles.loginText}>Log In</Text>
-                  )}
-                </TouchableOpacity>
-
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: 10,
-                  }}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      textAlign: 'center',
-                      fontFamily: 'Poppins-Regular',
-                      fontSize: 13,
-                      marginTop: 10,
-                    }}>
-                    Don't have an Account?
-                  </Text>
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('Register')}>
+                    style={[
+                      styles.submitBtn1,
+                      isLoading && styles.buttonDisabled,
+                    ]}
+                    onPress={() => handlePress(email, password)}
+                    disabled={isLoading}>
+                    {isLoading ? (
+                      <ActivityIndicator size="small" color="#ffffff" />
+                    ) : (
+                      <Text style={styles.loginText}>Log In</Text>
+                    )}
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: 10,
+                    }}>
                     <Text
                       style={{
-                        color: '#b3caf3',
-                        textDecorationLine: 'underline',
+                        color: 'white',
+                        textAlign: 'center',
+                        fontFamily: 'Poppins-Regular',
+                        fontSize: 13,
                         marginTop: 10,
-                        fontFamily: 'Poppins-Medium',
-                        marginLeft: 5,
                       }}>
-                      Create New
+                      Don't have an Account?
                     </Text>
-                  </TouchableOpacity>
-                </View>
-                {/* <Seprator/> */}
-                {/* <View style={styles.lineContainer}>
-                  <View style={styles.grayLine} />
-                  <Text style={styles.orText}>or log in with</Text>
-                  <View style={styles.grayLine} />
-                </View> */}
-                {/* <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => console.warn('google Pressed')}>
-                    <Icon
-                      name="ios-logo-google"
-                      size={35}
-                      color="#5a55ca"
-                      style={{ marginRight: 10 }}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => console.warn('facebook Pressed')}>
-                    <Icon name="ios-logo-facebook" size={35} color="#5a55ca" />
-                  </TouchableOpacity>
-                </View> */}
-                <Text
-                  style={{color: 'white', textAlign: 'center', fontSize: 13}}>
-                  By using TaskStack you agree to our{' '}
-                  <Text style={{fontFamily: 'Poppins-Medium'}}>
-                    Terms of Services
-                  </Text>{' '}
-                  and{' '}
-                  <Text style={{fontFamily: 'Poppins-Medium'}}>
-                    Privacy Policy
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate('Register')}>
+                      <Text
+                        style={{
+                          color: '#b3caf3',
+                          textDecorationLine: 'underline',
+                          marginTop: 10,
+                          fontFamily: 'Poppins-Medium',
+                          marginLeft: 5,
+                        }}>
+                        Create New
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Text
+                    style={{color: 'white', textAlign: 'center', fontSize: 13}}>
+                    By using TaskStack you agree to our{' '}
+                    <Text style={{fontFamily: 'Poppins-Medium'}}>
+                      Terms of Services
+                    </Text>{' '}
+                    and{' '}
+                    <Text style={{fontFamily: 'Poppins-Medium'}}>
+                      Privacy Policy
+                    </Text>
                   </Text>
-                </Text>
-              </View>
-              {isFieldInError('date') &&
-                getErrorsInField('date').map(errorMessage => (
-                  <Text>{errorMessage}</Text>
-                ))}
-            </View>
-          </ScrollView>
-        </HideKeyboard>
+                </View>
+                {isFieldInError('date') &&
+                  getErrorsInField('date').map(errorMessage => (
+                    <Text>{errorMessage}</Text>
+                  ))}
+              </ScrollView>
+            </HideKeyboard>
+          </View>
+        </LinearGradient>
       )}
     </>
   );
@@ -309,5 +284,4 @@ const sepratorstyles = {
   width: '100%',
   backgroundColor: '#ddd',
 };
-
 export default LoginScreen;

@@ -13,7 +13,7 @@ module.exports = {
   },
   title1: {
     fontSize: FontSize.xxLarge,
-    color: '#b4cef8',
+    color: 'white',
     fontFamily: 'Poppins-SemiBold',
     textAlign: 'center',
   },
@@ -47,10 +47,10 @@ module.exports = {
 
   container: {
     flex: 1,
-    flexDirection: 'row',
     padding: 5,
-  },
+    flexDirection: 'row',
 
+  },
   card: {
     flex: 1,
     width: 60,
@@ -60,7 +60,6 @@ module.exports = {
     margin: 10,
     //justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#b4cef8',
   },
 
   headingText: {
@@ -68,19 +67,17 @@ module.exports = {
     fontSize: FontSize.small,
     marginLeft: 20,
     marginTop: 6,
-    color: 'black',
+    color: 'white',
   },
-
   rightIcon: {
-    backgroundColor: Colors.background,
     flex: 1,
-    marginLeft: 60,
     height: 40,
     borderRadius: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 20,
+    justifyContent: 'center'
+  },
+  arrow:{
+    alignSelf: 'flex-end',
+    marginRight: 30, 
   },
   google_logo: {
     marginLeft: 29,

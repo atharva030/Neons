@@ -379,6 +379,7 @@ const TaskList = ({navigation, route}) => {
         ...DefaultTheme,
         colors: {...DefaultTheme.colors, accent: 'transparent'},
       }}>
+      
       <View style={styles.bottomContainer}>
         <BottomSheet
           ref={bottomSheetTeamRef}
@@ -726,7 +727,7 @@ const TaskList = ({navigation, route}) => {
                       maxValue={100}
                       radius={50}
                       backgroundColor='transparent'
-                      activeStrokeColor="#5B7519"
+                      activeStrokeColor="#001314"
                       withGradient
                     />
                   </View>
@@ -842,7 +843,7 @@ const TaskList = ({navigation, route}) => {
         ) : (
           ''
         )}
-      </ScrollView>
+      </ScrollView>   
     </Provider>
   );
 };
