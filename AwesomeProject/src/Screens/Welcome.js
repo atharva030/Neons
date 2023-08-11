@@ -122,7 +122,6 @@ const Welcome = ({navigation}) => {
     }
   };
 
-
   const handleSignUp = async () => {
     try {
       await GoogleSignin.hasPlayServices({
@@ -162,7 +161,6 @@ const Welcome = ({navigation}) => {
     }
   };
 
-
   const handleNavigation = user => {
     navigation.navigate('GuInfo', {
       name: user.displayName,
@@ -171,7 +169,6 @@ const Welcome = ({navigation}) => {
       pass: user.uid,
     });
   };
-
 
   return (
     <View style={styles.fullscreen}>
@@ -184,7 +181,7 @@ const Welcome = ({navigation}) => {
       </View>
 
       <View style={[styles.mainContainer, {flexDirection: 'column'}]}>
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={handleSignIn}>
           <View style={styles.card}>
             <Text style={styles.headingText}>Sign in with Google </Text>
             <IonIcon
@@ -203,7 +200,7 @@ const Welcome = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={handleSignUp}>
           <View style={styles.card}>
             <Text style={styles.headingText}>Sign Up with Google </Text>
             <IonIcon

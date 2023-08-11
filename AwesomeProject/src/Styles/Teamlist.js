@@ -12,6 +12,15 @@ module.exports = {
     margin: 15,
     flexDirection: 'columns',
   },
+  RotatedGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    zIndex: -1,
+    transform: [{rotate: '45deg'}],
+  },
   outer: {
     margin: 20,
   },
@@ -49,7 +58,7 @@ module.exports = {
     fontSize: 27,
     borderRadius: 30,
     fontFamily: 'Poppins-SemiBold',
-    color: '#fff'
+    color: '#fff',
   },
   dayContainer: {
     height: 50,
@@ -118,7 +127,6 @@ module.exports = {
     offset: 999,
     shadow: 10,
     shadowColor: 'gray',
-    
   },
   taskFlex: {
     width: 300,

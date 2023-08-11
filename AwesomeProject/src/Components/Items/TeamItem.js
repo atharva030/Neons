@@ -35,9 +35,9 @@ const TeamItem = props => {
   status = props.status;
   return (
     <LinearGradient
-      colors={['#00e099', '#dffa2e']}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 1}}
+      colors={['#140d13', '#0a1a1b']}
+      start={{x: 0, y: 1}}
+      end={{x: 1, y: 0}}
       style={styles.teamFlex}>
       <View>
         <View
