@@ -150,14 +150,14 @@ module.exports = {
     padding: 10,
   },
   taskText: {
-    color: '#303031',
+    color: 'white',
   },
   personText: {
-    //color: '#fefffe',
+    color: '#afaeaf',
     marginLeft: 10,
   },
   teamBigText: {
-    color: '#1b1b1b',
+    color: 'white',
     fontSize: 20,
     fontFamily: 'Poppins-Regular',
   },

@@ -25,11 +25,11 @@ const TeamItems = props => {
       />
       <View style={{flexDirection: 'column', marginLeft: 20}}>
         <Text
-          style={{color: 'black', fontFamily: 'Poppins-Medium', fontSize: 15}}>
+          style={{color: 'white', fontFamily: 'Poppins-Medium', fontSize: 15}}>
           {props.userName}
         </Text>
         <Text
-          style={{color: 'grey', fontFamily: 'Poppins-Regular', fontSize: 12}}>
+          style={{color: 'white', fontFamily: 'Poppins-Regular', fontSize: 12}}>
           {props.userDesignation}
         </Text>
       </View>

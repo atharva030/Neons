@@ -8,6 +8,7 @@ import styles from '../Styles/Welcome';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastComponent from '../Components/Toast/toast';
+import LinearGradient from 'react-native-linear-gradient';
 
 GoogleSignin.configure({
   scopes: ['email'],
@@ -171,7 +172,14 @@ const Welcome = ({navigation}) => {
   };
 
   return (
+     
     <View style={styles.fullscreen}>
+    <LinearGradient
+      colors={['#1e010b', '#001314']}
+      start={{x: 0, y: 1}}
+      end={{x: 1, y: 0}}
+      style={{height: '100%'}}>
+      <View>   
       <View style={[styles.titleView]}>
         <Text style={[styles.title1]}>TaskStack</Text>
         <Text style={[styles.title2]}>Manage{'\n'} your tasks easily</Text>
@@ -179,7 +187,6 @@ const Welcome = ({navigation}) => {
           Effortlessly manage your tasks with TaskStack.
         </Text>
       </View>
-
       <View style={[styles.mainContainer, {flexDirection: 'column'}]}>
         <TouchableOpacity style={styles.container} onPress={handleSignIn}>
           <View style={styles.card}>
@@ -239,6 +246,8 @@ const Welcome = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </View>
+    </View>
+    </LinearGradient>
     </View>
   );
 };
