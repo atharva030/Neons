@@ -71,16 +71,16 @@ module.exports = {
     color: '#1b1b1b',
   },
   dateInput: {
-    borderColor: '#8d98b0',
+    borderColor: '#6DED65',
     width: '96%',
     borderBottomWidth: 1,
-    color: 'black',
+    color: 'white',
     paddingVertical: 0,
   },
   input: {
-    borderColor: '#b3caf3',
+    borderColor: '#6DED65',
     borderBottomWidth: 1,
-    color: '#b3caf3',
+    color: 'white',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
   },
@@ -102,9 +102,9 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   labelStyle: {
-    color: 'black',
+    color: 'white',
     marginLeft: 4,
-    color: '#b3caf3',
+    color: '#6DED65',
     fontFamily: 'Poppins-Medium',
     marginTop: 15,
     alignSelf: 'flex-start',
@@ -112,7 +112,7 @@ module.exports = {
 
   commonPadding: {},
   avatarText: {
-    color: '#c2c9d7',
+    color: '#6DED65',
     fontFamily: 'Poppins-Regular',
   },
   timeContainer: {
@@ -123,22 +123,16 @@ module.exports = {
     marginTop: 10,
   },
   timeInput: {
-    borderColor: '#8d98b0',
+    borderColor: '#6DED65',
     borderBottomWidth: 1,
     color: 'black',
     width: '100%',
     paddingVertical: 0,
   },
-  // submitBtn: {
-  //   width: '100%',
-  //   marginTop: 20,
-  //   backgroundColor: '#5a55ca',
-  //   color: 'white',
-  // },
   submitBtn1: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#b3caf3',
+    backgroundColor: '#6DED65',
     color: 'white',
     borderRadius: 40,
     alignItems: 'center',
@@ -154,7 +148,7 @@ module.exports = {
   sendOtp: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#b3caf3',
+    backgroundColor: '#6DED65',
     color: 'black',
     marginBottom: 315,
   },

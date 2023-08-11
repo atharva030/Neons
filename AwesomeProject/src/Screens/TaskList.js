@@ -444,6 +444,7 @@ const TaskList = ({navigation, route}) => {
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
             },
             container: {
+              backgroundColor: "#1b1b1b",
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
             },
@@ -459,7 +460,7 @@ const TaskList = ({navigation, route}) => {
                 {backgroundColor: 'transparent', height: 40},
               ]}
               placeholder="Team Name"
-              placeholderTextColor="black"
+              placeholderTextColor="white"
               value={formData.editTitle}
               onChangeText={value =>
                 setFormData({...formData, editTitle: value})
@@ -473,7 +474,7 @@ const TaskList = ({navigation, route}) => {
                 {backgroundColor: 'transparent', height: 40},
               ]}
               placeholder="Team Description"
-              placeholderTextColor="black"
+              placeholderTextColor="white"
               value={formData.editDesc}
               onChangeText={value =>
                 setFormData({...formData, editDesc: value})
@@ -487,7 +488,7 @@ const TaskList = ({navigation, route}) => {
                   {backgroundColor: 'transparent', height: 40},
                 ]}
                 placeholder="Team Enddate"
-                placeholderTextColor="#8d98b0"
+                placeholderTextColor="white"
                 value={formData.endDate}
                 onChangeText={value =>
                   setFormData({...formData, endDate: value})
@@ -504,12 +505,21 @@ const TaskList = ({navigation, route}) => {
               <Button
                 icon="close"
                 mode="contained"
+                textColor="black"
+                style={{backgroundColor:'#6DED65'}}
                 onPress={closeeditBottomSheet}>
-                Close
+                <Text
+                  style={{
+                        color:'black',
+                    }}>
+                      Close
+                </Text>
+               
               </Button>
               <Button
                 icon="check"
                 mode="contained"
+                textColor="black"
                 onPress={() => {
                   Alert.alert(
                     'Confirmation',
@@ -527,8 +537,14 @@ const TaskList = ({navigation, route}) => {
                     {cancelable: false},
                   );
                 }}
-                style={{marginLeft: 5}}>
-                Done
+                style={{marginLeft: 5, backgroundColor:'#6DED65' }}>
+                <Text
+                  style={{
+                        color:'black',
+                    }}>
+                    Done
+                    </Text>
+               
               </Button>
             </View>
           </View>
@@ -580,7 +596,8 @@ const TaskList = ({navigation, route}) => {
                 icon="close"
                 mode="contained"
                 onPress={() => setmemberTeam(false)}
-                style={{marginRight: 10}}>
+                style={{marginRight: 10,
+                  backgroundColor: '#6DED65'}}>
                 Close
               </Button>
               <Button
@@ -794,18 +811,22 @@ const TaskList = ({navigation, route}) => {
           <Portal>
             <FAB.Group
               open={open}
-              fabStyle={styles.fab}
               visible
+              color="#6DED65"
+              fabStyle={{backgroundColor: '#1b1b1b'}}
               icon={open ? 'chevron-down' : 'plus'}
               actions={[
                 {
                   icon: 'plus',
                   label: 'Add Task',
+                  textColor: '#1b1b1b',
+                  color: '#6DED65',
                   onPress: () => showModal(),
                 },
                 {
                   icon: 'plus',
                   label: 'Add Team Members',
+                  color:"#6DED65",
                   onPress: () => setmemberTeam(true),
                 },
               ]}

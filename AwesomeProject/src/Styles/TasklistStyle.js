@@ -64,7 +64,7 @@ module.exports = {
     width: '94%',
     marginBottom: 10,
     borderBottomWidth: 1,
-    color: 'black',
+    color: 'white',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
   },
@@ -171,11 +171,9 @@ module.exports = {
     flexDirection: 'column',
   },
   emaillabelStyle: {
-    color: 'black',
+    color: '#6DED65',
     marginLeft: 4,
-    color: '#8d98b0',
     fontFamily: 'Poppins-Medium',
-    // marginTop:15
   },
 
   containerStyle: {
