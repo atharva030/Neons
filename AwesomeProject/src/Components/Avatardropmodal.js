@@ -111,8 +111,8 @@ const Avatardropmodal = ({
                 <Button
                   mode="contained"
                   icon="logout"
-                  style={{backgroundColor: '#F0F0F0', marginTop: 10}}
-                  textColor="#BA1F33"
+                  style={{backgroundColor: '#351C4F', marginTop: 10}}
+                  textColor="#fff"
                   onPress={() => {
                     Alert.alert(
                       'Confirmation',
@@ -185,13 +185,13 @@ const avatarstyles = StyleSheet.create({
   userNameText: {
     fontSize: 18,
     // fontWeight: 'bold',
-    color: '#0067FB',
+    color: '#1E010B',
     fontFamily: 'Poppins-Medium',
     textAlign: 'center',
   },
   userRoleText: {
     fontSize: 14,
-    color: '#FF0096',
+    color: '#835D3C',
     textAlign: 'center',
     fontFamily: 'Poppins-Regular',
   },

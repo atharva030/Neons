@@ -136,7 +136,7 @@ module.exports = {
     height: 170,
     flexDirection: 'column',
     borderColor: 'black',
-    borderRadius:10,
+    borderRadius: 10,
     padding: 1,
     borderRadius: 10,
     marginLeft: 30,
@@ -158,7 +158,7 @@ module.exports = {
     alignSelf: 'flex-start',
   },
   taskBigText: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
     fontFamily: 'Poppins-ExtraBold',
   },
@@ -222,7 +222,6 @@ module.exports = {
     marginBottom: 10,
     paddingHorizontal: 10,
     fontFamily: 'Poppins-Regular',
-  
   },
 
   placeholderStyle: {
@@ -366,5 +365,4 @@ module.exports = {
     top: 40,
     right: 20,
   },
- 
 };

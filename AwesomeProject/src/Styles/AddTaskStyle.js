@@ -21,9 +21,9 @@ module.exports = {
   addteamcontainerStyle: {
     width: deviceWidth * 0.85,
     height: deviceHeight * 0.45,
-    // borderWidth: 1,
-    // borderColor: 'black',
-    backgroundColor: '#1b1b1b',
+    borderWidth: 1,
+    borderColor: '#290A16',
+    backgroundColor: 'transparent',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
@@ -71,16 +71,16 @@ module.exports = {
     color: '#1b1b1b',
   },
   dateInput: {
-    borderColor: '#6DED65',
+    borderColor: '#8d98b0',
     width: '96%',
     borderBottomWidth: 1,
-    color: 'white',
+    color: 'black',
     paddingVertical: 0,
   },
   input: {
-    borderColor: '#6DED65',
+    borderColor: '#b3caf3',
     borderBottomWidth: 1,
-    color: 'white',
+    color: '#b3caf3',
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
   },
@@ -102,9 +102,9 @@ module.exports = {
     fontFamily: 'Poppins-Regular',
   },
   labelStyle: {
-    color: 'white',
+    color: 'black',
     marginLeft: 4,
-    color: '#6DED65',
+    color: '#b3caf3',
     fontFamily: 'Poppins-Medium',
     marginTop: 15,
     alignSelf: 'flex-start',
@@ -112,7 +112,7 @@ module.exports = {
 
   commonPadding: {},
   avatarText: {
-    color: '#6DED65',
+    color: '#c2c9d7',
     fontFamily: 'Poppins-Regular',
   },
   timeContainer: {
@@ -123,16 +123,22 @@ module.exports = {
     marginTop: 10,
   },
   timeInput: {
-    borderColor: '#6DED65',
+    borderColor: '#8d98b0',
     borderBottomWidth: 1,
     color: 'black',
     width: '100%',
     paddingVertical: 0,
   },
+  // submitBtn: {
+  //   width: '100%',
+  //   marginTop: 20,
+  //   backgroundColor: '#5a55ca',
+  //   color: 'white',
+  // },
   submitBtn1: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#6DED65',
+    backgroundColor: '#b3caf3',
     color: 'white',
     borderRadius: 40,
     alignItems: 'center',
@@ -148,7 +154,7 @@ module.exports = {
   sendOtp: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#6DED65',
+    backgroundColor: '#b3caf3',
     color: 'black',
     marginBottom: 315,
   },
@@ -196,7 +202,7 @@ module.exports = {
   },
   emaillabelStyle: {
     marginLeft: 4,
-    color: '#6DED65',
+    color: '#fff',
     fontFamily: 'Poppins-Medium',
     marginTop: 15,
   },

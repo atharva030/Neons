@@ -141,7 +141,8 @@ const TaskItem = props => {
         <TextInput
           style={[
             styles.textInputStyle,
-            { color:'white',
+            {
+              color: 'white',
               backgroundColor: '#1b1b1b',
               borderBottomWidth: 2,
               borderBottomColor: '#6DED65',
@@ -512,370 +513,380 @@ const TaskItem = props => {
   };
 
   return (
-  
     <View style={[styles.taskFlex, {height: taskFlexHeight}]}>
-
-<LinearGradient
-        colors={['#00e099', '#dffa2e']}
+      <LinearGradient
+        colors={['#140d13', '#0a1a1b']}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         style={{borderTopLeftRadius: 10, borderTopRightRadius: 10}}>
         <View>
-      
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-        <Text style={{color: statusColor || 'black', padding: 10}}>
-          {props.status}
-        </Text>
-
-        <View style={{flexDirection: 'row'}}>
-          {/* expanding panel for the  three dot icon  whn pressed it iwill grow and show the three icons which  will perform the crud operation for subtask  */}
-          {props.userRole == 'ROLE_ADMIN' ? (
-            <View>
-              <TouchableOpacity onPress={handleIconPress}>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignContent: 'center',
-                    justifyContent: 'center',
-                    alignSelf: 'center'
-                  }}>
-                  {isExpanded && (
-                    <Animated.View
-                      style={{
-                        flexDirection: 'row',
-                        padding: 5,
-                        borderRadius: 5,
-                        overflow: 'hidden',
-                        opacity: panelOpacity,
-                        alignItems: 'center',
-                      }}>
-                      <TouchableOpacity
-                        onPress={() => handleAddSubTaskClick(props.id)}>
-                        {fetchsubtask.length > 0 ? (
-                          ''
-                        ) : (
-                          <Icon
-                            name="add"
-                            color="black"
-                            size={20}
-                            style={{marginRight: 10}}
-                          />
-                        )}
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() =>
-                          handleEditClick(
-                            props.id,
-                            props.title,
-                            props.desc,
-                            props.time,
-                          )
-                        }>
-                        <Icon
-                          name="pencil-sharp"
-                          color="black"
-                          size={20}
-                          style={{marginRight: 10}}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() =>
-                          Alert.alert(
-                            'Confirmation',
-                            'Are you sure you want to delete?',
-                            [
-                              {
-                                text: 'Cancel',
-                                style: 'cancel',
-                              },
-                              {
-                                text: 'Delete',
-                                onPress: () =>
-                                  handleDeleteClick(
-                                    props.id,
-                                    props.teamIdByItem,
-                                  ),
-                                style: 'destructive',
-                              },
-                            ],
-                            {cancelable: false},
-                          )
-                        }>
-                        <Icon
-                          name="trash"
-                          color="black"
-                          size={20}
-                          style={{marginRight: 10}}
-                        />
-                      </TouchableOpacity>
-                    </Animated.View>
-                  )}
-                  <Icon
-                    name="ellipsis-vertical"
-                    color="black"
-                    size={20}
-                    style={{
-                      marginRight: 6,
-                      padding: 5,
-                      borderRadius: 6,
-                      alignItems: 'center',
-                    }}
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            ''
-          )}
-        </View>
-      </View>
-      <View style={styles.hairline} />
-      <View style={styles.mainSecondFlex}>
-        <View style={styles.secondflex}>
-          <View style={styles.secondSubFlex}>
-            <Text style={styles.taskBigText}>{props.title}</Text>
-          </View>
-          <Text style={styles.taskText}>{props.desc}</Text>
-        </View>
-        <View style={styles.flexIcon}>
-          <TouchableOpacity>
-            <Icon name="md-time-outline" size={15} color="#20471E" />
-          </TouchableOpacity>
-          <Text style={styles.taskText}>{props.time}</Text>
-        </View>
-      </View>
-      <Portal>
-        <Modal
-          visible={isModal1Visible}
-          onDismiss={() => setIsModal1Visible(false)}
-          contentContainerStyle={[containerStyle, {height: modalHeight}]}>
-          <View style={styles.container}>
-            <ScrollView>
-              <View
-                style={[
-                  styles.dropdown, // Add your custom styles here
-                  isExtended && {borderColor: '#6DED65'}, // Add border color when extended
-                ]}>
-                <Text style={{color: 'white', textAlign: 'center'}}>
-                  Please select the number of Subtask
-                </Text>
-                <Picker
-                  selectedValue={selectedOption}
-                  onValueChange={handleDropdownChange}
-                  style={[
-                    styles.pickerStyle,
-                    isExtended && {borderColor: '#6DED65'},
-                  ]}>
-                  {renderPickerItems()}
-                </Picker>
-              </View>
-              {/* Render TextInput components based on the selected option */}
-              {renderTextInputs()}
-            </ScrollView>
-          </View>
-
           <View
             style={{
-              display: 'flex',
               flexDirection: 'row',
-              width: 290,
-              marginLeft: 15,
-              marginTop: 25,
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}>
-            <Button
-              icon="close"
-              mode="contained"
-              style={{
-                backgroundColor: '#1b1b1b',
-                borderWidth: 2,
-                borderColor: '#6DED65',
-              }}
-              onPress={() => setIsModal1Visible(false)}>
-              Close
-            </Button>
-            <Button
-              icon="check"
-              mode="contained"
-              onPress={() => {
-                Alert.alert(
-                  'Once addition!!!!',
-                  'Are you sure you want to add Subtasks? You can only add the subtask for once',
-                  [
-                    {
-                      text: 'Cancel',
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'Add',
-                      onPress: handleSubmitModal,
-                    },
-                  ],
-                  {cancelable: false},
-                );
-              }}
-              style={{
-                marginLeft: 5,
-                backgroundColor: '#1b1b1b',
-                borderWidth: 2,
-                borderColor: '#6DED65',
-              }}>
-              Done
-            </Button>
-          </View>
-        </Modal>
-      </Portal>
+            <Text style={{color: statusColor || 'white', padding: 10}}>
+              {props.status}
+            </Text>
 
-      <View>
-        {/* Task content */}
-        <View style={styles.taskContainer}>
-          {/* Task */}
-          <View style={styles.taskContent}>{/* Task details */}</View>
-
-          {/* Toggle button */}
-
-          <TouchableOpacity onPress={() => handleToggleFlex(props.id)}>
-            {isExtended ? (
-              <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center', marginRight:12}}>
-                  <Icon name="chevron-up-outline" color="black" size={20} />
-                  <Text style={styles.taskText}> See less</Text>
-                </View>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <View style={{flexDirection: 'row', alignItems: 'center',marginRight:14}}>
-                  <Icon name="chevron-down-outline" color="black" size={20} />
-                  <Text style={styles.taskText}>See Subtasks</Text>
-                </View>
-              </React.Fragment>
-            )}
-          </TouchableOpacity>
-        </View>
-
-        <ProgressBar progress={subtaskProgress} color={MD3Colors.error50} />
-        <Collapsible collapsed={!isExtended} style={{color: 'black'}}>
-          <View style={styles.additionalContent}>
-            <View style={styles.subtaskBlockView}>
-              {fetchsubtask.length === 0 ? (
-                <Text style={{color: 'white'}}>
-                  You don't have subtask to show
-                </Text>
-            
-              ) : (
-                // <Text style={styles.subtaskTitle}>Subtasks</Text>
-                fetchsubtask.map(subtask => (
-                  // console.log(subtask._id),
-                  // console.log(props.teamIdByItem, props.id,subtask._id),
-                  <View
-                    key={subtask._id}
-                    style={[
-                      styles.individualSubT,
-                      {flexDirection: 'row', alignItems: 'center'},
-                    ]}>
-                    <TouchableOpacity
-                      style={styles.subTaskSelectCheck}
-                      onPress={() => {
-                        Alert.alert(
-                          'Confirmation',
-                          'Are you sure to submit check the box?',
-                          [
-                            {
-                              text: 'Cancel',
-                              style: 'cancel',
-                            },
-                            {
-                              text: 'Confirm',
-                              onPress: () =>
-                                toggleCheckbox(subtask._id, props.id),
-                              // onPress: () => { selectFile(subtask._id, props.id) },
-                            },
-                          ],
-                          {cancelable: false},
-                        );
+            <View style={{flexDirection: 'row'}}>
+              {/* expanding panel for the  three dot icon  whn pressed it iwill grow and show the three icons which  will perform the crud operation for subtask  */}
+              {props.userRole == 'ROLE_ADMIN' ? (
+                <View>
+                  <TouchableOpacity onPress={handleIconPress}>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignContent: 'center',
+                        justifyContent: 'center',
+                        alignSelf: 'center',
                       }}>
+                      {isExpanded && (
+                        <Animated.View
+                          style={{
+                            flexDirection: 'row',
+                            padding: 5,
+                            borderRadius: 5,
+                            overflow: 'hidden',
+                            opacity: panelOpacity,
+                            alignItems: 'center',
+                          }}>
+                          <TouchableOpacity
+                            onPress={() => handleAddSubTaskClick(props.id)}>
+                            {fetchsubtask.length > 0 ? (
+                              ''
+                            ) : (
+                              <Icon
+                                name="add"
+                                color="#835d3c"
+                                size={20}
+                                style={{marginRight: 10}}
+                              />
+                            )}
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() =>
+                              handleEditClick(
+                                props.id,
+                                props.title,
+                                props.desc,
+                                props.time,
+                              )
+                            }>
+                            <Icon
+                              name="pencil-sharp"
+                              color="white"
+                              size={20}
+                              style={{marginRight: 10}}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() =>
+                              Alert.alert(
+                                'Confirmation',
+                                'Are you sure you want to delete?',
+                                [
+                                  {
+                                    text: 'Cancel',
+                                    style: 'cancel',
+                                  },
+                                  {
+                                    text: 'Delete',
+                                    onPress: () =>
+                                      handleDeleteClick(
+                                        props.id,
+                                        props.teamIdByItem,
+                                      ),
+                                    style: 'destructive',
+                                  },
+                                ],
+                                {cancelable: false},
+                              )
+                            }>
+                            <Icon
+                              name="trash"
+                              color="white"
+                              size={20}
+                              style={{marginRight: 10}}
+                            />
+                          </TouchableOpacity>
+                        </Animated.View>
+                      )}
                       <Icon
-                        name={
-                          isChecked(subtask._id)
-                            ? 'md-checkbox'
-                            : 'md-checkbox-outline'
-                        }
-                        size={30}
-                        color={isChecked(subtask._id) ? '#418E3C' : '#8d98b0'}
+                        name="ellipsis-vertical"
+                        color="black"
+                        size={20}
+                        style={{
+                          marginRight: 6,
+                          padding: 5,
+                          borderRadius: 6,
+                          alignItems: 'center',
+                        }}
                       />
-                    </TouchableOpacity>
-                    <Text style={styles.subTTitle}>{subtask.title}</Text>
-                    {userRole === 'ROLE_ADMIN' ? (
-                      // If the user is an admin, show the eye button
-                      <TouchableOpacity
-                        style={[
-                          styles.uploadButton,
-                          {
-                            backgroundColor: 'lightgrey',
-                          },
-                        ]}>
-                        <Icon
-                          name="eye"
-                          color={'black'}
-                          size={24}
-                          onPress={() =>
-                            handleImageModalOpen(
-                              props.teamIdByItem,
-                              props.id,
-                              subtask._id,
-                            )
-                          }
-                        />
-                      </TouchableOpacity>
-                      
-                    ) : (
-                      // If the user is not an admin, show the upload button
-                      <TouchableOpacity
-                        style={[
-                          styles.uploadButton,
-                          {
-                            backgroundColor: isChecked(subtask._id)
-                              ? 'lightgrey'
-                              : '#00A36C',
-                          },
-                        ]}
-                        disabled={isChecked(subtask._id)}
-                        onPress={() =>
-                          handleUpload(
-                            props.teamIdByItem,
-                            props.id,
-                            subtask._id,
-                          )
-                        }>
-                        <Text
-                          style={[
-                            styles.uploadbtnTxt,
-                            {
-                              color: isChecked(subtask._id) ? 'grey' : '#fff',
-                            },
-                          ]}>
-                          Upload
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  </View>
-                ))
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                ''
               )}
             </View>
           </View>
-        </Collapsible>
-      </View>
-      <ImageModal />
-      
-    </View>
-    
+          <View style={styles.hairline} />
+          <View style={styles.mainSecondFlex}>
+            <View style={styles.secondflex}>
+              <View style={styles.secondSubFlex}>
+                <Text style={styles.taskBigText}>{props.title}</Text>
+              </View>
+              <Text style={styles.taskText}>{props.desc}</Text>
+            </View>
+            <View style={styles.flexIcon}>
+              <TouchableOpacity>
+                <Icon name="md-time-outline" size={15} color="#20471E" />
+              </TouchableOpacity>
+              <Text style={styles.taskText}>{props.time}</Text>
+            </View>
+          </View>
+          <Portal>
+            <Modal
+              visible={isModal1Visible}
+              onDismiss={() => setIsModal1Visible(false)}
+              contentContainerStyle={[containerStyle, {height: modalHeight}]}>
+              <View style={styles.container}>
+                <ScrollView>
+                  <View
+                    style={[
+                      styles.dropdown, // Add your custom styles here
+                      isExtended && {borderColor: '#6DED65'}, // Add border color when extended
+                    ]}>
+                    <Text style={{color: 'white', textAlign: 'center'}}>
+                      Please select the number of Subtask
+                    </Text>
+                    <Picker
+                      selectedValue={selectedOption}
+                      onValueChange={handleDropdownChange}
+                      style={[
+                        styles.pickerStyle,
+                        isExtended && {borderColor: '#6DED65'},
+                      ]}>
+                      {renderPickerItems()}
+                    </Picker>
+                  </View>
+                  {/* Render TextInput components based on the selected option */}
+                  {renderTextInputs()}
+                </ScrollView>
+              </View>
+
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  width: 290,
+                  marginLeft: 15,
+                  marginTop: 25,
+                }}>
+                <Button
+                  icon="close"
+                  mode="contained"
+                  style={{
+                    backgroundColor: '#1b1b1b',
+                    borderWidth: 2,
+                    borderColor: '#6DED65',
+                  }}
+                  onPress={() => setIsModal1Visible(false)}>
+                  Close
+                </Button>
+                <Button
+                  icon="check"
+                  mode="contained"
+                  onPress={() => {
+                    Alert.alert(
+                      'Once addition!!!!',
+                      'Are you sure you want to add Subtasks? You can only add the subtask for once',
+                      [
+                        {
+                          text: 'Cancel',
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'Add',
+                          onPress: handleSubmitModal,
+                        },
+                      ],
+                      {cancelable: false},
+                    );
+                  }}
+                  style={{
+                    marginLeft: 5,
+                    backgroundColor: '#1b1b1b',
+                    borderWidth: 2,
+                    borderColor: '#6DED65',
+                  }}>
+                  Done
+                </Button>
+              </View>
+            </Modal>
+          </Portal>
+
+          <View>
+            {/* Task content */}
+            <View style={styles.taskContainer}>
+              {/* Task */}
+              <View style={styles.taskContent}>{/* Task details */}</View>
+
+              {/* Toggle button */}
+
+              <TouchableOpacity onPress={() => handleToggleFlex(props.id)}>
+                {isExtended ? (
+                  <React.Fragment>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginRight: 12,
+                      }}>
+                      <Icon name="chevron-up-outline" color="black" size={20} />
+                      <Text style={styles.taskText}> See less</Text>
+                    </View>
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginRight: 14,
+                      }}>
+                      <Icon
+                        name="chevron-down-outline"
+                        color="black"
+                        size={20}
+                      />
+                      <Text style={styles.taskText}>See Subtasks</Text>
+                    </View>
+                  </React.Fragment>
+                )}
+              </TouchableOpacity>
+            </View>
+
+            <ProgressBar progress={subtaskProgress} color={MD3Colors.error50} />
+            <Collapsible collapsed={!isExtended} style={{color: 'black'}}>
+              <View style={styles.additionalContent}>
+                <View style={styles.subtaskBlockView}>
+                  {fetchsubtask.length === 0 ? (
+                    <Text style={{color: 'white'}}>
+                      You don't have subtask to show
+                    </Text>
+                  ) : (
+                    // <Text style={styles.subtaskTitle}>Subtasks</Text>
+                    fetchsubtask.map(subtask => (
+                      // console.log(subtask._id),
+                      // console.log(props.teamIdByItem, props.id,subtask._id),
+                      <View
+                        key={subtask._id}
+                        style={[
+                          styles.individualSubT,
+                          {flexDirection: 'row', alignItems: 'center'},
+                        ]}>
+                        <TouchableOpacity
+                          style={styles.subTaskSelectCheck}
+                          onPress={() => {
+                            Alert.alert(
+                              'Confirmation',
+                              'Are you sure to submit check the box?',
+                              [
+                                {
+                                  text: 'Cancel',
+                                  style: 'cancel',
+                                },
+                                {
+                                  text: 'Confirm',
+                                  onPress: () =>
+                                    toggleCheckbox(subtask._id, props.id),
+                                  // onPress: () => { selectFile(subtask._id, props.id) },
+                                },
+                              ],
+                              {cancelable: false},
+                            );
+                          }}>
+                          <Icon
+                            name={
+                              isChecked(subtask._id)
+                                ? 'md-checkbox'
+                                : 'md-checkbox-outline'
+                            }
+                            size={30}
+                            color={
+                              isChecked(subtask._id) ? '#418E3C' : '#8d98b0'
+                            }
+                          />
+                        </TouchableOpacity>
+                        <Text style={styles.subTTitle}>{subtask.title}</Text>
+                        {userRole === 'ROLE_ADMIN' ? (
+                          // If the user is an admin, show the eye button
+                          <TouchableOpacity
+                            style={[
+                              styles.uploadButton,
+                              {
+                                backgroundColor: 'lightgrey',
+                              },
+                            ]}>
+                            <Icon
+                              name="eye"
+                              color={'black'}
+                              size={24}
+                              onPress={() =>
+                                handleImageModalOpen(
+                                  props.teamIdByItem,
+                                  props.id,
+                                  subtask._id,
+                                )
+                              }
+                            />
+                          </TouchableOpacity>
+                        ) : (
+                          // If the user is not an admin, show the upload button
+                          <TouchableOpacity
+                            style={[
+                              styles.uploadButton,
+                              {
+                                backgroundColor: isChecked(subtask._id)
+                                  ? 'lightgrey'
+                                  : '#00A36C',
+                              },
+                            ]}
+                            disabled={isChecked(subtask._id)}
+                            onPress={() =>
+                              handleUpload(
+                                props.teamIdByItem,
+                                props.id,
+                                subtask._id,
+                              )
+                            }>
+                            <Text
+                              style={[
+                                styles.uploadbtnTxt,
+                                {
+                                  color: isChecked(subtask._id)
+                                    ? 'grey'
+                                    : '#fff',
+                                },
+                              ]}>
+                              Upload
+                            </Text>
+                          </TouchableOpacity>
+                        )}
+                      </View>
+                    ))
+                  )}
+                </View>
+              </View>
+            </Collapsible>
+          </View>
+          <ImageModal />
+        </View>
       </LinearGradient>
-      </View>
-    
+    </View>
   );
 };
 

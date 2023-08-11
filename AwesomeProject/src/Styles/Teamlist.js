@@ -12,15 +12,7 @@ module.exports = {
     margin: 15,
     flexDirection: 'columns',
   },
-  RotatedGradient: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    zIndex: -1,
-    transform: [{rotate: '45deg'}],
-  },
+
   outer: {
     margin: 20,
   },
@@ -127,6 +119,7 @@ module.exports = {
     offset: 999,
     shadow: 10,
     shadowColor: 'gray',
+    zIndex: 5,
   },
   taskFlex: {
     width: 300,

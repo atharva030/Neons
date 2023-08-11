@@ -15,8 +15,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BlurView} from '@react-native-community/blur';
-import RotatedGradient from '../Components/RotatedGradient';
-
 import {
   FAB,
   Provider,
@@ -30,6 +28,7 @@ import styles1 from '../Styles/AddTaskStyle';
 import ToastComponent from '../Components/Toast/toast';
 import Avatardropmodal from '../Components/Avatardropmodal';
 import AppLoader from '../Components/AppLoader';
+import RotatedGradient from '../Components/RotatedGradient';
 const handleSuccess = () => {
   ToastComponent({message: 'Team Added successfully'});
 };
@@ -315,10 +314,14 @@ const HomeScreen = ({navigation}) => {
   };
   return (
     <Provider>
-      {isLoading ? (
-        <AppLoader />
-      ) : (
-        <>
+      <LinearGradient
+        colors={['#140d13', '#0a1a1b']} // Set your desired gradient colors
+        start={{x: 0, y: 1}} // Adjust the start point as needed
+        end={{x: 1, y: 0}} // Adjust the end point as needed
+        style={{flex: 1}}>
+        {isLoading ? (
+          <AppLoader />
+        ) : (
           <ScrollView
             style={styles.fullscreen}
             refreshControl={
@@ -328,18 +331,22 @@ const HomeScreen = ({navigation}) => {
               />
             }>
             {/* <LinearGradient
-              colors={['#1e010b', '#001314']}
-              start={{x: 0, y: 1}}
-              end={{x: 1, y: 0}}
-              style={styles.gradient}> */}
+            colors={['#140d13', '#0a1a1b']}
+            start={{x: 0, y: 1}}
+            end={{x: 1, y: 0}}
+            style={{height: '100%'}}> */}
+            {/* <View> */}
 
-
-            <View>
-              <Portal>
-                <Modal
-                  visible={visible}
-                  onDismiss={hideModal}
-                  contentContainerStyle={styles1.addteamcontainerStyle}>
+            <Portal>
+              <Modal
+                visible={visible}
+                onDismiss={hideModal}
+                contentContainerStyle={styles1.addteamcontainerStyle}>
+                <LinearGradient
+                  colors={['#001314', '#1E010B']}
+                  start={{x: 0, y: 1}}
+                  end={{x: 1, y: 0}}
+                  style={{height: '100%'}}>
                   <View style={{marginTop: 10}}>
                     <Text style={styles1.emaillabelStyle}>Enter Team Name</Text>
                     <TextInput
@@ -385,247 +392,261 @@ const HomeScreen = ({navigation}) => {
                     <Button
                       icon="close"
                       mode="contained"
-                      textColor="black"
+                      textColor="#fff"
                       onPress={hideModal}
                       style={{
                         marginLeft: 5,
-                        backgroundColor: '#6DED65',
+                        backgroundColor: '#351C4F',
                         borderStyle: 'solid',
                         borderWidth: 2,
                       }}>
-                      <Text style={{color: 'black'}}>Close</Text>
+                      <Text style={{color: '#fff'}}>Close</Text>
                     </Button>
                     <Button
                       icon="check"
-                      textColor="black"
+                      textColor="#fff"
                       mode="contained"
                       onPress={addTeam}
                       style={{
                         marginLeft: 5,
-                        backgroundColor: '#6DED65',
+                        backgroundColor: '#351C4F',
 
                         borderStyle: 'solid',
                         borderWidth: 2,
                       }}>
-                      <Text style={{color: 'black'}}>Create</Text>
+                      <Text style={{color: '#fff'}}>Create</Text>
                     </Button>
                   </View>
-                </Modal>
-              </Portal>
-              {/* edit title modal */}
-              <RBSheet
-                ref={bottomSheetRef}
-                height={300} // Set the desired height of the bottom sheet
-                closeOnDragDown={true}
-                customStyles={{
-                  wrapper: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  },
-                  container: {
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                  },
-                  draggableIcon: {
-                    backgroundColor: '#000',
-                  },
-                }}>
-                <View style={styles1.btmeditsheet}>
-                  <View style={{marginTop: 2}}>
-                    <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
-                    <TextInput
-                      style={[
-                        styles1.Emailinput,
-                        {backgroundColor: 'transparent', height: 25},
-                      ]}
-                      placeholder="Team Name"
-                      placeholderTextColor="#6DED65"
-                      value={formData.editTitle}
-                      onChangeText={value =>
-                        setFormData({...formData, editTitle: value})
-                      }
-                    />
-                  </View>
-                  <View style={{marginTop: 10}}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        marginLeft: 4,
-                        color: '#6DED65',
-                        fontFamily: 'Poppins-Medium',
-                      }}>
-                      Edit Team Description
-                    </Text>
-                    <TextInput
-                      style={[
-                        styles1.Emailinput,
-                        {backgroundColor: 'transparent', height: 25},
-                      ]}
-                      placeholder="Team Description"
-                      placeholderTextColor="#6DED65"
-                      value={formData.editDesc}
-                      onChangeText={value =>
-                        setFormData({...formData, editDesc: value})
-                      }
-                    />
-                  </View>
-                  <View
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      width: '100%',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                    }}>
-                    <Button
-                      icon="close"
-                      mode="contained"
-                      textColor="black"
-                      onPress={closeBottomSheet}
-                      style={{
-                        marginLeft: 5,
-                        backgroundColor: '#6DED65',
-                        borderColor: '#6DED65',
-                        borderStyle: 'solid',
-                        borderWidth: 2,
-                      }}>
-                      <Text style={{color: 'black'}}>Close</Text>
-                    </Button>
-                    <Button
-                      icon="check"
-                      textColor="black"
-                      mode="contained"
-                      onPress={() => editTeam(teamId)}
-                      style={{
-                        marginLeft: 5,
-                        backgroundColor: '#6DED65',
-                        borderColor: '',
-                        borderStyle: 'solid',
-                        borderWidth: 2,
-                      }}>
-                      <Text style={{color: 'black'}}> Done </Text>
-                    </Button>
-                  </View>
-                </View>
-              </RBSheet>
+                </LinearGradient>
+              </Modal>
+            </Portal>
 
-              <View style={styles.outer}>
-                <View style={styles.titleContainer}>
-                  <Text style={[styles.teamtitleText]}>TaskStack</Text>
-                  <TouchableOpacity>
-                    <Avatardropmodal
-                      navigation={navigation}
-                      userName={idName}
-                      userDes={userDes}
-                      removeUser={removeUser}
-                      photoUrl={photoUrl}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.dayContainer}>
-                  <View style={styles.innerdayContainer}>
-                    <Text style={[styles.dateText]}>{currentDate}</Text>
-                  </View>
-                </View>
-              </View>
-              {resultTeamData.length === 0 ? (
-                <View
-                  style={{
-                    width: '100%',
-                    height: 500,
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      color: '#fff',
-                      fontSize: 20,
-                      padding: 20,
-                      marginTop: 140,
-                      textAlign: 'center',
-                      letterSpacing: 1.5,
-                    }}>
-                    You don't have Team to Display
-                  </Text>
-                  {userRole == 'ROLE_ADMIN' ? (
-                    <Button
-                      icon="plus"
-                      mode="contained"
-                      onPress={() => showModal()}
-                      style={{
-                        width: 100,
-                        backgroundColor: '#6DED65',
-                      }}>
-                      <Text
-                        style={{
-                          backgroundColor: '#6DED65',
-                        }}>
-                        ADD
-                      </Text>
-                    </Button>
-                  ) : (
-                    ''
-                  )}
-                </View>
-              ) : (
-                resultTeamData.map((items, index) => (
-                  <TeamItem
-                    key={items._id}
-                    index={index}
-                    navigation={navigation}
-                    desc={items.teamDesc}
-                    setteamId={setteamId}
-                    teamId={teamId}
-                    items={items}
-                    openBottomSheet={openBottomSheet}
-                    person={items.members.length}
-                    title={items.teamName}
-                    deleteTeam={deleteTeam}
-                    setFormData={setFormData}
-                    userRole={userRole}
-                    refreshControl={
-                      <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                      />
+            {/* edit title modal */}
+            <RBSheet
+              ref={bottomSheetRef}
+              height={300} // Set the desired height of the bottom sheet
+              closeOnDragDown={true}
+              customStyles={{
+                wrapper: {
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                },
+                container: {
+                  borderTopLeftRadius: 20,
+                  borderTopRightRadius: 20,
+                },
+                draggableIcon: {
+                  backgroundColor: '#000',
+                },
+              }}>
+              <View style={styles1.btmeditsheet}>
+                <View style={{marginTop: 2}}>
+                  <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
+                  <TextInput
+                    style={[
+                      styles1.Emailinput,
+                      {backgroundColor: 'transparent', height: 25},
+                    ]}
+                    placeholder="Team Name"
+                    placeholderTextColor="#6DED65"
+                    value={formData.editTitle}
+                    onChangeText={value =>
+                      setFormData({...formData, editTitle: value})
                     }
                   />
-                ))
-              )}
-
-              {userRole == 'ROLE_ADMIN' ? (
-                <Portal>
-                  <FAB.Group
-                    open={open}
-                    visible
-                    icon={open ? 'chevron-down' : 'plus'}
-                    color="#6DED65"
-                    fabStyle={{backgroundColor: '#1b1b1b'}}
-                    actions={[
-                      {
-                        icon: 'account-plus',
-                        label: 'New Team',
-                        color: '#6DED65',
-
-                        onPress: () => showModal(),
-                      },
+                </View>
+                <View style={{marginTop: 10}}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      marginLeft: 4,
+                      color: '#6DED65',
+                      fontFamily: 'Poppins-Medium',
+                    }}>
+                    Edit Team Description
+                  </Text>
+                  <TextInput
+                    style={[
+                      styles1.Emailinput,
+                      {backgroundColor: 'transparent', height: 25},
                     ]}
-                    onStateChange={onStateChange}
-                    onPress={() => {
-                      // if (open) {
-                      //     // do something if the speed dial is open
-                      // }
-                    }}
-                    overlayColor="#transparent"
+                    placeholder="Team Description"
+                    placeholderTextColor="#6DED65"
+                    value={formData.editDesc}
+                    onChangeText={value =>
+                      setFormData({...formData, editDesc: value})
+                    }
                   />
-                </Portal>
-              ) : (
-                ''
-              )}
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                  }}>
+                  <Button
+                    icon="close"
+                    mode="contained"
+                    textColor="black"
+                    onPress={closeBottomSheet}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#6DED65',
+                      borderColor: '#6DED65',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                    }}>
+                    <Text style={{color: 'black'}}>Close</Text>
+                  </Button>
+                  <Button
+                    icon="check"
+                    textColor="black"
+                    mode="contained"
+                    onPress={() => editTeam(teamId)}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#6DED65',
+                      borderColor: '',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                    }}>
+                    <Text style={{color: 'black'}}> Done </Text>
+                  </Button>
+                </View>
+              </View>
+            </RBSheet>
+
+            <View style={styles.outer}>
+              <View style={styles.titleContainer}>
+                <Text style={[styles.teamtitleText]}>TaskStack</Text>
+
+                <TouchableOpacity>
+                  <Avatardropmodal
+                    navigation={navigation}
+                    userName={idName}
+                    userDes={userDes}
+                    removeUser={removeUser}
+                    photoUrl={photoUrl}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.dayContainer}>
+                <View style={styles.innerdayContainer}>
+                  <Text style={[styles.dateText]}>{currentDate}</Text>
+                </View>
+              </View>
             </View>
-            {/* </LinearGradient> */}
+            {resultTeamData.length === 0 ? (
+              <View
+                style={{
+                  width: '100%',
+                  height: 500,
+                  display: 'flex',
+                  alignItems: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: 20,
+                    padding: 20,
+                    marginTop: 140,
+                    textAlign: 'center',
+                    letterSpacing: 1.5,
+                  }}>
+                  You don't have Team to Display
+                </Text>
+                {userRole == 'ROLE_ADMIN' ? (
+                  <Button
+                    icon="plus"
+                    mode="contained"
+                    onPress={() => showModal()}
+                    style={{
+                      width: 100,
+                      backgroundColor: '#6DED65',
+                    }}>
+                    <Text
+                      style={{
+                        backgroundColor: '#6DED65',
+                      }}>
+                      ADD
+                    </Text>
+                  </Button>
+                ) : (
+                  ''
+                )}
+              </View>
+            ) : (
+              resultTeamData.map((items, index) => (
+                <TeamItem
+                  key={items._id}
+                  index={index}
+                  navigation={navigation}
+                  desc={items.teamDesc}
+                  setteamId={setteamId}
+                  teamId={teamId}
+                  items={items}
+                  openBottomSheet={openBottomSheet}
+                  person={items.members.length}
+                  title={items.teamName}
+                  deleteTeam={deleteTeam}
+                  setFormData={setFormData}
+                  userRole={userRole}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
+                />
+              ))
+            )}
+
+            {userRole == 'ROLE_ADMIN' ? (
+              <Portal>
+                <FAB.Group
+                  open={open}
+                  visible
+                  icon={open ? 'chevron-down' : 'plus'}
+                  backdropColor="transparent"
+                  color="#fff"
+                  fabStyle={{
+                    backgroundColor: '#001314',
+                    borderColor: '#fff',
+                    borderWidth: 1,
+                  }}
+                  actions={[
+                    {
+                      icon: 'account-plus',
+                      label: 'New Team',
+                      labelTextColor: '#fff',
+                      style: {
+                        backgroundColor: '#001314',
+                        borderColor: '#fff',
+                        borderWidth: 1,
+                      },
+                      color: '#fff',
+
+                      onPress: () => showModal(),
+                    },
+                  ]}
+                  onStateChange={onStateChange}
+                  onPress={() => {
+                    // if (open) {
+                    //     // do something if the speed dial is open
+                    // }
+                  }}
+                  overlayColor="#transparent"
+                />
+              </Portal>
+            ) : (
+              ''
+            )}
+            {/* </View>
+          </LinearGradient> */}
           </ScrollView>
-        </>
-      )}
+        )}
+      </LinearGradient>
     </Provider>
   );
 };

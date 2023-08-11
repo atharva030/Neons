@@ -1,23 +1,22 @@
 module.exports = {
   Addfullscreen: {
     flex: 1,
-    backgroundColor: '#181921',
+    backgroundColor: 'transparent',
     padding: 2,
-    height: '100%'
+    height: '100%',
   },
 
   leftIcon: {
     margin: 15,
     flexDirection: 'row',
-    
   },
   accountBack: {
     backgroundColor: '#20212a',
     height: 40,
     width: 40,
     borderRadius: 10,
-    justifyContent:'center',
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleText: {
     justifyContent: 'center',
@@ -51,42 +50,41 @@ module.exports = {
     fontSize: 16,
     color: 'white',
   },
-  editFlex:{
+  editFlex: {
     flex: 1,
     margin: 15,
-    marginTop:20,
-    backgroundColor: '#20212a',
-    borderRadius:20,
+    marginTop: 20,
+    backgroundColor: 'transparent',
+    borderRadius: 20,
     padding: 10,
   },
-  container:{
-    marginLeft:10,
-    marginTop:25,
+  container: {
+    marginLeft: 10,
+    marginTop: 25,
   },
-  editValBtn:{
+  editValBtn: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-  editTitle:{
+  editTitle: {
     color: '#6e6e74',
-    fontSize: 17
+    fontSize: 17,
   },
-  editValue:{
+  editValue: {
     color: 'white',
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 20
+    fontSize: 20,
   },
-  editBtn:{ 
+  editBtn: {
     width: 100,
-    borderRadius:10,
+    borderRadius: 10,
     backgroundColor: '#414052',
-    
   },
-  signOutBtn:{
+  signOutBtn: {
     color: 'white',
     fontSize: 18,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };
