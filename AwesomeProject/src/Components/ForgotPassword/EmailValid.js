@@ -11,7 +11,7 @@ import styles from '../../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import OtpValid from './OtpValid';
-
+import LinearGradient from 'react-native-linear-gradient';
 const generateOTP = async email => {
   try {
     const response = await fetch(
@@ -62,42 +62,51 @@ const EmailValid = ({navigation}) => {
 
   return (
     <ScrollView style={styles.Addfullscreen}>
-      <View style={styles.Loginsubscreen}>
-        <TouchableOpacity
-          style={{flexDirection: 'row', marginTop: 20}}
-          onPress={() => navigation.goBack()}>
-          <Icon name="chevron-back" size={30} color="white" />
-          <Text style={styles.AddtitleText}>Forgot Password</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.registerSecondScreen}>
-        <Text
-          style={{
-            color: '#fefffe',
-            textAlign: 'center',
-            fontFamily: 'Poppins-Medium',
-            fontSize: 25,
-            marginTop: 80,
-            marginBottom: 25,
-          }}>
-          Validate your account
-        </Text>
-
-        <View>
-          <Text style={styles.emaillabelStyle}>Email</Text>
-          <TextInput
-            style={styles.Emailinput}
-            placeholder="Enter your Email "
-            placeholderTextColor="#b3caf3"
-            onChangeText={handleEmailChange} // Update the email state
-            value={email} // Bind the value to the email state
-          />
+      <LinearGradient
+        colors={['#1e010b', '#001314']}
+        start={{x: 0, y: 1}}
+        end={{x: 1, y: 0}}
+        style={{height: '100%'}}>
+        <View style={styles.Loginsubscreen}>
+          <TouchableOpacity
+            style={{flexDirection: 'row', marginTop: 20}}
+            onPress={() => navigation.goBack()}>
+            <Icon name="chevron-back" size={30} color="white" />
+            <Text style={styles.AddtitleText}>Forgot Password</Text>
+          </TouchableOpacity>
         </View>
+        <View style={styles.registerSecondScreen}>
+          <Text
+            style={{
+              color: '#fefffe',
+              textAlign: 'center',
+              fontFamily: 'Poppins-Medium',
+              fontSize: 25,
+              marginTop: 80,
+              marginBottom: 25,
+            }}>
+            Validate your account
+          </Text>
 
-        <Button onPress={handleSendOTP} style={styles.sendOtp} mode="contained">
-          Send OTP
-        </Button>
-      </View>
+          <View>
+            <Text style={styles.emaillabelStyle}>Email</Text>
+            <TextInput
+              style={styles.Emailinput}
+              placeholder="Enter your Email "
+              placeholderTextColor="#b3caf3"
+              onChangeText={handleEmailChange} // Update the email state
+              value={email} // Bind the value to the email state
+            />
+          </View>
+
+          <Button
+            onPress={handleSendOTP}
+            style={styles.sendOtp}
+            mode="contained">
+            Send OTP
+          </Button>
+        </View>
+      </LinearGradient>
     </ScrollView>
   );
 };

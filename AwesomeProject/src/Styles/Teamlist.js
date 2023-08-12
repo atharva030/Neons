@@ -3,7 +3,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 module.exports = {
   fullscreen: {
-    backgroundColor: '#000',
     height: windowHeight,
     widht: windowWidth,
     flex: 1,
@@ -119,7 +118,6 @@ module.exports = {
     offset: 999,
     shadow: 10,
     shadowColor: 'gray',
-    zIndex: 5,
   },
   taskFlex: {
     width: 300,
