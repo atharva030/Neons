@@ -33,7 +33,7 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
 import MemberFilter from '../Components/Teams/MemberFilter';
-import { black } from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
+import {black} from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
 const handleSuccess = () => {
   //ToastComponent({message: 'Task Updated Sucessfull'});
 };
@@ -379,7 +379,6 @@ const TaskList = ({navigation, route}) => {
         ...DefaultTheme,
         colors: {...DefaultTheme.colors, accent: 'transparent'},
       }}>
-      
       <View style={styles.bottomContainer}>
         <BottomSheet
           ref={bottomSheetTeamRef}
@@ -445,7 +444,7 @@ const TaskList = ({navigation, route}) => {
               backgroundColor: 'rgba(0, 0, 0, 0.5)',
             },
             container: {
-              backgroundColor: "#1b1b1b",
+              backgroundColor: '#1b1b1b',
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
             },
@@ -507,15 +506,14 @@ const TaskList = ({navigation, route}) => {
                 icon="close"
                 mode="contained"
                 textColor="black"
-                style={{backgroundColor:'#6DED65'}}
+                style={{backgroundColor: '#6DED65'}}
                 onPress={closeeditBottomSheet}>
                 <Text
                   style={{
-                        color:'black',
-                    }}>
-                      Close
+                    color: 'black',
+                  }}>
+                  Close
                 </Text>
-               
               </Button>
               <Button
                 icon="check"
@@ -538,14 +536,13 @@ const TaskList = ({navigation, route}) => {
                     {cancelable: false},
                   );
                 }}
-                style={{marginLeft: 5, backgroundColor:'#6DED65' }}>
+                style={{marginLeft: 5, backgroundColor: '#6DED65'}}>
                 <Text
                   style={{
-                        color:'black',
-                    }}>
-                    Done
-                    </Text>
-               
+                    color: 'black',
+                  }}>
+                  Done
+                </Text>
               </Button>
             </View>
           </View>
@@ -597,8 +594,7 @@ const TaskList = ({navigation, route}) => {
                 icon="close"
                 mode="contained"
                 onPress={() => setmemberTeam(false)}
-                style={{marginRight: 10,
-                  backgroundColor: '#6DED65'}}>
+                style={{marginRight: 10, backgroundColor: '#6DED65'}}>
                 Close
               </Button>
               <Button
@@ -663,7 +659,6 @@ const TaskList = ({navigation, route}) => {
               <View style={{display: 'flex', flexDirection: 'row'}}>
                 <View
                   style={{
-                  
                     backgroundColor: '#1b1b1b',
                     width: '50%',
                     borderTopLeftRadius: 20,
@@ -726,7 +721,7 @@ const TaskList = ({navigation, route}) => {
                       selectedValue={totalProgress}
                       maxValue={100}
                       radius={50}
-                      backgroundColor='transparent'
+                      backgroundColor="transparent"
                       activeStrokeColor="#001314"
                       withGradient
                     />
@@ -827,7 +822,7 @@ const TaskList = ({navigation, route}) => {
                 {
                   icon: 'plus',
                   label: 'Add Team Members',
-                  color:"#6DED65",
+                  color: '#6DED65',
                   onPress: () => setmemberTeam(true),
                 },
               ]}
@@ -843,7 +838,7 @@ const TaskList = ({navigation, route}) => {
         ) : (
           ''
         )}
-      </ScrollView>   
+      </ScrollView>
     </Provider>
   );
 };

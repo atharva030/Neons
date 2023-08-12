@@ -8,12 +8,11 @@ module.exports = {
     margin: 20,
     height: deviceHeight,
     widht: deviceWidth,
-    flex: 1
+    flex: 1,
   },
   btmeditsheet: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#1b1b1b',
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
