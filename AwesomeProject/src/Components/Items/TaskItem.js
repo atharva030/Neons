@@ -767,8 +767,9 @@ const TaskItem = props => {
                 )}
               </TouchableOpacity>
             </View>
-
-            <ProgressBar progress={subtaskProgress} color={MD3Colors.error50} />
+            <View style={{backgroundColor:"#222e2f",padding:8, borderRadius:10,marginLeft:4,marginRight:4,marginBottom:6}}>
+            <ProgressBar progress={subtaskProgress} style={{color:"#c897fe"}} />
+            </View>
             <Collapsible collapsed={!isExtended} style={{color: 'black'}}>
               <View style={styles.additionalContent}>
                 <View style={styles.subtaskBlockView}>

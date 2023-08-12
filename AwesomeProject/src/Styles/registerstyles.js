@@ -2,8 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const RegisterStyle = StyleSheet.create({
   Addfullscreen: {
-    flex: 1,
-    backgroundColor: '#1b1b1b',
+    flex: 1
   },
   Loginsubscreen: {
     backgroundColor: '#b3caf3',
