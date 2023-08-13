@@ -118,7 +118,10 @@ const LoginScreen = ({navigation}) => {
   useEffect(() => {
     getUserData();
   }, []);
-
+  const welco = () => {
+    console.log('welco');
+    navigation.navigate('Welcome');
+  };
   // const [Password, setPassword] = useState('');
   return (
     <>
@@ -135,7 +138,7 @@ const LoginScreen = ({navigation}) => {
               <ScrollView>
                 <View style={styles.Addfullscreen}>
                   <View style={styles.Loginsubscreen}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={welco}>
                       <View style={styles.accountBack}>
                         <Icon name="chevron-back" size={30} color="white" />
                       </View>
@@ -151,7 +154,11 @@ const LoginScreen = ({navigation}) => {
                     Login with Email
                   </Text>
                   <Text
-                    style={{color: '#70686a', fontSize: 16, textAlign: 'center'}}>
+                    style={{
+                      color: '#70686a',
+                      fontSize: 16,
+                      textAlign: 'center',
+                    }}>
                     Please Sign In to Continue
                   </Text>
                   <View style={{marginTop: 50}}>
