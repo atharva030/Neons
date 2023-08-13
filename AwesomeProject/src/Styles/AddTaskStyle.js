@@ -75,7 +75,7 @@ module.exports = {
     color: '#1b1b1b',
   },
   dateInput: {
-    borderColor: '#8d98b0',
+    borderColor: 'white',
     width: '96%',
     borderBottomWidth: 1,
     color: 'black',
@@ -92,7 +92,7 @@ module.exports = {
     width: '100%',
     borderColor: 'white',
     color: 'white',
-    marginBottom: 10,
+  
     borderBottomWidth: 1,
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
@@ -155,8 +155,7 @@ module.exports = {
   sendOtp: {
     width: '100%',
     marginTop: 20,
-    backgroundColor: '#b3caf3',
-    color: 'black',
+    backgroundColor: '#351c4f',
     marginBottom: 315,
   },
 
@@ -165,8 +164,6 @@ module.exports = {
     marginBottom: 20,
   },
   Loginsubscreen: {
-    // flex: 1,
-    height: deviceHeight / 8,
     marginBottom: 20,
   },
   loginSecondScreen: {
@@ -181,15 +178,8 @@ module.exports = {
     flexDirection: 'column',
   },
   registerSecondScreen: {
-    flex: 1,
     height: deviceHeight / 1.15,
     width: '100%',
-    backgroundColor: '#1b1b1b',
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
-    padding: 30,
-    // marginTop:10,
-    flexDirection: 'column',
   },
   AddTeamSecondScreen: {
     // height: '90%',
@@ -205,9 +195,12 @@ module.exports = {
     marginLeft: 4,
     color: '#fff',
     fontFamily: 'Poppins-Medium',
-    marginTop: 15,
+    marginTop: 70,
   },
-
+  disabledSendOtp: {
+    backgroundColor:"#808080",
+  },
+  
   containerStyle: {
     backgroundColor: 'white',
     padding: 20,
@@ -282,4 +275,12 @@ module.exports = {
     color: 'black',
     fontFamily: 'Poppins-Regular',
   },
+
+  buttonDisabled:{
+    backgroundColor: '#20212a',
+    color: '#808080'
+  },
+  buttonTextDisabled:{
+    color: '#808080'
+  }
 };

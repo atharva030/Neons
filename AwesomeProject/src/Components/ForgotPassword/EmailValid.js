@@ -42,6 +42,7 @@ const generateOTP = async email => {
 
 const EmailValid = ({navigation}) => {
   const [email, setEmail] = useState('');
+  const isSendOTPDisabled = !email.trim();
 
   const handleEmailChange = value => {
     setEmail(value);
@@ -61,53 +62,62 @@ const EmailValid = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.Addfullscreen}>
-      <LinearGradient
-        colors={['#1e010b', '#001314']}
-        start={{x: 0, y: 1}}
-        end={{x: 1, y: 0}}
-        style={{height: '100%'}}>
-        <View style={styles.Loginsubscreen}>
-          <TouchableOpacity
-            style={{flexDirection: 'row', marginTop: 20}}
-            onPress={() => navigation.goBack()}>
-            <Icon name="chevron-back" size={30} color="white" />
-            <Text style={styles.AddtitleText}>Forgot Password</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.registerSecondScreen}>
-          <Text
-            style={{
-              color: '#fefffe',
-              textAlign: 'center',
-              fontFamily: 'Poppins-Medium',
-              fontSize: 25,
-              marginTop: 80,
-              marginBottom: 25,
-            }}>
-            Validate your account
-          </Text>
-
-          <View>
-            <Text style={styles.emaillabelStyle}>Email</Text>
-            <TextInput
-              style={styles.Emailinput}
-              placeholder="Enter your Email "
-              placeholderTextColor="#b3caf3"
-              onChangeText={handleEmailChange} // Update the email state
-              value={email} // Bind the value to the email state
-            />
+    <LinearGradient
+      colors={['#1e010b', '#001314']}
+      start={{x: 0, y: 1}}
+      end={{x: 1, y: 0}}
+      style={{height: '100%'}}>
+      <View>
+        <ScrollView>
+          <View style={styles.Addfullscreen}>
+            <View style={styles.Loginsubscreen}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View style={styles.accountBack}>
+                  <Icon name="chevron-back" size={30} color="white" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontFamily: 'Poppins-Medium',
+                fontSize: 25,
+              }}>
+              Validate your account
+            </Text>
+            <View style={{paddingTop: 80}}>
+              <Text style={styles.emaillabelStyle}>Email</Text>
+              <View style={{marginTop: 20}}>
+                <TextInput
+                  style={[styles.Emailinput]}
+                  placeholder="Enter your Email "
+                  placeholderTextColor="white"
+                  onChangeText={handleEmailChange} 
+                  value={email} 
+                />
+              </View>
+            </View>
+            <Button
+              onPress={handleSendOTP}
+              style={[
+                styles.sendOtp,
+                isSendOTPDisabled && styles.buttonDisabled,
+              ]}
+              mode="contained"
+              disabled={isSendOTPDisabled}>
+              <Text
+                style={[
+                  styles.sendBtnText,
+                  isSendOTPDisabled && styles.buttonTextDisabled,
+                ]}>
+                Send OTP
+              </Text>
+            </Button>
           </View>
-
-          <Button
-            onPress={handleSendOTP}
-            style={styles.sendOtp}
-            mode="contained">
-            Send OTP
-          </Button>
-        </View>
-      </LinearGradient>
-    </ScrollView>
+        </ScrollView>
+      </View>
+    </LinearGradient>
   );
 };
 

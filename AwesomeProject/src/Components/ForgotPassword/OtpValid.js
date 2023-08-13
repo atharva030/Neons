@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
 import Newpassword from './Newpassword';
+import LinearGradient from 'react-native-linear-gradient';
 
 const OtpValid = ({navigation}) => {
   const [otp, setOtp] = useState('');
@@ -96,46 +97,55 @@ const OtpValid = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.Addfullscreen}>
-      <View style={styles.Loginsubscreen}>
-        <View style={{flexDirection: 'row', marginTop: 20}}>
-          {/* <Icon name="chevron-back" size={30} color="white" /> */}
-          <Text style={[styles.AddtitleText, {marginLeft: 20}]}>
-            Validate the OTP
-          </Text>
-        </View>
-      </View>
-      <View style={styles.registerSecondScreen}>
-        <Text
-          style={{
-            color: '#fefffe',
-            textAlign: 'center',
-            fontFamily: 'Poppins-Medium',
-            fontSize: 25,
-            marginTop: 80,
-            marginBottom: 25,
-          }}>
-          Validate with OTP
-        </Text>
+    <LinearGradient
+      colors={['#1e010b', '#001314']}
+      start={{x: 0, y: 1}}
+      end={{x: 1, y: 0}}
+      style={{height: '100%'}}>
+      <View>
+        <ScrollView>
+          <View style={styles.Addfullscreen}>
+            <View style={styles.Loginsubscreen}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View style={styles.accountBack}>
+                  <Icon name="chevron-back" size={30} color="white" />
+                </View>
+              </TouchableOpacity>
+            </View>
 
-        <View>
-          <Text style={styles.emaillabelStyle}>
-            Enter the OTP (Valid up to {timer} sec)
-          </Text>
-          <TextInput
-            style={styles.Emailinput}
-            placeholder="Fill the OTP"
-            placeholderTextColor="#8d98b0"
-            onChangeText={setOtp}
-            value={otp}
-          />
-        </View>
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontFamily: 'Poppins-Medium',
+                fontSize: 25,
+              }}>
+              Validate the OTP
+            </Text>
 
-        <Button onPress={validateOtp} style={styles.sendOtp} mode="contained">
-          Validate
-        </Button>
+            <View>
+              <Text style={styles.emaillabelStyle}>
+                Enter the OTP (Valid up to {timer} sec)
+              </Text>
+              <TextInput
+                style={styles.Emailinput}
+                placeholder="Fill the OTP"
+                placeholderTextColor="white"
+                onChangeText={setOtp}
+                value={otp}
+              />
+            </View>
+
+            <Button
+              onPress={validateOtp}
+              style={styles.sendOtp}
+              mode="contained">
+              Validate
+            </Button>
+          </View>
+        </ScrollView>
       </View>
-    </ScrollView>
+    </LinearGradient>
   );
 };
 

@@ -11,7 +11,6 @@ import {
 import styles from '../Styles/Home';
 import BottomSheet from 'react-native-raw-bottom-sheet';
 import moment from 'moment';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 import Calendarstrip from '../Components/Calender/Calender';
 import TaskItem from '../Components/Items/TaskItem';

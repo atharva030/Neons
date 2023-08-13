@@ -11,6 +11,7 @@ import styles from '../../Styles/AddTaskStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Button} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Newpassword = ({navigation}) => {
   const route = useRoute();
@@ -76,57 +77,67 @@ const Newpassword = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.Addfullscreen}>
-      <View style={styles.Loginsubscreen}>
-        <TouchableOpacity style={{flexDirection: 'row', marginTop: 20}}>
-          <Icon name="chevron-back" size={30} color="white" />
-          <Text style={styles.AddtitleText}>Create New Password</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.registerSecondScreen}>
-        <Text
-          style={{
-            color: '#b3caf3',
-            textAlign: 'center',
-            fontFamily: 'Poppins-Medium',
-            fontSize: 25,
-            marginTop: 80,
-            marginBottom: 25,
-          }}>
-          Create New Password
-        </Text>
+    <LinearGradient
+      colors={['#1e010b', '#001314']}
+      start={{x: 0, y: 1}}
+      end={{x: 1, y: 0}}
+      style={{height: '100%'}}>
+      <View>
+        <ScrollView>
+          <View style={styles.Addfullscreen}>
+            <View style={styles.Loginsubscreen}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View style={styles.accountBack}>
+                  <Icon name="chevron-back" size={30} color="white" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.registerSecondScreen}>
+              <Text
+                style={{
+                  color: 'white',
+                  textAlign: 'center',
+                  fontFamily: 'Poppins-Medium',
+                  fontSize: 25,
+                  marginTop: 80,
+                  marginBottom: 25,
+                }}>
+                Create New Password
+              </Text>
+              <View>
+                <Text style={styles.emaillabelStyle}>Create New Password</Text>
+                <TextInput
+                  style={styles.Emailinput}
+                  placeholder=""
+                  placeholderTextColor="white"
+                  secureTextEntry={true}
+                  value={newPassword}
+                  onChangeText={setNewPassword}
+                />
+              </View>
+              <View>
+                <Text style={styles.emaillabelStyle}>Confirm New Password</Text>
+                <TextInput
+                  style={styles.Emailinput}
+                  placeholder=""
+                  placeholderTextColor="white"
+                  secureTextEntry={true}
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                />
+              </View>
 
-        <View>
-          <Text style={styles.emaillabelStyle}>Create New Password</Text>
-          <TextInput
-            style={styles.Emailinput}
-            placeholder=""
-            placeholderTextColor="#8d98b0"
-            secureTextEntry={true}
-            value={newPassword}
-            onChangeText={setNewPassword}
-          />
-        </View>
-        <View>
-          <Text style={styles.emaillabelStyle}>Confirm New Password</Text>
-          <TextInput
-            style={styles.Emailinput}
-            placeholder=""
-            placeholderTextColor="#8d98b0"
-            secureTextEntry={true}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          />
-        </View>
-
-        <Button
-          onPress={handlePasswordReset}
-          style={styles.sendOtp}
-          mode="contained">
-          Create New
-        </Button>
+              <Button
+                onPress={handlePasswordReset}
+                style={styles.sendOtp}
+                mode="contained">
+                Create New
+              </Button>
+            </View>
+          </View>
+        </ScrollView>
       </View>
-    </ScrollView>
+    </LinearGradient>
   );
 };
 

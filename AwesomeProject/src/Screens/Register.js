@@ -12,11 +12,12 @@ import {GoogleSignin} from 'react-native-google-signin';
 import {useRef} from 'react';
 import auth from '@react-native-firebase/auth';
 import {Picker} from '@react-native-picker/picker';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {IconButton} from 'react-native-paper';
 import styles from '../Styles/registerstyles';
 import {Image} from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import ToastComponent from '../Components/Toast/toast';
 import TaskContext from '../Context/taskContext';
@@ -47,13 +48,22 @@ const RegisterScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [cnfpassword, setCnfPassword] = useState('');
-  const [selectedRole, setSelectedRole] = useState('');
   const [selectedDesignation, setSelectedDesignation] = useState(
     designations[0],
   );
   const context = useContext(TaskContext);
   const {handleSubmitRegister} = context;
   const [isLoading, setIsLoading] = useState(false);
+
+  const route = useRoute();
+  const selectedRole = route.params.selectedRole;
+
+  const isLoginDisabled = !name.trim() || !email.trim() || !password.trim() || !phone.trim() || !cnfpassword.trim() || !selectedDesignation.trim();
+
+  useEffect(() => {
+  console.log(selectedRole);
+  }, [])
+  
 
   const handleOpenPicker = () => {
     pickerRef.current && pickerRef.current.focus();
@@ -91,7 +101,7 @@ const RegisterScreen = ({navigation}) => {
     );
     if (
       !name ||
-      !email ||
+      !email |
       !password ||
       !phone ||
       !selectedRole ||
@@ -233,7 +243,7 @@ const RegisterScreen = ({navigation}) => {
                 <TextInput
                   style={styles.inputStyle}
                   placeholder=""
-                  placeholderTextColor="#8d98b0"
+                  placeholderTextColor="white"
                   value={email}
                   onChangeText={text => setEmail(text)}
                 />
@@ -246,7 +256,7 @@ const RegisterScreen = ({navigation}) => {
                     value={password}
                     onChangeText={setPassword}
                     placeholder=""
-                    placeholderTextColor="#8d98b0"
+                    placeholderTextColor="white"
                     secureTextEntry={hidePassword}
                   />
                   <IconButton
@@ -275,62 +285,11 @@ const RegisterScreen = ({navigation}) => {
                   />
                 </View>
               </View>
-              <View style={styles.inputContainer}>
-                <Text style={styles.labelStyle}>Choose Your Role</Text>
-                <View style={styles.roleSelectionContainer}>
-                  <TouchableOpacity
-                    style={[
-                      styles.roleSelectionIconContainer,
-                      selectedRole === 'ROLE_ADMIN' &&
-                        styles.selectedRoleContainer,
-                    ]}
-                    onPress={() => handleRoleSelection('ROLE_ADMIN')}>
-                    <Image
-                      source={require('../../assets/admin.png')}
-                      style={[
-                        styles.roleImageadmin,
-                        selectedRole === 'ROLE_ADMIN' &&
-                          styles.selectedRoleImage,
-                      ]}
-                    />
-                    <Text
-                      style={[
-                        styles.roleSelectionText,
-                        selectedRole === 'ROLE_ADMIN' &&
-                          styles.selectedRoleText,
-                      ]}>
-                      Admin
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[
-                      styles.roleSelectionIconContainer,
-                      selectedRole === 'ROLE_MEMBER' &&
-                        styles.selectedRoleContainer,
-                    ]}
-                    onPress={() => handleRoleSelection('ROLE_MEMBER')}>
-                    <Image
-                      source={require('../../assets/member.png')}
-                      style={[
-                        styles.roleImagemember,
-                        selectedRole === 'ROLE_MEMBER' &&
-                          styles.selectedRoleImage,
-                      ]}
-                    />
-                    <Text
-                      style={[
-                        styles.roleSelectionText,
-                        selectedRole === 'ROLE_MEMBER' &&
-                          styles.selectedRoleText,
-                      ]}>
-                      Member
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+            
 
               <TouchableOpacity
-              style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
+              style={[styles.submitBtn1, isLoginDisabled && styles.buttonDisabled, isLoading && styles.buttonDisabled ]}
+             
                 onPress={() =>
                   handlePressRegister(
                     name,
@@ -346,7 +305,7 @@ const RegisterScreen = ({navigation}) => {
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#ffffff" />
                 ) : (
-                  <Text style={styles.loginText}>Register</Text>
+                  <Text style={[styles.loginText, isLoginDisabled && styles.buttonTextDisabled]}>Register</Text>
                 )}
               </TouchableOpacity>
 

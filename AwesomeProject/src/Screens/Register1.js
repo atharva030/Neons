@@ -1,4 +1,3 @@
-
 import {
   View,
   Text,
@@ -17,6 +16,7 @@ import React, {useContext, useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {IconButton} from 'react-native-paper';
 import styles from '../Styles/registerstyles';
+
 import {Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import ToastComponent from '../Components/Toast/toast';
@@ -25,6 +25,12 @@ import {statusCodes} from 'react-native-google-signin';
 
 const Register1 = ({navigation}) => {
   const [selectedRole, setSelectedRole] = useState('');
+  const isNextButtonDisabled = !selectedRole;
+
+  const handleRoleSelection = role => {
+    setSelectedRole(role);
+  };
+
   return (
     <LinearGradient
       colors={['#1e010b', '#001314']}
@@ -32,20 +38,21 @@ const Register1 = ({navigation}) => {
       end={{x: 1, y: 0}}
       style={{height: '100%'}}>
       <View>
-      <ScrollView>
-        <View style={styles.Addfullscreen}>
-          <View style={styles.Loginsubscreen}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <View style={styles.accountBack}>
-                <Icon name="chevron-back" size={30} color="white" />
+        <ScrollView>
+          <View style={styles.Addfullscreen}>
+            <View style={styles.Loginsubscreen}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <View style={styles.accountBack}>
+                  <Icon name="chevron-back" size={30} color="white" />
+                </View>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.registerSecondScreen}>
+              <Text style={styles.titleText1}>Register</Text>
+              <Text style={styles.titleText2}>Create a new Account</Text>
+              <View style={{margin: 40}}>
+                <Text style={styles.labelStyle}>Choose Your Role</Text>
               </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.registerSecondScreen}>
-            <Text style={styles.titleText1}>Register</Text>
-            <Text style={styles.titleText2}>Create a new Account</Text>
-<View style={{marginTop:"30"}}>
-              <Text style={[styles.labelStyle]}>Choose Your Role</Text>
               <View style={styles.roleSelectionContainer}>
                 <TouchableOpacity
                   style={[
@@ -93,13 +100,22 @@ const Register1 = ({navigation}) => {
                   </Text>
                 </TouchableOpacity>
               </View>
+
+              <TouchableOpacity
+                style={[
+                  styles.submitBtn1,
+                  isNextButtonDisabled && styles.buttonDisabled,
+                ]}
+                onPress={() =>
+                  navigation.navigate('Register', {selectedRole: selectedRole})
+                }
+                disabled={isNextButtonDisabled}>
+                <Text style={[styles.loginText, isNextButtonDisabled && styles.buttonTextDisabled, ]}>Next</Text>
+              </TouchableOpacity>
             </View>
-            </View>
-            </View>
-          
+          </View>
         </ScrollView>
       </View>
-    
     </LinearGradient>
   );
 };

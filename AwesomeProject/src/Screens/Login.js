@@ -44,6 +44,9 @@ const LoginScreen = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const {handleLogin} = context;
 
+  const isLoginDisabled = !email.trim() || !password.trim();
+  
+
   const {validate, isFieldInError, getErrorsInField, getErrorMessages} =
     useValidation({
       state: {email, password},
@@ -211,16 +214,15 @@ const LoginScreen = ({navigation}) => {
                   Log In
                 </Button> */}
                   <TouchableOpacity
-                    style={[
-                      styles.submitBtn1,
-                      isLoading && styles.buttonDisabled,
-                    ]}
+                 style={[styles.submitBtn1, isLoginDisabled && styles.buttonDisabled]}
+                   
                     onPress={() => handlePress(email, password)}
-                    disabled={isLoading}>
+                  
+                   >
                     {isLoading ? (
                       <ActivityIndicator size="small" color="#ffffff" />
                     ) : (
-                      <Text style={styles.loginText}>Log In</Text>
+                      <Text style={[styles.loginText, isLoginDisabled && styles.buttonTextDisabled]}>Log In</Text>
                     )}
                   </TouchableOpacity>
                   <View

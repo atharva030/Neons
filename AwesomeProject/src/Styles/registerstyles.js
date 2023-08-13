@@ -13,7 +13,6 @@ const RegisterStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  Loginsubscreen: {},
   loginText: {
     fontSize: 16,
     color: 'white',
@@ -39,7 +38,6 @@ const RegisterStyle = StyleSheet.create({
   registerSecondScreen: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 30,
     paddingHorizontal: 20,
   },
   titleText1:{
@@ -164,6 +162,12 @@ const RegisterStyle = StyleSheet.create({
   selectedRoleText: {
     color: 'white',
   },
+  buttonDisabled:{
+    backgroundColor: '#20212a',
+    color: '#808080'
+  },
+  buttonTextDisabled:{
+    color: '#808080'
+  }
 });
-
 export default RegisterStyle;
