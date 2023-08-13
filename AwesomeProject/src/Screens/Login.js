@@ -241,7 +241,7 @@ const LoginScreen = ({navigation}) => {
                       Don't have an Account?
                     </Text>
                     <TouchableOpacity
-                      onPress={() => navigation.navigate('Register')}>
+                      onPress={() => navigation.navigate('Register1')}>
                       <Text
                         style={{
                           color: '#f3c134',

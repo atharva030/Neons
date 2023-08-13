@@ -14,6 +14,7 @@ import TaskState from './src/Context/taskState';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import GuInfo from './src/Screens/GuInfo';
 import MyComponent from './src/Screens/MyComponent';
+import Register1 from './src/Screens/Register1';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -89,9 +90,14 @@ const App = () => {
               component={LoginScreen}
               options={{headerShown: false}}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="Register"
               component={RegisterScreen}
+              options={{headerShown: false}}
+            /> */}
+            <Stack.Screen
+              name="Register1"
+              component={Register1}
               options={{headerShown: false}}
             />
             <Stack.Screen

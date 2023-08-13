@@ -135,12 +135,7 @@ module.exports = {
     width: '100%',
     paddingVertical: 0,
   },
-  // submitBtn: {
-  //   width: '100%',
-  //   marginTop: 20,
-  //   backgroundColor: '#5a55ca',
-  //   color: 'white',
-  // },
+ 
   submitBtn1: {
     width: '100%',
     marginTop: 20,
@@ -260,18 +255,6 @@ module.exports = {
     fontSize: 16,
     fontWeight: 'bold',
   },
-  // confirmationModal:{
-  //   background:'blueGrey100',
-  //   backgroundColor: 'white',
-  //   padding: 20,
-  //   height: '100%',
-  //   width: '100%',
-  //   borderRadius: 18,
-  //   justifyContent: 'center',
-  //   alignSelf: 'center',
-  //   alignItems: 'center',
-  //   zindex : 50
-  // },
   confirmationModal: {
     backgroundColor: '#fff',
     padding: 20,
