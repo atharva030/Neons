@@ -31,7 +31,12 @@ const TeamItem = props => {
     props.openBottomSheet();
     props.setFormData({editTitle: title, editDesc: desc});
   };
+  const MAX_TITLE_LENGTH = 18; // Set your desired character limit here
 
+  // Truncate the title if it exceeds the character limit
+  const truncatedTitle = props.title.length > MAX_TITLE_LENGTH
+    ? `${props.title.slice(0, MAX_TITLE_LENGTH)}...`
+    : props.title;
   status = props.status;
   return (
     <LinearGradient
@@ -49,7 +54,7 @@ const TeamItem = props => {
         <View style={styles.mainSecondFlex}>
           <View style={styles.secondflex}>
             <View style={styles.secondSubFlex}>
-              <Text style={styles.teamBigText}>{props.title}</Text>
+              <Text style={styles.teamBigText}>{truncatedTitle}</Text>
               <TouchableOpacity>
                 <Icon
                   name="md-arrow-forward-circle-sharp"
@@ -104,7 +109,7 @@ const TeamItem = props => {
                     {cancelable: false},
                   )
                 }>
-                <Icon name="md-trash" size={20} style={{color: '#7e2e32'}} />
+                <Icon name="md-trash" size={20} style={{color: '#FF0096'}} />
               </TouchableOpacity>
             </View>
             {/* </View> */}

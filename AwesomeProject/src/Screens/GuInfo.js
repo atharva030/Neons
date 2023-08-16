@@ -14,6 +14,7 @@ import {Picker} from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../Styles/registerstyles';
 import ToastComponent from '../Components/Toast/toast';
+import LinearGradient from 'react-native-linear-gradient';
 
 const designations = [
   'Software Developer',
@@ -31,6 +32,8 @@ const GuInfo = ({navigation}) => {
     designations[null],
   );
   const [isLoading, setIsLoading] = useState(false);
+  
+
   const pickerRef = useRef();
   const handleBackendError = () => {
     ToastComponent({message: 'Check your Network'});
@@ -173,147 +176,171 @@ const GuInfo = ({navigation}) => {
   const handleRoleSelection = role => {
     setSelectedRole(role);
   };
+  const welco = () => {
+    console.log('welco');
+    navigation.navigate('Welcome');
+  };
 
   return (
-    <ScrollView style={styles.Addfullscreen}>
-      <View style={styles.Loginsubscreen}>
-        <TouchableOpacity
-          style={{flexDirection: 'row', marginTop: 20}}
-          onPress={() => navigation.goBack()}>
-          <Icon name="chevron-back" size={30} color="white" />
-          <Text style={styles.AddtitleText}>Sign Up with Google</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.registerSecondScreen}>
-        <Text style={styles.titleText}>Create a New Account</Text>
-
-        <View style={styles.roleSelectionContainer}>
-          <TouchableOpacity
-            style={[
-              styles.roleSelectionIconContainer,
-              selectedRole === 'ROLE_ADMIN' && styles.selectedRoleContainer,
-            ]}
-            onPress={() => handleRoleSelection('ROLE_ADMIN')}>
-            <Image
-              source={require('../../assets/admin.png')}
-              style={[
-                styles.roleImageadmin,
-                selectedRole === 'ROLE_ADMIN' && styles.selectedRoleImage,
-              ]}
-            />
-            <Text
-              style={[
-                styles.roleSelectionText,
-                selectedRole === 'ROLE_ADMIN' && styles.selectedRoleText,
-              ]}>
-              Admin
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              styles.roleSelectionIconContainer,
-              selectedRole === 'ROLE_MEMBER' && styles.selectedRoleContainer,
-            ]}
-            onPress={() => handleRoleSelection('ROLE_MEMBER')}>
-            <Image
-              source={require('../../assets/member.png')}
-              style={[
-                styles.roleImagemember,
-                selectedRole === 'ROLE_MEMBER' && styles.selectedRoleImage,
-              ]}
-            />
-            <Text
-              style={[
-                styles.roleSelectionText,
-                selectedRole === 'ROLE_MEMBER' && styles.selectedRoleText,
-              ]}>
-              Member
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>Full Name</Text>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder=""
-            placeholderTextColor="#8d98b0"
-            value={name}
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>Phone</Text>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder=""
-            placeholderTextColor="#8d98b0"
-            value={phone}
-            onChangeText={text => setPhone(text)}
-            keyboardType="numeric"
-          />
-        </View>
-
-        <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>Designation</Text>
-          <TouchableOpacity onPress={handleOpenPicker}>
-            <View style={styles.inputStyle}>
-              <Text style={{color: selectedDesignation ? 'black' : '#8d98b0'}}>
-                {selectedDesignation || 'Choose the designation'}
-              </Text>
-              <Picker
-                ref={pickerRef}
-                style={{height: 0, overflow: 'hidden'}} // Set overflow to 'hidden' to clip the items within the container
-                selectedValue={selectedDesignation}
-                onValueChange={itemValue => setSelectedDesignation(itemValue)}>
-                {designations.map(designation => (
-                  <Picker.Item
-                    key={designation}
-                    label={designation}
-                    value={designation}
-                  />
-                ))}
-              </Picker>
+    <LinearGradient
+      colors={['#1e010b', '#001314']}
+      start={{x: 0, y: 1}}
+      end={{x: 1, y: 0}}
+      style={{height: '100%'}}>
+      <View>
+        <ScrollView>
+          <View style={styles.Addfullscreen}>
+            <View style={styles.Loginsubscreen}>
+              <TouchableOpacity onPress={welco}>
+                <View style={styles.accountBack}>
+                  <Icon name="chevron-back" size={30} color="white" />
+                </View>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
-        </View>
 
-        <View style={styles.inputContainer}>
-          <Text style={styles.labelStyle}>Email</Text>
-          <TextInput
-            style={styles.inputStyle}
-            placeholder=""
-            placeholderTextColor="#8d98b0"
-            value={email}
-          />
-        </View>
-      </View>
+            <View style={styles.registerSecondScreen}>
+            <Text style={styles.titleText1}>Sign Up with Google</Text>
+              <Text style={styles.titleText2}>Create a New Account</Text>
 
-      <TouchableOpacity
-        style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
-        onPress={() =>
-          handleSubmitRegister(
-            name,
-            email,
-            pass,
-            phone,
-            selectedRole,
-            selectedDesignation,
-            photoURL,
-          )
-        }
-        disabled={isLoading}>
-        {isLoading ? (
-          <ActivityIndicator size="small" color="#ffffff" />
-        ) : (
-          <View style={styles.signInContainer}>
-            <Text style={styles.loginText}>Enter Details</Text>
+              <View style={styles.roleSelectionContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.roleSelectionIconContainer,
+                    selectedRole === 'ROLE_ADMIN' &&
+                      styles.selectedRoleContainer,
+                  ]}
+                  onPress={() => handleRoleSelection('ROLE_ADMIN')}>
+                  <Image
+                    source={require('../../assets/admin.png')}
+                    style={[
+                      styles.roleImageadmin,
+                      selectedRole === 'ROLE_ADMIN' && styles.selectedRoleImage,
+                    ]}
+                  />
+                  <Text
+                    style={[
+                      styles.roleSelectionText,
+                      selectedRole === 'ROLE_ADMIN' && styles.selectedRoleText,
+                    ]}>
+                    Admin
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    styles.roleSelectionIconContainer,
+                    selectedRole === 'ROLE_MEMBER' &&
+                      styles.selectedRoleContainer,
+                  ]}
+                  onPress={() => handleRoleSelection('ROLE_MEMBER')}>
+                  <Image
+                    source={require('../../assets/member.png')}
+                    style={[
+                      styles.roleImagemember,
+                      selectedRole === 'ROLE_MEMBER' &&
+                        styles.selectedRoleImage,
+                    ]}
+                  />
+                  <Text
+                    style={[
+                      styles.roleSelectionText,
+                      selectedRole === 'ROLE_MEMBER' && styles.selectedRoleText,
+                    ]}>
+                    Member
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.labelStyle}>Full Name</Text>
+                <TextInput
+                  style={styles.inputStyle}
+                  placeholder=""
+                  placeholderTextColor="white"
+                  value={name}
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.labelStyle}>Phone</Text>
+                <TextInput
+                  style={styles.inputStyle}
+                  placeholder=" "
+                  placeholderTextColor="white"
+                  value={phone}
+                  onChangeText={text => setPhone(text)}
+                  keyboardType="numeric"
+                />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.labelStyle}>Designation</Text>
+                <TouchableOpacity onPress={handleOpenPicker}>
+                  <TextInput
+                    style={styles.inputStyle}
+                    placeholder={
+                      selectedDesignation
+                        ? selectedDesignation
+                        : 'Choose the designation'
+                    }
+                    placeholderTextColor="white"
+                    editable={false}
+                  />
+                </TouchableOpacity>
+                <Picker
+                  ref={pickerRef}
+                  style={{height: 0, color: 'transparent'}}
+                  selectedValue={selectedDesignation}
+                onValueChange={itemValue => setSelectedDesignation(itemValue)}>
+                  {designations.map(designation => (
+                    <Picker.Item
+                      key={designation}
+                      label={designation}
+                      value={designation}
+                    />
+                  ))}
+                </Picker>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.labelStyle}>Email</Text>
+                <TextInput
+                  style={styles.inputStyle}
+                  placeholder=""
+                  placeholderTextColor="white"
+                  value={email}
+                />
+              </View>
+              <TouchableOpacity
+              style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
+              onPress={() =>
+                handleSubmitRegister(
+                  name,
+                  email,
+                  pass,
+                  phone,
+                  selectedRole,
+                  selectedDesignation,
+                  photoURL,
+                )
+              }
+              disabled={isLoading}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#ffffff" />
+              ) : (
+                <View style={styles.signInContainer}>
+                  <Text style={styles.loginText}>Sign Up</Text>
+                </View>
+              )}
+            </TouchableOpacity> 
+            </View>
+
+            
+
           </View>
-        )}
-      </TouchableOpacity>
-    </ScrollView>
+        </ScrollView>
+      </View>
+    </LinearGradient>
   );
 };
 

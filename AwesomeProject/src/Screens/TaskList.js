@@ -639,9 +639,11 @@ const TaskList = ({navigation, route}) => {
           <View style={[styles.fullscreen]}>
             <View style={styles.outer}>
               <View style={{display: 'flex', flexDirection: 'row'}}>
-                <View style={styles.titleContainer}>
-                  <Text style={[styles.titleText]}>{teamTitle}</Text>
-                </View>
+              <View style={styles.titleContainer}>
+  <Text style={[styles.titleText]}>
+    {teamTitle.length > 12 ? `${teamTitle.slice(0, 12)}...` : teamTitle}
+  </Text>
+</View>
                 <TouchableOpacity
                   style={styles.addButton}
                   onPress={fetchTeamMembers}

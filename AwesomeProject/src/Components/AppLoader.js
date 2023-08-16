@@ -8,7 +8,7 @@ const AppLoader = () => {
   return (
     <View style={[StyleSheet.absoluteFillObject, styles.container]}>
       <Lottie
-        source={require('../../assets/Image/loader1.json')}
+        source={require('../../assets/Image/')}
         autoPlay
         loop
         style={styles.loader}

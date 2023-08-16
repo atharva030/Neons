@@ -16,11 +16,11 @@ const RegisterStyle = StyleSheet.create({
   loginText: {
     fontSize: 16,
     color: 'white',
-    textAlign: 'center',
+    // textAlign: 'center',
     fontFamily: 'Poppins-Regular',
   },
   submitBtn1: {
-    width: '90%',
+    width: '95%',
     marginTop: 20,
     backgroundColor: '#351c4f',
     color: 'white',

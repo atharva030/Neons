@@ -19,11 +19,12 @@ module.exports = {
   },
   addteamcontainerStyle: {
     width: deviceWidth * 0.85,
-    height: deviceHeight * 0.45,
-    backgroundColor: '#1b1b1b',
-    padding: 10,
+    height: deviceHeight * 0.38 ,
+    backgroundColor: 'black',
+    padding: 20,
     borderRadius: 20,
     justifyContent: 'center',
+    alignItems:'flex-start',
     position: 'absolute',
     top: (deviceHeight - deviceHeight * 0.45) / 2,
     left: (deviceWidth - deviceWidth * 0.85) / 2,
@@ -90,9 +91,9 @@ module.exports = {
   },
   Emailinput: {
     width: '100%',
-    borderColor: 'white',
+    borderColor: 'grey',
+    marginLeft:10,
     color: 'white',
-  
     borderBottomWidth: 1,
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
@@ -192,10 +193,9 @@ module.exports = {
     flexDirection: 'column',
   },
   emaillabelStyle: {
-    marginLeft: 4,
-    color: '#fff',
+    // marginLeft: 8,
+    color: 'white',
     fontFamily: 'Poppins-Medium',
-    marginTop: 70,
   },
   disabledSendOtp: {
     backgroundColor:"#808080",

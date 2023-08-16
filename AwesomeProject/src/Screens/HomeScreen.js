@@ -8,6 +8,7 @@ import {
   BackHandler,
   ToastAndroid,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../Styles/Teamlist';
 import moment from 'moment';
 import TeamItem from '../Components/Items/TeamItem';
@@ -357,54 +358,76 @@ const HomeScreen = ({navigation}) => {
                 visible={visible}
                 onDismiss={hideModal}
                 contentContainerStyle={styles1.addteamcontainerStyle}>
-                <LinearGradient
+                {/* <LinearGradient
                   colors={['#001314', '#1E010B']}
                   start={{x: 0, y: 1}}
                   end={{x: 1, y: 0}}
-                  style={{height: '100%'}}>
-                  <View style={{marginTop: 10}}>
-                    <Text style={styles1.emaillabelStyle}>Enter Team Name</Text>
-                    <TextInput
-                      style={[
-                        styles1.Emailinput,
-                        {backgroundColor: 'transparent', height: 40},
-                      ]}
-                      placeholder="Team Name"
-                      placeholderTextColor="white"
-                      value={teamName}
-                      onChangeText={setteamName}
-                    />
-                  </View>
-                  <View style={{marginTop: 10}}>
-                    <Text style={styles1.emaillabelStyle}>
-                      Enter Team Description
-                    </Text>
-                    <TextInput
-                      style={[
-                        styles1.Emailinput,
-                        {
-                          backgroundColor: 'transparent',
-                          height: 40,
-                        },
-                      ]}
-                      placeholder="Team Description"
-                      placeholderTextColor="white"
-                      value={teamDesc}
-                      onChangeText={setteamDesc}
-                    />
-                  </View>
+                  style={{height: '100%'}}> */}
+                <TouchableOpacity
+                  style={{width: '100%', flexDirection: 'row-reverse'}}
+                  onPress={hideModal}>
                   <View
                     style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      width: 290,
-                      justifyContent: 'space-between',
+                      backgroundColor: '#20212a',
+                      height: 40,
+                      width: 40,
+                      borderRadius: 10,
                       alignItems: 'center',
-                      flexWrap: 'wrap',
-                      marginLeft: 15,
-                      marginTop: 25,
+                      justifyContent: 'center',
                     }}>
-                    <Button
+                    <Icon name="close" size={30} color="white" />
+                  </View>
+                </TouchableOpacity>
+                <View style={{width: '100%'}}>
+                  <Text style={styles1.emaillabelStyle}>Enter Team Name</Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'transparent',
+                      height: 40,
+                      borderBottomWidth: 1, // Add an underline
+                      borderBottomColor: 'grey', // Underline color
+                      paddingLeft: 0, // Align the input text to the left
+                      textAlignVertical: 'bottom', // Align the placeholder text to the bottom
+                      color: 'white',
+                    }}
+                    // placeholder="Team Name"
+                    placeholderTextColor="white"
+                    value={teamName}
+                    onChangeText={setteamName}
+                  />
+                </View>
+                <View style={{width: '100%', marginTop: 10}}>
+                  <Text style={styles1.emaillabelStyle}>
+                    Enter Team Description
+                  </Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'transparent',
+                      height: 40,
+                      borderBottomWidth: 1, // Add an underline
+                      borderBottomColor: 'grey', // Underline color
+                      paddingLeft: 0, // Align the input text to the left
+                      textAlignVertical: 'bottom', // Align the placeholder text to the bottom
+                      color: 'white',
+                    }}
+                    // placeholder="Team Description"
+                    // placeholderTextColor="white"
+                    value={teamDesc}
+                    onChangeText={setteamDesc}
+                  />
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '100%',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    // marginLeft: 15,
+                    marginTop: 25,
+                  }}>
+                  {/* <Button
                       icon="close"
                       mode="contained"
                       textColor="#fff"
@@ -416,30 +439,30 @@ const HomeScreen = ({navigation}) => {
                         borderWidth: 2,
                       }}>
                       <Text style={{color: '#fff'}}>Close</Text>
-                    </Button>
-                    <Button
-                      icon="check"
-                      textColor="#fff"
-                      mode="contained"
-                      onPress={addTeam}
-                      style={{
-                        marginLeft: 5,
-                        backgroundColor: '#351C4F',
-
-                        borderStyle: 'solid',
-                        borderWidth: 2,
-                      }}>
-                      <Text style={{color: '#fff'}}>Create</Text>
-                    </Button>
-                  </View>
-                </LinearGradient>
+                    </Button> */}
+                  <Button
+                    icon="check"
+                    textColor="#fff"
+                    mode="contained"
+                    onPress={addTeam}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#351C4F',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                      // width:100
+                    }}>
+                    <Text style={{color: '#fff'}}>Create</Text>
+                  </Button>
+                </View>
+                {/* </LinearGradient> */}
               </Modal>
             </Portal>
 
             {/* edit title modal */}
             <RBSheet
               ref={bottomSheetRef}
-              height={300} // Set the desired height of the bottom sheet
+              height={270} // Set the desired height of the bottom sheet
               closeOnDragDown={true}
               customStyles={{
                 wrapper: {
@@ -448,94 +471,106 @@ const HomeScreen = ({navigation}) => {
                 container: {
                   borderTopLeftRadius: 20,
                   borderTopRightRadius: 20,
+                  backgroundColor: 'black',
                 },
                 draggableIcon: {
-                  backgroundColor: '#000',
+                  backgroundColor: 'white', // Set the drag-down color to white
                 },
               }}>
-              <LinearGradient
+              {/* <LinearGradient
                 colors={['#140d13', '#0a1a1b']}
                 start={{x: 0, y: 1}}
                 end={{x: 1, y: 1}}
-                style={{height: '100%'}}>
-                <View style={styles1.btmeditsheet}>
-                  <View style={{}}>
-                    <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
-                    <TextInput
-                      style={[
-                        styles1.Emailinput,
-                        {backgroundColor: 'transparent', height: 25},
-                      ]}
-                      placeholder="Team Name"
-                      placeholderTextColor="#6DED65"
-                      value={formData.editTitle}
-                      onChangeText={value =>
-                        setFormData({...formData, editTitle: value})
-                      }
-                    />
-                  </View>
-                  <View style={{marginTop: 10}}>
-                    <Text
-                      style={{
-                        color: 'black',
-                        marginLeft: 4,
-                        color: '#6DED65',
-                        fontFamily: 'Poppins-Medium',
-                      }}>
-                      Edit Team Description
-                    </Text>
-                    <TextInput
-                      style={[
-                        styles1.Emailinput,
-                        {backgroundColor: 'transparent', height: 25},
-                      ]}
-                      placeholder="Team Description"
-                      placeholderTextColor="#6DED65"
-                      value={formData.editDesc}
-                      onChangeText={value =>
-                        setFormData({...formData, editDesc: value})
-                      }
-                    />
-                  </View>
-                  <View
+                style={{height: '100%'}}> */}
+              <View style={styles1.btmeditsheet}>
+                <View style={{}}>
+                  <Text style={styles1.emaillabelStyle}>Edit Team Title</Text>
+                  <TextInput
                     style={{
-                      display: 'flex',
-                      flexDirection: 'row',
-                      width: '100%',
-                      alignItems: 'center',
-                      justifyContent: 'flex-start',
-                    }}>
-                    <Button
-                      icon="close"
-                      mode="contained"
-                      textColor="black"
-                      onPress={closeBottomSheet}
-                      style={{
-                        marginLeft: 5,
-                        backgroundColor: '#6DED65',
-                        borderColor: '#6DED65',
-                        borderStyle: 'solid',
-                        borderWidth: 2,
-                      }}>
-                      <Text style={{color: 'black'}}>Close</Text>
-                    </Button>
-                    <Button
-                      icon="check"
-                      textColor="black"
-                      mode="contained"
-                      onPress={() => editTeam(teamId)}
-                      style={{
-                        marginLeft: 5,
-                        backgroundColor: '#6DED65',
-                        borderColor: '',
-                        borderStyle: 'solid',
-                        borderWidth: 2,
-                      }}>
-                      <Text style={{color: 'black'}}> Done </Text>
-                    </Button>
-                  </View>
+                      backgroundColor: 'transparent',
+                      height: 40,
+                      borderBottomWidth: 1, // Add an underline
+                      borderBottomColor: 'grey', // Underline color
+                      paddingLeft: 0, // Align the input text to the left
+                      textAlignVertical: 'bottom', // Align the placeholder text to the bottom
+                      color: 'white',
+                    }}
+                    // placeholder="Team Name"
+                    // placeholderTextColor="#6DED65"
+                    value={formData.editTitle}
+                    onChangeText={value =>
+                      setFormData({...formData, editTitle: value})
+                    }
+                  />
                 </View>
-              </LinearGradient>
+                <View style={{marginTop: 14}}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      marginLeft: 4,
+                      color: 'white',
+                      fontFamily: 'Poppins-Medium',
+                    }}>
+                    Edit Team Description
+                  </Text>
+                  <TextInput
+                    style={{
+                      backgroundColor: 'transparent',
+                      height: 40,
+                      borderBottomWidth: 1, // Add an underline
+                      borderBottomColor: 'grey', // Underline color
+                      paddingLeft: 0, // Align the input text to the left
+                      textAlignVertical: 'bottom', // Align the placeholder text to the bottom
+                      color: 'white',
+                    }}
+                    // placeholder="Team Description"
+                    // placeholderTextColor="#6DED65"
+                    value={formData.editDesc}
+                    onChangeText={value =>
+                      setFormData({...formData, editDesc: value})
+                    }
+                  />
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    width: '100%',
+                    alignItems: 'center',
+                    justifyContent: 'flex-end',
+                  }}>
+                  {/* <Button
+                    icon="close"
+                    mode="contained"
+                    textColor="black"
+                    onPress={closeBottomSheet}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#6DED65',
+                      borderColor: '#6DED65',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                    }}>
+                    <Text style={{color: 'black'}}>Close</Text>
+                  </Button> */}
+                  <Button
+                    icon="check"
+                    textColor="white"
+                    mode="contained"
+                    onPress={() => editTeam(teamId)}
+                    style={{
+                      marginLeft: 5,
+                      backgroundColor: '#351c4f',
+                      borderColor: '',
+                      borderStyle: 'solid',
+                      borderWidth: 2,
+                      marginTop:10
+                    }}>
+                    <Text style={{color: 'white'}}> Done </Text>
+                  </Button>
+                </View>
+              </View>
+              {/* </LinearGradient> */}
             </RBSheet>
 
             <View style={styles.outer}>
@@ -633,7 +668,7 @@ const HomeScreen = ({navigation}) => {
                   color="#fff"
                   fabStyle={{
                     backgroundColor: '#001314',
-                    borderColor: '#fff',
+                    borderColor: '#272626',
                     borderWidth: 1,
                   }}
                   actions={[
@@ -643,7 +678,7 @@ const HomeScreen = ({navigation}) => {
                       labelTextColor: '#fff',
                       style: {
                         backgroundColor: '#001314',
-                        borderColor: '#fff',
+                        borderColor: '#272626',
                         borderWidth: 1,
                       },
                       color: '#fff',
