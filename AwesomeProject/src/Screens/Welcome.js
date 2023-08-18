@@ -43,7 +43,7 @@ const Welcome = ({navigation}) => {
       console.log('Error while retrieving user data:', error);
     }
   };
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const handleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices({
@@ -55,12 +55,12 @@ const Welcome = ({navigation}) => {
       const currentUser = auth().currentUser;
       setUser(currentUser);
 
-      console.log('This is user ', user.email, user.uid);
-      if (user.email == null) {
-        Alert.alert('Please Click One More Time');
+      console.log('This is user ', currentUser.email, currentUser.uid);
+      if (currentUser == null) {
+        ToastComponent({message: 'Try Again'});
       } else {
         try {
-          if (!user.email || !user.uid) {
+          if (!currentUser.email || !currentUser.uid) {
             ToastComponent({message: 'Please fill in all fields'});
             return;
           }
@@ -73,8 +73,8 @@ const Welcome = ({navigation}) => {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                email: user.email,
-                password: user.uid,
+                email: currentUser.email,
+                password: currentUser.uid,
               }),
             },
           );
