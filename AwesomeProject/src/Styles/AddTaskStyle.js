@@ -132,7 +132,7 @@ module.exports = {
   timeInput: {
     borderColor: '#8d98b0',
     borderBottomWidth: 1,
-    color: 'black',
+    color: 'white',
     width: '100%',
     paddingVertical: 0,
   },

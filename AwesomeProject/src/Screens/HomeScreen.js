@@ -664,7 +664,7 @@ const HomeScreen = ({navigation}) => {
                   open={open}
                   visible
                   icon={open ? 'chevron-down' : 'plus'}
-                  backdropColor="transparent"
+                  backdropColor='rgba(1, 1, 1, 0.9)'
                   color="#fff"
                   fabStyle={{
                     backgroundColor: '#0d181b',

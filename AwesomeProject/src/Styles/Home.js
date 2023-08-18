@@ -8,7 +8,6 @@ module.exports = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#b4cef8',
   },
   bottomSheetWrapper: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -17,7 +16,7 @@ module.exports = {
     backgroundColor: 'white',
   },
   bottomSheetContainer: { 
-  
+    borderTopWidth: 1,
     borderColor: '#F8EAEA',
     backgroundColor: '#000',
     borderTopLeftRadius: 10,
@@ -90,7 +89,7 @@ module.exports = {
   },
   dateText: {
     fontFamily: 'Poppins-Medium',
-    color: '#8d98b0',
+    color: 'white',
   },
   container: {
     flex: 1,
@@ -192,6 +191,7 @@ module.exports = {
     height: 50,
     borderColor: 'gray',
     borderWidth: 0.5,
+    padding: 5,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 5,
@@ -207,11 +207,12 @@ module.exports = {
     top: 8,
     zIndex: 999,
     paddingHorizontal: 8,
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Poppins-Regular',
   },
 
   textInputStyle: {
+    color: '#fff',
     height: 40,
     marginBottom: 10,
     paddingHorizontal: 10,
@@ -359,4 +360,10 @@ module.exports = {
     top: 40,
     right: 20,
   },
+  forwardArrow:{
+    backgroundColor: '#141011',
+    borderRadius: 10,
+    borderColor: "#1a1a1b",
+    padding: 5,
+  }
 };

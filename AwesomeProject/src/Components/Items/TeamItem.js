@@ -111,7 +111,7 @@ const TeamItem = props => {
                     {cancelable: false},
                   )
                 }>
-                <Icon name="md-trash" size={20} style={{color: '#F7DEE8'}} />
+                <Icon name="md-trash" size={20} style={{color: '#B20642'}} />
               </TouchableOpacity>
             </View>
             {/* </View> */}

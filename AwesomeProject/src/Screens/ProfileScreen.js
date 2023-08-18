@@ -1,5 +1,6 @@
 import {View, Text, TouchableOpacity, ScrollView, Image} from 'react-native';
 import React from 'react';
+import {Dimensions} from 'react-native';
 import styles from '../Styles/ProfileStyle';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Avatar} from 'react-native-paper';
@@ -11,6 +12,7 @@ import {statusCodes} from 'react-native-google-signin';
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
 import auth from '@react-native-firebase/auth';
 const defaultAvatar = require('../../assets/Image/profile1.png');
+const windowHeight = Dimensions.get('window').height;
 const Profile = ({navigation}) => {
   const FallbackAvatar = ({size}) => (
     <Image
@@ -70,7 +72,7 @@ const Profile = ({navigation}) => {
         colors={['#001314', '#1E010B']}
         start={{x: 0, y: 1}}
         end={{x: 1, y: 0}}
-        style={{height: '100%'}}>
+        style={{height: windowHeight}}>
         <View style={styles.Addfullscreen}>
           <View style={styles.leftIcon}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -110,12 +112,12 @@ const Profile = ({navigation}) => {
                 <View style={styles.editValBtn}>
                   <Text style={styles.editValue}>{userName}</Text>
 
-                  <Button
+                  {/* <Button
                     icon="account-edit"
                     mode="contained"
                     style={styles.editBtn}>
                     Edit
-                  </Button>
+                  </Button> */}
                 </View>
               </View>
 
@@ -123,13 +125,13 @@ const Profile = ({navigation}) => {
                 <Text style={styles.editTitle}>Email</Text>
                 <View style={styles.editValBtn}>
                   <Text style={styles.editValue}>{email}</Text>
-                  <Button
+                  {/* <Button
                     icon="account-edit"
                     mode="contained"
                     style={styles.editBtn}>
                     {' '}
                     Edit
-                  </Button>
+                  </Button> */}
                 </View>
               </View>
 
@@ -143,13 +145,13 @@ const Profile = ({navigation}) => {
             </View>
           </View>
 
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <View style={styles.editFlex}>
               <Text style={styles.signOutBtn} onPress={() => logout}>
                 Sign Out
               </Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </LinearGradient>
     </ScrollView>

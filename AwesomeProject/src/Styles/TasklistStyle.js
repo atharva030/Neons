@@ -171,7 +171,7 @@ module.exports = {
     flexDirection: 'column',
   },
   emaillabelStyle: {
-    color: '#6DED65',
+    color: 'white',
     marginLeft: 4,
     fontFamily: 'Poppins-Medium',
   },
@@ -204,7 +204,6 @@ module.exports = {
     fontSize: 14,
     textAlign: 'center',
     marginTop: 5
-
   },
   lineContainer: {
     flexDirection: 'row',

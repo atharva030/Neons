@@ -441,9 +441,12 @@ const TaskList = ({navigation, route}) => {
                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
               },
               container: {
-                backgroundColor: '#1b1b1b',
+                borderTopColor: 'white',
+                backgroundColor: 'black',
                 borderTopLeftRadius: 20,
                 borderTopRightRadius: 20,
+                marginTop: 30,
+                height: 300,
               },
               draggableIcon: {
                 backgroundColor: 'white',
@@ -820,21 +823,38 @@ const TaskList = ({navigation, route}) => {
               <FAB.Group
                 open={open}
                 visible
-                color="#6DED65"
-                fabStyle={{backgroundColor: '#1b1b1b'}}
+                backdropColor='rgba(1, 1, 1, 0.9)'
+                color="#fff"
+                fabStyle={{
+                    backgroundColor: '#0d181b',
+                    borderColor: '#272626',
+                    borderWidth: 1,
+                  }}
                 icon={open ? 'chevron-down' : 'plus'}
                 actions={[
                   {
                     icon: 'plus',
                     label: 'Add Task',
                     textColor: '#1b1b1b',
-                    color: '#6DED65',
+                    labelTextColor: '#fff',
+                      style: {
+                        backgroundColor: '#0d181b',
+                        borderColor: '#272626',
+                        borderWidth: 1,
+                      },
+                      color: '#fff',
                     onPress: () => showModal(),
                   },
                   {
-                    icon: 'plus',
+                    icon: 'account-multiple-plus',
                     label: 'Add Team Members',
-                    color: '#6DED65',
+                    labelTextColor: '#fff',
+                    color: '#fff',
+                    style: {
+                        backgroundColor: '#0d181b',
+                        borderColor: '#272626',
+                        borderWidth: 1,
+                      },
                     onPress: () => setmemberTeam(true),
                   },
                 ]}
@@ -851,7 +871,6 @@ const TaskList = ({navigation, route}) => {
             ''
           )}
         </ScrollView>
-     
     </Provider>
   );
 };

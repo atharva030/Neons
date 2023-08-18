@@ -24,7 +24,7 @@ const handleBackendError = () => {
   ToastComponent({message: '⚠️ Please Try again later!'});
 };
 const containerStyle = {
-  backgroundColor: '#1b1b1b',
+  backgroundColor: 'black',
   padding: 20,
   borderRadius: 20,
   width: 340,
@@ -63,8 +63,9 @@ const TaskItem = props => {
   const [taskIdbyItem, settaskIdbyItem] = useState('');
   const [taskFlexHeight, setTaskFlexHeight] = useState(200);
   const [subtaskStatus, setSubtaskStatus] = useState({});
-  const [modalHeight, setModalHeight] = useState(320); // Initial base height
+  const [modalHeight, setModalHeight] = useState(350); // Initial base height
   const [userRole, setUserRole] = useState('');
+
   // userRole==='ROLE_ADMIN'
   const getUserRole = async () => {
     try {
@@ -142,13 +143,14 @@ const TaskItem = props => {
           style={[
             styles.textInputStyle,
             {
-              color: 'white',
-              backgroundColor: '#1b1b1b',
+              color: '#fff',
+              backgroundColor: 'black',
               borderBottomWidth: 2,
-              borderBottomColor: '#6DED65',
+              borderBottomColor: '#351c4f',
             },
           ]}
           key={i}
+          placeholderTextColor={'#fff'}
           placeholder={`SubTask ${i + 1}`}
           onChangeText={value => handleSubtaskChange(i, value)}
         />,
@@ -461,7 +463,7 @@ const TaskItem = props => {
         key={item.value}
         label={item.label}
         value={item.value}
-        style={{color: 'white', backgroundColor: '#1b1b1b', fontSize: 16}}
+        style={{color: 'white', backgroundColor: 'black', fontSize: 14}}
       />
     ));
   };
@@ -518,12 +520,13 @@ const TaskItem = props => {
         colors={['#140d13', '#0a1a1b']}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
-        style={{borderTopLeftRadius: 10, borderTopRightRadius: 10}}>
+        style={{borderTopLeftRadius: 10, borderTopRightRadius: 10, padding: 8}}>
         <View>
           <View
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+
               justifyContent: 'space-between',
             }}>
             <Text style={{color: statusColor || 'white', padding: 10}}>
@@ -558,7 +561,7 @@ const TaskItem = props => {
                             ) : (
                               <Icon
                                 name="add"
-                                color="#835d3c"
+                                color="white"
                                 size={20}
                                 style={{marginRight: 10}}
                               />
@@ -575,7 +578,7 @@ const TaskItem = props => {
                             }>
                             <Icon
                               name="pencil-sharp"
-                              color="white"
+                              color="#F7DEE8"
                               size={20}
                               style={{marginRight: 10}}
                             />
@@ -605,7 +608,7 @@ const TaskItem = props => {
                             }>
                             <Icon
                               name="trash"
-                              color="white"
+                              color="#B20642"
                               size={20}
                               style={{marginRight: 10}}
                             />
@@ -614,7 +617,7 @@ const TaskItem = props => {
                       )}
                       <Icon
                         name="ellipsis-vertical"
-                        color="black"
+                        color="#F7DEE8"
                         size={20}
                         style={{
                           marginRight: 6,
@@ -653,10 +656,26 @@ const TaskItem = props => {
               contentContainerStyle={[containerStyle, {height: modalHeight}]}>
               <View style={styles.container}>
                 <ScrollView>
+                  <TouchableOpacity
+                    style={{width: '100%', flexDirection: 'row-reverse'}}
+                    onPress={() => setIsModal1Visible(false)}>
+                    <View
+                      style={{
+                        backgroundColor: '#20212a',
+                        height: 30,
+                        width: 30,
+                        borderRadius: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon name="close" size={20} color="white" />
+                    </View>
+                  </TouchableOpacity>
                   <View
                     style={[
-                      styles.dropdown, // Add your custom styles here
-                      isExtended && {borderColor: '#6DED65'}, // Add border color when extended
+                      styles.dropdown,
+                      {borderWidth: 1.5, marginBottom: 20, marginTop: 30},
+                      isExtended && {backgroundColor: '#351c4f'}, // Add border color when extended
                     ]}>
                     <Text style={{color: 'white', textAlign: 'center'}}>
                       Please select the number of Subtask
@@ -666,7 +685,7 @@ const TaskItem = props => {
                       onValueChange={handleDropdownChange}
                       style={[
                         styles.pickerStyle,
-                        isExtended && {borderColor: '#6DED65'},
+                        isExtended && {backgroundColor: '#351c4f'},
                       ]}>
                       {renderPickerItems()}
                     </Picker>
@@ -679,22 +698,15 @@ const TaskItem = props => {
               <View
                 style={{
                   display: 'flex',
-                  flexDirection: 'row',
-                  width: 290,
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  marginTop: 25,
+                  width: '100%',
                   marginLeft: 15,
                   marginTop: 25,
                 }}>
-                <Button
-                  icon="close"
-                  mode="contained"
-                  style={{
-                    backgroundColor: '#1b1b1b',
-                    borderWidth: 2,
-                    borderColor: '#6DED65',
-                  }}
-                  onPress={() => setIsModal1Visible(false)}>
-                  Close
-                </Button>
+               
                 <Button
                   icon="check"
                   mode="contained"
@@ -717,9 +729,7 @@ const TaskItem = props => {
                   }}
                   style={{
                     marginLeft: 5,
-                    backgroundColor: '#1b1b1b',
-                    borderWidth: 2,
-                    borderColor: '#6DED65',
+                    backgroundColor: '#351c4f',
                   }}>
                   Done
                 </Button>
@@ -744,7 +754,11 @@ const TaskItem = props => {
                         alignItems: 'center',
                         marginRight: 12,
                       }}>
-                      <Icon name="chevron-up-outline" color="#F7DEE8" size={20} />
+                      <Icon
+                        name="chevron-up-outline"
+                        color="#F7DEE8"
+                        size={20}
+                      />
                       <Text style={styles.taskText}> See less</Text>
                     </View>
                   </React.Fragment>
@@ -767,8 +781,19 @@ const TaskItem = props => {
                 )}
               </TouchableOpacity>
             </View>
-            <View style={{backgroundColor:"#222e2f",padding:8, borderRadius:10,marginLeft:4,marginRight:4,marginBottom:6}}>
-            <ProgressBar progress={subtaskProgress} style={{color:"#c897fe"}} />
+            <View
+              style={{
+                backgroundColor: '#222e2f',
+                padding: 8,
+                borderRadius: 10,
+                marginLeft: 4,
+                marginRight: 4,
+                marginBottom: 6,
+              }}>
+              <ProgressBar
+                progress={subtaskProgress}
+                style={{color: '#c897fe'}}
+              />
             </View>
             <Collapsible collapsed={!isExtended} style={{color: 'black'}}>
               <View style={styles.additionalContent}>
