@@ -34,9 +34,10 @@ const TeamItem = props => {
   const MAX_TITLE_LENGTH = 18; // Set your desired character limit here
 
   // Truncate the title if it exceeds the character limit
-  const truncatedTitle = props.title.length > MAX_TITLE_LENGTH
-    ? `${props.title.slice(0, MAX_TITLE_LENGTH)}...`
-    : props.title;
+  const truncatedTitle =
+    props.title.length > MAX_TITLE_LENGTH
+      ? `${props.title.slice(0, MAX_TITLE_LENGTH)}...`
+      : props.title;
   status = props.status;
   return (
     <LinearGradient
@@ -62,7 +63,6 @@ const TeamItem = props => {
                   size={20}
                   color="white"
                   style={styles.forwardArrow}
-
                 />
               </TouchableOpacity>
             </View>
@@ -85,7 +85,7 @@ const TeamItem = props => {
                   <Icon
                     name="md-pencil-outline"
                     size={20}
-                    style={{color: '#F7DEE8', marginRight: 15}}
+                    style={{color: '#18D39E', marginRight: 15}}
                   />
                 </TouchableOpacity>
               ) : (
@@ -111,7 +111,7 @@ const TeamItem = props => {
                     {cancelable: false},
                   )
                 }>
-                <Icon name="md-trash" size={20} style={{color: '#B20642'}} />
+                <Icon name="md-trash" size={20} style={{color: '#FF0096'}} />
               </TouchableOpacity>
             </View>
             {/* </View> */}

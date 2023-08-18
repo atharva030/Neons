@@ -122,24 +122,20 @@ const CircularProgressBar = ({
   const renderOuterCircle = () =>
     [...Array(maxValue + 1)].map((e, i) => renderPie(i));
 
-
   const labelView = (
- 
     <Text
       style={{
         color: textColor,
         fontSize: labelFontSize,
         textAlign: 'center',
         marginTop: radius,
-        textAlignVertical: 'center'
-      }}
-    >
+        textAlignVertical: 'center',
+      }}>
       {label}
     </Text>
   );
 
   const textValueY = label ? radius : radius + valueFontSize / 3;
-  
 
   // --------  MAIN Render --------
   return (

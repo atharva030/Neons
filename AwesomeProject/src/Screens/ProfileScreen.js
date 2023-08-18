@@ -28,6 +28,7 @@ const Profile = ({navigation}) => {
     try {
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
+        console.log(userData);
         const data = JSON.parse(userData);
         console.log('after logout', data);
         setuserName(data.userName);
@@ -108,16 +109,18 @@ const Profile = ({navigation}) => {
           <View style={styles.editFlex}>
             <View style={styles.container}>
               <View style={{marginBottom: 40}}>
-                <Text style={styles.editTitle}>Display Name</Text>
+                <Text style={styles.editTitle}>User Name</Text>
                 <View style={styles.editValBtn}>
                   <Text style={styles.editValue}>{userName}</Text>
 
+                  {/* <Button
                   {/* <Button
                     icon="account-edit"
                     mode="contained"
                     style={styles.editBtn}>
                     Edit
                   </Button> */}
+                 
                 </View>
               </View>
 
@@ -125,6 +128,7 @@ const Profile = ({navigation}) => {
                 <Text style={styles.editTitle}>Email</Text>
                 <View style={styles.editValBtn}>
                   <Text style={styles.editValue}>{email}</Text>
+                 
                   {/* <Button
                     icon="account-edit"
                     mode="contained"
@@ -132,6 +136,7 @@ const Profile = ({navigation}) => {
                     {' '}
                     Edit
                   </Button> */}
+                 
                 </View>
               </View>
 
@@ -139,17 +144,19 @@ const Profile = ({navigation}) => {
                 <Text style={styles.editTitle}>Password</Text>
                 <View style={styles.editValBtn}>
                   <Text style={styles.editValue}>*********</Text>
-                  <Button style={styles.editBtn}>Change</Button>
+                  <Button
+                    style={styles.editBtn}
+                    onPress={() => navigation.navigate('EmailValid')}>
+                    Change
+                  </Button>
                 </View>
               </View>
             </View>
           </View>
 
-          {/* <TouchableOpacity>
+          {/* <TouchableOpacity style={{height: '100%'}}>
             <View style={styles.editFlex}>
-              <Text style={styles.signOutBtn} onPress={() => logout}>
-                Sign Out
-              </Text>
+              <Text style={styles.signOutBtn}>Sign Out</Text>
             </View>
           </TouchableOpacity> */}
         </View>

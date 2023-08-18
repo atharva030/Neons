@@ -22,6 +22,8 @@ module.exports = {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     height: 400,
+    borderColor: '#ffff',
+    borderTopWidth: 1,
   },
   bottomSheetContent: {
     padding: 16,
