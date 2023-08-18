@@ -75,7 +75,7 @@ module.exports = {
   editValue: {
     color: 'white',
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 20,
+    fontSize: 17,
   },
   editBtn: {
     width: 100,

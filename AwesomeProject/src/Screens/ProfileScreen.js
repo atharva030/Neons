@@ -21,6 +21,7 @@ const Profile = ({navigation}) => {
         setuserName(data.userName);
         setuserDes(data.userDes);
         setPhotoUrl(data.photoUrl);
+        setEmail(data.email);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -96,6 +97,7 @@ const Profile = ({navigation}) => {
                     icon="account-edit"
                     mode="contained"
                     style={styles.editBtn}>
+                    {' '}
                     Edit
                   </Button>
                 </View>
@@ -104,7 +106,7 @@ const Profile = ({navigation}) => {
               <View style={{marginBottom: 40}}>
                 <Text style={styles.editTitle}>Password</Text>
                 <View style={styles.editValBtn}>
-                  <Text style={styles.editValue}>{email}</Text>
+                  <Text style={styles.editValue}>*********</Text>
                   <Button style={styles.editBtn}>Change</Button>
                 </View>
               </View>

@@ -26,13 +26,16 @@ const designations = [
 const GuInfo = ({navigation}) => {
   const route = useRoute();
   const {name, email, photoURL, pass} = route.params;
+  const [emil, setEmil] = useState('');
   const [phone, setPhone] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
   const [selectedDesignation, setSelectedDesignation] = useState(
     designations[null],
   );
   const [isLoading, setIsLoading] = useState(false);
-  
+  useEffect(() => {
+    console.log('this is user email ', email);
+  }, []);
 
   const pickerRef = useRef();
   const handleBackendError = () => {
@@ -99,6 +102,7 @@ const GuInfo = ({navigation}) => {
           }
           // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
           console.log(data.authToken);
+          console.log('this data email ', data.email);
           await AsyncStorage.setItem(
             'user',
             JSON.stringify({
@@ -107,6 +111,7 @@ const GuInfo = ({navigation}) => {
               userName: data.userName,
               userDes: data.designation,
               photoUrl: data.photoUrl,
+              email: email,
             }),
           );
           handleSuccess();
@@ -199,7 +204,7 @@ const GuInfo = ({navigation}) => {
             </View>
 
             <View style={styles.registerSecondScreen}>
-            <Text style={styles.titleText1}>Sign Up with Google</Text>
+              <Text style={styles.titleText1}>Sign Up with Google</Text>
               <Text style={styles.titleText2}>Create a New Account</Text>
 
               <View style={styles.roleSelectionContainer}>
@@ -291,7 +296,9 @@ const GuInfo = ({navigation}) => {
                   ref={pickerRef}
                   style={{height: 0, color: 'transparent'}}
                   selectedValue={selectedDesignation}
-                onValueChange={itemValue => setSelectedDesignation(itemValue)}>
+                  onValueChange={itemValue =>
+                    setSelectedDesignation(itemValue)
+                  }>
                   {designations.map(designation => (
                     <Picker.Item
                       key={designation}
@@ -312,31 +319,28 @@ const GuInfo = ({navigation}) => {
                 />
               </View>
               <TouchableOpacity
-              style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
-              onPress={() =>
-                handleSubmitRegister(
-                  name,
-                  email,
-                  pass,
-                  phone,
-                  selectedRole,
-                  selectedDesignation,
-                  photoURL,
-                )
-              }
-              disabled={isLoading}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color="#ffffff" />
-              ) : (
-                <View style={styles.signInContainer}>
-                  <Text style={styles.loginText}>Sign Up</Text>
-                </View>
-              )}
-            </TouchableOpacity> 
+                style={[styles.submitBtn1, isLoading && styles.buttonDisabled]}
+                onPress={() =>
+                  handleSubmitRegister(
+                    name,
+                    email,
+                    pass,
+                    phone,
+                    selectedRole,
+                    selectedDesignation,
+                    photoURL,
+                  )
+                }
+                disabled={isLoading}>
+                {isLoading ? (
+                  <ActivityIndicator size="small" color="#ffffff" />
+                ) : (
+                  <View style={styles.signInContainer}>
+                    <Text style={styles.loginText}>Sign Up</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
             </View>
-
-            
-
           </View>
         </ScrollView>
       </View>
