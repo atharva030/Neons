@@ -44,6 +44,7 @@ const Welcome = ({navigation}) => {
     }
   };
   const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
   const handleSignIn = async () => {
     try {
       await GoogleSignin.hasPlayServices({
@@ -97,6 +98,7 @@ const Welcome = ({navigation}) => {
               userName: data.userName,
               userDes: data.designation,
               photoUrl: data.photoUrl,
+              email: currentUser.email,
             }),
           );
           handleSuccess();

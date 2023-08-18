@@ -7,7 +7,17 @@ import {Button} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useEffect, useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import {statusCodes} from 'react-native-google-signin';
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
+import auth from '@react-native-firebase/auth';
+const defaultAvatar = require('../../assets/Image/profile1.png');
 const Profile = ({navigation}) => {
+  const FallbackAvatar = ({size}) => (
+    <Image
+      source={defaultAvatar}
+      style={{width: size, height: size, borderRadius: size / 2}}
+    />
+  );
   const [userName, setuserName] = useState('');
   const [userDes, setuserDes] = useState('');
   const [photourl, setPhotoUrl] = useState('');
@@ -33,7 +43,27 @@ const Profile = ({navigation}) => {
   useEffect(() => {
     getUserData();
   }, [count]);
+  const logout = async () => {
+    await AsyncStorage.removeItem('user')
+      .then(() => {
+        getUserData();
+        removeUser();
 
+        ToastAndroid.show('Logged out successfully', ToastAndroid.SHORT);
+
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Welcome'}],
+        });
+        GoogleSignin.signOut();
+      })
+      .catch(error => {
+        console.log(
+          'Error while removing auth-token from AsyncStorage:',
+          error,
+        );
+      });
+  };
   return (
     <ScrollView>
       <LinearGradient
@@ -57,7 +87,7 @@ const Profile = ({navigation}) => {
             <View style={styles.profileImage}>
               <Avatar.Image
                 size={90}
-                source={{uri: photourl}}
+                source={photourl ? {uri: photourl} : defaultAvatar}
                 avatarStyle={{
                   borderWidth: 22,
                   borderColor: 'white',
@@ -115,7 +145,9 @@ const Profile = ({navigation}) => {
 
           <TouchableOpacity>
             <View style={styles.editFlex}>
-              <Text style={styles.signOutBtn}>Sign Out</Text>
+              <Text style={styles.signOutBtn} onPress={() => logout}>
+                Sign Out
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
