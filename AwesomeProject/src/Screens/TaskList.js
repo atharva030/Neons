@@ -26,7 +26,7 @@ import AppLoader from '../Components/AppLoader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RBSheet from 'react-native-raw-bottom-sheet';
 const {Dimensions} = require('react-native');
-const {LinearGradient} = require('react-native-svg');
+import LinearGradient from 'react-native-linear-gradient';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -378,468 +378,488 @@ const TaskList = ({navigation, route}) => {
         ...DefaultTheme,
         colors: {...DefaultTheme.colors, accent: 'transparent'},
       }}>
-      <View style={styles.bottomContainer}>
-        <BottomSheet
-          ref={bottomSheetTeamRef}
-          closeOnDragDown={true}
-          closeOnPressMask={true}
-          customStyles={{
-            wrapper: styles.bottomSheetWrapper,
-            draggableIcon: styles.bottomSheetDraggableIcon,
-            container: styles.bottomSheetContainer,
-          }}>
-          <View style={[styles.bottomSheetContent]}>
-            <ScrollView>
-              {filterMember.length === 0 ? (
-                <View>
-                  <Text
-                    style={{
-                      color: 'grey',
-                      fontSize: 20,
-                      padding: 20,
-                      marginTop: 140,
-                      textAlign: 'center',
-                      letterSpacing: 1.5,
-                    }}>
-                    You don't have Team Members to Display
-                  </Text>
-                </View>
-              ) : (
-                filterMember.map(items => (
-                  <MemberFilter
-                    key={items._id}
-                    role={items.role}
-                    id={items._id}
-                    name={items.name}
-                    selectedIds={selectedIds}
-                    setSelectedIds={setSelectedIds}
-                    fetchTeamMembers={fetchTeamMembers}
-                    fetchMembers={fetchMembers}
-                    teamIdByItem={teamIdByItem}
-                  />
-                ))
-              )}
-            </ScrollView>
-            {/* <TouchableOpacity style={styles.closeButton} onPress={closeBottomSheet}>
-            <Text style={styles.closeButtonText}>Close</Text>
-          </TouchableOpacity> */}
-          </View>
-        </BottomSheet>
-      </View>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={refreshfetchTasks}
-          />
-        }>
-        {/* Edit Task Modal Starts */}
-        <RBSheet
-          ref={bottomSheetEditRef}
-          height={300} // Set the desired height of the bottom sheet
-          closeOnDragDown={true}
-          customStyles={{
-            wrapper: {
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            },
-            container: {
-              backgroundColor: '#1b1b1b',
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
-            },
-            draggableIcon: {
-              backgroundColor: '#6DED65',
-            },
-          }}>
-          <View style={{marginLeft: 10}}>
-            <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
-            <TextInput
-              style={[
-                styles1.Emailinput,
-                {backgroundColor: 'transparent', height: 40},
-              ]}
-              placeholder="Team Name"
-              placeholderTextColor="white"
-              value={formData.editTitle}
-              onChangeText={value =>
-                setFormData({...formData, editTitle: value})
-              }
-            />
-
-            <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
-            <TextInput
-              style={[
-                styles1.Emailinput,
-                {backgroundColor: 'transparent', height: 40},
-              ]}
-              placeholder="Team Description"
-              placeholderTextColor="white"
-              value={formData.editDesc}
-              onChangeText={value =>
-                setFormData({...formData, editDesc: value})
-              }
-            />
-            <View>
-              <Text style={styles1.emaillabelStyle}>Edit End Date</Text>
-              <TextInput
-                style={[
-                  styles1.Emailinput,
-                  {backgroundColor: 'transparent', height: 40},
-                ]}
-                placeholder="Team Enddate"
-                placeholderTextColor="white"
-                value={formData.endDate}
-                onChangeText={value =>
-                  setFormData({...formData, endDate: value})
-                }
-              />
-            </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: 290,
-                marginLeft: 15,
-              }}>
-              <Button
-                icon="close"
-                mode="contained"
-                textColor="black"
-                style={{backgroundColor: '#6DED65'}}
-                onPress={closeeditBottomSheet}>
-                <Text
-                  style={{
-                    color: 'black',
-                  }}>
-                  Close
-                </Text>
-              </Button>
-              <Button
-                icon="check"
-                mode="contained"
-                textColor="black"
-                onPress={() => {
-                  Alert.alert(
-                    'Confirmation',
-                    'Are you sure you want to Edit the Task?',
-                    [
-                      {
-                        text: 'Cancel',
-                        style: 'cancel',
-                      },
-                      {
-                        text: 'Yes',
-                        onPress: () => editTask(teamIdByItem, taskId), // Wrap the function call inside an arrow function
-                      },
-                    ],
-                    {cancelable: false},
-                  );
-                }}
-                style={{marginLeft: 5, backgroundColor: '#6DED65'}}>
-                <Text
-                  style={{
-                    color: 'black',
-                  }}>
-                  Done
-                </Text>
-              </Button>
-            </View>
-          </View>
-        </RBSheet>
-        {/* Edit Task Modal Ends */}
-        {/* Listing to add team members starts */}
-        <Portal>
-          <Modal
-            visible={memberTeam}
-            onDismiss={() => setmemberTeam(false)}
-            contentContainerStyle={containerMemberStyle}>
-            <Text style={{color: '#9E9E9E', fontSize: 15}}>
-              Tap to select/deselect the members
-            </Text>
-            <ScrollView style={{maxHeight: 400}}>
-              {resultTeamMemberData.length === 0 ? (
-                <View>
-                  <Text
-                    style={{
-                      color: 'grey',
-                      fontSize: 20,
-                      padding: 20,
-                      textAlign: 'center',
-                      letterSpacing: 1.5,
-                    }}>
-                    Team members are already added.
-                  </Text>
-                </View>
-              ) : (
-                resultTeamMemberData.map(items => (
-                  <TeamMember
-                    key={items._id}
-                    designation={items.designation}
-                    id={items._id}
-                    name={items.name}
-                    selectedIds={selectedIds}
-                    setSelectedIds={setSelectedIds}
-                  />
-                ))
-              )}
-            </ScrollView>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                padding: 10,
-              }}>
-              <Button
-                icon="close"
-                mode="contained"
-                onPress={() => setmemberTeam(false)}
-                style={{marginRight: 10, backgroundColor: '#6DED65'}}>
-                Close
-              </Button>
-              <Button
-                icon="check"
-                mode="contained"
-                onPress={() => {
-                  Alert.alert(
-                    'Confirmation',
-                    'Are you sure you want to add the selected members?',
-                    [
-                      {
-                        text: 'Cancel',
-                        style: 'cancel',
-                      },
-                      {
-                        text: 'Add',
-                        onPress: handleSubmit,
-                      },
-                    ],
-                    {cancelable: false},
-                  );
-                }}
-                disabled={resultTeamMemberData.length === 0}>
-                Add Member
-              </Button>
-            </View>
-          </Modal>
-        </Portal>
-
-        {/* Listing to add team members end */}
-        {/* Add task Modal start */}
-        <Portal>
-          <Modal
-            visible={visible}
-            onDismiss={hideModal}
-            contentContainerStyle={addtaskcontainerStyle}>
-            <AddTask hideAddModal={hideModal} teamIdByItem={teamIdByItem} />
-          </Modal>
-        </Portal>
-        {/* Add task Modal end */}
-
-        <ScrollView>
-          <View style={[styles.fullscreen]}>
-            <View style={styles.outer}>
-              <View style={{display: 'flex', flexDirection: 'row'}}>
-              <View style={styles.titleContainer}>
-  <Text style={[styles.titleText]}>
-    {teamTitle.length > 12 ? `${teamTitle.slice(0, 12)}...` : teamTitle}
-  </Text>
-</View>
-                <TouchableOpacity
-                  style={styles.addButton}
-                  onPress={fetchTeamMembers}
-                  // onPress={openBottomSheet}
-                >
-                  <Text style={styles.addText}>View Team</Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.dayContainer}>
-                <View style={styles.innerdayContainer}>
-                  <Text style={[styles.dateText]}>{currentDate}</Text>
-                </View>
-              </View>
-              <View style={{display: 'flex', flexDirection: 'row'}}>
-                <View
-                  style={{
-                    backgroundColor: '#1b1b1b',
-                    width: '50%',
-                    borderTopLeftRadius: 20,
-                    borderBottomLeftRadius: 20,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: 'Poppins-Regular',
-                      fontSize: 16,
-                      color: 'white',
-                      textAlign: 'center',
-                    }}>
-                    Tasks Progress
-                  </Text>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginLeft: 34,
-                      marginTop: 10,
-                    }}>
-                    <Icon name="square" color={'#6DED65'} size={14}></Icon>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Regular',
-                        marginLeft: 5,
-                        fontSize: 14,
-                        color: 'white',
-                      }}>
-                      Completed
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      marginLeft: 34,
-                      marginTop: 5,
-                    }}>
-                    <Icon name="square" color={'#D0D2D7'} size={14}></Icon>
-                    <Text
-                      style={{
-                        fontFamily: 'Poppins-Regular',
-                        marginLeft: 5,
-                        fontSize: 14,
-                        color: 'white',
-                      }}>
-                      Pending
-                    </Text>
-                  </View>
-                </View>
-
-                <View
-                  style={[
-                    styles1.pbView,
-                    {width: '50%', justifyContent: 'center'},
-                  ]}>
-                  <View style={styles1.pbStyle}>
-                    <CircularProgressBar
-                      selectedValue={totalProgress}
-                      maxValue={100}
-                      radius={50}
-                      backgroundColor="transparent"
-                      activeStrokeColor="#001314"
-                      withGradient
-                    />
-                  </View>
-                </View>
-              </View>
-
-              <Calendarstrip />
-            </View>
-            {isLoading ? (
-              <AppLoader />
-            ) : (
-              <>
-                {fetchTask.length === 0 ? (
-                  <View
-                    style={{
-                      width: '100%',
-                      height: 500,
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}>
+      
+        <View style={styles.bottomContainer}>
+          <BottomSheet
+            ref={bottomSheetTeamRef}
+            closeOnDragDown={true}
+            closeOnPressMask={true}
+            customStyles={{
+              wrapper: styles.bottomSheetWrapper,
+              draggableIcon: styles.bottomSheetDraggableIcon,
+              container: styles.bottomSheetContainer,
+            }}>
+            <View style={[styles.bottomSheetContent]}>
+              <ScrollView>
+                {filterMember.length === 0 ? (
+                  <View>
                     <Text
                       style={{
                         color: 'grey',
                         fontSize: 20,
                         padding: 20,
-                        marginTop: 100,
+                        marginTop: 140,
                         textAlign: 'center',
                         letterSpacing: 1.5,
                       }}>
-                      You don't have Tasks to Display
+                      You don't have Team Members to Display
                     </Text>
-                    {userRole == 'ROLE_ADMIN' ? (
-                      <Button
-                        icon="plus"
-                        mode="contained"
-                        onPress={() => showModal()}
-                        style={{width: 150}}>
-                        Add Task
-                      </Button>
-                    ) : (
-                      ''
-                    )}
                   </View>
                 ) : (
-                  fetchTask.map(items => {
-                    {
-                      /* console.log('Progress for Task:', items.taskName, items.Progress);
+                  filterMember.map(items => (
+                    <MemberFilter
+                      key={items._id}
+                      role={items.role}
+                      id={items._id}
+                      name={items.name}
+                      selectedIds={selectedIds}
+                      setSelectedIds={setSelectedIds}
+                      fetchTeamMembers={fetchTeamMembers}
+                      fetchMembers={fetchMembers}
+                      teamIdByItem={teamIdByItem}
+                    />
+                  ))
+                )}
+              </ScrollView>
+              {/* <TouchableOpacity style={styles.closeButton} onPress={closeBottomSheet}>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity> */}
+            </View>
+          </BottomSheet>
+        </View>
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={refreshfetchTasks}
+            />
+          }>
+          {/* Edit Task Modal Starts */}
+          <RBSheet
+            ref={bottomSheetEditRef}
+            height={300} // Set the desired height of the bottom sheet
+            closeOnDragDown={true}
+            customStyles={{
+              wrapper: {
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              },
+              container: {
+                backgroundColor: '#1b1b1b',
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+              },
+              draggableIcon: {
+                backgroundColor: '#6DED65',
+              },
+            }}>
+            <View style={{marginLeft: 10}}>
+              <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
+              <TextInput
+                style={[
+                  styles1.Emailinput,
+                  {backgroundColor: 'transparent', height: 40},
+                ]}
+                placeholder="Team Name"
+                placeholderTextColor="white"
+                value={formData.editTitle}
+                onChangeText={value =>
+                  setFormData({...formData, editTitle: value})
+                }
+              />
+
+              <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
+              <TextInput
+                style={[
+                  styles1.Emailinput,
+                  {backgroundColor: 'transparent', height: 40},
+                ]}
+                placeholder="Team Description"
+                placeholderTextColor="white"
+                value={formData.editDesc}
+                onChangeText={value =>
+                  setFormData({...formData, editDesc: value})
+                }
+              />
+              <View>
+                <Text style={styles1.emaillabelStyle}>Edit End Date</Text>
+                <TextInput
+                  style={[
+                    styles1.Emailinput,
+                    {backgroundColor: 'transparent', height: 40},
+                  ]}
+                  placeholder="Team Enddate"
+                  placeholderTextColor="white"
+                  value={formData.endDate}
+                  onChangeText={value =>
+                    setFormData({...formData, endDate: value})
+                  }
+                />
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  width: 290,
+                  marginLeft: 15,
+                }}>
+                <Button
+                  icon="close"
+                  mode="contained"
+                  textColor="black"
+                  style={{backgroundColor: '#351c4f'}}
+                  onPress={closeeditBottomSheet}>
+                  <Text
+                    style={{
+                      color: 'black',
+                    }}>
+                    Close
+                  </Text>
+                </Button>
+                <Button
+                  icon="check"
+                  mode="contained"
+                  textColor="black"
+                  onPress={() => {
+                    Alert.alert(
+                      'Confirmation',
+                      'Are you sure you want to Edit the Task?',
+                      [
+                        {
+                          text: 'Cancel',
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'Yes',
+                          onPress: () => editTask(teamIdByItem, taskId), // Wrap the function call inside an arrow function
+                        },
+                      ],
+                      {cancelable: false},
+                    );
+                  }}
+                  style={{marginLeft: 5, backgroundColor: '#351c4f'}}>
+                  <Text
+                    style={{
+                      color: 'black',
+                    }}>
+                    Done
+                  </Text>
+                </Button>
+              </View>
+            </View>
+          </RBSheet>
+          {/* Edit Task Modal Ends */}
+          {/* Listing to add team members starts */}
+          <Portal>
+            <Modal
+              visible={memberTeam}
+              onDismiss={() => setmemberTeam(false)}
+              contentContainerStyle={containerMemberStyle}>
+              <Text style={{color: '#9E9E9E', fontSize: 15}}>
+                Tap to select/deselect the members
+              </Text>
+              <ScrollView style={{maxHeight: 400}}>
+                {resultTeamMemberData.length === 0 ? (
+                  <View>
+                    <Text
+                      style={{
+                        color: 'grey',
+                        fontSize: 20,
+                        padding: 20,
+                        textAlign: 'center',
+                        letterSpacing: 1.5,
+                      }}>
+                      Team members are already added.
+                    </Text>
+                  </View>
+                ) : (
+                  resultTeamMemberData.map(items => (
+                    <TeamMember
+                      key={items._id}
+                      designation={items.designation}
+                      id={items._id}
+                      name={items.name}
+                      selectedIds={selectedIds}
+                      setSelectedIds={setSelectedIds}
+                    />
+                  ))
+                )}
+              </ScrollView>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  padding: 10,
+                }}>
+                <Button
+                  icon="close"
+                  mode="contained"
+                  onPress={() => setmemberTeam(false)}
+                  style={{marginRight: 10, backgroundColor: '#351c4f'}}>
+                  Close
+                </Button>
+                <Button
+                  icon="check"
+                  mode="contained"
+                  onPress={() => {
+                    Alert.alert(
+                      'Confirmation',
+                      'Are you sure you want to add the selected members?',
+                      [
+                        {
+                          text: 'Cancel',
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'Add',
+                          onPress: handleSubmit,
+                        },
+                      ],
+                      {cancelable: false},
+                    );
+                  }}
+                  disabled={resultTeamMemberData.length === 0}>
+                  Add Member
+                </Button>
+              </View>
+            </Modal>
+          </Portal>
+
+          {/* Listing to add team members end */}
+          {/* Add task Modal start */}
+          <Portal>
+            <Modal
+              visible={visible}
+              onDismiss={hideModal}
+              contentContainerStyle={addtaskcontainerStyle}>
+              <AddTask hideAddModal={hideModal} teamIdByItem={teamIdByItem} />
+            </Modal>
+          </Portal>
+          {/* Add task Modal end */}
+
+          
+          <ScrollView>
+
+          <LinearGradient
+        colors={['#140d13', '#0a1a1b']} // Set your desired gradient colors
+        start={{x: 0, y: 1}} // Adjust the start point as needed
+        end={{x: 1, y: 0}} // Adjust the end point as needed
+        style={{flex: 1}}>
+
+            <View style={[styles.fullscreen]}>
+              <View style={styles.outer}>
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                  <View style={styles.titleContainer}>
+                    <Text style={[styles.titleText]}>
+                      {teamTitle.length > 12
+                        ? `${teamTitle.slice(0, 12)}...`
+                        : teamTitle}
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={fetchTeamMembers}
+                    // onPress={openBottomSheet}
+                  >
+                    <Text style={styles.addText}>View Team</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.dayContainer}>
+                  <View style={styles.innerdayContainer}>
+                    <Text style={[styles.dateText]}>{currentDate}</Text>
+                  </View>
+                </View>
+                <View style={{display: 'flex', flexDirection: 'row'}}>
+                  <View
+                    style={{
+                      backgroundColor: '#1b1b1b',
+                      width: '50%',
+                      borderTopLeftRadius: 20,
+                      borderBottomLeftRadius: 20,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        fontFamily: 'Poppins-Regular',
+                        fontSize: 16,
+                        color: 'white',
+                        textAlign: 'center',
+                      }}>
+                      Tasks Progress
+                    </Text>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: 34,
+                        marginTop: 10,
+                      }}>
+                      <Icon name="square" color={'#351c4f'} size={14}></Icon>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Regular',
+                          marginLeft: 5,
+                          fontSize: 14,
+                          color: 'white',
+                        }}>
+                        Completed
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        marginLeft: 34,
+                        marginTop: 5,
+                      }}>
+                      <Icon name="square" color={'#D0D2D7'} size={14}></Icon>
+                      <Text
+                        style={{
+                          fontFamily: 'Poppins-Regular',
+                          marginLeft: 5,
+                          fontSize: 14,
+                          color: 'white',
+                        }}>
+                        Pending
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View
+                    style={[
+                      styles1.pbView,
+                      {width: '50%', justifyContent: 'center'},
+                    ]}>
+                    <View style={styles1.pbStyle}>
+                      <CircularProgressBar
+                        selectedValue={totalProgress}
+                        maxValue={100}
+                        radius={50}
+                        backgroundColor="transparent"
+                        activeStrokeColor="#351c4f"
+                        withGradient
+                      />
+                    </View>
+                  </View>
+                </View>
+
+                <Calendarstrip />
+              </View>
+
+           
+
+
+     
+              {isLoading ? (
+                <AppLoader />
+              ) : (
+                <>
+                  {fetchTask.length === 0 ? (
+                    <View
+                      style={{
+                        width: '100%',
+                        height: 500,
+                        display: 'flex',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={{
+                          color: 'grey',
+                          fontSize: 20,
+                          padding: 20,
+                          marginTop: 100,
+                          textAlign: 'center',
+                          letterSpacing: 1.5,
+                        }}>
+                        You don't have Tasks to Display
+                      </Text>
+                      {userRole == 'ROLE_ADMIN' ? (
+                        <Button
+                          icon="plus"
+                          mode="contained"
+                          onPress={() => showModal()}
+                          style={{width: 150}}>
+                          Add Task
+                        </Button>
+                      ) : (
+                        ''
+                      )}
+                    </View>
+                  ) : (
+                    fetchTask.map(items => {
+                      {
+                        /* console.log('Progress for Task:', items.taskName, items.Progress);
                     
                     subtaskLength = items.subTask.length;
                     {/* console.log(subtaskLength); */
-                    }
-                    {
-                      /* totalProgress1 = calculateCirP(items.Progress , subtaskLength, fetchTask.length); */
-                    }
+                      }
+                      {
+                        /* totalProgress1 = calculateCirP(items.Progress , subtaskLength, fetchTask.length); */
+                      }
 
-                    return (
-                      <TaskItem
-                        key={items._id}
-                        status={items.status}
-                        handleEditClick={handleEditClick}
-                        settaskId={settaskId}
-                        setIsModalVisible={setIsModalVisible}
-                        setFormData={setFormData}
-                        id={items._id}
-                        title={items.taskName}
-                        desc={items.taskDesc}
-                        time={items.endDate}
-                        teamIdByItem={teamIdByItem}
-                        deleteTask={deleteTask}
-                        userRole={userRole}
-                        openBottomEditSheet={openBottomEditSheet}
-                      />
-                    );
-                  })
-                )}
-              </>
-            )}
-          </View>
+                      return (
+                        <TaskItem
+                          key={items._id}
+                          status={items.status}
+                          handleEditClick={handleEditClick}
+                          settaskId={settaskId}
+                          setIsModalVisible={setIsModalVisible}
+                          setFormData={setFormData}
+                          id={items._id}
+                          title={items.taskName}
+                          desc={items.taskDesc}
+                          time={items.endDate}
+                          teamIdByItem={teamIdByItem}
+                          deleteTask={deleteTask}
+                          userRole={userRole}
+                          openBottomEditSheet={openBottomEditSheet}
+                        />
+                      );
+                    })
+                  )}
+                </>
+              )}
+             
+            </View>
+            </LinearGradient>
+          </ScrollView>
+          
+
+          {userRole == 'ROLE_ADMIN' ? (
+            <Portal>
+              <FAB.Group
+                open={open}
+                visible
+                color="#6DED65"
+                fabStyle={{backgroundColor: '#1b1b1b'}}
+                icon={open ? 'chevron-down' : 'plus'}
+                actions={[
+                  {
+                    icon: 'plus',
+                    label: 'Add Task',
+                    textColor: '#1b1b1b',
+                    color: '#6DED65',
+                    onPress: () => showModal(),
+                  },
+                  {
+                    icon: 'plus',
+                    label: 'Add Team Members',
+                    color: '#6DED65',
+                    onPress: () => setmemberTeam(true),
+                  },
+                ]}
+                onStateChange={onStateChange}
+                onPress={() => {
+                  if (open) {
+                    // do something if the speed dial is open
+                  }
+                }}
+                overlayColor="transparent"
+              />
+            </Portal>
+          ) : (
+            ''
+          )}
         </ScrollView>
-
-        {userRole == 'ROLE_ADMIN' ? (
-          <Portal>
-            <FAB.Group
-              open={open}
-              visible
-              color="#6DED65"
-              fabStyle={{backgroundColor: '#1b1b1b'}}
-              icon={open ? 'chevron-down' : 'plus'}
-              actions={[
-                {
-                  icon: 'plus',
-                  label: 'Add Task',
-                  textColor: '#1b1b1b',
-                  color: '#6DED65',
-                  onPress: () => showModal(),
-                },
-                {
-                  icon: 'plus',
-                  label: 'Add Team Members',
-                  color: '#6DED65',
-                  onPress: () => setmemberTeam(true),
-                },
-              ]}
-              onStateChange={onStateChange}
-              onPress={() => {
-                if (open) {
-                  // do something if the speed dial is open
-                }
-              }}
-              overlayColor="transparent"
-            />
-          </Portal>
-        ) : (
-          ''
-        )}
-      </ScrollView>
+     
     </Provider>
   );
 };

@@ -57,10 +57,12 @@ const TeamItem = props => {
               <Text style={styles.teamBigText}>{truncatedTitle}</Text>
               <TouchableOpacity>
                 <Icon
-                  name="md-arrow-forward-circle-sharp"
+                  name="arrow-forward-outline"
                   onPress={() => appFun(props.items._id, props.title)}
-                  size={30}
+                  size={20}
                   color="white"
+                  style={styles.forwardArrow}
+
                 />
               </TouchableOpacity>
             </View>
@@ -70,7 +72,7 @@ const TeamItem = props => {
             {/* <View style={styles.iconStyle}> */}
             <View style={{flexDirection: 'row'}}>
               <TouchableOpacity>
-                <Icon name="people" size={18} color="#54c279" />
+                <Icon name="people" size={18} color="#351c4f" />
               </TouchableOpacity>
               <Text style={styles.personText}>{props.person} Persons</Text>
             </View>
@@ -83,7 +85,7 @@ const TeamItem = props => {
                   <Icon
                     name="md-pencil-outline"
                     size={20}
-                    style={{color: '#f3c134', marginRight: 15}}
+                    style={{color: '#351c4f', marginRight: 15}}
                   />
                 </TouchableOpacity>
               ) : (
@@ -109,7 +111,7 @@ const TeamItem = props => {
                     {cancelable: false},
                   )
                 }>
-                <Icon name="md-trash" size={20} style={{color: '#FF0096'}} />
+                <Icon name="md-trash" size={20} style={{color: '#351c4f'}} />
               </TouchableOpacity>
             </View>
             {/* </View> */}

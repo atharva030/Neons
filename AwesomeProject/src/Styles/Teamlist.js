@@ -179,4 +179,11 @@ module.exports = {
     alignItems: 'center',
     width: '100%',
   },
+
+  forwardArrow:{
+    backgroundColor: '#141011',
+    borderRadius: 10,
+    borderColor: "##1a1a1b",
+    padding: 5,
+  }
 };

@@ -274,7 +274,7 @@ module.exports = {
   pbStyle:{
     justifyContent: 'center',
     alignItems: 'center',
-    
+   
 
   }
 };

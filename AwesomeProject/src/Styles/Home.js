@@ -27,7 +27,7 @@ module.exports = {
   },
   closeButton: {
     marginTop: 16,
-    backgroundColor: '#4287f5',
+    backgroundColor: '#351c4f',
     padding: 10,
     borderRadius: 5,
   },
@@ -111,7 +111,7 @@ module.exports = {
     padding: 10,
   },
   addButton: {
-    backgroundColor: '#f26950',
+    backgroundColor: '#351c4f',
     borderRadius: 5,
     padding: 10,
     margin: 10,
@@ -143,7 +143,7 @@ module.exports = {
     marginBottom: 10,
   },
   hairline: {
-    backgroundColor: '#6DED65',
+    backgroundColor: '#351c4f',
     height: 1,
     width: screenWidth - 90,
     marginLeft: 10,
@@ -153,7 +153,7 @@ module.exports = {
     padding: 10,
   },
   taskText: {
-    color: '#20471E',
+    color: '#F8EAEA',
     flexDirection: 'row',
     alignSelf: 'flex-start',
   },

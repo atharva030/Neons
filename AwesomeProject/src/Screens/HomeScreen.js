@@ -619,11 +619,11 @@ const HomeScreen = ({navigation}) => {
                     onPress={() => showModal()}
                     style={{
                       width: 100,
-                      backgroundColor: '#6DED65',
+                      backgroundColor: '#351c4f',
                     }}>
                     <Text
                       style={{
-                        backgroundColor: '#6DED65',
+                        backgroundColor: '#351c4f',
                       }}>
                       ADD
                     </Text>
@@ -667,7 +667,7 @@ const HomeScreen = ({navigation}) => {
                   backdropColor="transparent"
                   color="#fff"
                   fabStyle={{
-                    backgroundColor: '#001314',
+                    backgroundColor: '#0d181b',
                     borderColor: '#272626',
                     borderWidth: 1,
                   }}
@@ -677,7 +677,7 @@ const HomeScreen = ({navigation}) => {
                       label: 'New Team',
                       labelTextColor: '#fff',
                       style: {
-                        backgroundColor: '#001314',
+                        backgroundColor: '#0d181b',
                         borderColor: '#272626',
                         borderWidth: 1,
                       },

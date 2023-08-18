@@ -59,17 +59,17 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   highlightDateContainer: {
-    backgroundColor: '#6DED65',
+    backgroundColor: '#351c4f',
     borderRadius: 10,
     height: 60,
     width: 35,
   },
   highlightDateNumber: {
-    color: 'black',
+    color: 'white',
     fontSize: 12,
   },
   highlightDateName: {
-    color: 'black',
+    color: 'white',
     fontSize: 12,
     marginTop: -5,
   },
