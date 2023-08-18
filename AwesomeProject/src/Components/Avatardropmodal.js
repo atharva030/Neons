@@ -8,7 +8,9 @@ import {
   Image,
   ToastAndroid,
 } from 'react-native';
-
+import {statusCodes} from 'react-native-google-signin';
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
+import auth from '@react-native-firebase/auth';
 import styles from '../Styles/Teamlist';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -60,6 +62,7 @@ const Avatardropmodal = ({
           index: 0,
           routes: [{name: 'Welcome'}],
         });
+        GoogleSignin.signOut();
       })
       .catch(error => {
         console.log(
