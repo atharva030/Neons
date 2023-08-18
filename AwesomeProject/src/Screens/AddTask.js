@@ -7,6 +7,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   BackHandler,
+  TouchableOpacity,
   Alert,
 } from 'react-native';
 import {Modal, Portal, Provider, Button, RadioButton} from 'react-native-paper';
@@ -41,7 +42,7 @@ const AddTask = props => {
   const {navigation, hideAddModal, teamIdByItem} = props;
   const [isStDatePickerVisible, setStDatePickerVisibility] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisibility] = useState(false);
-
+  const hideModal = () => setVisible(false);
   const [visible, setVisible] = useState(false);
   const [checked, setChecked] = useState('');
   const [taskName, setTaskName] = useState('');
@@ -192,7 +193,6 @@ const AddTask = props => {
     };
   }, []);
 
-  const hideModal = () => setVisible(false);
   const showStDatePicker = () => {
     setStDatePickerVisibility(true);
   };
@@ -225,15 +225,30 @@ const AddTask = props => {
           <Modal
             visible={visible}
             onDismiss={hideModal}
-            // contentContainerStyle={styles.containerStyle}
-            style={{backgroundColor: '#'}}>
-            <Icon name="checkmark-circle-outline" size={90} color="#008000" />
+            style={{backgroundColor: '#000'}}>
+            <Icon name="checkmark-circle-outline" size={90} color="red" />
             <Text style={styles.modalTital}>Congrats!</Text>
             <Text style={styles.modalSubtital}>
               You successfully created a task in your account.
             </Text>
           </Modal>
         </Portal>
+        <TouchableOpacity
+          style={{width: '100%', flexDirection: 'row-reverse'}}
+          onPress={hideAddModal}>
+          <View
+            style={{
+              backgroundColor: '#20212a',
+              height: 40,
+              width: 40,
+              borderRadius: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Icon name="close" size={30} color="white" />
+          </View>
+        </TouchableOpacity>
+
         <Text style={styles.labelStyle}>TASK NAME</Text>
         <TextInput
           style={styles.input}
@@ -258,7 +273,10 @@ const AddTask = props => {
                     value={stDate}
                   />
                 </Pressable>
-                <Button icon="calendar" onPress={showStDatePicker} textColor='#6DED65'></Button>
+                <Button
+                  icon="calendar"
+                  onPress={showStDatePicker}
+                  textColor="#643597"></Button>
                 <DateTimePickerModal
                   isVisible={isStDatePickerVisible}
                   mode="date"
@@ -279,13 +297,15 @@ const AddTask = props => {
                     value={endDate}
                   />
                 </Pressable>
-                <Button icon="calendar" onPress={showEndDatePicker} textColor='#6DED65'></Button>
+                <Button
+                  icon="calendar"
+                  onPress={showEndDatePicker}
+                  textColor="#643597"></Button>
                 <DateTimePickerModal
                   isVisible={isEndDatePickerVisible}
                   mode="date"
                   onConfirm={handleEndDateConfirm}
-                  onCancel={hideEndDatePicker}
-                />
+                  onCancel={hideEndDatePicker}/>
               </View>
             </View>
           </View>
@@ -298,8 +318,7 @@ const AddTask = props => {
               placeholderTextColor="white"
               value={description}
               onChangeText={setDescription}
-              required
-            />
+              required/>
           </View>
 
           <View style={{marginTop: 10}}>
@@ -364,7 +383,7 @@ const AddTask = props => {
               <RadioButton
                 status={checked === 'third' ? 'checked' : 'unchecked'}
                 onPress={third}
-                color="#8e8cdb"
+                color="#AC86D5"
               />
               <Pressable onPress={third} style={{width: '50%'}}>
                 <Text
@@ -385,27 +404,16 @@ const AddTask = props => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            width: 290,
-            marginBottom: 15,
+            width: '100%',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            marginTop: 20,
           }}>
-          <Button
-            icon="close"
-            mode="contained"
-            onPress={hideAddModal}
-            textColor="black"
-            style={{marginLeft: 25, backgroundColor: '#6DED65'}}>
-            <Text
-              style={{
-                color: 'black',
-              }}>
-              Close
-            </Text>
-          </Button>
-
           <Button
             icon="check"
             mode="contained"
-            textColor="black"
+            textColor="white"
             onPress={() => {
               Alert.alert(
                 'Confirmation',
@@ -423,11 +431,11 @@ const AddTask = props => {
                 {cancelable: false},
               );
             }}
-            style={{marginLeft: 5, backgroundColor: '#6DED65'}}>
+            style={{marginLeft: 5, backgroundColor: '#351c4f'}}>
             <Text
               style={{
-                color: 'black',
-              }}>
+                color: '#fff',
+                }}>
               Create Task
             </Text>
           </Button>

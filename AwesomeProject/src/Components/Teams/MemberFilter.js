@@ -44,7 +44,7 @@ const MemberFilter = props => {
               padding: 10,
               borderRadius: 40,
               borderWidth: 1,
-              borderColor: '#6DED65',
+              borderColor: '#F7DEE8',
             }}
             onPress={() =>
               Alert.alert(
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   chip: {
     borderWidth: 2,
-    borderColor: '#6DED65',
+    borderColor: '#351c4f',
     borderRadius: 20,
     marginTop: 20,
     width: 280,
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   deleteIcon: {
-    color: '#6DED65',
+    color: '#F7DEE8',
   },
 });
 

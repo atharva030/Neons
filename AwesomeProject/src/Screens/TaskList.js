@@ -96,7 +96,7 @@ const TaskList = ({navigation, route}) => {
     height: deviceHeight * 0.46,
     // borderWidth: 1,
     // borderColor: 'black',
-    backgroundColor: '#1b1b1b',
+    backgroundColor: '#000',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
@@ -107,10 +107,8 @@ const TaskList = ({navigation, route}) => {
 
   const addtaskcontainerStyle = {
     width: deviceWidth * 0.95,
-    height: deviceHeight * 0.566,
-    // borderWidth: 1,
-    // borderColor: 'black',
-    backgroundColor: '#1b1b1b',
+    height: deviceHeight * 0.620,
+    backgroundColor: '#000',
     padding: 10,
     borderRadius: 20,
     justifyContent: 'center',
@@ -378,7 +376,6 @@ const TaskList = ({navigation, route}) => {
         ...DefaultTheme,
         colors: {...DefaultTheme.colors, accent: 'transparent'},
       }}>
-      
         <View style={styles.bottomContainer}>
           <BottomSheet
             ref={bottomSheetTeamRef}
@@ -449,7 +446,7 @@ const TaskList = ({navigation, route}) => {
                 borderTopRightRadius: 20,
               },
               draggableIcon: {
-                backgroundColor: '#6DED65',
+                backgroundColor: 'white',
               },
             }}>
             <View style={{marginLeft: 10}}>
@@ -743,11 +740,6 @@ const TaskList = ({navigation, route}) => {
 
                 <Calendarstrip />
               </View>
-
-           
-
-
-     
               {isLoading ? (
                 <AppLoader />
               ) : (
@@ -776,7 +768,7 @@ const TaskList = ({navigation, route}) => {
                           icon="plus"
                           mode="contained"
                           onPress={() => showModal()}
-                          style={{width: 150}}>
+                          style={{width: 150, backgroundColor: '#351c4f'}}>
                           Add Task
                         </Button>
                       ) : (

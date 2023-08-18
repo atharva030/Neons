@@ -16,8 +16,10 @@ module.exports = {
   bottomSheetDraggableIcon: {
     backgroundColor: 'white',
   },
-  bottomSheetContainer: {
-    backgroundColor: '#1b1b1b',
+  bottomSheetContainer: { 
+  
+    borderColor: '#F8EAEA',
+    backgroundColor: '#000',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     height: 400,
@@ -41,16 +43,13 @@ module.exports = {
     backgroundColor: 'black',
     minHeight: Dimensions.get('window').height,
   },
-
   flexBox: {
     margin: 15,
     flexDirection: 'columns',
   },
   outer: {
     margin: 25,
-    // flexGrow: 1
   },
-
   titleContainer: {
     height: 50,
     width: '70%',
@@ -58,13 +57,11 @@ module.exports = {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
   logo: {
     height: 35,
     width: 35,
     borderRadius: 1000,
   },
-
   titleText: {
     flexDirection: 'row',
     alignSelf: 'flex-start',
@@ -83,7 +80,6 @@ module.exports = {
   },
   dayContainer: {
     height: 50,
-    // justifyContent:'space-evenly',
     flexDirection: 'row',
   },
   innerdayContainer: {
@@ -129,8 +125,6 @@ module.exports = {
     paddingBottom: 10,
     fontFamily: 'Poppins-Regular',
   },
-  //TaskItem Styling Starts
-
   taskFlex: {
     width: screenWidth - 60,
     height: 170,
@@ -153,7 +147,7 @@ module.exports = {
     padding: 10,
   },
   taskText: {
-    color: '#F8EAEA',
+    color: '#F7DEE8',
     flexDirection: 'row',
     alignSelf: 'flex-start',
   },

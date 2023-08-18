@@ -641,7 +641,7 @@ const TaskItem = props => {
             </View>
             <View style={styles.flexIcon}>
               <TouchableOpacity>
-                <Icon name="md-time-outline" size={15} color="#20471E" />
+                <Icon name="md-time-outline" size={15} color="#F7DEE8" />
               </TouchableOpacity>
               <Text style={styles.taskText}>{props.time}</Text>
             </View>
@@ -744,7 +744,7 @@ const TaskItem = props => {
                         alignItems: 'center',
                         marginRight: 12,
                       }}>
-                      <Icon name="chevron-up-outline" color="black" size={20} />
+                      <Icon name="chevron-up-outline" color="#F7DEE8" size={20} />
                       <Text style={styles.taskText}> See less</Text>
                     </View>
                   </React.Fragment>
@@ -758,7 +758,7 @@ const TaskItem = props => {
                       }}>
                       <Icon
                         name="chevron-down-outline"
-                        color="black"
+                        color="#F7DEE8"
                         size={20}
                       />
                       <Text style={styles.taskText}>See Subtasks</Text>
