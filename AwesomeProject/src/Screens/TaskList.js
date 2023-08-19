@@ -421,51 +421,51 @@ const TaskList = ({navigation, route}) => {
             {/* <TouchableOpacity style={styles.closeButton} onPress={closeBottomSheet}>
             <Text style={styles.closeButtonText}>Close</Text>
           </TouchableOpacity> */}
-            </View>
-          </BottomSheet>
-        </View>
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={refreshfetchTasks}
+          </View>
+        </BottomSheet>
+      </View>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={refreshfetchTasks}
+          />
+        }>
+        {/* Edit Task Modal Starts */}
+        <RBSheet
+          ref={bottomSheetEditRef}
+          height={300} // Set the desired height of the bottom sheet
+          closeOnDragDown={true}
+          customStyles={{
+            wrapper: {
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            },
+            container: {
+              borderTopColor: 'white',
+              backgroundColor: 'black',
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              marginTop: 30,
+              height: 300,
+            },
+            draggableIcon: {
+              backgroundColor: 'white',
+            },
+          }}>
+          <View style={{marginLeft: 10}}>
+            <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
+            <TextInput
+              style={[
+                styles1.Emailinput,
+                {backgroundColor: 'transparent', height: 40},
+              ]}
+              placeholder="Team Name"
+              placeholderTextColor="white"
+              value={formData.editTitle}
+              onChangeText={value =>
+                setFormData({...formData, editTitle: value})
+              }
             />
-          }>
-          {/* Edit Task Modal Starts */}
-          <RBSheet
-            ref={bottomSheetEditRef}
-            height={300} // Set the desired height of the bottom sheet
-            closeOnDragDown={true}
-            customStyles={{
-              wrapper: {
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              },
-              container: {
-                borderTopColor: 'white',
-                backgroundColor: 'black',
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-                marginTop: 30,
-                height: 300,
-              },
-              draggableIcon: {
-                backgroundColor: 'white',
-              },
-            }}>
-            <View style={{marginLeft: 10}}>
-              <Text style={styles1.emaillabelStyle}>Edit Task Title</Text>
-              <TextInput
-                style={[
-                  styles1.Emailinput,
-                  {backgroundColor: 'transparent', height: 40},
-                ]}
-                placeholder="Team Name"
-                placeholderTextColor="white"
-                value={formData.editTitle}
-                onChangeText={value =>
-                  setFormData({...formData, editTitle: value})
-                }
-              />
 
             <Text style={styles1.emaillabelStyle}>Edit Task Description</Text>
             <TextInput
@@ -637,12 +637,12 @@ const TaskList = ({navigation, route}) => {
         {/* Add task Modal end */}
 
         <ScrollView>
-          <LinearGradient
-            colors={['#140d13', '#0a1a1b']} // Set your desired gradient colors
-            start={{x: 0, y: 1}} // Adjust the start point as needed
-            end={{x: 1, y: 0}} // Adjust the end point as needed
-            style={{flex: 1}}>
-            <View style={[styles.fullscreen]}>
+          <View style={[styles.fullscreen]}>
+            <LinearGradient
+              colors={['#140d13', '#0a1a1b']} // Set your desired gradient colors
+              start={{x: 0, y: 1}} // Adjust the start point as needed
+              end={{x: 1, y: 0}} // Adjust the end point as needed
+              style={{flex: 1}}>
               <View style={styles.outer}>
                 <View style={{display: 'flex', flexDirection: 'row'}}>
                   <View style={styles.titleContainer}>
@@ -737,10 +737,8 @@ const TaskList = ({navigation, route}) => {
                     </View>
                   </View>
                 </View>
-
-                <Calendarstrip />
               </View>
-
+              <Calendarstrip />
               {isLoading ? (
                 <AppLoader />
               ) : (
@@ -810,64 +808,63 @@ const TaskList = ({navigation, route}) => {
                   )}
                 </>
               )}
-            </View>
             </LinearGradient>
-          </ScrollView>
-          
+          </View>
+        </ScrollView>
 
-          {userRole == 'ROLE_ADMIN' ? (
-            <Portal>
-              <FAB.Group
-                open={open}
-                visible
-                backdropColor='rgba(1, 1, 1, 0.9)'
-                color="#fff"
-                fabStyle={{
+        {userRole == 'ROLE_ADMIN' ? (
+          <Portal>
+            <FAB.Group
+              open={open}
+              visible
+              backdropColor="rgba(1, 1, 1, 0.9)"
+              color="#fff"
+              fabStyle={{
+                backgroundColor: '#0d181b',
+                borderColor: '#272626',
+                borderWidth: 1,
+              }}
+              icon={open ? 'chevron-down' : 'plus'}
+              actions={[
+                {
+                  icon: 'plus',
+                  label: 'Add Task',
+                  textColor: '#1b1b1b',
+                  labelTextColor: '#fff',
+                  style: {
                     backgroundColor: '#0d181b',
                     borderColor: '#272626',
                     borderWidth: 1,
-                  }}
-                icon={open ? 'chevron-down' : 'plus'}
-                actions={[
-                  {
-                    icon: 'plus',
-                    label: 'Add Task',
-                    textColor: '#1b1b1b',
-                    labelTextColor: '#fff',
-                      style: {
-                        backgroundColor: '#0d181b',
-                        borderColor: '#272626',
-                        borderWidth: 1,
-                      },
-                      color: '#fff',
-                    onPress: () => showModal(),
                   },
-                  {
-                    icon: 'account-multiple-plus',
-                    label: 'Add Team Members',
-                    labelTextColor: '#fff',
-                    color: '#fff',
-                    style: {
-                        backgroundColor: '#0d181b',
-                        borderColor: '#272626',
-                        borderWidth: 1,
-                      },
-                    onPress: () => setmemberTeam(true),
+                  color: '#fff',
+                  onPress: () => showModal(),
+                },
+                {
+                  icon: 'account-multiple-plus',
+                  label: 'Add Team Members',
+                  labelTextColor: '#fff',
+                  color: '#fff',
+                  style: {
+                    backgroundColor: '#0d181b',
+                    borderColor: '#272626',
+                    borderWidth: 1,
                   },
-                ]}
-                onStateChange={onStateChange}
-                onPress={() => {
-                  if (open) {
-                    // do something if the speed dial is open
-                  }
-                }}
-                overlayColor="transparent"
-              />
-            </Portal>
-          ) : (
-            ''
-          )}
-        </ScrollView>
+                  onPress: () => setmemberTeam(true),
+                },
+              ]}
+              onStateChange={onStateChange}
+              onPress={() => {
+                if (open) {
+                  // do something if the speed dial is open
+                }
+              }}
+              overlayColor="transparent"
+            />
+          </Portal>
+        ) : (
+          ''
+        )}
+      </ScrollView>
     </Provider>
   );
 };

@@ -91,12 +91,12 @@ const TeamItem = props => {
               ) : (
                 ''
               )}
-
               <TouchableOpacity
                 onPress={() =>
                   Alert.alert(
                     'Confirmation',
                     'Are you sure you want to delete team Permanantly?',
+
                     [
                       {
                         text: 'Cancel',

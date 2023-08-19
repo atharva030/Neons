@@ -15,7 +15,7 @@ module.exports = {
   bottomSheetDraggableIcon: {
     backgroundColor: 'white',
   },
-  bottomSheetContainer: { 
+  bottomSheetContainer: {
     borderTopWidth: 1,
     borderColor: '#F8EAEA',
     backgroundColor: '#000',
@@ -41,7 +41,8 @@ module.exports = {
     textAlign: 'center',
   },
   fullscreen: {
-    backgroundColor: 'black',
+    backgroundColor: 'transparent',
+
     minHeight: Dimensions.get('window').height,
   },
   flexBox: {
@@ -50,6 +51,7 @@ module.exports = {
   },
   outer: {
     margin: 25,
+    backgroundColor: 'transparent',
   },
   titleContainer: {
     height: 50,
@@ -362,10 +364,10 @@ module.exports = {
     top: 40,
     right: 20,
   },
-  forwardArrow:{
+  forwardArrow: {
     backgroundColor: '#141011',
     borderRadius: 10,
-    borderColor: "#1a1a1b",
+    borderColor: '#1a1a1b',
     padding: 5,
-  }
+  },
 };
