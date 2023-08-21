@@ -9,7 +9,8 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastComponent from '../Components/Toast/toast';
 import LinearGradient from 'react-native-linear-gradient';
-import {Image} from 'react-native-svg';
+import {Image} from 'react-native';
+import googleI from '../../assets/googleI.png';
 
 GoogleSignin.configure({
   scopes: ['email'],
@@ -206,11 +207,13 @@ const Welcome = ({navigation}) => {
                 end={{x: 1, y: 0}}
                 style={styles.card}>
                 <Text style={styles.headingText}>Sign in with Google </Text>
-                <IonIcon
+                {/* <IonIcon
                   name="logo-google"
                   size={25}
                   color="#6b8cff"
-                  style={styles.google_logo}></IonIcon>
+                  style={styles.google_logo}></IonIcon> */}
+                <Image source={googleI} style={styles.google_logo}/>
+
                 <View style={styles.rightIcon}>
                   <IonIcon
                     name="arrow-forward-outline"

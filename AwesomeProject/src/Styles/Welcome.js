@@ -80,6 +80,8 @@ module.exports = {
     marginRight: 30, 
   },
   google_logo: {
+    width: 35,
+    height: 35,
     marginLeft: 29,
   },
   facebook_logo: {
