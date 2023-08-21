@@ -93,18 +93,26 @@ const HomeScreen = ({navigation}) => {
   const [authenToken, setauthenToken] = useState('');
   const [userDes, setuserDes] = useState('');
   const [photoUrl, setphotoUrl] = useState('');
+  const [Methode, setMethode] = useState('');
   const getUserRole = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
       console.log('this is from home screen ', userData);
       if (userData) {
-        const {userRole, userName, authToken, userDes, photoUrl} =
-          JSON.parse(userData);
+        const {
+          userRole,
+          userName,
+          authToken,
+          userDes,
+          photoUrl,
+          Signin_Method,
+        } = JSON.parse(userData);
         setUserRole(userRole);
         setidName(userName);
         setauthenToken(authToken);
         setuserDes(userDes);
         setphotoUrl(photoUrl);
+        setMethode(Signin_Method);
         console.log(
           'This is the one from homescreen',
           userRole,
@@ -112,6 +120,7 @@ const HomeScreen = ({navigation}) => {
           authenToken,
           userDes,
           photoUrl,
+          Methode,
         );
       }
     } catch (error) {
@@ -564,7 +573,7 @@ const HomeScreen = ({navigation}) => {
                       borderColor: '',
                       borderStyle: 'solid',
                       borderWidth: 2,
-                      marginTop:10
+                      marginTop: 10,
                     }}>
                     <Text style={{color: 'white'}}> Done </Text>
                   </Button>
@@ -664,7 +673,7 @@ const HomeScreen = ({navigation}) => {
                   open={open}
                   visible
                   icon={open ? 'chevron-down' : 'plus'}
-                  backdropColor='rgba(1, 1, 1, 0.9)'
+                  backdropColor="rgba(1, 1, 1, 0.9)"
                   color="#fff"
                   fabStyle={{
                     backgroundColor: '#0d181b',
