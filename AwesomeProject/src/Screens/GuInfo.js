@@ -108,6 +108,7 @@ const GuInfo = ({navigation}) => {
           }
           // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
           console.log(data.authToken);
+          console.log(data.Signin_Method);
           console.log('this data email ', data.email);
           await AsyncStorage.setItem(
             'user',
@@ -118,7 +119,7 @@ const GuInfo = ({navigation}) => {
               userDes: data.designation,
               photoUrl: data.photoUrl,
               email: email,
-              Signin_Method: signinMethode,
+              Signin_Method: data.signinMethode,
             }),
           );
           handleSuccess();

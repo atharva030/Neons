@@ -42,6 +42,7 @@ const Avatardropmodal = ({
       if (userData) {
         const data = JSON.parse(userData);
         console.log('after logout', data);
+        console.log('from async storage ', Signin_Method);
       } else {
         console.log('User data not found in AsyncStorage.');
       }

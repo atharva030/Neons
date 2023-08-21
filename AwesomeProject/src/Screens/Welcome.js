@@ -92,13 +92,13 @@ const Welcome = ({navigation}) => {
               email: user.email,
               photoURL: user.photoURL,
               pass: user.uid,
+              // Signin_Method: user.Signin_Method,
             });
             // ToastComponent({
             //   message: data.error || 'Invalid email or password',
             // });
           } else {
             // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
-            console.log(data.userName);
             await AsyncStorage.setItem(
               'user',
               JSON.stringify({
@@ -108,8 +108,10 @@ const Welcome = ({navigation}) => {
                 userDes: data.designation,
                 photoUrl: data.photoUrl,
                 email: currentUser.email,
+                Signin_Method: data.Signin_Method,
               }),
             );
+            // console.log('this is the methdoe ', Signin_Method);
             handleSuccess();
             navigation.navigate('NavigationScreen');
           }
