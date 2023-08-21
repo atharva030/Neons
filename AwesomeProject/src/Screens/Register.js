@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {IconButton} from 'react-native-paper';
 import styles from '../Styles/registerstyles';
 import {Image} from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import ToastComponent from '../Components/Toast/toast';
 import TaskContext from '../Context/taskContext';
@@ -54,16 +54,22 @@ const RegisterScreen = ({navigation}) => {
   const context = useContext(TaskContext);
   const {handleSubmitRegister} = context;
   const [isLoading, setIsLoading] = useState(false);
+  const Signin_Method = 'email';
 
   const route = useRoute();
   const selectedRole = route.params.selectedRole;
 
-  const isLoginDisabled = !name.trim() || !email.trim() || !password.trim() || !phone.trim() || !cnfpassword.trim() || !selectedDesignation.trim();
-
+  const isLoginDisabled =
+    !name.trim() ||
+    !email.trim() ||
+    !password.trim() ||
+    !phone.trim() ||
+    !cnfpassword.trim() ||
+    !selectedDesignation.trim();
   useEffect(() => {
-  console.log(selectedRole);
-  }, [])
-  
+    console.log(selectedRole);
+    console.log(Signin_Method);
+  }, []);
 
   const handleOpenPicker = () => {
     pickerRef.current && pickerRef.current.focus();
@@ -71,13 +77,11 @@ const RegisterScreen = ({navigation}) => {
 
   const handleBackendError = error => {
     let errorMessage = '⚠️ Please try again later!';
-
     if (error.message === 'Email already exists') {
       errorMessage = '⚠️ Email already exists';
     } else if (error.message === 'Phone number already exists') {
       errorMessage = '⚠️ Phone number already exists';
     }
-
     ToastAndroid.show(errorMessage, ToastAndroid.LONG);
   };
 
@@ -89,6 +93,7 @@ const RegisterScreen = ({navigation}) => {
     selectedRole,
     cnfpassword,
     selectedDesignation,
+    Signin_Method,
   ) => {
     console.log(
       name,
@@ -98,11 +103,11 @@ const RegisterScreen = ({navigation}) => {
       selectedRole,
       cnfpassword,
       selectedDesignation,
+      Signin_Method,
     );
     if (
       !name ||
-      !email |
-      !password ||
+      !email | !password ||
       !phone ||
       !selectedRole ||
       !cnfpassword ||
@@ -147,6 +152,7 @@ const RegisterScreen = ({navigation}) => {
       selectedRole,
       cnfpassword,
       selectedDesignation,
+      Signin_Method,
     )
       .then(success => {
         if (success) {
@@ -195,7 +201,7 @@ const RegisterScreen = ({navigation}) => {
                   placeholder=" "
                   placeholderTextColor="white"
                   value={name}
-                onChangeText={text => setName(text)}
+                  onChangeText={text => setName(text)}
                 />
               </View>
               <View style={styles.inputContainer}>
@@ -205,7 +211,7 @@ const RegisterScreen = ({navigation}) => {
                   placeholder=""
                   placeholderTextColor="white"
                   value={phone}
-                onChangeText={text => setPhone(text)}
+                  onChangeText={text => setPhone(text)}
                   keyboardType="numeric"
                 />
               </View>
@@ -228,7 +234,9 @@ const RegisterScreen = ({navigation}) => {
                   ref={pickerRef}
                   style={{height: 0, color: 'transparent'}}
                   selectedValue={selectedDesignation}
-                onValueChange={itemValue => setSelectedDesignation(itemValue)}>
+                  onValueChange={itemValue =>
+                    setSelectedDesignation(itemValue)
+                  }>
                   {designations.map(designation => (
                     <Picker.Item
                       key={designation}
@@ -285,11 +293,13 @@ const RegisterScreen = ({navigation}) => {
                   />
                 </View>
               </View>
-            
 
               <TouchableOpacity
-              style={[styles.submitBtn1, isLoginDisabled && styles.buttonDisabled, isLoading && styles.buttonDisabled ]}
-             
+                style={[
+                  styles.submitBtn1,
+                  isLoginDisabled && styles.buttonDisabled,
+                  isLoading && styles.buttonDisabled,
+                ]}
                 onPress={() =>
                   handlePressRegister(
                     name,
@@ -301,11 +311,17 @@ const RegisterScreen = ({navigation}) => {
                     selectedDesignation,
                   )
                 }
-              disabled={isLoading}>
+                disabled={isLoading}>
                 {isLoading ? (
                   <ActivityIndicator size="small" color="#ffffff" />
                 ) : (
-                  <Text style={[styles.loginText, isLoginDisabled && styles.buttonTextDisabled]}>Register</Text>
+                  <Text
+                    style={[
+                      styles.loginText,
+                      isLoginDisabled && styles.buttonTextDisabled,
+                    ]}>
+                    Register
+                  </Text>
                 )}
               </TouchableOpacity>
 

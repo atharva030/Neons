@@ -9,6 +9,7 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ToastComponent from '../Components/Toast/toast';
 import LinearGradient from 'react-native-linear-gradient';
+import {Image} from 'react-native-svg';
 
 GoogleSignin.configure({
   scopes: ['email'],
@@ -54,6 +55,8 @@ const Welcome = ({navigation}) => {
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
       const currentUser = auth().currentUser;
+      console.log('I am outside account');
+
       setUser(currentUser);
 
       console.log('This is user ', currentUser.email, currentUser.uid);
@@ -84,25 +87,32 @@ const Welcome = ({navigation}) => {
           console.log(data);
           setIsLoading(false);
           if (!response.ok) {
-            ToastComponent({
-              message: data.error || 'Invalid email or password',
+            navigation.navigate('GuInfo', {
+              name: user.displayName,
+              email: user.email,
+              photoURL: user.photoURL,
+              pass: user.uid,
             });
+            // ToastComponent({
+            //   message: data.error || 'Invalid email or password',
+            // });
+          } else {
+            // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
+            console.log(data.userName);
+            await AsyncStorage.setItem(
+              'user',
+              JSON.stringify({
+                authToken: data.authToken,
+                userRole: data.userRole,
+                userName: data.userName,
+                userDes: data.designation,
+                photoUrl: data.photoUrl,
+                email: currentUser.email,
+              }),
+            );
+            handleSuccess();
+            navigation.navigate('NavigationScreen');
           }
-          // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
-          console.log(data.userName);
-          await AsyncStorage.setItem(
-            'user',
-            JSON.stringify({
-              authToken: data.authToken,
-              userRole: data.userRole,
-              userName: data.userName,
-              userDes: data.designation,
-              photoUrl: data.photoUrl,
-              email: currentUser.email,
-            }),
-          );
-          handleSuccess();
-          navigation.navigate('NavigationScreen');
         } catch (error) {
           setIsLoading(false);
           console.log(error);
@@ -206,13 +216,13 @@ const Welcome = ({navigation}) => {
                     name="arrow-forward-outline"
                     size={25}
                     color="#70686a"
-                    onPress={handleSignIn}
+                    // onPress={handleSignIn}
                     style={styles.arrow}></IonIcon>
                 </View>
               </LinearGradient>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.container} onPress={handleSignUp}>
+            {/* <TouchableOpacity style={styles.container} onPress={handleSignUp}>
               <LinearGradient
                 colors={['#140d13', '#0a1a1b']}
                 start={{x: 0, y: 1}}
@@ -233,7 +243,7 @@ const Welcome = ({navigation}) => {
                     style={styles.arrow}></IonIcon>
                 </View>
               </LinearGradient>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity
               style={styles.container}

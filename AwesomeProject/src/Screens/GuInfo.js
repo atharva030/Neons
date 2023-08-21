@@ -32,14 +32,18 @@ const GuInfo = ({navigation}) => {
   const [selectedDesignation, setSelectedDesignation] = useState(
     designations[null],
   );
+  const [signinMethode] = useState('googleSignin');
   const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     console.log('this is user email ', email);
+    console.log('this is sign in methode ', signinMethode);
+    console.log(signinMethode);
   }, []);
 
   const pickerRef = useRef();
   const handleBackendError = () => {
-    ToastComponent({message: 'Check your Network'});
+    ToastComponent({message: 'Sign Up With Google '});
   };
   const handleSubmitRegister = async (
     name,
@@ -49,6 +53,7 @@ const GuInfo = ({navigation}) => {
     role,
     selectedDesignation,
     photoURL,
+    signinMethode,
   ) => {
     try {
       setIsLoading(true);
@@ -68,6 +73,7 @@ const GuInfo = ({navigation}) => {
             designation: selectedDesignation,
             password: pass,
             photoUrl: photoURL,
+            Signin_Method: 'google',
           }),
         },
       );
@@ -112,10 +118,12 @@ const GuInfo = ({navigation}) => {
               userDes: data.designation,
               photoUrl: data.photoUrl,
               email: email,
+              Signin_Method: signinMethode,
             }),
           );
           handleSuccess();
           console.log(data.photoUrl);
+
           navigation.navigate('NavigationScreen');
         } catch (error) {
           setIsLoading(false);
