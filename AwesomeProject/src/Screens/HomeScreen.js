@@ -113,6 +113,7 @@ const HomeScreen = ({navigation}) => {
         setuserDes(userDes);
         setphotoUrl(photoUrl);
         setMethod(Signin_Method);
+        console.log(userRole);
         // console.log(
         //   'This is the one from homescreen',
         //   // userRole,

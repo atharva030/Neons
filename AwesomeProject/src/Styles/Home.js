@@ -26,7 +26,7 @@ module.exports = {
     borderTopWidth: 1,
   },
   bottomSheetContent: {
-    padding: 16,
+    padding: 10,
   },
   closeButton: {
     marginTop: 16,

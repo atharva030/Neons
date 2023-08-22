@@ -88,9 +88,12 @@ const TeamItem = props => {
                     style={{color: '#18D39E', marginRight: 15}}
                   />
                 </TouchableOpacity>
+
+               
               ) : (
                 ''
               )}
+              {props.userRole == 'ROLE_ADMIN' ? (
               <TouchableOpacity
                 onPress={() =>
                   Alert.alert(
@@ -113,7 +116,11 @@ const TeamItem = props => {
                 }>
                 <Icon name="md-trash" size={20} style={{color: '#FF0096'}} />
               </TouchableOpacity>
-            </View>
+
+              ) : (
+                ''
+              )}
+              </View>
             {/* </View> */}
           </View>
         </View>

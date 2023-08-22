@@ -1,8 +1,27 @@
-import React from 'react';
+import {React,useState,useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import {Chip, Avatar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const MemberFilter = props => {
+  const [userRole, setUserRole] = useState('');
+
+  const getUserRole = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      console.log('this is from memberfilter screen ', userData);
+      if (userData) {
+        const {userRole} = JSON.parse(userData);
+        setUserRole(userRole);
+        console.log(userRole);
+      }
+    } catch (error) {
+      console.log('Error while retrieving userRole from AsyncStorage:', error);
+    }
+  };
+  useEffect(() => {
+    getUserRole();
+  }, []);
   const deletExistTeamMember = async memberId => {
     // console.log(props.teamIdByItem,memberId)
     try {
@@ -34,40 +53,49 @@ const MemberFilter = props => {
             source={require('../../../assets/Image/profile1.png')}
             style={styles.avatar}
           />
+       
           <View style={styles.textContainer}>
             <Text style={styles.nameText}>{props.name}</Text>
             <Text style={styles.designationText}>{props.role}</Text>
           </View>
-          <TouchableOpacity
-            style={{
-              backgroundColor: '#1b1b1b',
-              padding: 10,
-              borderRadius: 40,
-              borderWidth: 1,
-              borderColor: '#F7DEE8',
-            }}
-            onPress={() =>
-              Alert.alert(
-                'Confirmation',
-                'Are you sure you want to delete this team member?',
-                [
-                  {
-                    text: 'Cancel',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'Delete',
-                    onPress: () => deletExistTeamMember(props.id),
-                    style: 'destructive',
-                  },
-                ],
-                {cancelable: false},
-              )
-            }>
-            <Icon name="trash-outline" size={20} style={styles.deleteIcon} />
-          </TouchableOpacity>
+          
+          {userRole == 'ROLE_ADMIN' ? (
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#1b1b1b',
+                padding: 10,
+                borderRadius: 40,
+                borderWidth: 1,
+                justifyContent: 'center',
+                borderColor: '#F7DEE8',          
+              }}
+              onPress={() =>
+                Alert.alert(
+                  'Confirmation',
+                  'Are you sure you want to delete this team member?',
+                  [
+                    {
+                      text: 'Cancel',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Delete',
+                      onPress: () => deletExistTeamMember(props.id),
+                      style: 'destructive',
+                    },
+                  ],
+                  {cancelable: false},
+                )
+              }>
+              <Icon name="trash-outline" size={20} style={styles.deleteIcon} />
+            </TouchableOpacity>
+          
+          ) : (
+            ''
+          )}
+          </View>
         </View>
-      </View>
+
     </View>
   );
 };
@@ -83,7 +111,7 @@ const styles = StyleSheet.create({
     borderColor: '#351c4f',
     borderRadius: 20,
     marginTop: 20,
-    width: 280,
+    width: 300,
     height: 70,
     backgroundColor: '#1b1b1b',
   },
@@ -91,8 +119,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 12,
-    justifyContent: 'space-between',
-    paddingHorizontal: 10, // Added paddingHorizontal to create spacing between image and text
+
+    // justifyContent: 'space-between',
+    // paddingHorizontal: 10, 
   },
   avatar: {
     width: 40,
@@ -100,8 +129,8 @@ const styles = StyleSheet.create({
     // marginRight: 30, // Added marginRight to create spacing between image and text
   },
   textContainer: {
-    // justifyContent: 'center',
-    // margin:20
+    marginLeft: 10,
+    width: 180,
   },
   nameText: {
     fontFamily: 'Poppins-Regular',
