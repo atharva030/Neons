@@ -1,3 +1,6 @@
+import { Dimensions } from 'react-native';
+const { width } = Dimensions.get('window');
+
 module.exports = {
   Addfullscreen: {
     flex: 1,
@@ -42,13 +45,13 @@ module.exports = {
 
   ProfileTitle: {
     fontFamily: 'Poppins-Bold',
-    fontSize: 22,
+    fontSize: width * 0.045,
     color: 'white',
     width: '80%',
   },
   ProfileSubtitle: {
     fontFamily: 'Poppins-Light',
-    fontSize: 16,
+    fontSize: width * 0.038,
     color: 'white',
   },
   editFlex: {
@@ -71,12 +74,12 @@ module.exports = {
   },
   editTitle: {
     color: '#6e6e74',
-    fontSize: 17,
+    fontSize: width * 0.045,
   },
   editValue: {
     color: 'white',
     fontFamily: 'Poppins-SemiBold',
-    fontSize: 17,
+    fontSize: width * 0.042,
   },
   editBtn: {
     width: 100,

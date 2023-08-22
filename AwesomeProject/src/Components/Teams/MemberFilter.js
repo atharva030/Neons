@@ -1,9 +1,13 @@
-import {React,useState,useEffect} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import {React, useState, useEffect} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView} from 'react-native';
 import {Chip, Avatar} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Dimensions } from 'react-native';
+const { width } = Dimensions.get('window');
+
 const MemberFilter = props => {
+  
   const [userRole, setUserRole] = useState('');
 
   const getUserRole = async () => {
@@ -45,6 +49,7 @@ const MemberFilter = props => {
     }
   };
   return (
+    
     <View style={styles.chipWrapper}>
       <View style={styles.chip}>
         <View style={styles.container}>
@@ -53,12 +58,11 @@ const MemberFilter = props => {
             source={require('../../../assets/Image/profile1.png')}
             style={styles.avatar}
           />
-       
           <View style={styles.textContainer}>
             <Text style={styles.nameText}>{props.name}</Text>
             <Text style={styles.designationText}>{props.role}</Text>
           </View>
-          
+
           {userRole == 'ROLE_ADMIN' ? (
             <TouchableOpacity
               style={{
@@ -67,7 +71,7 @@ const MemberFilter = props => {
                 borderRadius: 40,
                 borderWidth: 1,
                 justifyContent: 'center',
-                borderColor: '#F7DEE8',          
+                borderColor: '#F7DEE8',
               }}
               onPress={() =>
                 Alert.alert(
@@ -89,14 +93,13 @@ const MemberFilter = props => {
               }>
               <Icon name="trash-outline" size={20} style={styles.deleteIcon} />
             </TouchableOpacity>
-          
           ) : (
             ''
           )}
-          </View>
         </View>
-
+      </View>
     </View>
+    
   );
 };
 
@@ -105,6 +108,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+   
   },
   chip: {
     borderWidth: 2,
@@ -112,16 +116,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginTop: 20,
     width: 300,
-    height: 70,
+    height: 75,
     backgroundColor: '#1b1b1b',
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     margin: 12,
-
     // justifyContent: 'space-between',
-    // paddingHorizontal: 10, 
+    // paddingHorizontal: 10,
   },
   avatar: {
     width: 40,
@@ -134,12 +137,12 @@ const styles = StyleSheet.create({
   },
   nameText: {
     fontFamily: 'Poppins-Regular',
-    fontSize: 16,
+    fontSize: width * 0.039,
     color: 'white',
   },
   designationText: {
     fontFamily: 'Poppins-ExtraLight',
-    fontSize: 12,
+    fontSize: width * 0.032,
     color: 'white',
   },
   deleteIcon: {

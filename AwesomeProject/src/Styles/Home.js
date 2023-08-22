@@ -27,6 +27,7 @@ module.exports = {
   },
   bottomSheetContent: {
     padding: 10,
+    marginBottom:20
   },
   closeButton: {
     marginTop: 16,
