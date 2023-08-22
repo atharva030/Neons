@@ -13,8 +13,10 @@ import {Image} from 'react-native-svg';
 
 GoogleSignin.configure({
   scopes: ['email'],
+
   webClientId:
     '461468934097-cfeol86ft1lq1gmsr5iqjsija3fipfp6.apps.googleusercontent.com',
+
   offlineAccess: true,
 });
 const handleSuccess = () => {
@@ -36,7 +38,7 @@ const Welcome = ({navigation}) => {
       if (userData) {
         const data = JSON.parse(userData);
 
-        console.log(data);
+        console.log(data.Signin_Method);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -59,7 +61,7 @@ const Welcome = ({navigation}) => {
 
       setUser(currentUser);
 
-      console.log('This is user ', currentUser.email, currentUser.uid);
+      // console.log('This is user ', currentUser.email, currentUser.uid);
       if (currentUser == null) {
         ToastComponent({message: 'Try Again'});
       } else {

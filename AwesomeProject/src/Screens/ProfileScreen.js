@@ -24,17 +24,22 @@ const Profile = ({navigation}) => {
   const [userDes, setuserDes] = useState('');
   const [photourl, setPhotoUrl] = useState('');
   const [email, setEmail] = useState('');
+  const [method, setMethod] = useState('');
   const getUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
-        console.log(userData);
+        // console.log(userData);
         const data = JSON.parse(userData);
-        console.log('after logout', data);
+        // console.log('after logout', data);
         setuserName(data.userName);
         setuserDes(data.userDes);
         setPhotoUrl(data.photoUrl);
         setEmail(data.email);
+        setMethod(data.Signin_Method);
+        // if (method == 'google') {
+        //   console.log('hello');
+        // }
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -120,7 +125,6 @@ const Profile = ({navigation}) => {
                     style={styles.editBtn}>
                     Edit
                   </Button> */}
-                 
                 </View>
               </View>
 
@@ -128,7 +132,7 @@ const Profile = ({navigation}) => {
                 <Text style={styles.editTitle}>Email</Text>
                 <View style={styles.editValBtn}>
                   <Text style={styles.editValue}>{email}</Text>
-                 
+
                   {/* <Button
                     icon="account-edit"
                     mode="contained"
@@ -136,7 +140,6 @@ const Profile = ({navigation}) => {
                     {' '}
                     Edit
                   </Button> */}
-                 
                 </View>
               </View>
 
@@ -144,11 +147,13 @@ const Profile = ({navigation}) => {
                 <Text style={styles.editTitle}>Password</Text>
                 <View style={styles.editValBtn}>
                   <Text style={styles.editValue}>*********</Text>
-                  <Button
-                    style={styles.editBtn}
-                    onPress={() => navigation.navigate('EmailValid')}>
-                    Change
-                  </Button>
+                  {method !== 'google' && (
+                    <Button
+                      style={styles.editBtn}
+                      onPress={() => navigation.navigate('EmailValid')}>
+                      Change
+                    </Button>
+                  )}
                 </View>
               </View>
             </View>

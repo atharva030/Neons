@@ -93,6 +93,9 @@ const LoginScreen = ({navigation}) => {
       setIsLoading(false);
       if (!response.ok) {
         ToastComponent({message: data.error || 'Invalid email or password'});
+      } else {
+        handleSuccess();
+        navigation.navigate('NavigationScreen');
       }
       // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
       console.log(data.userName);
@@ -103,10 +106,11 @@ const LoginScreen = ({navigation}) => {
           userRole: data.userRole,
           userName: data.userName,
           userDes: data.designation,
+          photoUrl: data.photoUrl,
+          email: data.useremail,
+          Signin_Method: data.signinMethode,
         }),
       );
-      handleSuccess();
-      navigation.navigate('NavigationScreen');
     } catch (error) {
       setIsLoading(false);
       console.log(error);

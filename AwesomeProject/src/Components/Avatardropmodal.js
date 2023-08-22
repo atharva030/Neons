@@ -56,9 +56,7 @@ const Avatardropmodal = ({
       .then(() => {
         getUserData();
         removeUser();
-
         ToastAndroid.show('Logged out successfully', ToastAndroid.SHORT);
-
         navigation.reset({
           index: 0,
           routes: [{name: 'Welcome'}],

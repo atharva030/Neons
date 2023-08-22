@@ -93,7 +93,7 @@ const HomeScreen = ({navigation}) => {
   const [authenToken, setauthenToken] = useState('');
   const [userDes, setuserDes] = useState('');
   const [photoUrl, setphotoUrl] = useState('');
-  const [Methode, setMethode] = useState('');
+  const [Method, setMethod] = useState('');
   const getUserRole = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
@@ -112,16 +112,16 @@ const HomeScreen = ({navigation}) => {
         setauthenToken(authToken);
         setuserDes(userDes);
         setphotoUrl(photoUrl);
-        setMethode(Signin_Method);
-        console.log(
-          'This is the one from homescreen',
-          userRole,
-          idName,
-          authenToken,
-          userDes,
-          photoUrl,
-          Methode,
-        );
+        setMethod(Signin_Method);
+        // console.log(
+        //   'This is the one from homescreen',
+        //   // userRole,
+        //   // idName,
+        //   // authenToken,
+        //   // userDes,
+        //   // photoUrl,
+        //   Method,
+        // );
       }
     } catch (error) {
       console.log('Error while retrieving userRole from AsyncStorage:', error);
@@ -139,7 +139,7 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     // Call fetchTeam() whenever authenToken changes
-    console.log(authenToken);
+    // console.log(authenToken);
     if (authenToken) {
       fetchTeam();
     }
@@ -259,7 +259,7 @@ const HomeScreen = ({navigation}) => {
 
   const fetchTeam = async () => {
     setIsLoading(true);
-    console.log('This is auth token', authenToken);
+    // console.log('This is auth token', authenToken);
     try {
       const response = await fetch(
         'https://tsk-final-backend.vercel.app/api/team/fetchallteams',
@@ -275,11 +275,11 @@ const HomeScreen = ({navigation}) => {
 
       console.log(response);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setresultTeamData(data); // Assuming setresultTeamData is a state update function
       setIsLoading(false);
     } catch (error) {
-      console.log('Atharva', error);
+      console.log('error', error);
       setIsLoading(false); // Set loading state to false even if an error occurs.
     }
   };

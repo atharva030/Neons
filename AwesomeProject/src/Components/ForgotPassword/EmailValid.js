@@ -93,8 +93,8 @@ const EmailValid = ({navigation}) => {
                   style={[styles.Emailinput]}
                   placeholder="Enter your Email "
                   placeholderTextColor="white"
-                  onChangeText={handleEmailChange} 
-                  value={email} 
+                  onChangeText={handleEmailChange}
+                  value={email}
                 />
               </View>
             </View>
