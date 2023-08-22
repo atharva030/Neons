@@ -107,9 +107,9 @@ const GuInfo = ({navigation}) => {
             });
           }
           // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
-          console.log(data.authToken);
+          // console.log(data.authToken);
           console.log(data.Signin_Method);
-          console.log('this data email ', data.email);
+          // console.log('this data email ', data.email);
           await AsyncStorage.setItem(
             'user',
             JSON.stringify({
@@ -152,6 +152,7 @@ const GuInfo = ({navigation}) => {
         setauthenToken(authToken);
         setuserDes(userDes);
         setphotoUrl(photoURL);
+
         console.log(
           'This is the one from homescreen',
           userRole,
