@@ -44,6 +44,7 @@ module.exports = {
     fontFamily: 'Poppins-Bold',
     fontSize: 22,
     color: 'white',
+    width: '80%',
   },
   ProfileSubtitle: {
     fontFamily: 'Poppins-Light',
