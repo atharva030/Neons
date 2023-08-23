@@ -63,6 +63,7 @@ const TaskList = ({navigation, route}) => {
   const teamTitle = route.params.teamTitle; //id by teamItem
   const [isLoading, setIsLoading] = useState(false);
   const [filterMember, setFilterMember] = useState([]);
+  const [uploaded, setUploaded] = useState('');
   var sum = 0;
   var subtaskLength = 0;
   var totalSubtasks = 0;
@@ -303,23 +304,7 @@ const TaskList = ({navigation, route}) => {
         handleBackendError();
       });
   };
-  // const calculateCirP = (progress, subtaskLength, taskLength) =>{
-  //   // console.log(progress);
-
-  //   sum += progress;
-  //   // const completedSubtask = sum * 10;
-  //   totalSubtasks += subtaskLength;
-  //   totalProgress1 = (sum * 10 / (taskLength * totalSubtasks)) * 100;
-
-  //   // setTotalProgress((sum * 10 / (taskLength * totalSubtasks)) * 100 );
-  //   return totalProgress1;
-  // }
-
-  // const handleProgress = (progress) => {
-  //   setTotalProgress(progress);
-  //   console.log(totalProgress);
-  // }
-  // console.log(props.route)
+ 
   useEffect(() => {
     // fetchData()
     fetchMembers();
@@ -347,18 +332,31 @@ const TaskList = ({navigation, route}) => {
   }, [count]);
   useEffect(() => {
     let sum = 0;
+    let count = 0;
+    let completedSubtask = 0;
     let totalSubtasks = 0;
     let taskLength = fetchTask.length;
+    //console.log('tasks ' ,taskLength);
 
     fetchTask.forEach(item => {
       totalSubtasks += item.subTask.length;
+      console.log('task subtask length ',item.subTask.length);
+      console.log('task progress ',item.Progress);
+
+
+      completedSubtask += Math.round((item.Progress)*(item.subTask.length));
+      console.log('task completed ',(Math.round((item.Progress)*(item.subTask.length))));
       sum += item.Progress;
+
+      console.log(totalSubtasks);
+      console.log(completedSubtask);   
     });
 
     const totalProgress = Math.round(
-      (sum / (taskLength * totalSubtasks)) * 100,
+      (completedSubtask / totalSubtasks) * 100,
     );
-    setTotalProgress(100 - totalProgress);
+    console.log(totalProgress);
+    setTotalProgress(totalProgress);
   }, [fetchTask]);
 
   let datesWhitelist = [
@@ -736,6 +734,8 @@ const TaskList = ({navigation, route}) => {
                       />
                     </View>
                   </View>
+
+
                 </View>
               </View>
               <Calendarstrip />
