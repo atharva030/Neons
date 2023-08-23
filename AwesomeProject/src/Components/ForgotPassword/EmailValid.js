@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
 import styles from '../../Styles/AddTaskStyle';
@@ -43,6 +44,7 @@ const generateOTP = async email => {
 const EmailValid = ({navigation}) => {
   const [email, setEmail] = useState('');
   const isSendOTPDisabled = !email.trim();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleEmailChange = value => {
     setEmail(value);
@@ -54,11 +56,13 @@ const EmailValid = ({navigation}) => {
       ToastAndroid.show('Email is required', ToastAndroid.SHORT);
       return;
     }
-
+    setIsLoading(true);
     const otpSent = await generateOTP(email);
     if (otpSent) {
+      
       navigation.navigate('OtpValid', {email: email}); // Navigate to the desired screen
     }
+    setIsLoading(false);
   };
 
   return (
@@ -106,13 +110,17 @@ const EmailValid = ({navigation}) => {
               ]}
               mode="contained"
               disabled={isSendOTPDisabled}>
-              <Text
-                style={[
-                  styles.sendBtnText,
-                  isSendOTPDisabled && styles.buttonTextDisabled,
-                ]}>
-                Send OTP
-              </Text>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#ffffff" />
+              ) : (
+                <Text
+                  style={[
+                    styles.sendBtnText,
+                    isSendOTPDisabled && styles.buttonTextDisabled,
+                  ]}>
+                  Send OTP
+                </Text>
+              )}
             </Button>
           </View>
         </ScrollView>

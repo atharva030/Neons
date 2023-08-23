@@ -91,10 +91,10 @@ module.exports = {
   },
   Emailinput: {
     width: '100%',
-    borderColor: 'grey',
-    marginLeft:10,
+    borderColor: 'white',
     color: 'white',
     borderBottomWidth: 1,
+    width: deviceWidth * 0.85,
     paddingVertical: 0,
     fontFamily: 'Poppins-Regular',
     alignSelf: 'flex-start',
