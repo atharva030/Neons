@@ -212,11 +212,9 @@ const GuInfo = ({navigation}) => {
                 </View>
               </TouchableOpacity>
             </View>
-
             <View style={styles.registerSecondScreen}>
               <Text style={styles.titleText1}>Sign Up with Google</Text>
               <Text style={styles.titleText2}>Create a New Account</Text>
-
               <View style={styles.roleSelectionContainer}>
                 <TouchableOpacity
                   style={[
@@ -240,7 +238,6 @@ const GuInfo = ({navigation}) => {
                     Admin
                   </Text>
                 </TouchableOpacity>
-
                 <TouchableOpacity
                   style={[
                     styles.roleSelectionIconContainer,

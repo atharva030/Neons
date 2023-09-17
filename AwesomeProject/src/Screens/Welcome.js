@@ -16,10 +16,11 @@ GoogleSignin.configure({
   scopes: ['email'],
 
   webClientId:
-    '461468934097-cfeol86ft1lq1gmsr5iqjsija3fipfp6.apps.googleusercontent.com',
+    '555421935130-caftme9mvipqnu0lruehhrdf1iq4ak97.apps.googleusercontent.com',
 
   offlineAccess: true,
 });
+
 const handleSuccess = () => {
   ToastComponent({message: 'Login Sucessfull'});
 };
@@ -59,9 +60,7 @@ const Welcome = ({navigation}) => {
       await auth().signInWithCredential(googleCredential);
       const currentUser = auth().currentUser;
       console.log('I am outside account');
-
       setUser(currentUser);
-
       // console.log('This is user ', currentUser.email, currentUser.uid);
       if (currentUser == null) {
         ToastComponent({message: 'Try Again'});
@@ -216,7 +215,7 @@ const Welcome = ({navigation}) => {
                   size={25}
                   color="#6b8cff"
                   style={styles.google_logo}></IonIcon> */}
-                <Image source={googleI} style={styles.google_logo}/>
+                <Image source={googleI} style={styles.google_logo} />
 
                 <View style={styles.rightIcon}>
                   <IonIcon

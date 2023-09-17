@@ -34,6 +34,7 @@ const handleSuccess = () => {
   ToastComponent({message: 'Team Added successfully'});
 };
 const toggleMenulogout = async () => {
+  // eslint-disable-next-line no-undef
   setIsOpen(false);
   // Remove the auth-token from AsyncStorage
   try {
@@ -72,6 +73,7 @@ const HomeScreen = ({navigation}) => {
 
   const closeBottomSheet = () => {
     bottomSheetRef.current.close();
+    // eslint-disable-next-line no-undef
     setIsBottomSheetOpen(false);
   };
 
@@ -113,16 +115,6 @@ const HomeScreen = ({navigation}) => {
         setuserDes(userDes);
         setphotoUrl(photoUrl);
         setMethod(Signin_Method);
-        console.log(userRole);
-        // console.log(
-        //   'This is the one from homescreen',
-        //   // userRole,
-        //   // idName,
-        //   // authenToken,
-        //   // userDes,
-        //   // photoUrl,
-        //   Method,
-        // );
       }
     } catch (error) {
       console.log('Error while retrieving userRole from AsyncStorage:', error);

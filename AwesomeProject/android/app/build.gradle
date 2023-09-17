@@ -129,6 +129,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release{
+            
+                        storeFile file('production.keystore')
+                        storePassword 'Teamrnxg@23'
+                        keyAlias 'production'
+                        keyPassword 'Teamrnxg@23'
+      
+        }
     }
     buildTypes {
         debug {
@@ -142,6 +150,9 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
         }
+        // release{
+        //      signingConfig signingConfigs.release
+        // }
     }
 
     // applicationVariants are e.g. debug, release

@@ -125,10 +125,11 @@ const LoginScreen = ({navigation}) => {
     console.log('welco');
     navigation.navigate('Welcome');
   };
-  // const [Password, setPassword] = useState('');
+
   return (
     <>
       {spinner ? (
+        // eslint-disable-next-line react/jsx-no-undef
         <Loader />
       ) : (
         <LinearGradient
