@@ -57,7 +57,7 @@ const LoginScreen = ({navigation}) => {
       if (userData) {
         const data = JSON.parse(userData);
 
-        console.log(data);
+        // console.log(data);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -89,7 +89,7 @@ const LoginScreen = ({navigation}) => {
       );
 
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setIsLoading(false);
       if (!response.ok) {
         ToastComponent({message: data.error || 'Invalid email or password'});
@@ -98,7 +98,7 @@ const LoginScreen = ({navigation}) => {
         navigation.navigate('NavigationScreen');
       }
       // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
-      console.log(data.userName);
+      // console.log(data.userName);
       await AsyncStorage.setItem(
         'user',
         JSON.stringify({
@@ -122,7 +122,7 @@ const LoginScreen = ({navigation}) => {
     getUserData();
   }, []);
   const welco = () => {
-    console.log('welco');
+    // console.log('welco');
     navigation.navigate('Welcome');
   };
 

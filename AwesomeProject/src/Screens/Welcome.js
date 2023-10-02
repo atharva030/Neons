@@ -26,7 +26,8 @@ const handleSuccess = () => {
 };
 
 const handleBackendError = () => {
-  ToastComponent({message: 'Check your Network'});
+  ToastComponent({message: 'Something went wrong'});
+  ToastComponent({message: 'Please try again later'});
 };
 
 const Welcome = ({navigation}) => {
@@ -40,7 +41,7 @@ const Welcome = ({navigation}) => {
       if (userData) {
         const data = JSON.parse(userData);
 
-        console.log(data.Signin_Method);
+        // console.log(data.Signin_Method);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -59,7 +60,7 @@ const Welcome = ({navigation}) => {
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       await auth().signInWithCredential(googleCredential);
       const currentUser = auth().currentUser;
-      console.log('I am outside account');
+      // console.log('I am outside account');
       setUser(currentUser);
       // console.log('This is user ', currentUser.email, currentUser.uid);
       if (currentUser == null) {
@@ -86,7 +87,7 @@ const Welcome = ({navigation}) => {
           );
 
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
           setIsLoading(false);
           if (!response.ok) {
             navigation.navigate('GuInfo', {
@@ -125,16 +126,13 @@ const Welcome = ({navigation}) => {
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('User cancelled the sign-in flow');
+        // console.log('User cancelled the sign-in flow');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Sign-in operation is in progress');
+        // console.log('Sign-in operation is in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Google Play Services not available or outdated');
+        // console.log('Google Play Services not available or outdated');
       } else {
-        console.log(
-          'Something went wrong with Google Sign-In: ',
-          error.message,
-        );
+        // toster for user
       }
     }
   };
@@ -164,16 +162,15 @@ const Welcome = ({navigation}) => {
       }
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('User cancelled the sign-in flow');
+        // console.log('User cancelled the sign-in flow');
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('Sign-in operation is in progress');
+        // console.log('Sign-in operation is in progress');
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('Google Play Services not available or outdated');
+        // console.log('Google Play Services not available or outdated');
       } else {
-        console.log(
-          'Something went wrong with Google Sign-In: ',
-          error.message,
-        );
+        // toster for user
+        // ToastComponent({message: 'Something went wrong'});
+        ToastComponent({message: 'Please try again later'});
       }
     }
   };

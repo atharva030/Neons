@@ -285,15 +285,15 @@ const TaskList = ({navigation, route}) => {
       }),
     })
       .then(response => {
-        console.log(selectedIds);
-        console.log('Response status code:', response);
+        // console.log(selectedIds);
+        // console.log('Response status code:', response);
         return response.text();
       })
       .then(text => {
         // console.log('Response body text:', text);
         try {
           const data = JSON.parse(text);
-          console.log('This is parse data', data);
+          // console.log('This is parse data', data);
         } catch (err) {
           console.log('Error parsing JSON:', err.message);
         }
@@ -304,7 +304,7 @@ const TaskList = ({navigation, route}) => {
         handleBackendError();
       });
   };
- 
+
   useEffect(() => {
     // fetchData()
     fetchMembers();
@@ -340,22 +340,22 @@ const TaskList = ({navigation, route}) => {
 
     fetchTask.forEach(item => {
       totalSubtasks += item.subTask.length;
-      console.log('task subtask length ',item.subTask.length);
-      console.log('task progress ',item.Progress);
+      // console.log('task subtask length ', item.subTask.length);
+      // console.log('task progress ', item.Progress);
 
-
-      completedSubtask += Math.round((item.Progress)*(item.subTask.length));
-      console.log('task completed ',(Math.round((item.Progress)*(item.subTask.length))));
+      completedSubtask += Math.round(item.Progress * item.subTask.length);
+      console.log(
+        'task completed ',
+        Math.round(item.Progress * item.subTask.length),
+      );
       sum += item.Progress;
 
-      console.log(totalSubtasks);
-      console.log(completedSubtask);   
+      // console.log(totalSubtasks);
+      // console.log(completedSubtask);
     });
 
-    const totalProgress = Math.round(
-      (completedSubtask / totalSubtasks) * 100,
-    );
-    console.log(totalProgress);
+    const totalProgress = Math.round((completedSubtask / totalSubtasks) * 100);
+    // console.log(totalProgress);
     setTotalProgress(totalProgress);
   }, [fetchTask]);
 
@@ -734,8 +734,6 @@ const TaskList = ({navigation, route}) => {
                       />
                     </View>
                   </View>
-
-
                 </View>
               </View>
               <Calendarstrip />

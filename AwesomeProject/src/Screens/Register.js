@@ -24,9 +24,17 @@ import TaskContext from '../Context/taskContext';
 import {statusCodes} from 'react-native-google-signin';
 
 const designations = [
-  'Software Developer',
+  'Vice Coordinator',
+  'Coordinator',
   'IoT Developer',
-  'Co-ordinator',
+  'Android Developer',
+  'iOS Developer',
+  'Web Developer',
+  'Graphic Designer',
+  'Content Writer',
+  'Video Editor',
+  'Social Media Handler',
+  'Event Manager',
   'CAD Developer',
   'Other',
 ];
@@ -66,10 +74,10 @@ const RegisterScreen = ({navigation}) => {
     !phone.trim() ||
     !cnfpassword.trim() ||
     !selectedDesignation.trim();
-  useEffect(() => {
-    console.log(selectedRole);
-    console.log(Signin_Method);
-  }, []);
+  // useEffect(() => {
+  //   console.log(selectedRole);
+  //   console.log(Signin_Method);
+  // }, []);
 
   const handleOpenPicker = () => {
     pickerRef.current && pickerRef.current.focus();

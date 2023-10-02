@@ -88,39 +88,36 @@ const TeamItem = props => {
                     style={{color: '#18D39E', marginRight: 15}}
                   />
                 </TouchableOpacity>
-
-               
               ) : (
                 ''
               )}
               {props.userRole == 'ROLE_ADMIN' ? (
-              <TouchableOpacity
-                onPress={() =>
-                  Alert.alert(
-                    'Confirmation',
-                    'Are you sure you want to delete team Permanantly?',
+                <TouchableOpacity
+                  onPress={() =>
+                    Alert.alert(
+                      'Confirmation',
+                      'Are you sure you want to delete team Permanantly?',
 
-                    [
-                      {
-                        text: 'Cancel',
-                        style: 'cancel',
-                      },
-                      {
-                        text: 'Delete',
-                        onPress: () => deleteId(props.items._id),
-                        style: 'destructive',
-                      },
-                    ],
-                    {cancelable: false},
-                  )
-                }>
-                <Icon name="md-trash" size={20} style={{color: '#FF0096'}} />
-              </TouchableOpacity>
-
+                      [
+                        {
+                          text: 'Cancel',
+                          style: 'cancel',
+                        },
+                        {
+                          text: 'Delete',
+                          onPress: () => deleteId(props.items._id),
+                          style: 'destructive',
+                        },
+                      ],
+                      {cancelable: false},
+                    )
+                  }>
+                  <Icon name="md-trash" size={20} style={{color: '#FF0096'}} />
+                </TouchableOpacity>
               ) : (
                 ''
               )}
-              </View>
+            </View>
             {/* </View> */}
           </View>
         </View>

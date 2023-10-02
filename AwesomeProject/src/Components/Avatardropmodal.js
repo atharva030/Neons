@@ -25,7 +25,7 @@ const Avatardropmodal = ({
   removeUser,
   photoUrl,
 }) => {
-  console.log('AVATAR ', photoUrl);
+  // console.log('AVATAR ', photoUrl);
   const FallbackAvatar = ({size}) => (
     <Image
       source={defaultAvatar}
@@ -41,8 +41,8 @@ const Avatardropmodal = ({
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
         const data = JSON.parse(userData);
-        console.log('after logout', data);
-        console.log('from async storage ', Signin_Method);
+        // console.log('after logout', data);
+        // console.log('from async storage ', Signin_Method);
       } else {
         console.log('User data not found in AsyncStorage.');
       }

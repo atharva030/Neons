@@ -17,9 +17,17 @@ import ToastComponent from '../Components/Toast/toast';
 import LinearGradient from 'react-native-linear-gradient';
 
 const designations = [
-  'Software Developer',
+  'Vice Coordinator',
+  'Coordinator',
   'IoT Developer',
-  'Co-ordinator',
+  'Android Developer',
+  'iOS Developer',
+  'Web Developer',
+  'Graphic Designer',
+  'Content Writer',
+  'Video Editor',
+  'Social Media Handler',
+  'Event Manager',
   'CAD Developer',
   'Other',
 ];
@@ -99,7 +107,7 @@ const GuInfo = ({navigation}) => {
             },
           );
           const data = await response.json();
-          console.log(data);
+          // console.log(data);
           setIsLoading(false);
           if (!response.ok) {
             ToastComponent({
@@ -108,7 +116,7 @@ const GuInfo = ({navigation}) => {
           }
           // Login successful, perform any necessary actions (e.g., store user data, navigate to next screen)
           // console.log(data.authToken);
-          console.log(data.Signin_Method);
+          // console.log(data.Signin_Method);
           // console.log('this data email ', data.email);
           await AsyncStorage.setItem(
             'user',
@@ -144,7 +152,7 @@ const GuInfo = ({navigation}) => {
   const getUserRole = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
-      console.log(userData);
+      // console.log(userData);
       if (userData) {
         const {userRole, userName, authToken, userDes} = JSON.parse(userData);
         setUserRole(userRole);
@@ -153,13 +161,13 @@ const GuInfo = ({navigation}) => {
         setuserDes(userDes);
         setphotoUrl(photoURL);
 
-        console.log(
-          'This is the one from homescreen',
-          userRole,
-          idName,
-          authenToken,
-          userDes,
-        );
+        // console.log(
+        //   'This is the one from homescreen',
+        //   userRole,
+        //   idName,
+        //   authenToken,
+        //   userDes,
+        // );
         // Call fetchTeam() here after setting the authToken
         // fetchTeam();
       }
@@ -173,7 +181,7 @@ const GuInfo = ({navigation}) => {
       if (userData) {
         const data = JSON.parse(userData);
 
-        console.log(data);
+        // console.log(data);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -192,7 +200,7 @@ const GuInfo = ({navigation}) => {
     setSelectedRole(role);
   };
   const welco = () => {
-    console.log('welco');
+    // console.log('welco');
     navigation.navigate('Welcome');
   };
 
