@@ -12,7 +12,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Image} from 'react-native';
 import googleI from '../../assets/googleI.png';
 import messaging from '@react-native-firebase/messaging';
-import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 GoogleSignin.configure({
   scopes: ['email'],
@@ -106,7 +105,7 @@ const Welcome = ({navigation}) => {
               email: user.email,
               photoURL: user.photoURL,
               pass: user.uid,
-              d_token: deviceToken,
+              Device_Token: deviceToken,
               // Signin_Method: user.Signin_Method,
             });
             // ToastComponent({

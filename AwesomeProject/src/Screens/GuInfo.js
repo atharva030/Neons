@@ -33,7 +33,7 @@ const designations = [
 ];
 const GuInfo = ({navigation}) => {
   const route = useRoute();
-  const {name, email, photoURL, pass} = route.params;
+  const {name, email, photoURL, pass, Device_Token} = route.params;
   const [emil, setEmil] = useState('');
   const [phone, setPhone] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
@@ -42,11 +42,14 @@ const GuInfo = ({navigation}) => {
   );
   const [signinMethode] = useState('googleSignin');
   const [isLoading, setIsLoading] = useState(false);
-
+  const [Device_Token1, setDevice_Token1] = useState('');
   useEffect(() => {
     // console.log('this is user email ', email);
     // console.log('this is sign in methode ', signinMethode);
     // console.log(signinMethode);
+    console.log('this d token from gui info  ', Device_Token);
+    setDevice_Token1(Device_Token);
+    console.log('this is Device token 1 ', Device_Token1);
   }, []);
 
   const pickerRef = useRef();
@@ -62,6 +65,7 @@ const GuInfo = ({navigation}) => {
     selectedDesignation,
     photoURL,
     signinMethode,
+    Device_Token,
   ) => {
     try {
       setIsLoading(true);
@@ -82,6 +86,7 @@ const GuInfo = ({navigation}) => {
             password: pass,
             photoUrl: photoURL,
             Signin_Method: 'google',
+            Device_Token: Device_Token,
           }),
         },
       );
@@ -128,6 +133,7 @@ const GuInfo = ({navigation}) => {
               photoUrl: data.photoUrl,
               email: email,
               Signin_Method: data.signinMethode,
+              Device_Token: d_token,
             }),
           );
           handleSuccess();
