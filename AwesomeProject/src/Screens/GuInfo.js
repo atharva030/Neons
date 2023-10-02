@@ -44,9 +44,9 @@ const GuInfo = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log('this is user email ', email);
-    console.log('this is sign in methode ', signinMethode);
-    console.log(signinMethode);
+    // console.log('this is user email ', email);
+    // console.log('this is sign in methode ', signinMethode);
+    // console.log(signinMethode);
   }, []);
 
   const pickerRef = useRef();
@@ -65,24 +65,6 @@ const GuInfo = ({navigation}) => {
   ) => {
     try {
       setIsLoading(true);
-
-      if (!email || !pass || !name) {
-        ToastComponent({ message: 'Please fill in all fields' });
-        setIsLoading(false); // Stop loading
-        return;
-      }else if(!role ){
-        ToastComponent({ message: 'Please choose the user role' });
-        setIsLoading(false); // Stop loading
-        return;
-      }else if(!selectedDesignation){
-        ToastComponent({ message: 'Please Select the user designation' });
-        setIsLoading(false); // Stop loading
-        return;
-      }else if( !phone){
-        ToastComponent({ message: 'Please Enter your mobile Number' });
-        setIsLoading(false); // Stop loading
-        return;
-      }
 
       const response = await fetch(
         'https://tsk-final-backend.vercel.app/api/auth/createuser',

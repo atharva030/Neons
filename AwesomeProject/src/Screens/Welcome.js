@@ -11,13 +11,13 @@ import ToastComponent from '../Components/Toast/toast';
 import LinearGradient from 'react-native-linear-gradient';
 import {Image} from 'react-native';
 import googleI from '../../assets/googleI.png';
+import messaging from '@react-native-firebase/messaging';
+import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 GoogleSignin.configure({
   scopes: ['email'],
-
   webClientId:
     '555421935130-caftme9mvipqnu0lruehhrdf1iq4ak97.apps.googleusercontent.com',
-
   offlineAccess: true,
 });
 
@@ -33,15 +33,26 @@ const handleBackendError = () => {
 const Welcome = ({navigation}) => {
   useEffect(() => {
     getUserData();
+    getDevicetoken();
   }, []);
+
+  // >>>>>>>>>><<<<<<<<<<
+  // // Get the device token
+  const getDevicetoken = async () => {
+    const token = await messaging().getToken();
+    setdeviceToken(token);
+    console.log('this sated device token ', deviceToken);
+  };
+  const [deviceToken, setdeviceToken] = useState(null);
+  //this is for the notifaction  part
+  // >>>>>>>>>><<<<<<<<<<
+
   const [isLoading, setIsLoading] = useState(false);
   const getUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
         const data = JSON.parse(userData);
-
-        // console.log(data.Signin_Method);
       } else {
         console.log('User data not found in AsyncStorage.');
       }
@@ -67,11 +78,10 @@ const Welcome = ({navigation}) => {
         ToastComponent({message: 'Try Again'});
       } else {
         try {
-          if (!currentUser.email || !currentUser.uid ) {
+          if (!currentUser.email || !currentUser.uid) {
             ToastComponent({message: 'Please fill in all fields'});
             return;
           }
-
           setIsLoading(true);
           const response = await fetch(
             'https://tsk-final-backend.vercel.app/api/auth/login',
@@ -96,6 +106,7 @@ const Welcome = ({navigation}) => {
               email: user.email,
               photoURL: user.photoURL,
               pass: user.uid,
+              d_token: deviceToken,
               // Signin_Method: user.Signin_Method,
             });
             // ToastComponent({
@@ -148,13 +159,13 @@ const Welcome = ({navigation}) => {
       await auth().signInWithCredential(googleCredential);
       const currentUser = auth().currentUser;
       setUser(currentUser);
-      console.log(
-        'This is user ',
-        currentUser.email,
-        currentUser.displayName,
-        currentUser.photoURL,
-        currentUser.uid,
-      );
+      // console.log(
+      //   'This is user ',
+      //   currentUser.email,
+      //   currentUser.displayName,
+      //   currentUser.photoURL,
+      //   currentUser.uid,
+      // );
 
       if (currentUser.email == null) {
         Alert.alert('Please provide your name and Email to continue');
