@@ -67,10 +67,11 @@ const Welcome = ({navigation}) => {
         ToastComponent({message: 'Try Again'});
       } else {
         try {
-          if (!currentUser.email || !currentUser.uid) {
+          if (!currentUser.email || !currentUser.uid ) {
             ToastComponent({message: 'Please fill in all fields'});
             return;
           }
+
           setIsLoading(true);
           const response = await fetch(
             'https://tsk-final-backend.vercel.app/api/auth/login',
