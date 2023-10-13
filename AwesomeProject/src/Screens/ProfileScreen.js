@@ -34,6 +34,7 @@ const Profile = ({navigation}) => {
         // console.log('after logout', data);
         setuserName(data.userName);
         setuserDes(data.userDes);
+
         setPhotoUrl(data.photoUrl);
         setEmail(data.email);
         setMethod(data.Signin_Method);

@@ -31,6 +31,7 @@ const designations = [
   'CAD Developer',
   'Other',
 ];
+
 const GuInfo = ({navigation}) => {
   const route = useRoute();
   const {name, email, photoURL, pass, Device_Token} = route.params;
