@@ -34,7 +34,6 @@ const Profile = ({navigation}) => {
         // console.log('after logout', data);
         setuserName(data.userName);
         setuserDes(data.userDes);
-
         setPhotoUrl(data.photoUrl);
         setEmail(data.email);
         setMethod(data.Signin_Method);
@@ -57,7 +56,8 @@ const Profile = ({navigation}) => {
       .then(() => {
         getUserData();
         removeUser();
-
+        const email = auth().currentUser.email;
+        console.log(email);
         ToastAndroid.show('Logged out successfully', ToastAndroid.SHORT);
 
         navigation.reset({
@@ -72,6 +72,18 @@ const Profile = ({navigation}) => {
           error,
         );
       });
+  };
+  const delete_account = async () => {
+    // await AsyncStorage.removeItem('user');
+
+    const email = auth().currentUser.email;
+    const user_ID = auth().currentUser.uid;
+
+    console.log(email);
+    console.log(user_ID);
+
+    try {
+    } catch (error) {}
   };
   return (
     <ScrollView>
@@ -157,9 +169,18 @@ const Profile = ({navigation}) => {
                   )}
                 </View>
               </View>
+              {/* delete account button  */}
+              <View style={{marginBottom: 40}}>
+                <Text style={styles.editTitle}>Delete Account</Text>
+                <View style={styles.editValBtn}>
+                  <Text style={styles.editValue}>Delete Account</Text>
+                  <Button style={styles.editBtn} onPress={delete_account}>
+                    Delete
+                  </Button>
+                </View>
+              </View>
             </View>
           </View>
-
           {/* <TouchableOpacity style={{height: '100%'}}>
             <View style={styles.editFlex}>
               <Text style={styles.signOutBtn}>Sign Out</Text>
